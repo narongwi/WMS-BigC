@@ -1,0 +1,248 @@
+<div class="row fnb fn-07e">
+    <div class="col-md-4">
+        <div class="lsset ">
+            <div class="head">
+                <div class="row mg-0 ln ">
+                    <div class="col-md-12 ">Location entity</div>
+                </div>
+            </div>
+        
+            <div class="line bgsub-head ">
+                <div class="row mg-0 ln " >
+                    <div class="col-md-6 lh-08e">
+                        <span class="text-dark fnb ">Site </span><br />
+                        <span class="text-mute">Site code</span>
+                    </div>
+                    <div class="col-md-6">
+                        <span class="text-danger fnb ">{{locmd.site}}</span>
+                    </div>
+                </div>
+                <div class="row mg-0 ln " >
+                    <div class="col-md-6 lh-08e">
+                        <span class="text-dark fnb ">Depot</span><br />
+                        <span class="text-mute">Depot code</span>
+                    </div>
+                    <div class="col-md-6">
+                        <span class="text-danger fnb ">{{locmd.depot}}</span>
+                    </div>
+                </div>
+                <div class="row mg-0 ln " >
+                    <div class="col-md-6 lh-08e">
+                        <span class="text-dark fnb ">Zone</span><br />
+                        <span class="text-mute">Zone code</span>
+                    </div>
+                    <div class="col-md-6">
+                        <span class="text-danger fnb ">{{locmd.lszone}}</span>
+                    </div>
+                </div>
+                <div class="row mg-0 ln " >
+                    <div class="col-md-6 lh-08e">
+                        <span class="text-dark fnb ">location</span><br />
+                        <span class="text-mute">location code</span>
+                    </div>
+                    <div class="col-md-6">
+                        <span class="text-danger fnb ">{{locmd.lsstack}}</span>
+                    </div>
+                </div>
+                <div class="row mg-0 ln " >
+                    <div class="col-md-6 lh-08e">
+                        <span class="text-dark fnb ">Sequence</span><br />
+                        <span class="text-mute">Sequence code</span>
+                    </div>
+                    <div class="col-md-6">
+                        <span class="text-danger fnb ">{{locmd.lsseq}}</span>
+                    </div>
+                </div>
+                <div class="row mg-0 ln " >
+                    <div class="col-md-6 lh-08e">
+                        <span class="text-dark fnb ">Digit</span><br />
+                        <span class="text-mute ">Verify digit of location</span>
+                    </div>
+                    <div class="col-md-6">
+                        <span class="text-danger fnb ">{{locmd.lsdigit}}</span>
+                    </div>
+                </div>
+                <div class="row mg-0 ln " >
+                    <div class="col-md-6 lh-08e">
+                        <span class="text-dark fnb ">Altername name</span><br />
+                        <span class="text-mute ">Alternate name of location</span>
+                    </div>
+                    <div class="col-md-6">
+                        <span class="text-danger fnb ">{{locmd.lscodealt}}</span>
+                    </div>
+                </div>
+                <div class="row mg-0 ln " >
+                    <div class="col-md-6 lh-08e">
+                        <span class="text-dark fnb ">Full Name</span><br />
+                        <span class="text-mute ">Full name of location</span>
+                    </div>
+                    <div class="col-md-6">
+                        <span class="text-danger fnb ">{{locmd.lscodefull}}</span>
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln " >
+                    <div class="col-md-6 lh-09e tx-overflow">
+                        <span class="text-dark fnb ">Allow to stock In</span><br />
+                        <span class="text-mute  tx-overflow">of location</span>
+                    </div>
+                    <div class="col-md-6 pdt-3">                        
+                            <ui-switch checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" [(ngModel)]="swflowin" ></ui-switch>
+                    </div>
+                </div>
+                <div class="row mg-0 ln " >
+                    <div class="col-md-6 lh-09e tx-overflow">
+                        <span class="text-dark fnb ">Allow to stock Out</span><br />
+                        <span class="text-mute  tx-overflow">of location</span>
+                    </div>
+                    <div class="col-md-6 pdt-3">                        
+                            <ui-switch checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" [(ngModel)]="swflowou" ></ui-switch>
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln " >
+                    <div class="col-md-6 lh-08e">
+                        <span class="text-dark fnb ">Current capacity</span><br />
+                        <span class="text-mute ">Percentage free space</span>
+                    </div>
+                    <div class="col-md-6">
+                        <span class="text-danger fnb ">{{locmd.crweight}}</span>
+                    </div>
+                </div>
+                <div class="row mg-0 ln " >
+                    <div class="col-md-6 lh-08e">
+                        <span class="text-dark fnb ">Current weight</span><br />
+                        <span class="text-mute ">Weight on location</span>
+                    </div>
+                    <div class="col-md-6">
+                        <span class="text-danger fnb ">{{locmd.crweight}}</span>
+                    </div>
+                </div>
+                <div class="row mg-0 ln " >
+                    <div class="col-md-6 lh-08e">
+                        <span class="text-dark fnb ">Current volume</span><br />
+                        <span class="text-mute ">Weight on volume</span>
+                    </div>
+                    <div class="col-md-6">
+                        <span class="text-danger fnb ">{{locmd.crvolume}}</span>
+                    </div>
+                </div>
+            </div>        
+        </div>
+    </div>
+    <div class="col-md-8">
+        
+        <div class="lsset ">
+            <div class="head">
+                <div class="row mg-0 ln ">
+                    <div class="col-md-12 ">Location Dimension</div>
+                </div>
+            </div>
+
+            <div class="line bgsub-head ">
+                <div class="row mg-0 ln " >
+                    <div class="col-md-6 lh-1e1 pdt-5">
+                        <span class="text-dark fnb ">Dimemnsion</span><br />
+                        <span class="text-mute">No of Length x Width x Height </span>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group form-control-sm mg-0">
+                            <input class="form-control text-danger fnb" type="text" placeholder="Length" [(ngModel)]="locmd.lsdmlength">
+                        </div> 
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group form-control-sm mg-0">
+                            <input class="form-control text-danger fnb" type="text" placeholder="Width" [(ngModel)]="locmd.lsdmwidth" >
+                        </div> 
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group form-control-sm mg-0">
+                            <input class="form-control text-danger fnb" type="text" placeholder="Height" [(ngModel)]="locmd.lsdmheight">
+                        </div> 
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln " >
+                    <div class="col-md-6 lh-1e1 pdt-5">
+                        <span class="text-dark fnb ">Maximum weight</span><br />
+                        <span class="text-mute">No of maximum weight that can storage in location </span>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group form-control-sm mg-0">
+                            <input class="form-control text-danger fnb" type="text" placeholder=""  [(ngModel)]="locmd.lsmxweight"  >
+                        </div> 
+                    </div>
+                    <div class="col-md-3"></div>
+                </div>
+                <div class="row mg-0 ln " >
+                    <div class="col-md-6 lh-1e1 pdt-5">
+                        <span class="text-dark fnb ">Maximum volume</span><br />
+                        <span class="text-mute">No of maximum volume that can storage in location</span>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group form-control-sm mg-0">
+                            <input class="form-control text-danger fnb" type="text" placeholder=""   [(ngModel)]="locmd.lsmxvolume" >
+                        </div> 
+                    </div>
+                    <div class="col-md-3"></div>
+                </div>
+
+                <div class="row mg-0 ln " >
+                    <div class="col-md-6 lh-1e1 pdt-5">
+                        <span class="text-dark fnb ">Maximum Handling</span><br />
+                        <span class="text-mute">No of maximum HU that can storage in location</span>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group form-control-sm mg-0">
+                            <input class="form-control text-danger fnb" type="text" placeholder=""  [(ngModel)]="locmd.lsmxhuno" >
+                        </div> 
+                    </div>
+                    <div class="col-md-3"></div>
+                </div>
+                <div class="row mg-0 ln " >
+                    <div class="col-md-6 lh-1e1 pdt-5">
+                        <span class="text-dark fnb ">Minimum stock on location</span><br />
+                        <span class="text-mute">No of minimum stock that can storage in location</span>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group form-control-sm mg-0">
+                            <input class="form-control text-danger fnb" type="text" placeholder="" [(ngModel)]="locmd.lsmnsafety"  >
+                        </div> 
+                    </div>
+                    <div class="col-md-3"></div>
+                </div>
+<!-- 
+                <div class="row mg-0 ln " >
+                    <div class="col-md-6 lh-1e1 pdt-5">
+                        <span class="text-dark fnb ">Third party</span><br />
+                        <span class="text-mute">Third party code</span>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group form-control-sm mg-0">
+                            <input class="form-control text-danger fnb" type="text" placeholder="" [(ngModel)]="ops.spcthcode"  >
+                        </div> 
+                    </div>
+                    <div class="col-md-3"></div>
+                </div> -->
+
+                <div class="row mg-0 ln">
+                    <div class="col-md-9">&nbsp;</div>
+                    <div class="col-md-3">
+                        <button type="button" class="btn snaps-primary btn-block mp " (click)="validate()">
+                            <i class="fas fa-save"></i>
+                            &nbsp;
+                            Save Location
+                        </button>
+        
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+
+       
+
+    </div>
+</div>

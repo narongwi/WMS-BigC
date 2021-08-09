@@ -1,0 +1,241 @@
+<div class="row">
+
+    <div class="col-md-8 fnb fn pdt-5 ">
+        <span class="fn-palette-1">Warehouse Map</span>&nbsp;<i class="fas fa-chevron-right fa-xs"></i>&nbsp;<span class="fn-palette-5"> Grid</span>
+    </div>
+    <div class="col-md-2 ">
+        <div class="input-group fnb">
+            <input class="form-control fn-07e fnb text-danger " placeholder="Location"
+                >
+            <div class="input-group-append">
+            <button type="button" class="btn snaps-btngroup btn-prime " (click)="fndgrid();" >
+                <i class="fas fa-search"></i>
+            </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-2 text-right">
+        <div class="d-grid gap-2">
+        
+            <ng-template #popContent>
+                <div  style="width:280px" class="fn fn-07e fnb">                                    
+                    <div class="row ln pd-5">
+                        <div class="col-md-4 pdt-5">Zone </div>
+                        <div class="col-md-8">
+                            <ng-select class=" text-danger"  class="custom custom-sm" bindLabel="desc" bindvalue="value" 
+                            [clearable]="true"  [(ngModel)]="pmfnd.zone" [items]="lszone" >
+                            <ng-template ng-label-tmp let-item="item"><span class="text-danger b">{{item.desc}}</span> </ng-template>
+                            <ng-template ng-option-tmp let-item="item"><span class="text-danger b">{{item.desc}}</span> </ng-template>
+                            </ng-select>
+                        </div>
+                    </div>
+                    <div class="row ln pd-5">
+                        <div class="col-md-4 pdt-5">Aisle from </div>
+                        <div class="col-md-8">
+                            <input class="form-control form-control-sm  text-danger " type="text" [(ngModel)]="pmfnd.aislefrom">
+                        </div>
+                    </div>
+                    <div class="row ln pd-5">
+                        <div class="col-md-4 pdt-5">Aisle to </div>
+                        <div class="col-md-8">
+                            <input class="form-control form-control-sm  text-danger " type="text" [(ngModel)]="pmfnd.aisleto">
+                        </div>
+                    </div>
+                    <div class="row ln pd-5">
+                        <div class="col-md-4 pdt-5">Bay from </div>
+                        <div class="col-md-8">
+                            <input class="form-control form-control-sm  text-danger " type="text" [(ngModel)]="pmfnd.bayfrom">
+                        </div>
+                    </div>
+                    <div class="row ln pd-5">
+                        <div class="col-md-4 pdt-5">Bay to </div>
+                        <div class="col-md-8">
+                            <input class="form-control form-control-sm  text-danger " type="text" [(ngModel)]="pmfnd.bayto">
+                        </div>
+                    </div>
+
+                    <div class="row ln pd-5">
+                        <div class="col-md-4 pdt-5">Level from </div>
+                        <div class="col-md-8">
+                            <input class="form-control form-control-sm  text-danger " type="text" [(ngModel)]="pmfnd.levelfrom">
+                        </div>
+                    </div>
+                    <div class="row ln pd-5">
+                        <div class="col-md-4 pdt-5">Level to </div>
+                        <div class="col-md-8">
+                            <input class="form-control form-control-sm  text-danger " type="text" [(ngModel)]="pmfnd.levelto">
+                        </div>
+                    </div>
+
+                    <div class="row ln pd-5">
+                        <div class="col-md-4 pdt-5">Location from</div>
+                        <div class="col-md-8">
+                            <input class="form-control form-control-sm  text-danger " type="text" [(ngModel)]="pmfnd.locationfrom">
+                        </div>
+                    </div>
+
+                    <div class="row ln pd-5">
+                        <div class="col-md-4 pdt-5">Location to</div>
+                        <div class="col-md-8">
+                            <input class="form-control form-control-sm  text-danger " 
+                            type="text" placeholder="Code or Name" [(ngModel)]="pmfnd.locationto">
+                        </div>
+                    </div>
+
+                    <div class="row ln  pd-5 ">
+                        <div class="col-md-4 pdt-5">Allow mixing product</div>
+                        <div class="col-md-8">
+                            <ng-select class="b text-danger"  class="custom custom-sm" bindLabel="desc" bindvalue="value" 
+                            [clearable]="true"  [(ngModel)]="slcordertype" [items]="lstype" >
+                                <ng-template ng-label-tmp let-item="item"><span class="text-danger b">{{item.desc}}</span> </ng-template>
+                                <ng-template ng-option-tmp let-item="item"><span class="text-danger b">{{item.desc}}</span> </ng-template>
+                            </ng-select>
+                        </div>
+                    </div>
+                    <div class="row ln pd-5">
+                        <div class="col-md-4 pdt-5">Allow mixing aging</div>
+                        <div class="col-md-8">
+                            <ng-select class=" text-danger"  class="custom custom-sm" bindLabel="desc" bindvalue="value" 
+                            [clearable]="true"  [(ngModel)]="slcarea" [items]="lsspcarea" >
+                            <ng-template ng-label-tmp let-item="item"><span class="text-danger b">{{item.desc}}</span> </ng-template>
+                            <ng-template ng-option-tmp let-item="item"><span class="text-danger b">{{item.desc}}</span> </ng-template>
+                            </ng-select>
+                        </div>
+                    </div>
+                    <div class="row ln pd-5">
+                        <div class="col-md-4 pdt-5">Allow mixing lot</div>
+                        <div class="col-md-8">
+                            <ng-select class=" text-danger"  class="custom custom-sm" bindLabel="desc" bindvalue="value" 
+                            [clearable]="true"  [(ngModel)]="slcpriority" [items]="lsyesno" >
+                            <ng-template ng-label-tmp let-item="item"><span class="text-danger b">{{item.desc}}</span> </ng-template>
+                            <ng-template ng-option-tmp let-item="item"><span class="text-danger b">{{item.desc}}</span> </ng-template>
+                            </ng-select>
+                        </div>
+                    </div>
+                    <div class="row ln pd-5">
+                        <div class="col-md-4 pdt-5">Is picking</div>
+                        <div class="col-md-8">
+                            <ng-select class=" text-danger"  class="custom custom-sm" bindLabel="desc" bindvalue="value" 
+                            [clearable]="true"  [(ngModel)]="slcpriority" [items]="lsyesno" >
+                            <ng-template ng-label-tmp let-item="item"><span class="text-danger b">{{item.desc}}</span> </ng-template>
+                            <ng-template ng-option-tmp let-item="item"><span class="text-danger b">{{item.desc}}</span> </ng-template>
+                            </ng-select>
+                        </div>
+                    </div>
+                    <div class="row ln pd-5">
+                        <div class="col-md-4 pdt-5">Is Reserve</div>
+                        <div class="col-md-8">
+                            <ng-select class=" text-danger"  class="custom custom-sm" bindLabel="desc" bindvalue="value" 
+                            [clearable]="true"  [(ngModel)]="slcpriority" [items]="lsyesno" >
+                            <ng-template ng-label-tmp let-item="item"><span class="text-danger b">{{item.desc}}</span> </ng-template>
+                            <ng-template ng-option-tmp let-item="item"><span class="text-danger b">{{item.desc}}</span> </ng-template>
+                            </ng-select>
+                        </div>
+                    </div>
+                    <div class="row ln pd-5">
+                        <div class="col-md-4 pdt-5">Third party</div>
+                        <div class="col-md-8">
+                            <input class="form-control form-control-sm  text-danger " 
+                            type="text" placeholder="Code or Name" [(ngModel)]="pmfnd.thcode">
+                        </div>
+                    </div>
+                    <div class="row ln pd-5">
+                        <div class="col-md-4 pdt-5">Product</div>
+                        <div class="col-md-8">
+                            <input class="form-control form-control-sm  text-danger " type="text" placeholder="Order No" [(ngModel)]="pmfnd.ouorder">
+                        </div>
+                    </div>
+                    <div class="row ln pd-5">
+                        <div class="col-md-4 pdt-5">Last touch</div>
+                        <div class="col-md-8">
+                            <input class="form-control form-control-sm  text-danger " type="text" placeholder="Code or Description" [(ngModel)]="pmfnd.article">
+                        </div>
+                    </div>
+                    <div class="row ln pd-5">
+                        <div class="col-md-4 pdt-5">State</div>
+                        <div class="col-md-8">
+                            <ng-select class=" text-danger"  class="custom custom-sm" bindLabel="desc" bindvalue="value" 
+                            [clearable]="true"  [(ngModel)]="slcstate" [items]="lsstatem" >
+                            <ng-template ng-label-tmp let-item="item"><span class="text-danger b">{{item.desc}}</span> </ng-template>
+                            <ng-template ng-option-tmp let-item="item"><span class="text-danger b">{{item.desc}}</span> </ng-template>
+                        </ng-select>
+                        </div>
+                    </div>
+                    <div class="row   pd-5">
+                        <div class="col-md-4">&nbsp;</div>
+                        <div class="col-md-8">
+                            <div class="d-grid gap-2">
+
+                                <button type="button" class="btn snaps-warning btn-block mp " 
+                                (click)="fndgrid()">
+                                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-search" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z"/>
+                                        <path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>
+                                    </svg>
+                                    &nbsp;
+                                    Filter Location
+                                </button>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ng-template>
+            <ng-template #popTitle >
+                <div style="width:280px">
+                    <span class="fn fn-08e fnb">Search parameter</span>
+                </div>
+            </ng-template>
+            <button type="button" class="btn btn-secondary snaps-btnblank fn-07e" placement="bottom" [autoClose]="'outside'" [ngbPopover]="popContent" [popoverTitle]="popTitle">
+                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-funnel-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.128.334L10 8.692V13.5a.5.5 0 0 1-.342.474l-3 1A.5.5 0 0 1 6 14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5v-2z"/>
+                </svg> Parameters
+            </button>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="row fnb fn-07e pdt-10">
+
+    <div class="col-md-12">
+        <div class="row">
+            <div class="lsset pd-0 ">
+                <div class="head">
+                    <div class="row mg-0 ln ">
+                        <div class="col-md-1 ">Site</div>
+                        <div class="col-md-1 ">Depot </div>
+                        <div class="col-md-1 ">Zone</div>              
+                        <div class="col-md-1 ">Grid No</div>
+                        <div class="col-md-6 ">Third Party</div>
+                        <div class="col-md-1 ">Capacity</div>
+                        <div class="col-md-1 ">State</div>
+                    </div>
+                </div>
+            
+                <div class="line bgsub-head dggrid ">
+                    <ng-scrollbar>
+                    <div class="row mg-0 ln mpswitch " *ngFor="let ln of lsgrid" >
+                        <div class="col-md-1 ">{{ln.site}}</div>
+                        <div class="col-md-1 ">{{ln.depot}}</div>
+                        <div class="col-md-1 ">{{ln.lszone}}</div>
+                        <div class="col-md-1 fnb ">{{ln.lscodealt}}</div>
+                        <div class="col-md-6 ">{{ln.lscodefull}}</div>
+                        <div class="col-md-1 ">{{ln.crfreepct}} %</div>
+                        <div class="col-md-1  text-left ">
+                            <span class="{{dscicon(ln.tflow)}} w30 dp"></span>
+                            <span class="fas fa-wrench text-warning w20 hd" (click)="selgrid(ln)"></span>
+                            &nbsp;<span class="fas fa-hand-paper text-grey w30" *ngIf="ln.spcpicking == 1"> </span>
+                        </div>                        
+                    </div>
+                    </ng-scrollbar>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

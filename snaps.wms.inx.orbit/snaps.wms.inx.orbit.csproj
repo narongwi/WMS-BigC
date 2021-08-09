@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <StartupObject>snaps.wms.inx.orbit.Program</StartupObject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.ComponentModel.Annotations" Version="4.7.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.1.5" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
+    <PackageReference Include="Oracle.ManagedDataAccess.Core" Version="2.19.100" />
+    <ProjectReference Include="..\snaps.helpers.dbcontext.sqlserver\Snaps.Helpers.DbContext.SQLServer.csproj" />
+    <ProjectReference Include="..\snaps.helpers.hash\Snaps.Helpers.Hash.csproj" />
+    <ProjectReference Include="..\snaps.helpers.stringext\Snaps.Helpers.StringExt.csproj" />
+    <ProjectReference Include="..\snaps.wms.interface\snaps.wms.interface.csproj" />
+    <ProjectReference Include="..\snaps.wms.statistics\snaps.wms.statistics.csproj" />
+    <!-- <Reference Include="Snaps.Helpers.DbContext.SqlServer"> <HintPath>..\..\Snaps.Library\Snaps.Helpers.DbContext.SqlServer.dll</HintPath> </Reference>  -->
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="SnapsConfiguration.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+</Project>

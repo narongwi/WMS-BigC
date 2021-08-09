@@ -1,0 +1,153 @@
+<div class="row fn-07e fnb">
+
+    <div class="col-md-7 fnb fn ">
+        <span class="fn-palette-1">Master</span>&nbsp;<i class="fas fa-chevron-right fa-xs"></i>&nbsp;<span class="fn-palette-5"> Third party</span>
+    </div>
+
+    <div class="col-md-2 text-right">
+        <div class="d-grid gap-2">
+        
+            <ng-template #popContent>
+                <div  style="width:280px" class="fn fn-07e fnb">                                    
+
+                    <div class="row ln  pd-5 ">
+                        <div class="row ln pd-5">
+                            <div class="col-md-4 pdt-5">TH.Code</div>
+                            <div class="col-md-8">
+                                <input class="form-control form-control-sm  text-danger " type="text" placeholder="Third party code" [(ngModel)]="pm.thcode">
+                            </div>
+                        </div>
+
+                        <div class="row ln pd-5">
+                            <div class="col-md-4 pdt-5">Business type</div>
+                            <div class="col-md-8">
+                                <ng-select class="b text-danger"  class="custom custom-sm" bindLabel="desc" bindvalue="value" 
+                                [clearable]="true"  [(ngModel)]="slcbutype" [items]="msdbu" >
+                                <ng-template ng-label-tmp let-item="item"><span class="text-danger b">{{item.desc}}</span> </ng-template>
+                                <ng-template ng-option-tmp let-item="item"><span class="text-danger b">{{item.desc}}</span> </ng-template>
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="row ln pd-5">
+                            <div class="col-md-4 pdt-5">TH. Type</div>
+                            <div class="col-md-8">
+                                <ng-select class="b text-danger"  class="custom custom-sm" bindLabel="desc" bindvalue="value" 
+                                [clearable]="true"  [(ngModel)]="slcthtype" [items]="msdthtype" >
+                                <ng-template ng-label-tmp let-item="item"><span class="text-danger b">{{item.desc}}</span> </ng-template>
+                                <ng-template ng-option-tmp let-item="item"><span class="text-danger b">{{item.desc}}</span> </ng-template>
+                                </ng-select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row   pd-5">
+                        <div class="col-md-4">&nbsp;</div>
+                        <div class="col-md-8">
+                            <div class="d-grid gap-2">
+
+                                <button type="button" class="btn snaps-warning btn-block mp " (click)="fndthparty()">
+                                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-search" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z"/>
+                                        <path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>
+                                    </svg>
+                                    &nbsp;
+                                    Filter Third party
+                                </button>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ng-template>
+            <ng-template #popTitle >
+                <div style="width:280px">
+                    <span class="fn fn-08e fnb">Search parameter</span>
+                </div>
+            </ng-template>
+            <button type="button" class="btn btn-secondary snaps-btnblank fn-07e" placement="bottom" [autoClose]="'outside'" [ngbPopover]="popContent" [popoverTitle]="popTitle">
+                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-funnel-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.128.334L10 8.692V13.5a.5.5 0 0 1-.342.474l-3 1A.5.5 0 0 1 6 14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5v-2z"/>
+                </svg> Parameters
+            </button>
+
+        </div>
+    </div>
+
+    <div class="col-md-3 ">
+        <div class="input-group fnb">
+            <input class="form-control fn-07e fnb text-danger "
+             placeholder="Third party code or name" 
+             [(ngModel)]="pm.searchall">
+            <div class="input-group-append">
+            <button type="button" class="btn snaps-btngroup btn-prime " (click)="fndthparty()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                </svg>
+            </button>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+<div class="row fn-07e fnb pdt-10">
+    <div class="col-md-12">
+        <div class="lsset ">
+            <div class="head">
+                <div class="row mg-0 ln ">
+                    <div class="col-md-1 ">Business</div>
+                    <div class="col-md-1 ">Type</div>
+                    <div class="col-md-1 ">Code</div>
+                    <div class="col-md-2 ">Altername</div> 
+                    <div class="col-md-5 ">Name</div> 
+                    <div class="col-md-1 ">Group</div>
+                    <div class="col-md-1 ">State</div>
+                </div>
+            </div>
+        
+            <div class="line bgsub-head dgthirdparty ">
+                <ng-scrollbar>
+                <div class="row mg-0 ln " *ngFor="let ln of lsthparty  | slice: (page-1) * pageSize : page * pageSize | orderBy: lssort : lsreverse " >
+                    <div class="col-md-1">{{ln.thbutypename}}</div>
+                    <div class="col-md-1 text-primary">{{ln.thtypename}}</div>
+                    <div class="col-md-1 text-danger">{{ln.thcode}}</div>
+                    <div class="col-md-2">{{ln.thcodealt}}</div>
+                    <div class="col-md-5">{{ln.thnamealt}}</div>
+                    <div class="col-md-1">{{ln.thgroup}}</div>
+                    <div class="col-md-1" (click)="selthparty(ln)">
+                        <span class="fas " [ngClass]="{'fa-check-circle text-primary': ln.tflow == 'IO', 'fa-pause-circle text-danger': ln.tflow == 'XX' }"></span>
+                    </div>
+                </div>
+                </ng-scrollbar>
+            </div>
+
+            <div class="foot bgsub-head fnb pd-5">
+                <div class="row mg-0">
+                    <div class="col-md-2 pdt-5">
+                        Total &nbsp; &nbsp;<span class="text-danger">{{lsthparty.length}}</span> &nbsp; &nbsp; Third party
+                    </div>
+                    
+                    <div class="col-md-1 text-right lh-08e">
+                        <div class="fn-06e fnb text-danger">Row Limit</div>
+                        <div class="fn-06e">Per Page</div>
+                    </div>
+                    <div class="col-md-1">
+
+                        <ng-select class=" text-danger"  class="custom custom-sm" bindLabel="value" bindvalue="value" 
+                                    [clearable]="false"  [(ngModel)]="slrowlmt" [items]="lsrowlmt" (change)="changerowlmt()" >
+                            <ng-template ng-label-tmp let-item="item"><span class="text-danger b">{{item.value}}</span> </ng-template>
+                            <ng-template ng-option-tmp let-item="item"><span class="text-danger b">{{item.value}}</span> </ng-template>
+                        </ng-select>
+                    
+                    </div>
+                    <div class="col-md-5"></div>
+                    <div class="col-md-3">
+                        <ngb-pagination [(page)]="page" [pageSize]="pageSize" [collectionSize]="lsthparty.length" class="d-flex justify-content-end" ></ngb-pagination>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>

@@ -1,0 +1,373 @@
+<div class="bgsub-info fn fnb">
+    <div class="bgprime" style="height: 44px;background-color: #ffffff;border-bottom: 1px solid #e0e0e0;"> </div>
+    <div class="container">        
+        <div class="row " style="margin-top:-34px">
+            <ul ngbNav #nav="ngbNav" [(activeId)]="crtab" class="nav-tabs" [destroyOnHide]="false">
+                <li [ngbNavItem]="1">
+                  <a ngbNavLink class="fn fn-07e">Depot </a>
+                  <ng-template ngbNavContent>
+                    
+                    <div class="row  fn-07e">
+                        <div class="col-md-12">
+                            <div class="lsset  ">
+                                <div class="head">
+                                    <div class="row mg-0 ln ">
+                                        <div class="col-md-1 ">Site</div>
+                                        <div class="col-md-1 ">Code </div>
+                                        <div class="col-md-2 ">Alternate name </div>
+                                        <div class="col-md-5 ">Official name</div>
+                                        <div class="col-md-2 ">Start </div>
+                                        <div class="col-md-1 ">State</div>
+                                    </div>
+                                </div>
+                            
+                                <div class="line bgsub-head dgvalue ">
+                                    <div class="row mg-0 ln mpswitch " *ngFor="let ln of lsdepot" >
+                                        <div class="col-md-1 ">{{ln.sitecode}}</div>
+                                        <div class="col-md-1 ">{{ln.depotcode}}</div>
+                                        <div class="col-md-2 ">{{ln.depotnamealt}}</div>
+                                        <div class="col-md-5 ">{{ln.depotname}}</div>
+                                        <div class="col-md-1 ">{{ln.datestart | date : datestart}}</div>
+                                        <div class="col-md-1  text-center ">
+                                            <span class="{{ngDecIcon(ln.tflow)}} w20 dp"></span>
+                                            <span class="fas fa-wrench text-warning w20 hd" (click)="ngSelc(ln)"></span>
+                                            &nbsp;&nbsp;{{ngDecState(ln.tflow)}}
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <div class="col-md-6 pdt-10 pdr-5">
+                            <div class="lsset  ">
+                                <div class="head">
+                                    <div class="row mg-0 ln ">
+                                        <div class="col-md-6 ">Configuration</div>
+                                        <div class="col-md-6 tx-right">
+                                            <div class="mp" (click)="ngNew()"><i class="fas fa-plus-circle"></i>&nbsp;New Depot</div>              
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                                <div class="linebx bgsub-head dgline ">
+                                    <div class="row mg-0 ln " >
+                                        <div class="col-md-3 lh-07e">
+                                            <span class="text-danger fnb">Warehouse</span><br />
+                                            <span class="text-dark">of Depot</span>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <ng-select class=" "  class="custom custom-sm" bindLabel="desc" bindvalue="value" 
+                                                       [clearable]="false"  [(ngModel)]="slcwarehouse" [items]="lswarehouse" >
+                                                <ng-template ng-label-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                                                <ng-template ng-option-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                                            </ng-select>
+                                            <span class="text-danger fnb  " *ngIf="crdepot.siteid != 0 ">{{spcareadsc}}</span>
+                                        </div>
+                                    </div>
+                                    <div class="row mg-0 ln " >
+                                        <div class="col-md-3 lh-07e">
+                                            <span class="text-danger fnb">Operate</span><br />
+                                            <span class="text-dark">of Depot</span>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <ng-select class=" "  class="custom custom-sm" bindLabel="desc" bindvalue="value" 
+                                                       [clearable]="false"  [(ngModel)]="slcopstype" [items]="msdopstype" >
+                                                <ng-template ng-label-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                                                <ng-template ng-option-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                                            </ng-select>
+                                            <span class="text-danger fnb  " *ngIf="crdepot.siteid != 0 ">{{spcareadsc}}</span>
+                                        </div>
+                                    </div>
+                                    <div class="row mg-0 ln " >
+                                        <div class="col-md-3 lh-07e">
+                                            <span class="text-danger fnb">Depot code</span><br />
+                                            <span class="text-dark">of warehouse</span>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <span class="text-danger fnb pdt-5" *ngIf="crdepot.tflow != 'NW'">{{crdepot.depotcode}}</span>                                           
+                                            <input class="form-control form-control-sm text-danger fnb " type="text" placeholder=""  [(ngModel)]="crdepot.depotcode" *ngIf="crdepot.tflow == 'NW'">                                            
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row mg-0 ln " >
+                                        <div class="col-md-3 lh-08e">
+                                            <span class="text-danger fnb">Official name</span><br />
+                                            <span class="text-dark">of Depot </span>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <input class="form-control form-control-sm text-danger fnb " type="text" placeholder=""  [(ngModel)]="crdepot.depotname">
+                                        </div>
+                                    </div>
+                                    <div class="row mg-0 ln " >
+                                        <div class="col-md-3 lh-07e">
+                                            <span class="text-danger fnb">Alternate name</span><br />
+                                            <span class="text-dark">of Depot </span>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <input class="form-control form-control-sm text-danger fnb " type="text" placeholder=""  [(ngModel)]="crdepot.depotnamealt">
+                                        </div>
+                                    </div>
+                                    <div class="row mg-0 ln " >
+                                        <div class="col-md-3 lh-07e">
+                                            <span class="text-danger fnb">Code</span><br />
+                                            <span class="text-dark">Authorize</span>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <input class="form-control form-control-sm text-danger fnb " type="text" placeholder=""  [(ngModel)]="crdepot.authcode">
+                                        </div>
+                                    </div>
+                                    <div class="row mg-0 ln " >
+                                        <div class="col-md-3 lh-07e">
+                                            <span class="text-danger fnb">Digit</span><br />
+                                            <span class="text-dark">Authorize</span>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <input class="form-control form-control-sm text-danger fnb " type="text" placeholder=""  [(ngModel)]="crdepot.authdigit">
+                                        </div>
+                                    </div>
+                                    <div class="row mg-0 ln " >
+                                        <div class="col-md-3 lh-07e">
+                                            <span class="text-danger fnb">Date</span><br />
+                                            <span class="text-dark">Authorize</span>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="input-group">
+                                                <input  class="form-control text-danger fnb"name="dp" ngbDatepicker #dateauth="ngbDatepicker"  placeholder="{{dateformat}}"
+                                                        [(ngModel)]="crdepot.authdate">
+                                                <div class="input-group-append">
+                                                <button type="button" class="btn snaps-btngroup btn-prime" (click)="dateauth.toggle()" >
+                                                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-calendar-date" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                    <path fill-rule="evenodd" d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"></path>
+                                                    <path d="M6.445 11.688V6.354h-.633A12.6 12.6 0 0 0 4.5 7.16v.695c.375-.257.969-.62 1.258-.777h.012v4.61h.675zm1.188-1.305c.047.64.594 1.406 1.703 1.406 1.258 0 2-1.066 2-2.871 0-1.934-.781-2.668-1.953-2.668-.926 0-1.797.672-1.797 1.809 0 1.16.824 1.77 1.676 1.77.746 0 1.23-.376 1.383-.79h.027c-.004 1.316-.461 2.164-1.305 2.164-.664 0-1.008-.45-1.05-.82h-.684zm2.953-2.317c0 .696-.559 1.18-1.184 1.18-.601 0-1.144-.383-1.144-1.2 0-.823.582-1.21 1.168-1.21.633 0 1.16.398 1.16 1.23z"></path>
+                                                    </svg>
+                                                </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="row mg-0 ln " >
+                                        <div class="col-md-3 lh-07e pdt-5">
+                                            <span class="text-danger fnb">Start date</span><br />
+                                            <span class="text-dark">of Depot</span>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="input-group">
+                                                <input  class="form-control text-danger fnb"name="dp" ngbDatepicker #datestart="ngbDatepicker"  placeholder="{{dateformat}}"
+                                                        [(ngModel)]="crdepot.datestart">
+                                                <div class="input-group-append">
+                                                <button type="button" class="btn snaps-btngroup btn-prime" (click)="datestart.toggle()" >
+                                                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-calendar-date" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                    <path fill-rule="evenodd" d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"></path>
+                                                    <path d="M6.445 11.688V6.354h-.633A12.6 12.6 0 0 0 4.5 7.16v.695c.375-.257.969-.62 1.258-.777h.012v4.61h.675zm1.188-1.305c.047.64.594 1.406 1.703 1.406 1.258 0 2-1.066 2-2.871 0-1.934-.781-2.668-1.953-2.668-.926 0-1.797.672-1.797 1.809 0 1.16.824 1.77 1.676 1.77.746 0 1.23-.376 1.383-.79h.027c-.004 1.316-.461 2.164-1.305 2.164-.664 0-1.008-.45-1.05-.82h-.684zm2.953-2.317c0 .696-.559 1.18-1.184 1.18-.601 0-1.144-.383-1.144-1.2 0-.823.582-1.21 1.168-1.21.633 0 1.16.398 1.16 1.23z"></path>
+                                                    </svg>
+                                                </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mg-0 ln " >
+                                        <div class="col-md-3 lh-07e pdt-5">
+                                            <span class="text-danger fnb">Last date</span><br />
+                                            <span class="text-dark">of Depot</span>
+                                        </div>
+                                        <div class="col-md-6"> 
+                                            <div class="input-group">
+                                                <input  class="form-control text-danger fnb"name="dp" ngbDatepicker #dateend="ngbDatepicker"  placeholder="{{dateformat}}"
+                                                        [(ngModel)]="crdepot.dateend">
+                                                <div class="input-group-append">
+                                                <button type="button" class="btn snaps-btngroup btn-prime" (click)="dateend.toggle()" >
+                                                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-calendar-date" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                    <path fill-rule="evenodd" d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"></path>
+                                                    <path d="M6.445 11.688V6.354h-.633A12.6 12.6 0 0 0 4.5 7.16v.695c.375-.257.969-.62 1.258-.777h.012v4.61h.675zm1.188-1.305c.047.64.594 1.406 1.703 1.406 1.258 0 2-1.066 2-2.871 0-1.934-.781-2.668-1.953-2.668-.926 0-1.797.672-1.797 1.809 0 1.16.824 1.77 1.676 1.77.746 0 1.23-.376 1.383-.79h.027c-.004 1.316-.461 2.164-1.305 2.164-.664 0-1.008-.45-1.05-.82h-.684zm2.953-2.317c0 .696-.559 1.18-1.184 1.18-.601 0-1.144-.383-1.144-1.2 0-.823.582-1.21 1.168-1.21.633 0 1.16.398 1.16 1.23z"></path>
+                                                    </svg>
+                                                </button>
+                                                </div>
+                                            </div>                                     
+                                        </div>
+                                    </div>
+                    
+                                    
+                    
+                                    <div class="row mg-0 ln">
+                                        <div class="col-md-3 lh-07e ">
+                                            <span class="text-danger fnb">State</span><br />
+                                            <span class="text-dark">of Depot </span>
+                                        </div>
+                                        <div class="col-md-2 text-center">
+                                            <ui-switch checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" [(ngModel)]="crstate" ></ui-switch></div>
+                                    </div>
+
+                                    <div class="row mg-0 ln">
+                                        <div class="col-md-6">
+                                            <button type="button" class="btn snaps-danger btn-block mp" (click)="ngRemove()" *ngIf="crstate == false">
+                                                <i class="fas fa-times-circle"></i>&nbsp;Delete Depot
+                                            </button>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <button type="button" class="btn snaps-primary btn-block mp" (click)="validate()">
+                                                <i class="fas fa-check-circle"></i>&nbsp;Save Depot
+                                            </button>
+                                        </div>
+                                    </div>
+                    
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 pdt-10 pdl-5">
+                            <div class="lsset  ">
+                                <div class="head">
+                                    <div class="row mg-0 ln ">
+                                        <div class="col-md-12 ">Configuration</div>
+                                    </div>
+                                </div>
+                            
+                                <div class="linebx bgsub-head dgline">
+
+                                    <div class="row mg-0 ln " >
+                                        <div class="col-md-3 lh-07e pdt-5">
+                                            <span class="text-danger fnb">VAT Code</span><br />
+                                            <span class="text-dark">of depot</span>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <input class="form-control form-control-sm text-danger fnb " type="text" placeholder=""  [(ngModel)]="craddress.vatcode">                                            
+                                        </div>
+                                    </div>
+                    
+                                    <div class="row mg-0 ln " >
+                                        <div class="col-md-3 lh-07e pdt-3">
+                                            <span class="text-danger fnb ">House No</span><br />
+                                            <span class="text-dark">of depot</span>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <input class="form-control form-control-sm text-danger fnb " type="text" placeholder=""  [(ngModel)]="craddress.addressln1">  
+                                        </div>
+                                    </div>
+                        
+                                    <div class="row mg-0 ln " >
+                                        <div class="col-md-3 lh-07e pdt-3">
+                                            <span class="text-danger fnb ">Villeage name</span><br />
+                                            <span class="text-dark">of depot </span>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <input class="form-control form-control-sm text-danger fnb " type="text" placeholder=""  [(ngModel)]="craddress.addressln2"> 
+                                        </div>
+                                    </div>
+                        
+                                    <div class="row mg-0 ln " >
+                                        <div class="col-md-3 lh-07e pdt-3">
+                                            <span class="text-danger fnb ">Sub district</span><br />
+                                            <span class="text-dark">of depot</span>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <input class="form-control form-control-sm text-danger fnb " type="text" placeholder=""  [(ngModel)]="craddress.subdistrict"> 
+                                        </div>
+                                    </div>
+                        
+                                    <div class="row mg-0 ln " >
+                                        <div class="col-md-3 lh-07e pdt-3">
+                                            <span class="text-danger fnb ">City</span><br />
+                                            <span class="text-dark">of depot</span>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <input class="form-control form-control-sm text-danger fnb " type="text" placeholder=""  [(ngModel)]="craddress.city"> 
+                                        </div>
+                                    </div>
+                        
+                                    <div class="row mg-0 ln " >
+                                        <div class="col-md-3 lh-07e pdt-3">
+                                            <span class="text-danger fnb ">Country</span><br />
+                                            <span class="text-dark">of depot</span>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <input class="form-control form-control-sm text-danger fnb " type="text" placeholder=""  [(ngModel)]="craddress.country"> 
+                                        </div>
+                                    </div>
+                        
+                                    <div class="row mg-0 ln " >
+                                        <div class="col-md-3 lh-07e pdt-3">
+                                            <span class="text-danger fnb ">Region</span><br />
+                                            <span class="text-dark">of depot</span>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <input class="form-control form-control-sm text-danger fnb " type="text" placeholder=""  [(ngModel)]="craddress.region"> 
+                                        </div>
+                                    </div>
+                        
+                                    <div class="row mg-0 ln " >
+                                        <div class="col-md-3 lh-07e pdt-3">
+                                            <span class="text-danger fnb ">Post code</span><br />
+                                            <span class="text-dark">of depot</span>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <input class="form-control form-control-sm text-danger fnb " type="text" placeholder=""  [(ngModel)]="craddress.postcode">                                             
+                                        </div>
+                                    </div>
+
+                                    <div class="row mg-0 ln " >
+                                        <div class="col-md-3 lh-07e">
+                                            <span class="text-danger fnb">Weight unit</span><br />
+                                            <span class="text-dark">of Depot</span>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <ng-select class=" "  class="custom custom-sm" bindLabel="desc" bindvalue="value" 
+                                                       [clearable]="false"  [(ngModel)]="slunitweight" [items]="lsunitweight" >
+                                                <ng-template ng-label-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                                                <ng-template ng-option-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                                            </ng-select>
+                                            <span class="text-danger fnb  " *ngIf="crdepot.siteid != 0 ">{{spcareadsc}}</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mg-0 ln " >
+                                        <div class="col-md-3 lh-07e">
+                                            <span class="text-danger fnb">Dimension unit</span><br />
+                                            <span class="text-dark">of Depot</span>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <ng-select class=" "  class="custom custom-sm" bindLabel="desc" bindvalue="value" 
+                                                       [clearable]="false"  [(ngModel)]="slunitdimension" [items]="lsunitdimension" >
+                                                <ng-template ng-label-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                                                <ng-template ng-option-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                                            </ng-select>
+                                            <span class="text-danger fnb  " *ngIf="crdepot.siteid != 0 ">{{spcareadsc}}</span>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="row mg-0 ln " >
+                                        <div class="col-md-3 lh-07e">
+                                            <span class="text-danger fnb">Volume unit</span><br />
+                                            <span class="text-dark">of Depot</span>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <ng-select class=" "  class="custom custom-sm" bindLabel="desc" bindvalue="value" 
+                                                       [clearable]="false"  [(ngModel)]="slunitvolume" [items]="lsunitvolume" >
+                                                <ng-template ng-label-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                                                <ng-template ng-option-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                                            </ng-select>
+                                            <span class="text-danger fnb  " *ngIf="crdepot.siteid != 0 ">{{spcareadsc}}</span>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        
+                        </div>
+                    </div>
+                    
+
+                  </ng-template>
+                </li>
+              </ul>
+              
+              <div [ngbNavOutlet]="nav" class="mt-2"></div>
+
+        </div>
+    </div>
+</div>
+

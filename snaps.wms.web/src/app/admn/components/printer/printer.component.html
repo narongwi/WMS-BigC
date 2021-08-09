@@ -1,0 +1,98 @@
+<div class="bgsub-info">
+    <div class="bgprime" style="height: 44px;background-color: #ffffff;border-bottom: 1px solid #e0e0e0;"> </div>
+    <div class="container">        
+        <div class="row " style="margin-top:-34px">
+            <ul ngbNav #nav="ngbNav" [(activeId)]="crtab" class="nav-tabs" [destroyOnHide]="false">
+                <li [ngbNavItem]="1">
+                  <a ngbNavLink class="w150 fn fn-07e">Printer management</a>
+                  <ng-template ngbNavContent>
+                    <div class="row">
+                        <div class="col-md-8"> 
+                            <div class="row mg-0 pd-5">
+                                <div class="col-md-6 fnb ">
+                                    <span class="fn-palette-1">Account</span>&nbsp;
+                                </div>
+                                <div class="col-md-3">
+                                    <ng-select class="custom fn-07e" bindLabel="desc" bindvalue="value" 
+                                            [compareWith]="ngSelcompare" [clearable]="true"  [(ngModel)]="slcstate" [items]="lsacnstate" >
+                                        <ng-template ng-label-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                                        <ng-template ng-option-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                                    </ng-select>
+                                </div>
+                                <div class="col-md-3">                            
+                                    <div class="input-group fnb">
+                                        <input class="form-control fn-07e fnb text-danger " placeholder="Account code or name" [(ngModel)]="pmaccn.accnname" >
+                                        <div class="input-group-append">
+                                        <button type="button" class="btn snaps-btngroup btn-prime " (click)="fndaccn();" >
+                                            <i class="fas fa-search fa-sm"></i>
+                                        </button>
+                                        </div>
+                                    </div>                            
+                                </div>
+                            </div>
+
+                            <div class="lsset fn-07e fnb ">
+                                <div class="head">
+                                    <div class="row mg-0 ln ">
+                                        <div class="col-md-3">Account </div>
+                                        <div class="col-md-6">Name </div>
+                                        <div class="col-md-3">Status </div>
+                                    </div>
+                                </div>
+                                <div class="line bgsub-head dgaccn ">
+                                    <ng-scrollbar>                                    
+                                        <accn-list [item]="ln" [iconstate]="ngDecIcon(ln.tflow)" [descstate]="ngDecState(ln.tflow)" class="row mg-0 pd-5 ln" 
+                                        *ngFor="let ln of lsaccn;let i=index" [class.row-active]="i==accselect" (click)="accnget(ln,i)" ></accn-list>                                     
+                                    </ng-scrollbar>
+                                </div>
+                                <div class="foot bgsub-head fnb pd-5">
+                                    <div class="row mg-0">
+                                        <div class="col-md-2 pdt-5">
+                                            Total &nbsp; &nbsp;<span class="text-danger">{{lsaccn.length | number }}</span> &nbsp; &nbsp; Account
+                                        </div>                                       
+                                        <div class="col-md-1 tx-right lh-07e">
+                                            <div class="fn-06e fnb text-danger">Rows</div>
+                                            <div class="fn-06e">Per Page</div>
+                                        </div>
+                                        <div class="col-md-2">                    
+                                            <ng-select class=" text-danger"  class="custom custom-sm" bindLabel="value" bindvalue="value" 
+                                                        [clearable]="false"  [(ngModel)]="pageSize" [items]="lsrowlmt" [compareWith]="ngSelcompare" >
+                                                <ng-template ng-label-tmp let-item="item"><span class="text-danger b">{{item.value}}</span> </ng-template>
+                                                <ng-template ng-option-tmp let-item="item"><span class="text-danger b">{{item.value}}</span> </ng-template>
+                                            </ng-select>
+                                        
+                                        </div>
+                                        <div class="col-md-7 tx-right">
+                                            <ngb-pagination [(page)]="page" [pageSize]="pageSize" [collectionSize]="lsaccn.length" class="d-flex justify-content-end" ></ngb-pagination>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>                            
+                        </div>
+                    
+                        <div class="col-md-4">
+                            <app-option [mdaccn]="mdaccn" [lsrole]="lsrole" [lsacnstate]="lsacnstate" [lstype]="lstype" refresh="refresh($event)"></app-option>
+                        </div>
+
+                    </div>
+                  </ng-template>
+                </li>
+
+              </ul>
+              
+              <div [ngbNavOutlet]="nav" class="mt-2"></div>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+

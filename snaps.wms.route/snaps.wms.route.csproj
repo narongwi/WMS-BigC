@@ -1,0 +1,47 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    
+    <RootNamespace>Snaps.WMS.Route</RootNamespace>
+    <Product>Snaps.WMS.Route</Product>
+    <Description>Route managment </Description>
+    
+    <Version>1.0.0.1</Version>
+    <AssemblyVersion>1.0.0.1</AssemblyVersion>
+    <FileVersion>1.0.0.1</FileVersion>
+
+    <TargetFramework>netstandard2.1</TargetFramework>
+	<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+
+    <Authors>Sitthinun Muangthai</Authors>
+    <Company>Snaps Solutions Co,Ltd.</Company> 
+    <Copyright>Snaps Solution @ 2020+</Copyright>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DebugType Condition=" '$(Configuration)' == 'Release' ">None</DebugType>
+    <GenerateDependencyFile Condition=" '$(GenerateDependencyFile)' == '' ">None</GenerateDependencyFile> 
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>    
+    <OutputPath Condition="'$(OutputPath)'=='' ">..\..\Snaps.Library\</OutputPath>
+  </PropertyGroup>
+
+  <ItemGroup> 
+    <ProjectReference Include="..\snaps.helpers.dbcontext.sqlserver\Snaps.Helpers.DbContext.SQLServer.csproj" /> 
+    <ProjectReference Include="..\snaps.helpers.hash\Snaps.Helpers.Hash.csproj" /> 
+    <ProjectReference Include="..\snaps.helpers.stringext\Snaps.Helpers.StringExt.csproj" />
+    <!-- <Reference Include="Snaps.WMS.inventory"> <HintPath>..\..\Snaps.Library\snaps.wms.inventory.dll</HintPath> </Reference> -->
+    <ProjectReference Include="..\snaps.wms.interface\snaps.wms.interface.csproj" />
+    <ProjectReference Include="..\snaps.wms.outbound\snaps.wms.outbound.csproj" />
+    <ProjectReference Include="..\snaps.wms.parameter\snaps.wms.parameter.csproj" /> 
+    <ProjectReference Include="..\snaps.wms.statistics\snaps.wms.statistics.csproj" />   
+    <ProjectReference Include="..\snaps.wms.sequence\snaps.wms.sequence.csproj" />
+    <ProjectReference Include="..\snaps.wms.inventory\snaps.wms.inventory.csproj" />   
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.ComponentModel.Annotations" Version="4.7.0" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
+  </ItemGroup>
+
+
+</Project>

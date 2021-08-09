@@ -1,0 +1,38 @@
+
+<div class="bgsub-info">
+    <div class="bgprime" style="height: 44px;background-color: #ffffff;border-bottom: 1px solid #e0e0e0;"> </div>
+    <div class="container">        
+        <div class="row " style="margin-top:-34px">
+            <ul ngbNav #nav="ngbNav" [(activeId)]="crtab" class="nav-tabs" [destroyOnHide]="false">
+                <li [ngbNavItem]="1">
+                  <a ngbNavLink class="w150 fn fn-07e">Selection order</a>
+                  <ng-template ngbNavContent>
+                    <appoub-processstock-selection #chselection 
+                    (refreshdata)="refresh($event)"
+                    (selectOrder)="selorder($event)"
+                    ></appoub-processstock-selection>
+                  </ng-template>
+                </li>
+
+
+                <li [ngbNavItem]="2">
+                    <a ngbNavLink class="w150 fn fn-07e">Process order</a>
+                    <ng-template ngbNavContent>
+                        <appoub-processstock-operate #choperate (selecProcess)="selecprocess($event)"></appoub-processstock-operate>
+                    </ng-template>
+                </li>
+
+                <li [ngbNavItem]="3">
+                    <a ngbNavLink class="w150 fn fn-07e">Process summary</a>
+                    <ng-template ngbNavContent>
+                        <appoub-processstock-summary #chsummary (processFinish)="processFinish($event)"></appoub-processstock-summary>
+                    </ng-template>
+                </li>
+              </ul>
+              
+              <div [ngbNavOutlet]="nav" class="mt-2"></div>
+
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,86 @@
+<div class="row">
+    <div class="col-md-10 fnb fn pdt-5">
+        <span class="fn-palette-1">Process</span>&nbsp;<i class="fas fa-chevron-right fa-xs"></i>&nbsp;<span class="fn-palette-5"> Distribution</span>&nbsp;<i class="fas fa-chevron-right fa-xs"></i>&nbsp;<span class="text-muted"> Summary</span>
+    </div>
+    <div class="col-md-2 text-right">
+        <button type="button" class="btn btn-succedd snaps-warning fn-07e " placement="bottom"(click)="launchprocess()" *ngIf="isonProcess==0">
+            <i class="fas fa-check-circle fa-lg"></i>&nbsp;&nbsp;                
+            Generate plan
+        </button>
+
+        <div style="width: 200px; height: 30px; margin: 0 0 0 -100px;" *ngIf="isonProcess==1">  
+            <img src="../../../../assets/loading.svg#svgView(viewBox(-16, 125, 180, 8))" > 
+            <!-- <div class="loadingio-spinner-ellipsis-x7yu2aq6ze">
+                <div class="ldio-c4z2jl8vtf">
+                <div></div><div></div><div></div><div></div><div></div>
+                </div>
+            </div> -->
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 pdt-10">
+        <div class="lsset fn-07e "> 
+            <div class="head">
+                <div class="row mg-0 ln ">
+                    <div class="col-md-1 ">Customer</div> 
+                    <div class="col-md-1 ">Route</div>  
+                    <div class="col-md-1 ">Order</div>                            
+                    <div class="col-md-1 ">Product</div>
+                    <div class="col-md-3 ">Description</div> 
+                    <div class="col-md-1 ">Unit</div> 
+                    <div class="col-md-1 ">Req.process</div>                          
+                    <div class="col-md-1 ">Res.process</div>
+                    <div class="col-md-1 ">Result</div>
+                </div>
+            </div>
+
+            <div class="line bgsub-head fn-07e dgsummary ">
+                <ng-scrollbar>
+                    <div class="row mg-0 ln fnb" *ngFor="let ln of proc.orders| slice: (page-1) * pageSize : page * pageSize | orderBy: lssort : lsreverse " >
+                        <div class="col-md-1 ">{{ln.thcode}}</div>
+                        <div class="col-md-1 ">{{ln.routeno}}</div>
+                        <div class="col-md-1 text-danger">{{ln.ouorder}}</div>
+                        <div class="col-md-1 fn-palette-1">{{ln.article}}</div>  
+                        <div class="col-md-3 ">{{ln.description}}</div>
+                        <div class="col-md-1 text-center ">{{ln.unitprep}}</div>
+                        <div class="col-md-1 tx-right text-danger">{{ln.qtyreqpu}}</div>
+                        <div class="col-md-1 tx-right text-primary">{{ln.qtypuops}}</div>
+                        <div class="col-md-2 text-truncate" title="{{ngDecStr(ln.tflow,ln.errmsg)}}">
+                            <span class="fa {{ngDecIcon(ln.tflow)}}"></span>&nbsp;{{ngDecStr(ln.tflow,ln.errmsg)}}
+                        </div>
+                    </div>
+                </ng-scrollbar>
+            </div>
+            <div class="foot bgsub-head fnb pd-5">
+                <div class="row mg-0">
+                    <div class="col-md-2 pdt-5">
+                        Total &nbsp; &nbsp;<span class="text-danger">{{proc.orders.length}}</span> &nbsp; &nbsp; Orders
+                    </div>
+                    <div class="col-md-5"></div>
+                    <div class="col-md-1 text-right lh-08e">
+                        <div class="fn-06e fnb text-danger">Row Limit</div>
+                        <div class="fn-06e">Per Page</div>
+                    </div>
+                    <div class="col-md-1">
+
+                        <ng-select class=" text-danger"  class="custom custom-sm" bindLabel="value" bindvalue="value" 
+                                    [clearable]="false"  [(ngModel)]="slrowlmt" [items]="lsrowlmt" (change)="changerowlmt()" >
+                            <ng-template ng-label-tmp let-item="item"><span class="text-danger b">{{item.value}}</span> </ng-template>
+                            <ng-template ng-option-tmp let-item="item"><span class="text-danger b">{{item.value}}</span> </ng-template>
+                        </ng-select>
+                    
+                    </div>
+                    <div class="col-md-3">
+                        <ngb-pagination [(page)]="page" [pageSize]="pageSize" [collectionSize]="proc.orders.length" class="d-flex justify-content-end" ></ngb-pagination>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+</div>
+

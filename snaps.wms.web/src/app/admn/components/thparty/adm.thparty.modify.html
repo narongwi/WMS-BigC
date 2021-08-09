@@ -1,0 +1,348 @@
+<div class="row fn-07e fnb pdt-10 ">
+    <div class="col-md-5">
+        <div class="lsset  ">
+            <div class="head">
+                <div class="row mg-0 ln ">
+                    <div class="col-md-8 ">Configuration</div>
+                    <div class="col-md-4 ">
+                        <span class=" mp" (click)="newthparty()">
+                            <i class="fas fa-plus-square text-primary"></i>&nbsp;
+                            New thparty
+                        </span>
+                        
+                    </div>
+                </div>
+            </div>
+    
+            <div class="line bgsub-head dgthparty">
+                <div class="row mg-0 ln " >
+                    <div class="col-md-3">
+                        <span class=" ">Site </span>
+                    </div>
+                    <div class="col-md-3">
+                        <span class="text-danger  ">{{crthparty.site}}</span>
+                    </div>
+
+                    <div class="col-md-3">
+                        <span class=" ">Depot</span>
+                    </div>
+                    <div class="col-md-3">
+                        <span class="text-danger  ">{{crthparty.depot}}</span>
+                    </div>
+
+                </div>
+                <div class="row mg-0 ln " >
+                    <div class="col-md-5 lh-07e tx-overflow">
+                        <span class="  ">Business</span>&nbsp;<span class="text-danger">*</span><br />
+                        <span class="tx-mute fnnb">Type</span>
+                    </div>
+                    <div class="col-md-7">
+                        <ng-select class=" "  class="custom custom-sm" bindLabel="desc" bindvalue="value" 
+                                   [clearable]="false"  [(ngModel)]="slcbutype" [items]="msdbu" (change)="ngselcbutype()" >
+                            <ng-template ng-label-tmp let-item="item"><span class="text-danger ">{{item.desc}}</span> </ng-template>
+                            <ng-template ng-option-tmp let-item="item"><span class="text-danger ">{{item.desc}}</span> </ng-template>
+                        </ng-select>
+                        <span class="text-danger  fn-1e1 " *ngIf="crthparty.tflow != 'NW'">{{spcareadsc}}</span>
+                    </div>
+                </div>
+                <div class="row mg-0 ln " >
+                    <div class="col-md-5 lh-07e tx-overflow">
+                        <span class="  ">Sub type</span>&nbsp;<span class="text-danger">*</span><br />
+                        <span class="tx-mute fnnb">of </span>
+                    </div>
+                    <div class="col-md-7">
+                        <ng-select class=" "  class="custom" bindLabel="desc" bindvalue="value" 
+                                   [clearable]="false"  [(ngModel)]="slcthtype" [items]="msdtype" >
+                            <ng-template ng-label-tmp let-item="item"><span class="text-danger ">{{item.desc}}</span> </ng-template>
+                            <ng-template ng-option-tmp let-item="item"><span class="text-danger ">{{item.desc}}</span> </ng-template>
+                        </ng-select>
+                        <span class="text-danger  fn-1e1 " *ngIf="crthparty.tflow != 'NW'">{{spcareadsc}}</span>
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln " >
+                    <div class="col-md-3 lh-07e pdt-3">
+                        <span class=" ">Code</span><br />
+                        <span class="tx-mute fnnb">Offical code</span>
+                    </div>
+                    <div class="col-md-3 fnb fn-1e15 text-danger pdt-3"> {{crthparty.thcode}} </div>
+
+                    <div class="col-md-3 lh-07e pdt-3">
+                        <span class=" ">Internal Code</span><br />
+                        <span class="tx-mute fnnb">Internal code</span>
+                    </div>
+                    <div class="col-md-3">
+                        <input class="form-control form-control-xs text-danger fnb" type="text" placeholder="Product code" [(ngModel)]="crthparty.thcodealt" >
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln " >
+                    <div class="col-md-3 lh-07e pdt-3">
+                        <span class=" ">Group</span><br />
+                        <span class="tx-mute fnnb">of THParty</span>
+                    </div>
+                    <div class="col-md-3">
+                        <input class="form-control form-control-xs text-danger fnb " type="text" placeholder="" [(ngModel)]="crthparty.thgroup" [disabled]="!allowchangeofexsource">
+                    </div>
+
+                    <div class="col-md-3 lh-07e pdt-3">
+                        <span class=" ">Plan delivery</span><br />
+                        <span class="tx-mute fnnb">of THParty</span>
+                    </div>
+                    <div class="col-md-3">
+                        <input class="form-control form-control-xs text-danger fnb " type="text" placeholder="" [(ngModel)]="crthparty.plandelivery" [disabled]="!allowchangeplandate">
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln " >
+                    <div class="col-md-6 lh-07e pdt-3">
+                        <span class=" ">Default Inbound staging</span> &nbsp;<span class="text-danger">*</span><br />
+                        <span class="tx-mute fnnb">of THParty</span>
+                    </div>
+                    <div class="col-md-6">
+                        <ng-select class=" "  class="custom custom-sm" bindLabel="desc" bindvalue="value" 
+                                   [clearable]="false"  [(ngModel)]="slstaginb" [items]="lsstaginb" >
+                            <ng-template ng-label-tmp let-item="item"><span class="text-danger ">{{item.desc}}</span> </ng-template>
+                            <ng-template ng-option-tmp let-item="item"><span class="text-danger ">{{item.desc}}</span> </ng-template>
+                        </ng-select>
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln " >
+                    <div class="col-md-6 lh-07e pdt-3">
+                        <span class=" ">Default Outbound staging</span>&nbsp;<span class="text-danger">*</span><br />
+                        <span class="tx-mute fnnb">of THParty</span>
+                    </div>
+                    <div class="col-md-6">
+                        <ng-select class=" "  class="custom custom-sm" bindLabel="desc" bindvalue="value" 
+                                [clearable]="false"  [(ngModel)]="slstagoub" [items]="lsstagoub" >
+                        <ng-template ng-label-tmp let-item="item"><span class="text-danger ">{{item.desc}}</span> </ng-template>
+                        <ng-template ng-option-tmp let-item="item"><span class="text-danger ">{{item.desc}}</span> </ng-template>
+                        </ng-select>
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln " >
+                    <div class="col-md-6 lh-07e pdt-3">
+                        <span class=" ">Travelling time </span><br />
+                        <span class="tx-mute fnnb">of THParty</span>
+                    </div>
+                    <div class="col-md-4 tx-center">
+                        <input class="form-control form-control-xs text-danger fnb " type="text" placeholder="" [(ngModel)]="crthparty.traveltime" [disabled]="!allowchangeofexsource">
+                    </div>
+                    <div class="col-md-2 tx-center pdt-3 tx-overflow">
+                        <span class=" ">Minutes</span>
+                    </div>
+                </div>
+
+
+                <div class="row mg-0 ln " >
+                    <div class="col-md-6 lh-07e pdt-3">
+                        <span class=" ">Window time for Preparation</span><br />
+                        <span class="tx-mute fnnb">of THParty</span>
+                    </div>
+                    <div class="col-md-3">
+                        <input class="form-control form-control-xs text-danger fnb " type="text" placeholder="From time" [disabled]="!allowchangeofexsource">
+                    </div>
+
+                    <div class="col-md-3">
+                        <input class="form-control form-control-xs text-danger fnb " type="text" placeholder="To time" [disabled]="!allowchangeofexsource">
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln " >
+                    <div class="col-md-6 lh-07e pdt-3">
+                        <span class=" ">Window time for Delivery</span><br />
+                        <span class="tx-mute fnnb">of THParty</span>
+                    </div>
+                    <div class="col-md-3">
+                        <input class="form-control form-control-xs text-danger fnb " type="text" placeholder="From time" [disabled]="!allowchangeofexsource">
+                    </div>
+
+                    <div class="col-md-3">
+                        <input class="form-control form-control-xs text-danger fnb " type="text" placeholder="To time" [disabled]="!allowchangeofexsource">
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln">
+                    <div class="col-md-5 lh-07e ">
+                        <span class="    pdt-3">State</span><br />
+                        <span class="tx-mute fnnb">of THParty </span>
+                    </div>
+                    <div class="col-md-3 text-center">
+                        <ui-switch checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" [(ngModel)]="crstate" [disabled]="!allowchangestate"></ui-switch>
+                    </div>
+                </div>
+    
+                <div class="row mg-0 ln">
+                    <div class="col-md-5 lh-07e pdt-5">
+                        <span class="text-danger">{{crthparty.orgcode}}-{{crthparty.site}}-{{crthparty.depot}}-{{crthparty.thcode}}</span><br />
+                        <span class="tx-mute fnnb">of THParty</span>
+                    </div>
+                    <div class="col-md-7">
+                        <button type="button" class="btn snaps-primary btn-xs btn-block mp" (click)="validate()">
+                            <i class="fas fa-check-circle fa-lg"></i>
+                            &nbsp;
+                           Validate third party 
+                        </button>
+                    </div>
+                </div>
+    
+                
+    
+                <div class="row mg-0 ln" >
+                    <div class="col-md-5 lh-07e">
+                        <span class="tx-mute fnnb "></span>Last modify<br />
+                        <span class="tx-mute fnnb">Account & date </span>
+                    </div>
+                    <div class="col-md-7 lh-07e fn-06e">
+                        <span class="fnb text-danger">{{crthparty.accnmodify}}</span><br />
+                        <span class="tx-mute fnnb">{{crthparty.datemodify | date : formatdate }}</span>
+                    </div>
+                </div>
+    
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-7 fnb">
+        <div class="lsset ">
+            <div class="head">
+                <div class="row mg-0 ln ">
+                    <div class="col-md-12 ">Address Infomation</div>
+                </div>
+            </div>
+        
+            <div class="line bgsub-head dgthparty">
+    
+                <div class="row mg-0 ln " >
+                    <div class="col-md-3 lh-07e pdt-3">
+                        <span class=" ">Official name</span><br />
+                    </div>
+                    <div class="col-md-9 text-danger"> {{crthparty.thname}} </div>
+                </div>
+    
+                <div class="row mg-0 ln " >
+                    <div class="col-md-3 lh-07e pdt-3">
+                        <span class=" ">Alternate name</span>
+                    </div>
+                    <div class="col-md-9">
+                        <div class="col-md-9 text-danger"> {{crthparty.thnamealt}} </div>
+                    </div>
+                </div>
+    
+                <div class="row mg-0 ln " >
+                    <div class="col-md-3 lh-07e pdt-3">
+                        <span class=" ">Internal name</span><br />
+                        <span class="tx-mute fnnb">of Third party</span>
+                    </div>
+                    <div class="col-md-9">
+                        <input class="form-control form-control-xs text-danger fnb " type="text" placeholder="Internal name" [(ngModel)]="crthparty.thnameint">
+                    </div>
+                </div>
+    
+                <div class="row mg-0 ln " >
+                    <div class="col-md-3 lh-07e pdt-3 tx-overflow">
+                        <span class=" ">House No & Road name</span><br />
+                        <span class="tx-mute fnnb">of customer</span>
+                    </div>
+                    <div class="col-md-9">
+                        <input class="form-control form-control-xs text-danger fnb " type="text" placeholder="House No" [(ngModel)]="crthparty.addressln1" [disabled]="!allowchangeofexsource">
+                    </div>
+                </div>
+    
+                <div class="row mg-0 ln " >
+                    <div class="col-md-3 lh-07e pdt-3 tx-overflow">
+                        <span class=" ">Villeage name</span><br />
+                        <span class="tx-mute fnnb">of customer address</span>
+                    </div>
+                    <div class="col-md-9">
+                        <input class="form-control form-control-xs text-danger fnb " type="text" placeholder="Villeage name" [(ngModel)]="crthparty.addressln2" [disabled]="!allowchangeofexsource">
+                    </div>
+                </div>
+    
+                <div class="row mg-0 ln " >
+                    <div class="col-md-3 lh-07e pdt-3 tx-overflow">
+                        <span class=" ">Sub district</span><br />
+                        <span class="tx-mute fnnb">of customer address</span>
+                    </div>
+                    <div class="col-md-9">
+                        <input class="form-control form-control-xs text-danger fnb " type="text" placeholder="Sub-district" [(ngModel)]="crthparty.subdistrict" [disabled]="!allowchangeofexsource">
+                    </div>
+                </div>
+    
+                <div class="row mg-0 ln " >
+                    <div class="col-md-3 lh-07e pdt-3">
+                        <span class=" ">City</span><br />
+                        <span class="tx-mute fnnb">of customer address</span>
+                    </div>
+                    <div class="col-md-9">
+                        <input class="form-control form-control-xs text-danger fnb " type="text" placeholder="City" [(ngModel)]="crthparty.city" [disabled]="!allowchangeofexsource">
+                    </div>
+                </div>
+    
+                <div class="row mg-0 ln " >
+                    <div class="col-md-3 lh-07e pdt-3">
+                        <span class=" ">Country</span><br />
+                        <span class="tx-mute fnnb">of customer address</span>
+                    </div>
+                    <div class="col-md-9">
+                        <input class="form-control form-control-xs text-danger fnb " type="text" placeholder="Country" [(ngModel)]="crthparty.country" [disabled]="!allowchangeofexsource">
+                    </div>
+                </div>
+    
+                <div class="row mg-0 ln " >
+                    <div class="col-md-3 lh-07e pdt-3">
+                        <span class=" ">Region</span><br />
+                        <span class="tx-mute fnnb">of customer address</span>
+                    </div>
+                    <div class="col-md-9">
+                        <input class="form-control form-control-xs text-danger fnb " type="text" placeholder="Region" [(ngModel)]="crthparty.region" [disabled]="!allowchangeofexsource">
+                    </div>
+                </div>
+    
+                <div class="row mg-0 ln " >
+                    <div class="col-md-3 lh-07e pdt-3">
+                        <span class=" ">Post code</span><br />
+                        <span class="tx-mute fnnb">of customer address</span>
+                    </div>
+                    <div class="col-md-3">
+                        <input class="form-control form-control-xs text-danger fnb " type="text" placeholder="Postcode" [(ngModel)]="crthparty.postcode" [disabled]="!allowchangeofexsource">
+                    </div>
+                </div>
+    
+                <div class="row mg-0 ln " >
+                    <div class="col-md-3 lh-07e pdt-3">
+                        <span class=" ">Telephone</span><br />
+                        <span class="tx-mute fnnb">of customer</span>
+                    </div>
+                    <div class="col-md-5">
+                        <input class="form-control form-control-xs text-danger fnb " type="text" placeholder="Telephone" [(ngModel)]="crthparty.telephone" [disabled]="!allowchangeofexsource">
+                    </div>
+                </div>
+    
+                <div class="row mg-0 ln " >
+                    <div class="col-md-3 lh-07e pdt-3">
+                        <span class=" ">Email</span><br />
+                        <span class="tx-mute fnnb">of customer</span>
+                    </div>
+                    <div class="col-md-8">
+                        <input class="form-control form-control-xs text-danger fnb " type="text" placeholder="Email" [(ngModel)]="crthparty.email" [disabled]="!allowchangeofexsource">
+                    </div>
+                </div>
+    
+                <div class="row mg-0 ln " >
+                    <div class="col-md-3 lh-07e pdt-3">
+                        <span class=" ">Remarks</span><br />
+                        <span class="tx-mute fnnb">of customer</span>
+                    </div>
+                    <div class="col-md-8">
+                        <input class="form-control form-control-xs text-danger fnb " type="text" placeholder="Remarks" [(ngModel)]="crthparty.thcomment" [disabled]="!allowchangeofexsource">
+                    </div>
+                </div>
+    
+            </div>
+        </div>
+    </div>
+    
+</div>

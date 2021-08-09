@@ -1,0 +1,68 @@
+<div class="">
+    <!-- <form id="advanced-form" data-parsley-validate novalidate> -->
+        <div class="row tx-mutd">
+            <div class="col-md-8 " *ngIf="mdrole?.tflow != 'NW'">
+                <span class=" fnb ">{{mdrole?.rolename}}</span><br>
+                <span class=" ">{{mdrole?.roledesc}}</span>
+            </div>
+            <div class="col-md-2" *ngIf="mdrole?.tflow == 'NW'">
+                <input class="form-control form-control-sm  text-danger " required type="text" placeholder="Role code" [(ngModel)]="mdrole.rolecode">
+            </div>
+            <div class="col-md-6 " *ngIf="mdrole?.tflow == 'NW'">
+                <input class="form-control form-control-sm  text-danger " required type="text" placeholder="Role name" [(ngModel)]="mdrole.rolename">
+            </div>
+            <div class="col-md-2 text-center">
+                <!-- <img src="assets/images/logobgc_small.jpg" class="img-responsive logo img-rounded"> -->
+                <button type="button" class="btn snaps-danger btn-block mp" (click)="remove()"[disabled]="mdrole?.tflow != 'IO'">
+                    <span class="fas fa-check-circle"></span>
+                    &nbsp;
+                    Remove
+                </button>
+            </div>
+            <div class="col-md-2 text-center">
+                <!-- <img src="assets/images/logobgc_small.jpg" class="img-responsive logo img-rounded"> -->
+                <button type="button" class="btn snaps-primary btn-block mp" (click)="validate()">
+                    <span class="fas fa-check-circle"></span>
+                    &nbsp;
+                    Save
+                </button>
+            </div>
+        </div>
+
+</div>
+<div class="pdt-5">
+    <div class="lsset pd-0 ">
+        <div class="head">
+            <div class="row mg-0 ln ">
+                <div class="col-md-3">Module</div>
+                <div class="col-md-7">Permission</div>
+                <div class="col-md-2 text-center">Enable</div>
+                <!-- <div class="col-md-1">Execute</div> -->
+            </div>
+        </div>
+        <div class="line bgsub-head fnb dglines" >
+            <ng-scrollbar>
+                <div class="" *ngFor="let pn of mdrole?.roleaccs[0].modules">
+                    <div class="row mg-0 selc" *ngFor="let md of pn.permission; let ix = index;">
+                        <div class="col-md-3 ln fnb ">
+                            <span *ngIf="ix==0" > <i class="{{pn.moduleicon}} fa-sm"></i> &nbsp;&nbsp;{{pn.modulename}}
+                            </span>&nbsp;
+                        </div>
+                        <div class="col-md-7 ln ">{{md.objname}}</div>
+                        <div class="col-md-2 ln text-center mp" (click)="ngLnenable(md)">
+                            <span class="fas fa-check-circle text-primary "  [ngClass]=" md.isenable == '0' ?'tx-mute':'text-primary' " ></span>
+                        </div>
+                        <!-- <div class="col-md-1 text-center">
+                            <span class="fas fa-check-circle text-primary " *ngIf="md.isenable == '1'" (click)="ngLnexecute(ln)"></span>
+                            <span class="fas fa-check-circle tx-mute  " *ngIf="md.isenable == '0'" (click)="ngLnexecute(ln)"></span>
+                        </div> -->
+                    </div>
+                </div>
+            </ng-scrollbar>
+
+
+           
+
+        </div>
+    </div>
+</div>

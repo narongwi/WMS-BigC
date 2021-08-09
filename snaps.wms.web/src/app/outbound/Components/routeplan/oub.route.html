@@ -1,0 +1,695 @@
+<div class="bgsub-info">
+  <div class="bgprime" style="height: 44px;background-color: #ffffff;border-bottom: 1px solid #e0e0e0;"> </div>
+  <div class="container">        
+      <div class="row " style="margin-top:-34px">
+          <ul ngbNav #nav="ngbNav" [(activeId)]="crtab" class="nav-tabs" [destroyOnHide]="false">
+              <li [ngbNavItem]="1">
+                <a ngbNavLink class="w150 fn fn-07e">Route planning</a>
+                <ng-template ngbNavContent>
+
+                  <div class="row">
+                  
+                  <div class="col-md-12 pdt-10">
+                    <div class="row mg-0">
+
+                      <div class="col-md-6 fnb fn ">
+                          <span class="fn-palette-1">Route</span>&nbsp;<i class="fas fa-chevron-right fa-xs"></i>&nbsp;<span class="fn-palette-5"> Management</span>
+                      </div>
+                      <div class="col-md-2 text-right">
+                        <div class="d-grid gap-2">
+                        
+                             <ng-template #popContent>
+                                <div  style="width:280px" class="fn fn-07e fnb">                                    
+                                    <div class="row ln pd-5">
+                                        <div class="col-md-4 pdt-5">Plan from </div>
+                                        <div class="col-md-8">
+                                            <div class="input-group">
+                                                <input  class="form-control text-danger fnb"name="dp" ngbDatepicker #dateplanfrom="ngbDatepicker"  placeholder="{{dateformat}}"
+                                                        [(ngModel)]="pm.datereqfrom">
+                                                <div class="input-group-append">
+                                                <button type="button" class="btn snaps-btngroup btn-prime" (click)="dateplanfrom.toggle()" >
+                                                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-calendar-date" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                    <path fill-rule="evenodd" d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"></path>
+                                                    <path d="M6.445 11.688V6.354h-.633A12.6 12.6 0 0 0 4.5 7.16v.695c.375-.257.969-.62 1.258-.777h.012v4.61h.675zm1.188-1.305c.047.64.594 1.406 1.703 1.406 1.258 0 2-1.066 2-2.871 0-1.934-.781-2.668-1.953-2.668-.926 0-1.797.672-1.797 1.809 0 1.16.824 1.77 1.676 1.77.746 0 1.23-.376 1.383-.79h.027c-.004 1.316-.461 2.164-1.305 2.164-.664 0-1.008-.45-1.05-.82h-.684zm2.953-2.317c0 .696-.559 1.18-1.184 1.18-.601 0-1.144-.383-1.144-1.2 0-.823.582-1.21 1.168-1.21.633 0 1.16.398 1.16 1.23z"></path>
+                                                    </svg>
+                                                </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row ln pd-5">
+                                        <div class="col-md-4 pdt-5">Plan to </div>
+                                        <div class="col-md-8">
+                                            <div class="input-group">
+                                                <input class="form-control text-danger fnb " placeholder="{{dateformat}}"
+                                                    name="dp" [(ngModel)]="pm.datereqto" ngbDatepicker #dateplanto="ngbDatepicker">
+                                                <div class="input-group-append">
+                                                <button type="button" class=" btn snaps-btngroup btn-prime" (click)="dateplanto.toggle()" >
+                                                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-calendar-date" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                    <path fill-rule="evenodd" d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"></path>
+                                                    <path d="M6.445 11.688V6.354h-.633A12.6 12.6 0 0 0 4.5 7.16v.695c.375-.257.969-.62 1.258-.777h.012v4.61h.675zm1.188-1.305c.047.64.594 1.406 1.703 1.406 1.258 0 2-1.066 2-2.871 0-1.934-.781-2.668-1.953-2.668-.926 0-1.797.672-1.797 1.809 0 1.16.824 1.77 1.676 1.77.746 0 1.23-.376 1.383-.79h.027c-.004 1.316-.461 2.164-1.305 2.164-.664 0-1.008-.45-1.05-.82h-.684zm2.953-2.317c0 .696-.559 1.18-1.184 1.18-.601 0-1.144-.383-1.144-1.2 0-.823.582-1.21 1.168-1.21.633 0 1.16.398 1.16 1.23z"></path>
+                                                    </svg>
+                                                </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row ln pd-5">
+                                        <div class="col-md-4 pdt-5">Priority</div>
+                                        <div class="col-md-8">
+                                            <ng-select class=" text-danger"  class="custom custom-sm" bindLabel="desc" bindvalue="value" 
+                                            [clearable]="true"  [(ngModel)]="pmpriority" [items]="lsreqmsm" >
+                                            <ng-template ng-label-tmp let-item="item"><span class="text-danger b">{{item.desc}}</span> </ng-template>
+                                            <ng-template ng-option-tmp let-item="item"><span class="text-danger b">{{item.desc}}</span> </ng-template>
+                                            </ng-select>
+                                        </div>
+                                    </div>
+                                    <div class="row ln pd-5">
+                                        <div class="col-md-4 pdt-5">Third party</div>
+                                        <div class="col-md-8">
+                                            <input class="form-control form-control-sm  text-danger " 
+                                            type="text" placeholder="Code or Name" [(ngModel)]="pm.thcode">
+                                        </div>
+                                    </div>
+                                    <div class="row ln pd-5">
+                                        <div class="col-md-4 pdt-5">Promotion</div>
+                                        <div class="col-md-8">
+                                            <input class="form-control form-control-sm  text-danger " type="text" placeholder="Promotion" [(ngModel)]="pm.oupromo">
+                                        </div>
+                                    </div>
+                                    <div class="row ln pd-5">
+                                        <div class="col-md-4 pdt-5">Remarks</div>
+                                        <div class="col-md-8">
+                                            <input class="form-control form-control-sm  text-danger " type="text" placeholder="Remarks"  [(ngModel)]="pm.remarks">
+                                        </div>
+                                    </div>
+                                  <div class="row ln pd-5">
+                                      <div class="col-md-4 pdt-5">Route Type</div>
+                                      <div class="col-md-8">
+                                          <ng-select class=" text-danger"  class="custom custom-sm" bindLabel="desc" bindvalue="value" 
+                                          [clearable]="true"  [(ngModel)]="pmroutetype" [items]="lsroutetype" >
+                                          <ng-template ng-label-tmp let-item="item"><span class="text-danger b">{{item.desc}}</span> </ng-template>
+                                          <ng-template ng-option-tmp let-item="item"><span class="text-danger b">{{item.desc}}</span> </ng-template>
+                                      </ng-select>
+                                      </div>
+                                  </div>
+
+                                  <div class="row ln pd-5">
+                                    <div class="col-md-4 pdt-5">Trans.Mode</div>
+                                    <div class="col-md-8">
+                                        <ng-select class=" text-danger"  class="custom custom-sm" bindLabel="desc" bindvalue="value" 
+                                        [clearable]="true"  [(ngModel)]="pmtrtmode" [items]="lstrtmode" >
+                                        <ng-template ng-label-tmp let-item="item"><span class="text-danger b">{{item.desc}}</span> </ng-template>
+                                        <ng-template ng-option-tmp let-item="item"><span class="text-danger b">{{item.desc}}</span> </ng-template>
+                                    </ng-select>
+                                    </div>
+                                </div>
+
+                                <div class="row ln pd-5">
+                                  <div class="col-md-4 pdt-5">Transportor</div>
+                                  <div class="col-md-8">
+                                      <ng-select class=" text-danger"  class="custom custom-sm" bindLabel="desc" bindvalue="value" 
+                                      [clearable]="true"  [(ngModel)]="pmtransportor" [items]="lstransportor" >
+                                      <ng-template ng-label-tmp let-item="item"><span class="text-danger b">{{item.desc}}</span> </ng-template>
+                                      <ng-template ng-option-tmp let-item="item"><span class="text-danger b">{{item.desc}}</span> </ng-template>
+                                  </ng-select>
+                                  </div>
+                                </div>
+
+                                <div class="row ln pd-5">
+                                  <div class="col-md-4 pdt-5">Load Type</div>
+                                  <div class="col-md-8">
+                                      <ng-select class=" text-danger"  class="custom custom-sm" bindLabel="desc" bindvalue="value" 
+                                      [clearable]="true"  [(ngModel)]="pmloadtype" [items]="lsloadtype" >
+                                      <ng-template ng-label-tmp let-item="item"><span class="text-danger b">{{item.desc}}</span> </ng-template>
+                                      <ng-template ng-option-tmp let-item="item"><span class="text-danger b">{{item.desc}}</span> </ng-template>
+                                  </ng-select>
+                                  </div>
+                                </div>
+
+                                <div class="row ln pd-5">
+                                  <div class="col-md-4 pdt-5">Payment Type</div>
+                                  <div class="col-md-8">
+                                      <ng-select class=" text-danger"  class="custom custom-sm" bindLabel="desc" bindvalue="value" 
+                                      [clearable]="true"  [(ngModel)]="pmpayment" [items]="lspayment" >
+                                      <ng-template ng-label-tmp let-item="item"><span class="text-danger b">{{item.desc}}</span> </ng-template>
+                                      <ng-template ng-option-tmp let-item="item"><span class="text-danger b">{{item.desc}}</span> </ng-template>
+                                  </ng-select>
+                                  </div>
+                                </div>
+
+                                <div class="row ln pd-5">
+                                  <div class="col-md-4 pdt-5">Truck Type</div>
+                                  <div class="col-md-8">
+                                      <ng-select class=" text-danger"  class="custom custom-sm" bindLabel="desc" bindvalue="value" 
+                                      [clearable]="true"  [(ngModel)]="pmtrucktype" [items]="lstrucktype" >
+                                      <ng-template ng-label-tmp let-item="item"><span class="text-danger b">{{item.desc}}</span> </ng-template>
+                                      <ng-template ng-option-tmp let-item="item"><span class="text-danger b">{{item.desc}}</span> </ng-template>
+                                  </ng-select>
+                                  </div>
+                                </div>
+
+
+                                    <div class="row ln pd-5">
+                                        <div class="col-md-4 pdt-5">Staging</div>
+                                        <div class="col-md-8">
+                                            <ng-select class=" text-danger"  class="custom custom-sm" bindLabel="desc" bindvalue="value" 
+                                            [clearable]="true"  [(ngModel)]="pmstaging" [items]="lsstaging" >
+                                            <ng-template ng-label-tmp let-item="item"><span class="text-danger b">{{item.desc}}</span> </ng-template>
+                                            <ng-template ng-option-tmp let-item="item"><span class="text-danger b">{{item.desc}}</span> </ng-template>
+                                        </ng-select>
+                                        </div>
+                                    </div>
+                                    <div class="row ln pd-5">
+                                        <div class="col-md-4 pdt-5">State</div>
+                                        <div class="col-md-8">
+                                            <ng-select class=" text-danger"  class="custom custom-sm" bindLabel="desc" bindvalue="value" 
+                                            [clearable]="true"  [(ngModel)]="pmstate" [items]="lstatem" >
+                                            <ng-template ng-label-tmp let-item="item"><span class="text-danger b">{{item.desc}}</span> </ng-template>
+                                            <ng-template ng-option-tmp let-item="item"><span class="text-danger b">{{item.desc}}</span> </ng-template>
+                                        </ng-select>
+                                        </div>
+                                    </div>
+                                    <div class="row   pd-5">
+                                        <div class="col-md-4">&nbsp;</div>
+                                        <div class="col-md-8">
+                                            <div class="d-grid gap-2">
+        
+                                                <button type="button" class="btn snaps-warning btn-block mp " (click)="fndroute()">
+                                                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-search" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                        <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z"/>
+                                                        <path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>
+                                                    </svg>
+                                                    &nbsp;
+                                                    Filter Route
+                                                </button>
+        
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-template>
+                            <ng-template #popTitle >
+                                <div style="width:280px">
+                                    <span class="fn fn-08e fnb">Search parameter</span>
+                                </div>
+                            </ng-template>
+                            <button type="button" class="btn btn-secondary snaps-btnblank fn-07e" placement="bottom" [autoClose]="'outside'" [ngbPopover]="popContent" [popoverTitle]="popTitle">
+                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-funnel-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" d="M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.128.334L10 8.692V13.5a.5.5 0 0 1-.342.474l-3 1A.5.5 0 0 1 6 14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5v-2z"/>
+                                </svg> Parameters
+                            </button> 
+        
+                        </div>
+                    </div>
+                      <div class="col-md-2 ">
+                        <div class="input-group fnb">
+                            <input class="form-control fn-07e fnb text-danger " placeholder="Route no"
+                                [(ngModel)]="pm.routeno">
+                            <div class="input-group-append">
+                            <button type="button" class="btn snaps-btngroup btn-prime " (click)="fndroute();" >
+                                <i class="fas fa-search"></i>
+                            </button>
+                            </div>
+                        </div>
+                    </div>
+
+                      <div class="col-md-2 ">
+                           <div class="input-group fnb">
+                              <input class="form-control fn-07e fnb text-danger "
+                               placeholder="{{dateformat}}" name="dp" 
+                               ngbDatepicker #datefrom="ngbDatepicker" 
+                               [(ngModel)]="pm.datereqfrom"
+                               (dateSelect)="fndroute();">
+                              <div class="input-group-append">
+                              <button type="button" class="btn snaps-btngroup btn-prime " (click)="datefrom.toggle();" >
+                                  <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-calendar-date" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                  <path fill-rule="evenodd" d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"></path>
+                                  <path d="M6.445 11.688V6.354h-.633A12.6 12.6 0 0 0 4.5 7.16v.695c.375-.257.969-.62 1.258-.777h.012v4.61h.675zm1.188-1.305c.047.64.594 1.406 1.703 1.406 1.258 0 2-1.066 2-2.871 0-1.934-.781-2.668-1.953-2.668-.926 0-1.797.672-1.797 1.809 0 1.16.824 1.77 1.676 1.77.746 0 1.23-.376 1.383-.79h.027c-.004 1.316-.461 2.164-1.305 2.164-.664 0-1.008-.45-1.05-.82h-.684zm2.953-2.317c0 .696-.559 1.18-1.184 1.18-.601 0-1.144-.383-1.144-1.2 0-.823.582-1.21 1.168-1.21.633 0 1.16.398 1.16 1.23z"></path>
+                                  </svg>
+                              </button>
+                              </div>
+                          </div> 
+                      </div>
+
+                     
+                  </div>
+
+                    <div class="row mg-0 pdt-10">
+                      <div class="col-md-12">
+                        <div class="lsset fn fn-07e "> 
+                          <div class="head">
+                            <div class="row mg-0 ln ">
+                              <div class="col-md-1 ">Type</div>
+                              <div class="col-md-2 ">Plan Date</div>
+                              <div class="col-md-1 ">Route</div>
+                              <div class="col-md-1 ">Customer</div>
+                              <div class="col-md-4 "></div>
+                              <div class="col-md-1 ">State</div>
+                              <div class="col-md-2 ">Remarks</div>
+                            </div>
+                          </div>
+              
+                          <div class="line bgsub-head dgroute">
+                            <ng-scrollbar>
+                              <div class="row mg-0 ln  fnb" *ngFor="let ln of lsroute | slice: (page-1) * pageSize : page * pageSize | orderBy: lssort : lsreverse;let i=index"
+                              [class.row-active]="i==routenoselect" (click)="getinfo(ln,i)">
+                                <div class="col-md-1 ">{{ngDesRoute(ln.routetype)}}</div>
+                                <div class="col-md-2 tx-overflow">{{ln.datereqdelivery | date : dateformatshort}}</div>
+                                <div class="col-md-1 text-danger">{{ln.routeno }}</div>
+                                <div class="col-md-1 ">{{ln.thcode }}</div>
+                                <div class="col-md-4 text-truncate">{{ln.thname }}</div>
+                                <div class="col-md-1 ">{{ngDecState(ln.tflow)}} </div>
+                                <div class="col-md-2 ">{{ln.remarks}} </div>
+                              </div>
+                            </ng-scrollbar>
+                          </div>
+
+                          <div class="foot bgsub-head fnb pd-5">
+                            <div class="row mg-0">
+                                <div class="col-md-2 pdt-5">
+                                    Total &nbsp; &nbsp;<span class="text-danger">{{lsroute.length}}</span> &nbsp; &nbsp; HUs
+                                </div>
+                                <div class="col-md-1 tx-right lh-07e">
+                                  <div class="fn-06e fnb text-danger">Row Limit</div>
+                                  <div class="fn-06e">Per Page</div>
+                              </div>
+                              <div class="col-md-1  " style="overflow-x : none !important;">              
+                                  <ng-select class=" text-danger"  class="custom custom-sm" bindLabel="value" bindvalue="value" 
+                                              [clearable]="false"  [(ngModel)]="slrowlmt" [items]="lsrowlmt" (change)="changerowlmt()" >
+                                      <ng-template ng-label-tmp let-item="item"><span class="text-danger b">{{item.value}}</span> </ng-template>
+                                      <ng-template ng-option-tmp let-item="item"><span class="text-danger b">{{item.value}}</span> </ng-template>
+                                  </ng-select>
+                              
+                              </div>
+                                <div class="col-md-5"></div>
+                               
+                                <div class="col-md-3">
+                                    <ngb-pagination [(page)]="page" [pageSize]="pageSize" [collectionSize]="lsroute.length" class="d-flex justify-content-end" ></ngb-pagination>
+                                </div>
+                            </div>
+                        </div>
+
+                      </div>
+                      </div>
+                      
+                    </div>
+
+                      
+                  </div>
+
+                  
+
+                  </div>
+                  
+
+                </ng-template>
+              </li>
+
+              <li [ngbNavItem]="2">
+                <a ngbNavLink class="w150 fn fn-07e">Route <span class="text-danger">{{crroute.routeno}}</span> info</a>
+                <ng-template ngbNavContent>                 
+                  <div class="row">
+                    <div class="col-md-8 pdt-10">
+                      <div class="row mg-0 ln pd-0">
+                        <div class="lsset fn fn-07e pd-0 ">
+                          <div class="head">
+                            <div class="row mg-0 ln ">
+                              <div class="col-md-2 ">HU.No</div>
+                              <div class="col-md-2 ">Location</div>
+                              <div class="col-md-1 tx-center">SKU</div>
+                              <div class="col-md-2 tx-center">Weight</div>
+                              <div class="col-md-2 tx-center">Volume</div>
+                              <div class="col-md-3 ">State</div>
+                            </div>
+                          </div>
+
+                          <div class="line bgsub-head  dglines ">
+                            <div class="row mg-0 ln  fnb" *ngFor="let rn of crroute?.hus">
+                              <div class="col-md-2 text-danger">{{rn.huno}}&nbsp;<i class="fas fa-star text-watning" *ngIf="rn.priority > 0"></i></div>
+                              <div class="col-md-2 text-primary">{{rn.loccode}}</div>
+                              <div class="col-md-1 tx-center">{{rn.crsku | number}}</div>
+                              <div class="col-md-2 tx-center">{{rn.crweight | number}}</div>
+                              <div class="col-md-2 tx-center">{{rn.crvolume | number}}</div>
+                              <div class="col-md-3 ">{{ngDecState(rn.tflow)}} free <span class="{{ngDecColor(rn.crcapacity)}}">{{rn.crcapacity}}</span>&nbsp;%</div>
+                            </div>
+                          </div>
+
+                        </div>
+                      </div>
+
+                    </div>
+                    <div class="col-md-4 pdt-10">
+                      <div class="lsset propset fn fn-07e " > 
+                        <div class="head" >
+                            <div class="row mg-0 ln ">
+                                <div class="col-md-12 text-center">Route Detail  </div>
+                            </div>
+                        </div>                         
+                        <div class="line bgsub-head dglines" >
+                          <div class="row mg-0 ln ">
+                            <div class="col-md-3"> <span class="fnb">Route</span> </div>
+                            <div class="col-md-7"> <span class="text-danger fnb ">{{crroute?.routeno}}</span></div>
+                            <div class="col-md-2 text-center"> <span class="fas fa-star text-warning w20 fa-sm"></span> </div>
+                          </div>
+  
+                          <div class="row mg-0 ln ">
+                            <div class="col-md-3"> <span class="fnb">Type</span> </div>
+                            <div class="col-md-9"> <span class="text-danger fnb ">{{crroute?.routetypename}}</span></div>
+                          </div>
+                          <div class="row mg-0 ln ">
+                            <div class="col-md-3"> <span class="fnb">Cus.code</span> </div>
+                            <div class="col-md-3"> <span class="text-danger fnb ">{{crroute?.thcode}}</span></div>
+  
+                            <div class="col-md-2"> <span class="fnb">Promo.</span> </div>
+                            <div class="col-md-4"> <span class="text-danger fnb ">{{crroute?.oupromo}}</span></div>
+                          </div>
+                          <div class="row mg-0 ln ">
+                            <div class="col-md-3"> <span class="fnb">Cus.name</span> </div>
+                            <div class="col-md-9"> <span class="text-danger fnb ">{{crroute?.thname}}</span></div>
+                          </div>
+                          <div class="row mg-0 ln ">
+                            <div class="col-md-3"> <span class="fnb">Create</span> </div>
+                            <div class="col-md-9 "> <span class="text-danger fnb ">{{crroute?.plandate | date : dateformatlong}}</span></div>
+                          </div>
+                          <div class="row mg-0 ln ">
+                            <div class="col-md-3"> <span class="fnb">Expect</span> </div>
+                            <div class="col-md-9"> <span class="text-danger fnb ">{{crroute?.datereqdelivery | date :dateformatlong}}</span></div>
+                          </div>
+                          <div class="row mg-0 ln ">
+                            <div class="col-md-3"> <span class="fnb">Transportor</span> </div>
+                            <div class="col-md-9">
+                              <ng-select class=" custom" bindLabel="desc" bindvalue="value"
+                                         [clearable]="false" [(ngModel)]="slctransportor" [items]="lstransportor">
+                                <ng-template ng-label-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                                <ng-template ng-option-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                              </ng-select>
+                            </div>
+                          </div>
+                          <div class="row mg-0 ln ">
+                            <div class="col-md-3"> <span class="fnb">Dock</span> </div>
+                            <div class="col-md-9">
+                              <ng-select class=" custom " bindLabel="desc" bindvalue="value"
+                                         [clearable]="false" [(ngModel)]="slcstaging" [items]="lsstaging">
+                                <ng-template ng-label-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                                <ng-template ng-option-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                              </ng-select>
+                            </div>
+                          </div>
+                          <div class="row mg-0 ln ">
+                            <div class="col-md-3"> <span class="fnb">Truck</span> </div>
+                            <div class="col-md-9">
+                              <ng-select class=" custom" bindLabel="desc" bindvalue="value"
+                                         [clearable]="false" [(ngModel)]="slctrucktype" [items]="lstrucktype">
+                                <ng-template ng-label-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                                <ng-template ng-option-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                              </ng-select>
+                            </div>
+                          </div>
+                          <div class="row mg-0 ln ">
+                            <div class="col-md-3"> <span class="fnb">Load</span> </div>
+                            <div class="col-md-9">
+                              <ng-select class=" custom" bindLabel="desc" bindvalue="value"
+                                         [clearable]="false" [(ngModel)]="slcloadtype" [items]="lsloadtype">
+                                <ng-template ng-label-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                                <ng-template ng-option-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                              </ng-select>
+                            </div>
+                          </div>
+  
+                          <div class="row mg-0 ln ">
+                            <div class="col-md-3 pdt-5"> <span class="fnb">Payment.</span> </div>
+                            <div class="col-md-9">
+                              <ng-select class=" custom" bindLabel="desc" bindvalue="value"
+                                         [clearable]="false" [(ngModel)]="slcpayment" [items]="lspayment">
+                                <ng-template ng-label-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                                <ng-template ng-option-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                              </ng-select>
+                            </div>
+                          </div>
+  
+                          <div class="row mg-0 ln ">
+                            <div class="col-md-3 pdt-5"> <span class="fnb">Driver</span> </div>
+                            <div class="col-md-6">
+                              <input class="form-control  text-danger fnb" type="text" placeholder="Driver name" [(ngModel)]="crroute.driver">
+                            </div>
+                          </div>
+                          <div class="row mg-0 ln ">
+                            <div class="col-md-3 pdt-5"> <span class="fnb">Plate.</span> </div>
+                            <div class="col-md-6">
+                              <input class="form-control  text-danger fnb" type="text" placeholder="Plate No" [(ngModel)]="crroute.plateNo">
+                            </div>
+                          </div>
+                          <div class="row mg-0 ln ">
+                            <div class="col-md-3 pdt-5"> <span class="fnb">Seal No</span> </div>
+                            <div class="col-md-6">
+                              <input class="form-control  text-danger fnb" type="text" placeholder="Seal No" [(ngModel)]="crroute.sealno">
+                            </div>
+                          </div>
+                          <div class="row mg-0 ln ">
+                            <div class="col-md-3 pdt-5"> <span class="fnb">Promotion</span> </div>
+                            <div class="col-md-6">
+                              <input class="form-control  text-danger fnb" type="text" placeholder="Promotion Code" [(ngModel)]="crroute.oupromo">
+                            </div>
+                          </div>
+                          <div class="row mg-0 ln ">
+                            <div class="col-md-3 pdt-5"> <span class="fnb">Remarks</span> </div>
+                            <div class="col-md-9">
+                              <input class="form-control  text-danger fnb" type="text" placeholder="Remarks" [(ngModel)]="crroute.remarks">
+                            </div>
+                          </div>
+  
+                          <div class="row mg-0 ln ">
+                            <div class="col-md-3 lh-07e"> <span class="fnb">Max<br/>HU</span> </div>
+                            <div class="col-md-3">
+                              <input class="form-control  text-danger fnb" type="text" placeholder="Max. HU" [(ngModel)]="crroute.mxhu" appOnlynumber>
+                            </div>
+  
+                            <div class="col-md-2 lh-07e"> <span class="fnb">Max<br/>Weight</span> </div>
+                            <div class="col-md-4">
+                              <input class="form-control  text-danger fnb" type="text" placeholder="Max. weight" [(ngModel)]="crroute.mxweight" appOnlynumber>
+                            </div>
+                          </div>
+  
+                          <div class="row mg-0 ln">
+                            <div class="col-md-3 lh-07e"> <span class="fnb">Max<br/>Volume</span> </div>
+                            <div class="col-md-3">
+                              <input class="form-control  text-danger fnb" type="text" placeholder="Max. volume" [(ngModel)]="crroute.mxvolume" appOnlynumber>
+                            </div>
+                            <div class="col-md-2 lh-07e fnb">Block<br/>Prepare</div>
+                            <div class="col-md-4">
+                              <ui-switch checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" [(ngModel)]="crstate" ></ui-switch>
+
+                             
+                            </div>
+                          </div>
+
+                          <div class="row mg-0 ln">
+                            <div class="col-md-6">
+                              <button type="button" class="btn snaps-danger btn-block mp" (click)="remove()">
+                              <i class="fas fa-check-circle "></i>
+                              &nbsp;
+                              Remove
+                              </button>
+                            </div>
+
+                            <div class="col-md-6">
+                              <button type="button" class="btn snaps-primary btn-block mp" (click)="upsert()">
+                              <i class="fas fa-check-circle "></i>
+                              &nbsp;
+                              Confirm
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                    </div>
+                  </div>
+                </ng-template>
+              </li>
+
+              <li [ngbNavItem]="3">
+                <a ngbNavLink class="w150 fn fn-07e" (click)="pregen()">Route.Generate </a>
+                <ng-template ngbNavContent>
+                  <div class="col-md-3"> &nbsp; </div>
+                  <div class="col-md-6">
+                    <div class="lsset fn-07e">
+                      <div class="head">
+                        <div class="row pd-5">
+                          <div class="col-md-12 tx-center">Generate Reoute</div>
+                        </div>
+                      </div>
+                      <div class="line bgsub-head dglines" >
+    
+                        <div class="row mg-0 ln ">
+                          <div class="col-md-3"> <span class="fnb">Type.</span>&nbsp;<span class='text-danger tbold fn-1e'>*</span></div>
+                          <div class="col-md-9">
+                            <ng-select class=" custom" bindLabel="desc" bindvalue="value"
+                                       [clearable]="false" [(ngModel)]="slcroutetype" [items]="lsroutetype">
+                              <ng-template ng-label-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                              <ng-template ng-option-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                            </ng-select>
+                          </div>
+                        </div>
+    
+                        <div class="row mg-0 ln " *ngIf="slcroutetype?.value != 'C'">
+    
+                          <div class="col-md-3"> <span class="fnb">Third party</span><span class='text-danger tbold fn-1e'>*</span></div>
+                          <div class="col-md-9">
+                            <input class="form-control  text-danger fnb" type="text" placeholder="Third party code" [(ngModel)]="gnroute.thcode">
+                          </div>
+                        </div>
+    
+                        <div class="row mg-0 ln ">
+                          <div class="col-md-3"> <span class="fnb">Expect Date</span><span class='text-danger tbold fn-1e'>*</span></div>
+                          <div class="col-md-7">
+                            <div class="input-group">
+                              <input class="form-control text-danger fnb" placeholder="{{dateformat}}"
+                                  name="dp" [(ngModel)]="gnroute.datereqdelivery" ngbDatepicker #dateorderto="ngbDatepicker">
+                              <div class="input-group-append">
+                              <button type="button" class=" btn snaps-btngroup btn-prime" (click)="dateorderto.toggle()" >
+                                  <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-calendar-date" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                  <path fill-rule="evenodd" d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"></path>
+                                  <path d="M6.445 11.688V6.354h-.633A12.6 12.6 0 0 0 4.5 7.16v.695c.375-.257.969-.62 1.258-.777h.012v4.61h.675zm1.188-1.305c.047.64.594 1.406 1.703 1.406 1.258 0 2-1.066 2-2.871 0-1.934-.781-2.668-1.953-2.668-.926 0-1.797.672-1.797 1.809 0 1.16.824 1.77 1.676 1.77.746 0 1.23-.376 1.383-.79h.027c-.004 1.316-.461 2.164-1.305 2.164-.664 0-1.008-.45-1.05-.82h-.684zm2.953-2.317c0 .696-.559 1.18-1.184 1.18-.601 0-1.144-.383-1.144-1.2 0-.823.582-1.21 1.168-1.21.633 0 1.16.398 1.16 1.23z"></path>
+                                  </svg>
+                              </button>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-md-2">
+                            <input class="form-control  text-danger fnb" type="text" placeholder="00" [(ngModel)]="gnroute.datereqdeliverytime">
+                          </div>
+                        </div>
+                        <div class="row mg-0 ln ">
+                          <div class="col-md-3"> <span class="fnb">Staging.</span><span class='text-danger tbold fn-1e'>*</span></div>
+                          <div class="col-md-9">
+                            <ng-select class=" custom " bindLabel="desc" bindvalue="value"
+                                       [clearable]="false" [(ngModel)]="slcstaging" [items]="lsstaging">
+                              <ng-template ng-label-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                              <ng-template ng-option-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                            </ng-select>
+                          </div>
+                        </div>
+    
+    
+                        <div class="row mg-0 ln ">
+                          <div class="col-md-3"> <span class="fnb">Mode.</span><span class='text-danger tbold fn-1e'>*</span></div>
+                          <div class="col-md-9">
+                            <ng-select class=" custom" bindLabel="desc" bindvalue="value"
+                                       [clearable]="false" [(ngModel)]="slctrtmode" [items]="lstrtmode">
+                              <ng-template ng-label-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                              <ng-template ng-option-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                            </ng-select>
+                          </div>
+                        </div>
+    
+                        <div class="row mg-0 ln ">
+                          <div class="col-md-3"> <span class="fnb">Transportor.</span><span class='text-danger tbold fn-1e'>*</span></div>
+                          <div class="col-md-9">
+                            <ng-select class=" custom" bindLabel="desc" bindvalue="value"
+                                       [clearable]="false" [(ngModel)]="slctransportor" [items]="lstransportor">
+                              <ng-template ng-label-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                              <ng-template ng-option-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                            </ng-select>
+                          </div>
+                        </div>
+    
+                        <div class="row mg-0 ln ">
+                          <div class="col-md-3"> <span class="fnb">Truck.</span><span class='text-danger tbold fn-1e'>*</span></div>
+                          <div class="col-md-9">
+                            <ng-select class=" custom" bindLabel="desc" bindvalue="value"
+                                       [clearable]="false" [(ngModel)]="slctrucktype" [items]="lstrucktype">
+                              <ng-template ng-label-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                              <ng-template ng-option-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                            </ng-select>
+                          </div>
+                        </div>
+    
+                        <div class="row mg-0 ln ">
+                          <div class="col-md-3"> <span class="fnb">Load.</span><span class='text-danger tbold fn-1e'>*</span></div>
+                          <div class="col-md-9">
+                            <ng-select class=" custom" bindLabel="desc" bindvalue="value"
+                                       [clearable]="false" [(ngModel)]="slcloadtype" [items]="lsloadtype">
+                              <ng-template ng-label-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                              <ng-template ng-option-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                            </ng-select>
+                          </div>
+                        </div>
+    
+                        <div class="row mg-0 ln ">
+                          <div class="col-md-3"> <span class="fnb">Payment.</span><span class='text-danger tbold fn-1e'>*</span></div>
+                          <div class="col-md-9">
+                            <ng-select class=" custom" bindLabel="desc" bindvalue="value"
+                                       [clearable]="false" [(ngModel)]="slcpayment" [items]="lspayment">
+                              <ng-template ng-label-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                              <ng-template ng-option-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                            </ng-select>
+                          </div>
+                        </div>
+    
+                        <div class="row mg-0 ln ">
+                          <div class="col-md-3"> <span class="fnb">Driver</span> </div>
+                          <div class="col-md-6">
+                            <input class="form-control  text-danger fnb" type="text" placeholder="Driver name" [(ngModel)]="gnroute.driver">
+                          </div>
+                        </div>
+                        <div class="row mg-0 ln ">
+                          <div class="col-md-3"> <span class="fnb">Plate.</span> </div>
+                          <div class="col-md-6">
+                            <input class="form-control  text-danger fnb" type="text" placeholder="Plate No" [(ngModel)]="gnroute.plateNo">
+                          </div>
+                        </div>
+                        <div class="row mg-0 ln ">
+                          <div class="col-md-3"> <span class="fnb">Promotion</span> </div>
+                          <div class="col-md-6">
+                            <input class="form-control  text-danger fnb" type="text" placeholder="Promotion Code" [(ngModel)]="gnroute.oupromo">
+                          </div>
+                        </div>
+                        <div class="row mg-0 ln ">
+                          <div class="col-md-3"> <span class="fnb">Remarks</span> </div>
+                          <div class="col-md-9">
+                            <input class="form-control  text-danger fnb" type="text" placeholder="Remarks" [(ngModel)]="gnroute.remarks">
+                          </div>
+                        </div>
+    
+                        <div class="row mg-0 ln ">
+                          <div class="col-md-3"> <span class="fnb">Max. HU</span><span class='text-danger tbold fn-1e'>*</span></div>
+                          <div class="col-md-3">
+                            <input class="form-control  text-danger fnb" type="number" placeholder="Max. HU" [(ngModel)]="gnroute.mxhu" appOnlynumber>
+                          </div>
+    
+                          <div class="col-md-2"> <span class="fnb">Max. Weight</span><span class='text-danger tbold fn-1e'>*</span></div>
+                          <div class="col-md-4">
+                            <input class="form-control  text-danger fnb" type="number" placeholder="Max. weight" [(ngModel)]="gnroute.mxweight">
+                          </div>
+                        </div>
+    
+                        <div class="row mg-0 ln">
+                          <div class="col-md-3"> <span class="fnb">Max. Volume</span><span class='text-danger tbold fn-1e'>*</span></div>
+                          <div class="col-md-3">
+                            <input class="form-control  text-danger fnb" type="number" placeholder="Max. volume" [(ngModel)]="gnroute.mxvolume">
+                          </div>
+                          <div class="col-md-2"></div>
+                          <div class="col-md-4">
+                             <button type="button" class="btn snaps-primary btn-block mp" (click)="generate()">
+                              <i class="fas fa-check-circle "></i>
+                              &nbsp;
+                              Generate route
+                          </button>
+                            
+                          </div>
+                        </div>
+    
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-3"> &nbsp; </div>
+                </ng-template>
+              </li>
+
+            </ul>            
+            <div [ngbNavOutlet]="nav" class="mt-2"></div>
+
+      </div>
+  </div>
+</div>

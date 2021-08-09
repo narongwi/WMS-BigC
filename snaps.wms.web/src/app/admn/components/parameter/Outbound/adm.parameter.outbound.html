@@ -1,0 +1,172 @@
+<div class="row pdt-10">
+
+    <div class="col-md-12 fn fnb fn-07e fn-palette-1 ">
+        <div class="lsset  ">
+            <div class="head">
+                <div class="row mg-0 ln ">
+                    <div class="col-md-10 15">Outbound Order</div>
+                    <div class="col-md-2 ">Last modify</div>
+                </div>
+            </div>
+        
+            <div class="line bgsub-head ">
+
+                <div class="row mg-0 ln pd-8" *ngIf="allowchangeofexsource">
+                    <div class="col-md-9 col-xs-10 lh-1e">
+                        <span class="">{{allowchangeofexsource.pmdesc}}</span><br />
+                        <span class="text-muted">{{allowchangeofexsource.pmdescalt}}</span>
+                    </div>
+                    <div class="col-md-1 col-xs-2 pdt-3">
+                        <ui-switch  checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" 
+                                    [(ngModel)]="allowchangeofexsource.pmvalue" (change)="save(allowchangeofexsource)"
+                        ></ui-switch>
+                    </div>
+                    <div class="col-md-2 lh-1e">
+                        <span class="text-danger fnb">{{allowchangeofexsource.datemodify | date : dateformatlong }}</span><br>
+                        <span class="text-muted">{{allowchangeofexsource.accnmodify}}</span>
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln pd-8" *ngIf="allowchangespcdlc">
+                    <div class="col-md-9 col-xs-10 lh-1e">
+                        <span class="">{{allowchangespcdlc.pmdesc}}</span><br />
+                        <span class="text-muted">{{allowchangespcdlc.pmdescalt}}</span>
+                    </div>
+                    <div class="col-md-1 col-xs-2 pdt-3">
+                        <ui-switch  checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" 
+                                    [(ngModel)]="allowchangespcdlc.pmvalue" (change)="save(allowchangespcdlc)"
+                        ></ui-switch>
+                    </div>
+                    <div class="col-md-2 lh-1e">
+                        <span class="text-danger fnb">{{allowchangespcdlc.datemodify | date : dateformatlong }}</span><br>
+                        <span class="text-muted">{{allowchangespcdlc.accnmodify}}</span>
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln pd-8" *ngIf="allowchangereqdate">
+                    <div class="col-md-9 col-xs-10 lh-1e">
+                        <span class="">{{allowchangereqdate.pmdesc}}</span><br />
+                        <span class="text-muted">{{allowchangereqdate.pmdescalt}}</span>
+                    </div>
+                    <div class="col-md-1 col-xs-2 pdt-3">
+                        <ui-switch  checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" 
+                                    [(ngModel)]="allowchangereqdate.pmvalue" (change)="save(allowchangereqdate)"
+                        ></ui-switch>
+                    </div>
+                    <div class="col-md-2 lh-1e">
+                        <span class="text-danger fnb">{{allowchangereqdate.datemodify | date : dateformatlong }}</span><br>
+                        <span class="text-muted">{{allowchangereqdate.accnmodify}}</span>
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln pd-8" *ngIf="allowchangespcbatch">
+                    <div class="col-md-9 col-xs-10 lh-1e">
+                        <span class="">{{allowchangespcbatch.pmdesc}}</span><br />
+                        <span class="text-muted">{{allowchangespcbatch.pmdescalt}}</span>
+                    </div>
+                    <div class="col-md-1 col-xs-2 pdt-3">
+                        <ui-switch  checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" 
+                                    [(ngModel)]="allowchangespcbatch.pmvalue" (change)="save(allowchangespcbatch)"
+                        ></ui-switch>
+                    </div>
+                    <div class="col-md-2 lh-1e">
+                        <span class="text-danger fnb">{{allowchangespcbatch.datemodify | date : dateformatlong }}</span><br>
+                        <span class="text-muted">{{allowchangespcbatch.accnmodify}}</span>
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln pd-8" *ngIf="allowcancel">
+                    <div class="col-md-9 col-xs-10 lh-1e">
+                        <span class="">{{allowcancel.pmdesc}}</span><br />
+                        <span class="text-muted">{{allowcancel.pmdescalt}}</span>
+                    </div>
+                    <div class="col-md-1 col-xs-2 pdt-3">
+                        <ui-switch  checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" 
+                                    [(ngModel)]="allowcancel.pmvalue" (change)="save(allowcancel)"
+                        ></ui-switch>
+                    </div>
+                    <div class="col-md-2 lh-1e">
+                        <span class="text-danger fnb">{{allowcancel.datemodify | date : dateformatlong }}</span><br>
+                        <span class="text-muted">{{allowcancel.accnmodify}}</span>
+                    </div>
+                </div>
+                <div class="row mg-0 ln pd-8" *ngIf="allowpartialship">
+                    <div class="col-md-9 col-xs-10 lh-1e">
+                        <span class="">{{allowpartialship.pmdesc}}</span><br />
+                        <span class="text-muted">{{allowpartialship.pmdescalt}}</span>
+                    </div>
+                    <div class="col-md-1 col-xs-2 pdt-3">
+                        <ui-switch  checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" 
+                                    [(ngModel)]="allowpartialship.pmvalue" (change)="save(allowpartialship)"
+                        ></ui-switch>
+                    </div>
+                    <div class="col-md-2 lh-1e">
+                        <span class="text-danger fnb">{{allowpartialship.datemodify | date : dateformatlong }}</span><br>
+                        <span class="text-muted">{{allowpartialship.accnmodify}}</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="lsset  mgt-10 ">
+            <div class="head">
+                <div class="row mg-0 ln ">
+                    <div class="col-md-10 15">Allocate to route</div>
+                    <div class="col-md-2 ">Last modify</div>
+                </div>
+            </div>
+        
+            <div class="line bgsub-head ">
+
+                <div class="row mg-0 ln pd-8" *ngIf="allocatehuwhenprepdone">
+                    <div class="col-md-9 col-xs-10 lh-1e">
+                        <span class="">{{allocatehuwhenprepdone.pmdesc}}</span><br />
+                        <span class="text-muted">{{allocatehuwhenprepdone.pmdescalt}}</span>
+                    </div>
+                    <div class="col-md-1 col-xs-2 pdt-3">
+                        <ui-switch  checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" 
+                                    [(ngModel)]="allocatehuwhenprepdone.pmvalue" (change)="save(allocatehuwhenprepdone)"
+                        ></ui-switch>
+                    </div>
+                    <div class="col-md-2 lh-1e">
+                        <span class="text-danger fnb">{{allocatehuwhenprepdone.datemodify | date : dateformatlong }}</span><br>
+                        <span class="text-muted">{{allocatehuwhenprepdone.accnmodify}}</span>
+                    </div>
+                </div>     
+
+            </div>
+        </div>
+
+        <div class="lsset  mgt-10 ">
+            <div class="head">
+                <div class="row mg-0 ln ">
+                    <div class="col-md-10 15">Delivery</div>
+                    <div class="col-md-2 ">Last modify</div>
+                </div>
+            </div>
+        
+            <div class="line bgsub-head ">
+
+                <div class="row mg-0 ln pd-8" *ngIf="allowrevisequantity">
+                    <div class="col-md-9 col-xs-10 lh-1e">
+                        <span class="">{{allowrevisequantity.pmdesc}}</span><br />
+                        <span class="text-muted">{{allowrevisequantity.pmdescalt}}</span>
+                    </div>
+                    <div class="col-md-1 col-xs-2 pdt-3">
+                        <ui-switch  checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" 
+                                    [(ngModel)]="allowrevisequantity.pmvalue" (change)="save(allowrevisequantity)"
+                        ></ui-switch>
+                    </div>
+                    <div class="col-md-2 lh-1e">
+                        <span class="text-danger fnb">{{allowrevisequantity.datemodify | date : dateformatlong }}</span><br>
+                        <span class="text-muted">{{allowrevisequantity.accnmodify}}</span>
+                    </div>
+                </div>                
+
+            </div>
+        </div>
+    </div>
+
+
+</div>

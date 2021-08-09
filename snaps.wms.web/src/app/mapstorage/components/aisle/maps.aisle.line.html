@@ -1,0 +1,183 @@
+<div class="row fn-07e fnb">
+    <div class="col-md-8">
+        <div class="lsset  ">
+            <div class="head">
+                <div class="row mg-0 ln ">
+                    <div class="col-md-1 ">Type</div>
+                    <div class="col-md-2 ">Zone</div>
+                    <div class="col-md-1 ">Code</div>
+                    <div class="col-md-2 ">Name</div>                   
+                    <div class="col-md-3 ">Description</div>
+                    <div class="col-md-1 tx-center">Seq</div>
+                    <div class="col-md-2 ">State</div>
+                </div>
+            </div>
+        
+            <div class="line bgsub-head dgaisle ">
+                <ng-scrollbar>
+                    <div class="row mg-0 ln mpswitch " *ngFor="let ln of lsaisle" >
+                        <div class="col-md-1 ">{{ngDecArea(ln.spcarea)}}</div>
+                        <div class="col-md-2 ">{{ln.lszone}}</div>
+                        <div class="col-md-1 text-danger ">{{ln.lscode}}</div>
+                        <div class="col-md-2 text-primary">{{ln.lscodealt}}</div>
+                        <div class="col-md-3 ">{{ln.lsdesc}}</div>
+                        <div class="col-md-1 tx-center">{{ln.lsseq}}</div>
+                        <div class="col-md-2 "  (click)="selaisle(ln)">
+                            <span class="{{ngDecIcon(ln.tflow)}} w20 dp"></span>
+                            <span class="fas fa-wrench text-warning w20 hd"></span>
+                            &nbsp;&nbsp;{{ngDecState(ln.tflow)}}
+                        </div>                    
+                    </div>
+                </ng-scrollbar>
+            </div>
+
+            <div class="foot bgsub-head fnb pd-5 h38">
+                <div class="row mg-0 pdt-5">
+                    <div class="col-md-12 tx-right"> Total&nbsp;&nbsp;&nbsp;<span class="text-danger">{{lsaisle.length}}</span>&nbsp;&nbsp;&nbsp;Aisles </div> 
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="lsset fn-07e ">
+            <div class="head">
+                <div class="row mg-0 ln ">
+                    <div class="col-md-8 ">Configuration</div>
+                    <div class="col-md-4 ">
+                        <span class=" mp" (click)="newaisle()">
+                            <i class="fas fa-plus-square text-primary"></i>&nbsp;
+                            New aisle
+                        </span>
+                        
+                    </div>
+                </div>
+            </div>
+        
+            <div class="line bgsub-head dgaisle">
+                <div class="row mg-0 ln " >
+                    <div class="col-md-7 lh-07e">
+                        <span class="text-dark fnb ">Site </span><br />
+                        <span class="text-muted">site code of warehouse</span>
+                    </div>
+                    <div class="col-md-5">
+                        <span class="text-danger fnb fn-08e">{{craisle.site}}</span>
+                    </div>
+                </div>
+                <div class="row mg-0 ln " >
+                    <div class="col-md-7 lh-07e">
+                        <span class="text-dark fnb ">Depot</span><br />
+                        <span class="text-muted">depot code of warehouse</span>
+                    </div>
+                    <div class="col-md-5">
+                        <span class="text-danger fnb fn-08e">{{craisle.depot}}</span>
+                    </div>
+                </div>
+                <div class="row mg-0 ln " >
+                    <div class="col-md-7 lh-07e">
+                        <span class="text-dark fnb ">Category</span><br />
+                        <span class="text-muted">Category of zone</span>
+                    </div>
+                    <div class="col-md-5">
+                        <span class="text-danger fnb  fn-08e">{{ngDecArea(craisle.spcarea)}}</span>
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln " >
+                    <div class="col-md-7 lh-07e pdt-5">
+                        <span class="text-dark fnb ">Zone</span><br />
+                        <span class="text-muted">Zone code on warehouse</span>
+                    </div>
+                    <div class="col-md-5">
+                        <ng-select class="fn-1e5 " [items]="lszone" class="custom custom-sm" bindLabel="desc" bindvalue="desc" 
+                                    [clearable]="false"  [(ngModel)]="slczone" (change)="ngselczone()">
+                            <ng-template ng-label-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                            <ng-template ng-option-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                        </ng-select>
+                    </div>
+                </div>
+                <div class="row mg-0 ln " >
+                    <div class="col-md-7 lh-07e">
+                        <span class="text-dark fnb ">Code</span><br />
+                        <span class="text-muted">Aisle code</span>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="text-danger fnb fn-08e" *ngIf="craisle.tflow != 'NW'">{{ngDecArea(craisle.lscode)}}</div>
+                        <input class="form-control form-control-xs  text-danger fnb" type="text" placeholder="" [(ngModel)]="craisle.lscode" *ngIf="craisle.tflow == 'NW'">
+                    </div>
+                </div>
+                <div class="row mg-0 ln " >
+                    <div class="col-md-7 lh-07e pdt-5">
+                        <span class="text-dark fnb ">Aisle Name</span><br />
+                        <span class="text-muted">Aisle code for short description</span>
+                    </div>
+                    <div class="col-md-5">
+                        <input class="form-control form-control-xs  text-danger fnb" type="text" placeholder="" [(ngModel)]="craisle.lscodealt">
+                    </div>
+                </div>
+                <div class="row mg-0 ln " >
+                    <div class="col-md-7 lh-07e pdt-5">
+                        <span class="text-dark fnb ">Sequence</span><br />
+                        <span class="text-muted">Sequence no for align priority </span>
+                    </div>
+                    <div class="col-md-5">
+                        <input class="form-control form-control-xs  text-danger fnb" type="text" placeholder="" [(ngModel)]="craisle.lsseq">
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln">
+                    <div class="col-md-7 lh-07e pdt-5">
+                        <span class="text-dark fnb ">Description</span><br />
+                        <span class="text-muted">Sequence no for align priority </span>
+                    </div>
+                    <div class="col-md-5">
+                        <input class="form-control form-control-xs  text-danger fnb" type="text" placeholder="" [(ngModel)]="craisle.lsdesc">
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln">
+                    <div class="col-md-7 lh-07e ">
+                        <span class="text-dark fnb ">State</span><br />
+                        <span class="text-muted">Status of aisle </span>
+                    </div>
+                    <div class="col-md-5 text-center">
+                        <ui-switch checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" [(ngModel)]="crstate" ></ui-switch></div>
+                </div>
+
+                <div class="row mg-0 ln">
+                    <div class="col-md-7 lh-07e">
+                        <span class="text-danger fnb ">{{craisle.orgcode}}-{{craisle.site}}-{{craisle.depot}}-{{craisle.lszone}}-{{craisle.lscode}}</span><br />
+                        <span class="text-dark">Full name of zone</span>
+                    </div>
+                    <div class="col-md-5">
+                        <button type="button" class="btn snaps-primary btn-xs btn-block mp"  (click)="validate()">
+                            <i class="fas fa-check-circle"></i>
+                            Save
+                        </button>
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln">
+                    <div class="col-md-7 lh-07e">
+                    </div>
+                    <div class="col-md-5">
+                        <button type="button" class="btn snaps-danger btn-xs btn-block mp"  (click)="drop()" *ngIf="crstate == false && craisle.tflow != 'NW'">
+                            <i class="fas fa-trash-alt"></i>
+                            Delete 
+                        </button> 
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="foot bgsub-head fnb pd-5 h38">
+                <div class="row mg-0 pdt-5">
+                    <div class="col-md-3 tx-overflow"> Modify date </div>                   
+                    <div class="col-md-8"> {{craisle.datemodify | date : formatdatelong}} by <span class="text-danger">{{craisle.accnmodify}}</span> </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,69 @@
+<!-- 
+<!doctype html>
+<html lang="en">
+
+<head>
+	<title>Snaps WMS</title>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+</head> -->
+
+<div style="font-family: 'Sarabun','Montserrat', sans-serif; " class="bggrey">
+	<div class="backdrop" [ngClass]="isbackdrop?'bd-active':''" >Please Wait</div>
+	<ng-progress #progressBar (started)="onStarted()" (completed)="onCompleted()"></ng-progress>
+	<!-- WRAPPER -->
+	<div id="wrapper">
+		<!-- NAVBAR -->
+		<nav class="navbar navbar-default navbar-fixed-top pd-0 " style="background-image: linear-gradient(to right, #bbce00, #ffbd66, #ffc4c4, #ffe4fe, #ffffff);" >
+			<div class="container-fluid">
+				<div>
+					<span><img src="assets/images/logobgc_small_back.jpg" class="img-responsive logo img-rounded"></span>
+				</div>
+				<div class="col-md-9 text-right lh-08e">
+					<!-- <div style="width: 100px; float:left"><img src="assets/images/Snaps-bgcth_BannerR2.jpg" height="40"  ></div> -->
+					<div class="fn-07e fn-palette-1 fnb">Warehouse Management</div>
+					<div class="fn-06e fn-palette-5 fnb">Snaps Solution Co,Ltd.</div>
+				</div>
+				
+				
+				<div class="col-md-2 text-right lh-08e" style="text-align: right;padding-right: 50px;">
+					<div class="fn-07e fn-palette-1 fnb">{{crprofile.cfgvalue}}</div>
+					<div class="fn-06e fn-palette-5 fnb">Site: {{crprofile.site}} Depot: {{crprofile.depot}}</div>
+				</div>
+			
+				<!-- logo -->
+
+				<!-- end logo -->
+				<!-- <div class="navbar-right">
+					<select class="selectpicker pd-5 ">
+						<option data-icon="fas fa-warehouse">91918</option>
+					</select>
+				</div> -->
+			</div>
+		</nav>
+		<!-- END NAVBAR -->
+		<!-- LEFT SIDEBAR -->
+		<button type="button" class="btn btn-outline-secondary btn-xs toggle-button" (click)="toggleSidebar()">
+			<i class="fas fa-angle-left fn-palette-1"></i>
+		</button>
+		<div id="left-sidebar" class="sidebar" >
+			<div class="sidebar-scroll">
+				<app-navigate></app-navigate>
+			</div>
+		</div>
+		<!-- END LEFT SIDEBAR -->
+		<!-- MAIN CONTENT -->
+		<div id="main-content" style="overflow-y:hidden;padding-bottom: 0px;">
+			<div class="bgsub-head">
+				<router-outlet></router-outlet>
+			</div>
+		</div>
+		<!-- END MAIN CONTENT -->
+
+	</div>
+	<!-- END WRAPPER -->
+
+</div>
+
+<!-- </html> -->

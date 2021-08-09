@@ -1,0 +1,149 @@
+<div class="row mg-0 ln ">
+    <div class="col-md-7">&nbsp;</div>
+    <div class="col-md-5">
+        <button type="button" class="btn snaps-warning btn-xs btn-block mp"  (click)="newaccount()">
+            <i class="fas fa-check-circle"></i>
+            New Account
+        </button>
+    </div>
+</div>
+
+<div class="lsset fnb fn-07e">
+    <div class="head">
+        <div class="row mg-0 ln ">
+            <div class="col-md-12 ">Account Info </div>
+        </div>
+    </div>
+    <div class="linebx bgsub-head dgaccn ">
+        <div class="row mg-0 ln">
+            <div class="col-md-3">{{ 'accncode' | translate }} </div>
+            <div class="col-md-8">
+                <input class="form-control form-control-xs text-danger fnb" type="text" *ngIf="mdaccn.tflow == 'NW'" [(ngModel)]="mdaccn.accncode">
+                <span class="text-primary"  *ngIf="mdaccn.tflow != 'NW'"> {{ mdaccn.accncode }} </span>
+            </div>
+        </div>
+        <div class="row mg-0 ln">
+            <div class="col-md-3 pdt-3">{{ 'firstname' | translate }} </div>
+            <div class="col-md-8">
+                <input class="form-control form-control-xs text-danger fnb" type="text" placeholder="" [(ngModel)]="mdaccn.accnname">
+            </div>
+        </div>
+        <div class="row mg-0 ln">
+            <div class="col-md-3 pdt-3">{{ 'lastname' | translate }} </div>
+            <div class="col-md-8">
+                <input class="form-control form-control-xs text-danger fnb" type="text" placeholder="" [(ngModel)]="mdaccn.accnsurname">
+            </div>
+        </div>
+
+        <div class="row mg-0 ln">
+            <div class="col-md-3 pdt-3">{{ 'email' | translate }} </div>
+            <div class="col-md-8">
+                <input class="form-control form-control-xs text-danger fnb" type="text" placeholder="" [(ngModel)]="mdaccn.email">
+            </div>
+        </div>
+        <div class="row mg-0 ln">
+            <div class="col-md-3 pdt-3">Account Type </div>
+            <div class="col-md-8">
+                <ng-select class="custom custom-sm" bindLabel="desc" bindvalue="value" 
+                          [compareWith]="ngSelcompare" [clearable]="false"  [(ngModel)]="slctype" [items]="lstype" >
+                    <ng-template ng-label-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                    <ng-template ng-option-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                </ng-select>
+            </div>
+        </div>
+        <div class="row mg-0 ln">
+            <div class="col-md-3 pdt-3">{{ 'role' | translate }} </div>
+            <div class="col-md-8">
+                <ng-select class="custom custom-sm" bindLabel="desc" bindvalue="value" 
+                          [compareWith]="ngSelcompare" [clearable]="false"  [(ngModel)]="slcrole" [items]="lsrole" >
+                    <ng-template ng-label-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                    <ng-template ng-option-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                </ng-select>
+            </div>
+        </div>
+        <div class="row mg-0 ln">
+            <div class="col-md-3 pdt-3">{{ 'accn.state' | translate }} </div>
+            <div class="col-md-8">
+                <ng-select class="custom custom-sm" bindLabel="desc" bindvalue="value" 
+                          [compareWith]="ngSelcompare" [clearable]="false"  [(ngModel)]="slcstate" [items]="lsacnstate" >
+                    <ng-template ng-label-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                    <ng-template ng-option-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                </ng-select>
+            </div>
+        </div>
+
+        <div class="row mg-0 ln">
+            <div class="col-md-3 ">Date<br>format</div>
+            <div class="col-md-8">
+                <input class="form-control form-control-xs text-danger fnb" type="text" placeholder="" [(ngModel)]="mdaccn.formatdate">
+            </div>
+        </div>
+
+        <div class="row mg-0 ln">
+            <div class="col-md-3 ">Short<br>Date format</div>
+            <div class="col-md-8">
+                <input class="form-control form-control-xs text-danger fnb" type="text" placeholder="" [(ngModel)]="mdaccn.formatdateshort">
+            </div>
+        </div>
+
+        <div class="row mg-0 ln">
+            <div class="col-md-3 ">Long<br>Date format</div>
+            <div class="col-md-8">
+                <input class="form-control form-control-xs text-danger fnb" type="text" placeholder="" [(ngModel)]="mdaccn.formatdatelong">
+            </div>
+        </div>
+
+        <div class="row mg-0 ln">
+            <div class="col-md-3 pdt-3">Avartar</div>
+            <div class="col-md-8">
+                <input class="form-control form-control-xs text-danger fnb" type="text" placeholder="" [(ngModel)]="mdaccn.accnavartar">
+            </div>
+        </div>
+
+        <div class="row mg-0 ln">
+            <div class="col-md-3 ">Expire date </div>
+            <div class="col-md-9 text-danger"> {{mdaccn.dateexpire | date : formatdatelong}}
+            </div>
+        </div>
+
+        <div class="row mg-0 ln">
+            <div class="col-md-3 ">Last login </div>
+            <div class="col-md-9 text-danger"> {{mdaccn.datelogin | date : formatdatelong}}
+            </div>
+        </div>
+
+        <div class="row mg-0 ln">
+            <div class="col-md-3 tx-overflow">Last change pwd. </div>
+            <div class="col-md-9 text-danger"> {{mdaccn.datechnpriv | date : formatdatelong}}
+            </div>
+        </div>
+
+        <div class="row mg-0 ln">
+            <div class="col-md-3 ">Incorrect pwd.</div>
+            <div class="col-md-9 "><span class="text-danger">{{mdaccn.cntfailure}} </span>&nbsp;&nbsp;Times
+            </div>
+        </div>
+
+        <div class="row mg-0 ln">
+            <div class="col-md-6">
+            <button *ngIf="mdaccn.tflow != 'NW' && mdaccn.tflow!=null" type="button" class="btn snaps-warning btn-xs btn-block mp"  (click)="resetpw()">
+                    <i class="fas fa-check-circle"></i>
+                    Reset Password
+                </button></div>
+            <div class="col-md-5">
+                <button type="button" class="btn snaps-primary btn-xs btn-block mp"  (click)="validate()">
+                    <i class="fas fa-check-circle"></i>
+                    Save
+                </button>
+            </div>
+            <div class="col-md-1">&nbsp;</div>
+        </div>
+
+    </div>
+    <div class="foot bgsub-head fnb pd-5 h38">
+        <div class="row mg-0 pdt-5">
+            <div class="col-md-3"> Modify date </div>                   
+            <div class="col-md-8"> {{mdaccn.datemodify | date : formatdatelong}} by <span class="text-danger">{{mdaccn.accnmodify}}</span> </div>
+        </div>
+    </div>
+</div>

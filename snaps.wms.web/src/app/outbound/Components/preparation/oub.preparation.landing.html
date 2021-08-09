@@ -1,0 +1,34 @@
+
+<div class="bgsub-info">
+  <div class="bgprime" style="height: 44px;background-color: #ffffff;border-bottom: 1px solid #e0e0e0;"> </div>
+  <div class="container">        
+      <div class="row " style="margin-top:-34px">
+          <ul ngbNav #nav="ngbNav" [(activeId)]="crtab" class="nav-tabs" [destroyOnHide]="false">
+              <li [ngbNavItem]="1">
+                <a ngbNavLink class="w150 fn fn-07e">Preparation stocking</a>
+                <ng-template ngbNavContent>
+                  <appoub-preparation-stock></appoub-preparation-stock>
+                </ng-template>
+              </li>
+
+
+              <li [ngbNavItem]="2">
+                  <a ngbNavLink class="w150 fn fn-07e">Preparation distribution</a>
+                  <ng-template ngbNavContent>
+                    <appoub-preparation-distribute></appoub-preparation-distribute>
+                  </ng-template>
+              </li>
+
+              <li [ngbNavItem]="3">
+                  <a ngbNavLink class="w150 fn fn-07e">HU distribution</a>
+                  <ng-template ngbNavContent>
+                    <appoub-preparation-humonitor></appoub-preparation-humonitor>
+                  </ng-template>
+              </li>
+            </ul>
+            
+            <div [ngbNavOutlet]="nav" class="mt-2"></div>
+
+      </div>
+  </div>
+</div>

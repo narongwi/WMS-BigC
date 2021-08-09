@@ -1,0 +1,21 @@
+<div class="user-account"  >
+    <img src="assets/images/account_temp.jpg" class="img-responsive img-circle user-photo" alt="User Profile Picture">
+    <div class="dropdown">
+        <a class="user-name" [routerLink]="['/profile/my']"><span class="fn-07e">{{crprofile.accncode}}</span></a>
+    </div>
+   
+</div>
+<nav id="left-sidebar-nav" class="sidebar-nav" >
+    <ul id="main-menu" class="metismenu fn-08e" >
+
+        <li class="mp" *ngFor="let mn of crrole.modules;let idx = index"  [routerLinkActiveOptions]="{exact:true}">
+            <a class="has-arrow mp mnu " aria-expanded="false">
+            <i class="{{mn.moduleicon}} w30 "></i><span><span class="fnb"> {{ mn.modulename | translate }} </span></span></a>
+            <ul aria-expanded="true" >
+                <li class="" *ngFor="let ms of mn.permission"> 
+                     <a [routerLink] = "['/'+ms.objroute]" >{{ ms.objname | translate  }}</a></li>
+            </ul>
+        </li> 
+        <li class="mp"><a class="mp mnu"  (click)="singout()"><i class="fas fa-door-closed w30"></i><span><span class="fnb">Sign out</span></span></a></li>
+    </ul>
+</nav>

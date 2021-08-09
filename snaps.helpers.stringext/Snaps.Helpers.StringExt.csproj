@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+	<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    <Version>1.0.0.9</Version>
+    <AssemblyVersion>1.0.0.9</AssemblyVersion>
+    <FileVersion>1.0.0.9</FileVersion>
+    <Authors>Snaps Solutions Co,Ltd</Authors>
+    <Company>Snaps Solutions Co,Ltd.</Company>
+    <Product>Snaps.Helpers.StringExt</Product>
+    <Description>Convert from stirng to another type</Description>
+    <Copyright>Snaps Solution @ 2020+</Copyright>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DebugType Condition=" '$(Configuration)' == 'Release' ">None</DebugType>
+    <GenerateDependencyFile Condition=" '$(GenerateDependencyFile)' == '' ">None</GenerateDependencyFile> 
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>    
+    <OutputPath Condition="'$(OutputPath)'=='' ">..\..\Snaps.Library\</OutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.ComponentModel.Annotations" Version="4.7.0" />
+  </ItemGroup>
+
+</Project>

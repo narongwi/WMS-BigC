@@ -1,0 +1,41 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    
+    <RootNamespace>Snaps.WMS.Counting</RootNamespace>
+    <Product>Snaps.WMS.Counting</Product>
+    <Description>Counting managment </Description>
+    
+    <Version>1.0.0.1</Version>
+    <AssemblyVersion>1.0.0.1</AssemblyVersion>
+    <FileVersion>1.0.0.1</FileVersion>
+
+    <TargetFramework>netstandard2.1</TargetFramework>
+	<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+
+    <Authors>Sitthinun Muangthai</Authors>
+    <Company>Snaps Solutions Co,Ltd.</Company> 
+    <Copyright>Snaps Solution @ 2020+</Copyright>
+  </PropertyGroup>
+
+  <ItemGroup>
+
+    <Reference Include="Snaps.Helpers.Hash"> <HintPath>..\Snaps.Library\Snaps.Helpers.Hash.dll</HintPath> </Reference> 
+    <Reference Include="Snaps.Helpers.StringExt"> <HintPath>..\Snaps.Library\Snaps.Helpers.StringExt.dll</HintPath> </Reference> 
+    <ProjectReference Include="..\snaps.helpers.dbcontext.sqlserver\Snaps.Helpers.DbContext.SQLServer.csproj" /> 
+    <ProjectReference Include="..\snaps.helpers.logging\Snaps.Helpers.Logging.csproj" /> 
+    <ProjectReference Include="..\snaps.wms.inventory\snaps.wms.inventory.csproj" />
+    <ProjectReference Include="..\snaps.wms.statistics\snaps.wms.statistics.csproj" />
+    <ProjectReference Include="..\snaps.wms.handlingunit\snaps.wms.handlingunit.csproj" /> 
+    <ProjectReference Include="..\snaps.wms.sequence\snaps.wms.sequence.csproj" /> 
+    <ProjectReference Include="..\snaps.wms.parameter\snaps.wms.parameter.csproj" />
+    <ProjectReference Include="..\snaps.wms.taskmovement\snaps.wms.taskmovement.csproj" />
+
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.ComponentModel.Annotations" Version="4.7.0" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
+  </ItemGroup>
+
+</Project>

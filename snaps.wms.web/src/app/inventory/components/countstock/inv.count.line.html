@@ -1,0 +1,574 @@
+<div class="row">
+  <div class="col-md-5 fn-07e">
+    <div class="lsset">
+      <div class="head">
+        <div class="row mg-0 ln 5">
+          <div class="col-md-2">Plan</div>
+          <div class="col-md-4">Plan Name</div>
+          <div class="col-md-3">Start date</div>
+          <div class="col-md-3">Status</div>
+        </div>
+      </div>
+
+      <div class="line bgsub-head dgtask">
+        <ng-scrollbar>
+          <div
+            class="row mg-0 ln fnb"
+            *ngFor="let ln of lsplan;let i=index"
+            (click)="ngSelect(ln,i)"
+            [class.row-active]="i== rowselected"
+          >
+            <div class="col-md-2 text-primary tx-overflow">{{ln.plancode}}</div>
+            <div class="col-md-4">{{ln.planname}}</div>
+            <div class="col-md-3">{{ln.datestart | date : dateformat }}</div>
+            <div class="col-md-3">
+              <span class="fas {{ngDecIcon(ln.tflow)}}"></span> &nbsp;
+              {{ngDecStr(ln.tflow)}}
+            </div>
+          </div>
+        </ng-scrollbar>
+      </div>
+
+      <div class="foot">
+        <div class="row mg-0 ln">
+          <div class="col-md-4">&nbsp;</div>
+          <div class="col-md-3 fnb" style="text-align: right; padding-top: 6px">
+            <!-- In Process -->
+          </div>
+          <!-- style="width: 25%;" -->
+          <div class="col-md-5 fnb" style="padding-top: 6px">
+            <!-- <div class="progress">
+                        <div
+                          [ngClass]="{'progress-bar bg-warning': planprogress < 100,'progress-bar bg-success': planprogress == 100,'progress-bar bg-danger': planprogress  > 100}"
+                          [style.width]="planprogress + '%'"
+                          aria-valuenow="planprogress"
+                          aria-valuemin="0"
+                          aria-valuemax="100"
+                        >
+                          {{planprogress}}%
+                        </div>
+                      </div> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-7" *ngIf="crplan.tflow != 'NW'">
+    <div class="lsset fn-07e">
+      <div class="head">
+        <div class="row mg-0 ln">
+          <div class="col-md-12">Plan Count</div>
+        </div>
+      </div>
+      <div class="linebx bgsub-head dgplan">
+        <div class="row mg-0 ln fnb">
+          <div class="col-md-2">
+            <span class="text-dark fnb">Task</span>
+          </div>
+          <div class="col-md-2">
+            <span class="text-danger fnb tx-overflow"
+              >{{crplan.countcode}}</span
+            >
+          </div>
+          <div class="col-md-2">
+            <span class="text-dark fnb">Plan code</span>
+          </div>
+          <div class="col-md-2">
+            <span class="fnb">{{crplan.plancode}}</span>
+          </div>
+          <div class="col-md-2">
+            <span class="text-dark fnb">Target count</span>
+          </div>
+          <div class="col-md-2 tx-right">
+            <span class="text-danger fnb">{{crplan.cntlines}}</span>
+          </div>
+        </div>
+
+        <div class="row mg-0 ln">
+          <div class="col-md-2">
+            <span class="text-dark fnb tx-overflow">Plan name </span>
+          </div>
+          <div class="col-md-6">
+            <span class="text-danger fnb tx-overflow">{{crplan.planname}}</span>
+          </div>
+          <div class="col-md-2">
+            <span class="text-dark fnb">Actual count</span>
+          </div>
+          <div class="col-md-2 tx-right">
+            <span class="text-danger fnb">{{crplan.cntactual}}</span>
+          </div>
+        </div>
+
+        <div class="row mg-0 ln">
+          <div class="col-md-2">
+            <span class="text-dark fnb tx-overflow">Zone </span>
+          </div>
+          <div class="col-md-6">
+            <span class="text-danger fnb tx-overflow">{{crplan.szone}}</span>
+          </div>
+
+          <div class="col-md-2">
+            <span class="text-dark fnb">Wrong count</span>
+          </div>
+          <div class="col-md-2 tx-right">
+            <span class="text-danger fnb">{{crplan.cnterror}}</span>
+          </div>
+        </div>
+
+        <div class="row mg-0 ln">
+          <div class="col-md-2 fnb">Aisle from</div>
+          <div class="col-md-2">
+            <span class="text-dark fnb">{{crplan.saisle}}</span>
+          </div>
+          <div class="col-md-2 fnb">Aisle to</div>
+          <div class="col-md-2">
+            <span class="text-dark fnb">{{crplan.eaisle}}</span>
+          </div>
+        </div>
+
+        <div class="row mg-0 ln">
+          <div class="col-md-2 fnb">Bay from</div>
+          <div class="col-md-2">
+            <span class="text-dark fnb">{{crplan.sbay}}</span>
+          </div>
+          <div class="col-md-2 fnb">Bay to</div>
+          <div class="col-md-2">
+            <span class="text-dark fnb">{{crplan.ebay}}</span>
+          </div>
+          <div class="col-md-2 fnb">Start</div>
+          <div class="col-md-2">
+            <span class="text-dark fnb"
+              >{{crplan.datestart | date : dateformat }}</span
+            >
+          </div>
+        </div>
+
+        <div class="row mg-0 ln">
+          <div class="col-md-2 fnb">Level from</div>
+          <div class="col-md-2">
+            <span class="text-dark fnb">{{crplan.slevel}}</span>
+          </div>
+          <div class="col-md-2 fnb">Level to</div>
+          <div class="col-md-2">
+            <span class="text-dark fnb">{{crplan.elevel}}</span>
+          </div>
+          <div class="col-md-2 fnb">Confirm</div>
+          <div class="col-md-2">
+            <span class="text-dark fnb"
+              >{{crplan.datestart | date : dateformat }}</span
+            >
+          </div>
+        </div>
+
+        <div class="row mg-0 ln" *ngIf="crplan.tflow == 'IO'">
+          <div class="col-md-3">
+            <button
+              type="button"
+              class="btn snaps-default btn-xs btn-block mp"
+              (click)="getdocstatement()"
+            >
+              <i class="fas fa-file-alt"></i>
+              &nbsp; Count sheet
+            </button>
+          </div>
+          <div class="col-md-2 fnb" style="padding-top: 6px; text-align: right">
+            Summary :
+          </div>
+          <div class="col-md-4 fnb" style="padding-top: 6px">
+            <div class="progress">
+              <div
+                [ngClass]="{'progress-bar bg-warning': lineprogress < 100,'progress-bar bg-success text-white': lineprogress == 100,'progress-bar bg-danger': lineprogress  > 100}"
+                [style.width]="lineprogress + '%'"
+                [attr.aria-valuenow]="lineprogress"
+                [attr.aria-valuemin]="0"
+                [attr.aria-valuemax]="100"
+              >
+                {{lineprogress}}%
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <button
+              type="button"
+              class="btn snaps-primary btn-xs btn-block mp"
+              (click)="ngSave()"
+              [disabled]="disabledSave"
+            >
+              <i class="fas fa-check-circle"></i>
+              &nbsp; Save count
+            </button>
+          </div>
+        </div>
+
+        <div class="row mg-0 ln" *ngIf="crplan.tflow == 'ED'">
+          <div class="col-md-2 text-dark fnb">Validate date</div>
+          <div class="col-md-2 fnb text-danger tx-overflow">
+            {{crplan.datevld | date : dateformatlong}}
+          </div>
+
+          <div class="col-md-2 text-dark fnb">Remarks Count</div>
+          <div class="col-md-3">{{crplan.remarksvld}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row pdt-10">
+  <div class="col-md-12 fn-07e">
+    <div class="lsset propset">
+      <div class="line bgsub-head">
+        <div class="row mg-0 ln pd-0">
+          <div class="lsset pd-0" style="border: 0px !important">
+            <div class="head">
+              <div class="row mg-0 ln">
+                <div class="px-100 text-center">Loc.</div>
+                <div class="px-120 text-center">Barcode</div>
+                <div class="px-100 text-center">Article</div>
+                <!-- <div class="px-50 ">LV</div> -->
+                <!-- <div class="col-md-1 ">Description</div> -->
+                <div class="px-130 text-center">HU.no</div>
+                <div class="col">Description</div>
+                <!-- <div class="col-md-2 ">MFG</div>   -->
+                <div class="px-120">Exp</div>
+                <div class="col-md-1">Batch</div>
+                <div class="px-100 text-right">Count</div>
+                <div class="px-80 text-danger text-center">unit</div>
+              </div>
+            </div>
+
+            <div class="line bgsub-head dglines" #planLine>
+              <div
+                style="
+                  position: fixed;
+                  top: 0;
+                  left: 0;
+                  z-index: 99;
+                  height: 100%;
+                  width: 100%;
+                  overflow: auto;
+                  padding-top: 100px;
+                "
+                *ngIf="editorIsOpen"
+              >
+                <div
+                  style="
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    z-index: 98;
+                    background-color: gray;
+                    height: 100%;
+                    width: 100%;
+                    opacity: 0.3;
+                  "
+                ></div>
+                <div
+                  style="
+                    position: relative;
+                    z-index: 99;
+                    width: 50%;
+                    height: auto;
+                    margin: 40px auto auto auto;
+                  "
+                >
+                  <div class="editor-form lsset propset fn-07e">
+                    <div class="head">
+                      <div class="row mg-0 ln">
+                        <div class="col-md-12">Edit Count item</div>
+                      </div>
+                    </div>
+                    <div class="line bgsub-head">
+                      <div class="row mg-0 ln">
+                        <div class="col-md-3">
+                          <span class="text-dark fnb tx-overflow"
+                            >Plan code
+                          </span>
+                        </div>
+                        <div class="col-md-6">
+                          <span class="text-danger fnb"
+                            >{{editorLinemd.plancode}} :
+                            {{crplan.planname}}</span
+                          >
+                        </div>
+                        <div
+                          class="col-md-3 text-info"
+                          style="text-align: right; font-size: 13px"
+                        >
+                          <button
+                            type="button"
+                            class="btn snaps-default btn-xs"
+                            (click)="ngResetEdit()"
+                          >
+                            <i class="fas fa-redo mr-1"></i> reset
+                          </button>
+                        </div>
+                      </div>
+
+                      <div class="row mg-0 ln">
+                        <div class="col-md-3">
+                          <span class="text-dark fnb tx-overflow"
+                            >Location
+                          </span>
+                        </div>
+                        <div class="col-md-9">
+                          <span class="text-danger fnb"
+                            >{{editorLinemd.loccode}}</span
+                          >
+                        </div>
+                        <!-- <div class="col-md-3 text-info" style="text-align:right;font-size: 13px;" >
+                                                        <button type="button" class="btn snaps-default btn-xs" (click)="ngResetEdit()"><i class="fas fa-redo mr-1"></i> reset</button>
+                                                    </div> -->
+                      </div>
+
+                      <div class="row mg-0 ln">
+                        <div class="col-md-3">Barcode</div>
+                        <div class="col-md-9">
+                          <input
+                            class="form-control form-control-sm text-danger fnb"
+                            name="editBarcode"
+                            type="text"
+                            placeholder="Count Barcode"
+                            [(ngModel)]="editorLinemd.cnbarcode"
+                            (change)="checkNewLine()"
+                          />
+                        </div>
+                      </div>
+                      <div class="row mg-0 ln">
+                        <div class="col-md-3">Article</div>
+                        <div class="col-md-3">
+                          <input
+                            class="form-control form-control-sm text-danger fnb"
+                            name="editArticle"
+                            type="text"
+                            placeholder="Count Article"
+                            [(ngModel)]="editorLinemd.cnarticle"
+                            (change)="checkNewLine()"
+                          />
+                        </div>
+                        <div class="col-md-1">PV</div>
+                        <div class="col-md-2">
+                          <input
+                            class="form-control form-control-sm text-danger fnb"
+                            name="editPV"
+                            type="number"
+                            min="0"
+                            placeholder="Count PV"
+                            [(ngModel)]="editorLinemd.cnpv"
+                            disabled
+                          />
+                        </div>
+                        <div class="col-md-1">LV</div>
+                        <div class="col-md-2">
+                          <input
+                            class="form-control form-control-sm text-danger fnb"
+                            name="editLV"
+                            type="number"
+                            min="0"
+                            placeholder="Count LV"
+                            [(ngModel)]="editorLinemd.cnlv"
+                            (change)="checkNewLine()"
+                          />
+                        </div>
+                      </div>
+                      <div
+                        class="row mg-0 ln"
+                        *ngIf="editorLinemd.locctype!='P'||!this.valid(this.editorLinemd.sthuno)"
+                      >
+                        <div class="col-md-3">HU No</div>
+                        <div class="col-md-9">
+                          <input
+                            class="form-control form-control-sm text-danger fnb"
+                            name="editHuno"
+                            type="text"
+                            placeholder="Count huno"
+                            [(ngModel)]="editorLinemd.cnhuno"
+                            (change)="checkNewLine()"
+                          />
+                        </div>
+                      </div>
+                      <div class="row mg-0 ln" *ngIf="crplan.isbatchno==1">
+                        <div class="col-md-3">Expire Date</div>
+                        <div class="col-md-9">
+                          <input
+                            class="form-control form-control-sm text-danger fnb"
+                            name="editDateexp"
+                            type="text"
+                            placeholder="Count Expire Date"
+                            [(ngModel)]="editDateexpMd"
+                            mask="00/00/0000"
+                          />
+                        </div>
+                      </div>
+                      <div class="row mg-0 ln" *ngIf="crplan.isbatchno==1">
+                        <div class="col-md-3">Batch MFG</div>
+                        <div class="col-md-9">
+                          <input
+                            class="form-control form-control-sm text-danger fnb"
+                            name="editBatch"
+                            type="text"
+                            placeholder="Count Batch MFG"
+                            [(ngModel)]="editorLinemd.cnlotmfg"
+                          />
+                        </div>
+                      </div>
+                      <div class="row mg-0 ln">
+                        <div class="col-md-3">Count Qtypu</div>
+                        <div class="col-md-9">
+                          <input
+                            class="form-control form-control-sm text-danger fnb"
+                            name="editQtypu"
+                            type="number"
+                            min="0"
+                            placeholder="Count Qtypu"
+                            [(ngModel)]="editorLinemd.cnqtypu"
+                          />
+                        </div>
+                      </div>
+                      <div class="row mg-0 ln">
+                        <div class="col-md-3">&nbsp;</div>
+                        <div class="col-md-7">
+                          <button
+                            class="btn snaps-default btn-xs"
+                            style="margin-right: 20px"
+                            (click)="ngCancleEdit()"
+                          >
+                            Cancel
+                          </button>
+                          <button
+                            class="btn btn-xs"
+                            [ngClass]="newline?'snaps-warning':'snaps-success'"
+                            (click)="ngSaveLine()"
+                          >
+                            {{newline?'Create New':'Save Change'}}
+                          </button>
+                        </div>
+                        <!-- Enable with Create new line-->
+                        <div
+                          class="col-md-2"
+                          style="text-align: right"
+                          *ngIf="editorLinemd.cnflow=='NW'"
+                        >
+                          <button
+                            class="btn snaps-danger btn-xs"
+                            (click)="ngRemvoeEdit()"
+                          >
+                            Delete
+                          </button>
+                        </div>
+                      </div>
+                      <div class="row mg-0 ln">
+                        <div class="col-md-12 text-danger text-center">
+                          {{editLineMessage}}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- <div class="editor-button text-right">
+                                        <button class="btn snaps-default btn-xs" style="margin-right: 20px;" (click)="ngCloseLine()">Cancel</button>
+                                        <button class="btn snaps-success btn-xs" (click)="ngCloseLine()">Save Change</button>
+                                    </div> -->
+                </div>
+              </div>
+              <ng-scrollbar>
+                <div
+                  class="row-p-0 row-input mg-0 ln fnb"
+                  *ngFor="let ln of lsline;let ix=index"
+                  [class.row-active]="ix==editLineIndex"
+                >
+                  <div class="px-100 text-center fnb">
+                    <span [ngClass]="ln.locctype=='R'?'text-info':'text-danger'"
+                      >{{ln.locctype}}</span
+                    >
+                    : {{ln.loccode}}
+                  </div>
+                  <!-- <div class="col-md-2 ">
+                                        <h6 class="card-subtitle text-muted">{{ln.productdesc}}</h6>
+                                        <p class="card-text">{{ln.stbarcode}} {{ln.starticle}}</p>
+                                    </div> -->
+                  <!-- mask="00/00/0000" -->
+                  <!-- <div class="px-120"><input class="form-control form-control-xs text-danger fnb tx-center" name="cnbarcode-{{i}}" type="text" [(ngModel)]="ln.cnbarcode" placeholder="{{ln.stbarcode}}" ></div> -->
+                  <div class="px-120 text-center">
+                    <a
+                      class="btn snaps-default btn-xs fnb"
+                      [class.active]="ln.cnbarcode != ln.stbarcode"
+                      name="cnbarcode-{{i}}"
+                      (click)="ngEditLine(ln,ix)"
+                      >{{ln.cnbarcode==''?'+':ln.cnbarcode}}</a
+                    >
+                  </div>
+                  <div class="px-100 text-center">
+                    <a
+                      class="btn snaps-default btn-xs fnb"
+                      [class.active]="ln.cnarticle != ln.starticle||ln.cnlv!=ln.stlv"
+                      name="cnarticle-{{i}}"
+                      (click)="ngEditLine(ln,ix)"
+                      >{{ln.cnarticle==''?'+':ln.cnarticle}}
+                      {{ln.cnarticle==''?'':ln.cnlv}}</a
+                    >
+                  </div>
+                  <!-- <div class="px-100"><input class="form-control form-control-xs text-danger fnb tx-center" name="cnarticle-{{i}}" type="text" [(ngModel)]="ln.cnarticle" placeholder="{{ln.starticle}}"></div> -->
+                  <!-- <div class="px-50"><input class="form-control form-control-xs text-danger fnb tx-center" name="cnlv-{{i}}" type="text" [(ngModel)]="ln.cnlv" placeholder="{{ln.stlv}}"></div> -->
+                  <!-- <div class="col-md-1 pr-1"><input class="form-control form-control-xs text-danger fnb tx-center" name="cnarticle-{{i}}" type="text" [(ngModel)]="ln.description"></div> -->
+                  <div class="px-140 text-center">
+                    <a
+                      class="btn snaps-default btn-xs fnb"
+                      [class.active]="ln.cnhuno != ln.sthuno"
+                      name="cnhuno-{{i}}"
+                      (click)="ngEditLine(ln,ix)"
+                      >{{ln.cnhuno==''?'+':ln.cnhuno}}</a
+                    >
+                  </div>
+                  <!-- <div class="px-130"><input class="form-control form-control-xs text-danger " type="text"  name="cnhuno-{{i}}" [(ngModel)]="ln.cnhuno" placeholder="{{ln.sthuno}}" > </div> -->
+                  <div class="col">{{ln.productdesc}}</div>
+                  <!-- <div class="col-md-2"><input class="form-control form-control-xs text-danger " type="date"  name="cndatemfg-{{i}}" [ngModel]="ln.cndatemfg|date:'yyyy-MM-dd'" (ngModelChange)="ln.cndatemfg = $event" [disabled]="crrtask.isdatemfg==0?false:true"> </div>  -->
+                  <div class="px-100 text-center">
+                    <a
+                      *ngIf="crplan.isdateexp==1"
+                      class="btn snaps-default btn-xs fnb"
+                      [class.active]="ln.cndateexp != ln.stdateexp"
+                      name="stdateexp-{{i}}"
+                      (click)="ngEditLine(ln,ix)"
+                      >{{ln.cndateexp|date:'yyyy-MM-dd'}}</a
+                    >
+                  </div>
+                  <!-- <div class="px-120"><input class="form-control form-control-xs text-danger " type="text"  name="cnlotmfg-{{i}}" [(ngModel)]="ln.cnlotmfg"  [disabled]="crrtask.isbatchno==0?false:true"> </div> -->
+                  <div class="px-100 text-center">
+                    <a
+                      *ngIf="crplan.isbatchno==1"
+                      class="btn snaps-default btn-xs fnb"
+                      [class.active]="ln.cnlotmfg != ln.stlotmfg"
+                      name="cnlotmfg-{{i}}"
+                      (click)="ngEditLine(ln,ix)"
+                      >{{ln.cnlotmfg}}</a
+                    >
+                  </div>
+                  <div class="px-100">
+                    <input
+                      class="
+                        form-control form-control-xs
+                        text-danger
+                        fnb
+                        text-center
+                      "
+                      type="number"
+                      name="cnqtypu-{{i}}"
+                      [(ngModel)]="ln.cnqtypu"
+                      min="0"
+                    />
+                  </div>
+                  <div class="px-80 tx-center text-danger m-0">
+                    {{ngDecUnitstock(ln.unitcount)}}
+                  </div>
+                </div>
+              </ng-scrollbar>
+
+              <!-- Popup Editor -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

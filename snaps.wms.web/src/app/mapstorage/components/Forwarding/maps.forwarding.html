@@ -1,0 +1,21 @@
+
+<div class="bgsub-info">
+    <div class="bgprime" style="height: 44px;background-color: #ffffff;border-bottom: 1px solid #e0e0e0;"> </div>
+    <div class="container">        
+        <div class="row " style="margin-top:-34px">
+            <ul ngbNav #nav="ngbNav" [(activeId)]="crtab" class="nav-tabs" [destroyOnHide]="false">
+
+                <li [ngbNavItem]="1">
+                  <a ngbNavLink class=" fn fn-07e">Forwarding Location Management </a>
+                  <ng-template ngbNavContent>
+                    <appmaps-forwardline></appmaps-forwardline>
+                  </ng-template>
+                </li>
+
+              </ul>
+              
+              <div [ngbNavOutlet]="nav" class="mt-2"></div>
+
+        </div>
+    </div>
+</div>

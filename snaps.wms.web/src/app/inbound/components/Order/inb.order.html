@@ -1,0 +1,21 @@
+<div class="bgsub-info">
+    <div class="bgprime" style="height: 44px;background-color: #ffffff;border-bottom: 1px solid #e0e0e0;"> </div>
+    <div class="container">        
+        <div class="row " style="margin-top:-34px">
+            <ul ngbNav #nav="ngbNav" [(activeId)]="crtab" class="nav-tabs" [destroyOnHide]="false">
+                <li [ngbNavItem]="1">
+                  <a ngbNavLink class="w150 fn fn-07e">Inbound Order </a>
+                  <ng-template ngbNavContent> <appinb-orderline #inboundorderline (selln)="selorder($event)" ></appinb-orderline></ng-template>
+                </li>
+                <li [ngbNavItem]="2">
+                  <a ngbNavLink class="w200 fn fn-07e">Inbound Receipt &nbsp;&nbsp;&nbsp;<span class="text-danger">{{crorder}}</span></a>
+                  <ng-template ngbNavContent> 
+                    <appinb-orderreceipt #inboundorderoperate (refrln)="selfnd()"></appinb-orderreceipt> </ng-template>
+                </li>
+              </ul>
+              
+              <div [ngbNavOutlet]="nav" class="mt-2"></div>
+
+        </div>
+    </div>
+</div>

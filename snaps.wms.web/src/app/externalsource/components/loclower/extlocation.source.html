@@ -1,0 +1,124 @@
+<div class="row fnb fn-07e">
+    <div class="row mg-0">
+        <div class="row">
+            <div class="col-md-6 fn-09e pdt-5">
+                <span class="fn-palette-1">External Source</span>&nbsp;<i class="fas fa-chevron-right fa-xs"></i>&nbsp;<span class="fn-palette-5"> Location</span>
+            </div>
+            <div class="col-md-3">
+                <div class="input-group fnb">
+                    <input class="form-control fn-07e fnb text-danger " placeholder="File name" >
+                    <div class="input-group-append">
+                    <button type="button" class="btn snaps-btngroup btn-prime " (click)="meFnd();" >
+                        <i class="fas fa-search"></i>
+                    </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 ">
+                <div class="input-group fnb">
+                    <input class="form-control fn-07e fnb text-danger "
+                     placeholder="{{dateformat}}" name="dp" 
+                     ngbDatepicker #datefrom="ngbDatepicker" 
+                     (dateSelect)="meFnd();">
+                    <div class="input-group-append">
+                    <button type="button" class="btn snaps-btngroup btn-prime " (click)="datefrom.toggle();" >
+                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-calendar-date" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"></path>
+                        <path d="M6.445 11.688V6.354h-.633A12.6 12.6 0 0 0 4.5 7.16v.695c.375-.257.969-.62 1.258-.777h.012v4.61h.675zm1.188-1.305c.047.64.594 1.406 1.703 1.406 1.258 0 2-1.066 2-2.871 0-1.934-.781-2.668-1.953-2.668-.926 0-1.797.672-1.797 1.809 0 1.16.824 1.77 1.676 1.77.746 0 1.23-.376 1.383-.79h.027c-.004 1.316-.461 2.164-1.305 2.164-.664 0-1.008-.45-1.05-.82h-.684zm2.953-2.317c0 .696-.559 1.18-1.184 1.18-.601 0-1.144-.383-1.144-1.2 0-.823.582-1.21 1.168-1.21.633 0 1.16.398 1.16 1.23z"></path>
+                        </svg>
+                    </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mg-0 pdt-10">
+        <div class="col-md-12">
+            <div class="lsset fnb fn-07e ">
+                <div class="head">
+                    <div class="row mg-0 ln ">
+                        <div class="col-md-2 ">Process date</div>
+                        <div class="col-md-4">File name</div>
+                        <div class="col-md-1 tx-center">Insert</div>
+                        <div class="col-md-1 tx-center">Update</div>
+                        <div class="col-md-1 tx-center">Delete</div>
+                        <div class="col-md-1 tx-center">Error</div>
+                        <div class="col-md-1 ">State</div>
+                    </div>
+                </div>
+            
+                <div class="line bgsub-head dgexsource">
+                    <ng-scrollbar>
+                    <div class="row mg-0 ln " *ngFor="let ln of lssource" (click)="meLine(ln)">                        
+                        <div class="col-md-2 text-danger ">  {{ln.datestart | date : dateformatlong}}</div>
+                        <div class="col-md-4 text-truncate ">{{ln.filename}} </div>
+                        <div class="col-md-1 tx-center text-primary">{{ln.opsins | number}} </div>
+                        <div class="col-md-1 tx-center text-success">{{ln.opsupd | number}} </div>
+                        <div class="col-md-1 tx-center text-warning">{{ln.opsrem | number}} </div>
+                        <div class="col-md-1 tx-center text-danger">{{ln.opserr | number}} </div>
+                        <div class="col-md-1 "><span class="fa {{ngDecIcon(ln.tflow)}}"></span>&nbsp;&nbsp;{{ngDecState(ln.tflow)}} </div>
+                    </div>
+                    </ng-scrollbar>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mg-0 pdt-10">
+        <div class="col-md-12">
+            <div class="lsset  ">
+                <div class="head">
+                    <div class="row mg-0 ln ">
+                        <div class="col-md-1 ">Area</div>
+                        <div class="col-md-1 ">Storage</div>
+                        <div class="col-md-1 ">Type</div>
+                        <div class="col-md-3 ">Location</div>
+                        <div class="col-md-6 ">Fullname</div>
+                    </div>
+                </div>
+            
+                <div class="line bgsub-head dgexline "  > 
+                    <ng-scrollbar>         
+                    <div class="row mg-0 ln "*ngFor="let ln of lsline" >
+                        <div class="col-md-1 text-danger">{{ln.spcarea}} </div>
+                        <div class="col-md-1 ">{{ln.fltype}}</div>
+                        <div class="col-md-1 ">{{ln.lsloctype}}</div>                        
+                        <div class="col-md-3 ">{{ln.lscode}}</div>
+                        <div class="col-md-6 ">{{ln.lscodefull}}</div>
+                    </div>
+                    </ng-scrollbar>
+                </div>
+
+                <div class="foot bgsub-head fnb pd-5">
+                    <div class="row mg-0">
+                        <div class="col-md-2 pdt-5">
+                            Total &nbsp; &nbsp;<span class="text-danger">{{lsline.length}}</span> &nbsp; &nbsp; Product
+                        </div>
+                       
+                        <div class="col-md-1 text-right lh-08e">
+                            <div class="fn-06e fnb text-danger">Row Limit</div>
+                            <div class="fn-06e">Per Page</div>
+                        </div>
+                        
+                        <div class="col-md-1">
+    
+                            <ng-select class=" text-danger"  class="custom custom-sm" bindLabel="value" bindvalue="value" 
+                                        [clearable]="false"  [(ngModel)]="slrowlmt" [items]="lsrowlmt" (change)="ngChangeRowlmt()" >
+                                <ng-template ng-label-tmp let-item="item"><span class="text-danger b">{{item.value}}</span> </ng-template>
+                                <ng-template ng-option-tmp let-item="item"><span class="text-danger b">{{item.value}}</span> </ng-template>
+                            </ng-select>
+                        
+                        </div>
+                        <div class="col-md-5"></div>
+                        <div class="col-md-3">
+                            <ngb-pagination [(page)]="page" [pageSize]="pageSize" [collectionSize]="lsline.length" class="d-flex justify-content-end" ></ngb-pagination>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+

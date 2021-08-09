@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    
+    <RootNamespace>Snaps.WMS.Hook</RootNamespace>
+    <Product>Snaps.WMS.Hook</Product>
+    <Description>Web Hook managment </Description>
+    
+    <Version>1.0.0.1</Version>
+    <AssemblyVersion>1.0.0.1</AssemblyVersion>
+    <FileVersion>1.0.0.1</FileVersion>
+
+    <TargetFramework>netstandard2.1</TargetFramework>
+
+    <Authors>Sitthinun Muangthai</Authors>
+    <Company>Snaps Solutions Co,Ltd.</Company> 
+    <Copyright>Snaps Solution @ 2020+</Copyright>
+  </PropertyGroup>
+
+  <ItemGroup>
+
+    <Reference Include="Snaps.Helpers.Hash"> <HintPath>externallibs\Snaps.Helpers.Hash.dll</HintPath> </Reference>
+    <Reference Include="Snaps.Helpers.DbContext.SqlServer"> <HintPath>externallibs\Snaps.Helpers.DbContext.SqlServer.dll</HintPath> </Reference>
+    <Reference Include="Snaps.Helpers.StringExt"> <HintPath>externallibs\Snaps.Helpers.StringExt.dll</HintPath> </Reference>
+
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.ComponentModel.Annotations" Version="4.7.0" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
+  </ItemGroup>
+</Project>

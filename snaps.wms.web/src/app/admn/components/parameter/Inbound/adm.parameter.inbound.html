@@ -1,0 +1,227 @@
+
+<div class="row pdt-10">
+
+    <div class="col-md-12 fn-palette-1 ">
+        <div class="lsset fn fn-07e fnb ">
+            <div class="head">
+                <div class="row mg-0 ln ">
+                    <div class="col-md-10 ">Inbound Process</div>
+                    <div class="col-md-2 ">Last modify</div>
+                </div>
+            </div>
+        
+            <div class="line bgsub-head ">
+
+                <div class="row mg-0 ln pd-8" *ngIf="pmallowcalculatemfg">
+                    <div class="col-md-9 col-xs-10 lh-1e">
+                        <span class="">{{pmallowcalculatemfg.pmdesc}}</span><br />
+                        <span class="text-muted">{{pmallowcalculatemfg.pmdescalt}}</span>
+                    </div>
+                    <div class="col-md-1 col-xs-2 pdt-3">
+                        <ui-switch  checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" 
+                                    [(ngModel)]="pmallowcalculatemfg.pmvalue" (change)="save(pmallowcalculatemfg)"
+                        ></ui-switch>
+                    </div>
+                    <div class="col-md-2 lh-1e">
+                        <span class="text-danger fnb">{{pmallowcalculatemfg.datemodify | date : dateformatlong }}</span><br>
+                        <span class="text-muted">{{pmallowcalculatemfg.accnmodify}}</span>
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln pd-8" *ngIf="pmallowpartail">
+                    <div class="col-md-9 col-xs-10 lh-1e">
+                        <span class="">{{pmallowpartail.pmdesc}}</span><br />
+                        <span class="text-muted">{{pmallowpartail.pmdescalt}}</span>
+                    </div>
+                    <div class="col-md-1 col-xs-2 pdt-3">
+                        <ui-switch  checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" 
+                                    [(ngModel)]="pmallowpartail.pmvalue" (change)="save(pmallowpartail)"
+                        ></ui-switch>
+                    </div>
+                    <div class="col-md-2 lh-1e">
+                        <span class="text-danger fnb">{{pmallowpartail.datemodify | date : dateformatlong }}</span><br>
+                        <span class="text-muted">{{pmallowpartail.accnmodify}}</span>
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln pd-8" *ngIf="pmallowoverplan">
+                    <div class="col-md-9 col-xs-10 lh-1e">
+                        <span class="">{{pmallowoverplan.pmdesc}}</span><br />
+                        <span class="text-muted">{{pmallowoverplan.pmdescalt}}</span>
+                    </div>
+                    <div class="col-md-1 col-xs-2 pdt-3">
+                        <ui-switch  checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" 
+                                    [(ngModel)]="pmallowoverplan.pmvalue" (change)="save(pmallowoverplan)"
+                        ></ui-switch>
+                    </div>
+                    <div class="col-md-2 lh-1e">
+                        <span class="text-danger fnb">{{pmallowoverplan.datemodify | date : dateformatlong }}</span><br>
+                        <span class="text-muted">{{pmallowoverplan.accnmodify}}</span>
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln pd-8" *ngIf="pmallowexpired">
+                    <div class="col-md-9 col-xs-10 lh-1e">
+                        <span class="">{{pmallowexpired.pmdesc}}</span><br />
+                        <span class="text-muted">{{pmallowexpired.pmdescalt}}</span>
+                    </div>
+                    <div class="col-md-1 col-xs-2 pdt-3">
+                        <ui-switch  checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" 
+                                    [(ngModel)]="pmallowexpired.pmvalue" (change)="save(pmallowexpired)"
+                        ></ui-switch>
+                    </div>
+                    <div class="col-md-2 lh-1e">
+                        <span class="text-danger fnb">{{pmallowexpired.datemodify | date : dateformatlong }}</span><br>
+                        <span class="text-muted">{{pmallowexpired.accnmodify}}</span>
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln pd-8" *ngIf="pmallowchangeunit">
+                    <div class="col-md-9 col-xs-10 lh-1e">
+                        <span class="">{{pmallowchangeunit.pmdesc}}</span><br />
+                        <span class="text-muted">{{pmallowchangeunit.pmdescalt}}</span>
+                    </div>
+                    <div class="col-md-1 col-xs-2 pdt-3">
+                        <ui-switch  checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" 
+                                    [(ngModel)]="pmallowchangeunit.pmvalue" (change)="save(pmallowchangeunit)"
+                        ></ui-switch>
+                    </div>
+                    <div class="col-md-2 lh-1e">
+                        <span class="text-danger fnb">{{pmallowchangeunit.datemodify | date : dateformatlong }}</span><br>
+                        <span class="text-muted">{{pmallowchangeunit.accnmodify}}</span>
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln pd-8" *ngIf="pmallowshowqtyorder">
+                    <div class="col-md-9 col-xs-10 lh-1e">
+                        <span class="">{{pmallowshowqtyorder.pmdesc}}</span><br />
+                        <span class="text-muted">{{pmallowshowqtyorder.pmdescalt}}</span>
+                    </div>
+                    <div class="col-md-1 col-xs-2 pdt-3">
+                        <ui-switch  checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" 
+                                    [(ngModel)]="pmallowshowqtyorder.pmvalue" (change)="save(pmallowshowqtyorder)"
+                        ></ui-switch>
+                    </div>
+                    <div class="col-md-2 lh-1e">
+                        <span class="text-danger fnb">{{pmallowshowqtyorder.datemodify | date : dateformatlong }}</span><br>
+                        <span class="text-muted">{{pmallowshowqtyorder.accnmodify}}</span>
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln pd-8" *ngIf="pmallowautostaging">
+                    <div class="col-md-9 col-xs-10 lh-1e">
+                        <span class="">{{pmallowautostaging.pmdesc}}</span><br />
+                        <span class="text-muted">{{pmallowautostaging.pmdescalt}}</span>
+                    </div>
+                    <div class="col-md-1 col-xs-2 pdt-3">
+                        <ui-switch  checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" 
+                                    [(ngModel)]="pmallowautostaging.pmvalue" (change)="save(pmallowautostaging)"
+                        ></ui-switch>
+                    </div>
+                    <div class="col-md-2 lh-1e">
+                        <span class="text-danger fnb">{{pmallowautostaging.datemodify | date : dateformatlong }}</span><br>
+                        <span class="text-muted">{{pmallowautostaging.accnmodify}}</span>
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln pd-8" *ngIf="pmallowcontrolcapacity">
+                    <div class="col-md-9 col-xs-10 lh-1e">
+                        <span class="">{{pmallowcontrolcapacity.pmdesc}}</span><br />
+                        <span class="text-muted">{{pmallowcontrolcapacity.pmdescalt}}</span>
+                    </div>
+                    <div class="col-md-1 col-xs-2 pdt-3">
+                        <ui-switch  checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" 
+                                    [(ngModel)]="pmallowcontrolcapacity.pmvalue" (change)="save(pmallowcontrolcapacity)"
+                        ></ui-switch>
+                    </div>
+                    <div class="col-md-2 lh-1e">
+                        <span class="text-danger fnb">{{pmallowcontrolcapacity.datemodify | date : dateformatlong }}</span><br>
+                        <span class="text-muted">{{pmallowcontrolcapacity.accnmodify}}</span>
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln pd-8" *ngIf="pmallowchangepriority">
+                    <div class="col-md-9 col-xs-10 lh-1e">
+                        <span class="">{{pmallowchangepriority.pmdesc}}</span><br />
+                        <span class="text-muted">{{pmallowchangepriority.pmdescalt}}</span>
+                    </div>
+                    <div class="col-md-1 col-xs-2 pdt-3">
+                        <ui-switch  checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" 
+                                    [(ngModel)]="pmallowchangepriority.pmvalue" (change)="save(pmallowchangepriority)"
+                        ></ui-switch>
+                    </div>
+                    <div class="col-md-2 lh-1e">
+                        <span class="text-danger fnb">{{pmallowchangepriority.datemodify | date : dateformatlong }}</span><br>
+                        <span class="text-muted">{{pmallowchangepriority.accnmodify}}</span>
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln pd-8" *ngIf="pmallowcancel">
+                    <div class="col-md-9 col-xs-10 lh-1e">
+                        <span class="">{{pmallowcancel.pmdesc}}</span><br />
+                        <span class="text-muted">{{pmallowcancel.pmdescalt}}</span>
+                    </div>
+                    <div class="col-md-1 col-xs-2 pdt-3">
+                        <ui-switch  checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" 
+                                    [(ngModel)]="pmallowcancel.pmvalue" (change)="save(pmallowcancel)"
+                        ></ui-switch>
+                    </div>
+                    <div class="col-md-2 lh-1e">
+                        <span class="text-danger fnb">{{pmallowcancel.datemodify | date : dateformatlong }}</span><br>
+                        <span class="text-muted">{{pmallowcancel.accnmodify}}</span>
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln pd-8" *ngIf="pmallowgendistplan">
+                    <div class="col-md-9 col-xs-10 lh-1e">
+                        <span class="">{{pmallowgendistplan.pmdesc}}</span><br />
+                        <span class="text-muted">{{pmallowgendistplan.pmdescalt}}</span>
+                    </div>
+                    <div class="col-md-1 col-xs-2 pdt-3">
+                        <ui-switch  checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" 
+                                    [(ngModel)]="pmallowgendistplan.pmvalue" (change)="save(pmallowgendistplan)"
+                        ></ui-switch>
+                    </div>
+                    <div class="col-md-2 lh-1e">
+                        <span class="text-danger fnb">{{pmallowgendistplan.datemodify | date : dateformatlong }}</span><br>
+                        <span class="text-muted">{{pmallowgendistplan.accnmodify}}</span>
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln pd-8" *ngIf="pmallowgenstckputaway">
+                    <div class="col-md-9 col-xs-10 lh-1e">
+                        <span class="">{{pmallowgenstckputaway.pmdesc}}</span><br />
+                        <span class="text-muted">{{pmallowgenstckputaway.pmdescalt}}</span>
+                    </div>
+                    <div class="col-md-1 col-xs-2 pdt-3">
+                        <ui-switch  checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" 
+                                    [(ngModel)]="pmallowgenstckputaway.pmvalue" (change)="save(pmallowgenstckputaway)"
+                        ></ui-switch>
+                    </div>
+                    <div class="col-md-2 lh-1e">
+                        <span class="text-danger fnb">{{pmallowgenstckputaway.datemodify | date : dateformatlong }}</span><br>
+                        <span class="text-muted">{{pmallowgenstckputaway.accnmodify}}</span>
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln pd-8" *ngIf="pmallowreplandelivery">
+                    <div class="col-md-9 col-xs-10 lh-1e">
+                        <span class="">{{pmallowreplandelivery.pmdesc}}</span><br />
+                        <span class="text-muted">{{pmallowreplandelivery.pmdescalt}}</span>
+                    </div>
+                    <div class="col-md-1 col-xs-2 pdt-3">
+                        <ui-switch  checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" 
+                                    [(ngModel)]="pmallowreplandelivery.pmvalue" (change)="save(pmallowreplandelivery)"
+                        ></ui-switch>
+                    </div>
+                    <div class="col-md-2 lh-1e">
+                        <span class="text-danger fnb">{{pmallowreplandelivery.datemodify | date : dateformatlong }}</span><br>
+                        <span class="text-muted">{{pmallowreplandelivery.accnmodify}}</span>
+                    </div>
+                </div>
+             
+            </div>
+        </div>
+    </div>
+
+</div>

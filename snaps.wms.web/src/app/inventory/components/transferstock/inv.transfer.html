@@ -1,0 +1,475 @@
+<div class="bgsub-info">
+    <div class="bgprime" style="height: 44px;background-color: #ffffff;border-bottom: 1px solid #e0e0e0;"> </div>
+    <div class="container">        
+        <div class="row " style="margin-top:-34px">
+            <ul ngbNav #nav="ngbNav" [(activeId)]="crtab" class="nav-tabs" [destroyOnHide]="false">
+                <li [ngbNavItem]="1">
+                  <a ngbNavLink class="w150 fn fn-07e">Transfer stock</a>
+                  <ng-template ngbNavContent>
+                    <div class="container">
+                        <div class="row pdt-10">                    
+                            <div class="col-md-12">                    
+                                <div class="row">
+                                    <div class="col-md-7 fnb fn ">
+                                        <span class="fn-palette-1">Inventory</span>&nbsp;<i class="fas fa-chevron-right fa-xs"></i>&nbsp;<span class="fn-palette-5">Transfer</span>
+                                    </div>
+
+                                    <div class="col-md-2 text-right">
+                                        <div class="d-grid gap-2">
+                                        
+                                            <ng-template #popContent>
+                                                <div  style="width:280px" class="fn fn-07e fnb"> 
+                                                    <div class="row ln pd-5">
+                                                        <div class="col-md-4 pdt-5">Article</div>
+                                                        <div class="col-md-8">
+                                                            <input class="form-control form-control-sm  text-danger " 
+                                                            type="text" placeholder="Article" [(ngModel)]="pm.article">
+                                                        </div>
+                                                    </div>
+                                                    <div class="row ln pd-5">
+                                                        <div class="col-md-4 pdt-5">HU.no</div>
+                                                        <div class="col-md-8">
+                                                            <input class="form-control form-control-sm  text-danger " 
+                                                            type="text" placeholder="HU.no" [(ngModel)]="pm.huno">
+                                                        </div>
+                                                    </div>
+                                                    <div class="row ln pd-5">
+                                                        <div class="col-md-4 pdt-5">TH.Code</div>
+                                                        <div class="col-md-8">
+                                                            <input class="form-control form-control-sm  text-danger " 
+                                                            type="text" placeholder="Third party code" [(ngModel)]="pm.thcode">
+                                                        </div>
+                                                    </div>
+                                                    <div class="row ln pd-5">
+                                                        <div class="col-md-4 pdt-5">Ref.No</div>
+                                                        <div class="col-md-8">
+                                                            <input class="form-control form-control-sm  text-danger " 
+                                                            type="text" placeholder="Reference no" [(ngModel)]="pm.inrefno">
+                                                        </div>
+                                                    </div>
+                                                    <div class="row ln pd-5">
+                                                        <div class="col-md-4 pdt-5">Location</div>
+                                                        <div class="col-md-8">
+                                                            <input class="form-control form-control-sm  text-danger " 
+                                                            type="text" placeholder="Location code" [(ngModel)]="pm.loccode">
+                                                        </div>
+                                                    </div>
+                                                    <div class="row ln pd-5">
+                                                        <div class="col-md-4 pdt-5">Batchno</div>
+                                                        <div class="col-md-8">
+                                                            <input class="form-control form-control-sm  text-danger " 
+                                                            type="text" placeholder="Batch no" [(ngModel)]="pm.batchno">
+                                                        </div>
+                                                    </div>
+                                                    <div class="row ln pd-5">
+                                                        <div class="col-md-4 pdt-5">Date Receipt </div>
+                                                        <div class="col-md-8">
+                                                            <div class="input-group">
+                                                                <input  class="form-control text-danger fnb"name="dp" ngbDatepicker #datereceipt="ngbDatepicker"  placeholder="{{dateformat}}"
+                                                                        [(ngModel)]="pm.daterec">
+                                                                <div class="input-group-append">
+                                                                <button type="button" class="btn snaps-btngroup btn-prime" (click)="datereceipt.toggle()" >
+                                                                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-calendar-date" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                                    <path fill-rule="evenodd" d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"></path>
+                                                                    <path d="M6.445 11.688V6.354h-.633A12.6 12.6 0 0 0 4.5 7.16v.695c.375-.257.969-.62 1.258-.777h.012v4.61h.675zm1.188-1.305c.047.64.594 1.406 1.703 1.406 1.258 0 2-1.066 2-2.871 0-1.934-.781-2.668-1.953-2.668-.926 0-1.797.672-1.797 1.809 0 1.16.824 1.77 1.676 1.77.746 0 1.23-.376 1.383-.79h.027c-.004 1.316-.461 2.164-1.305 2.164-.664 0-1.008-.45-1.05-.82h-.684zm2.953-2.317c0 .696-.559 1.18-1.184 1.18-.601 0-1.144-.383-1.144-1.2 0-.823.582-1.21 1.168-1.21.633 0 1.16.398 1.16 1.23z"></path>
+                                                                    </svg>
+                                                                </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row ln pd-5">
+                                                        <div class="col-md-4 pdt-5">Date Receipt </div>
+                                                        <div class="col-md-8">
+                                                            <div class="input-group">
+                                                                <input  class="form-control text-danger fnb"name="dp" ngbDatepicker #datemfg="ngbDatepicker"  placeholder="{{dateformat}}"
+                                                                        [(ngModel)]="pm.datemfg">
+                                                                <div class="input-group-append">
+                                                                <button type="button" class="btn snaps-btngroup btn-prime" (click)="datemfg.toggle()" >
+                                                                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-calendar-date" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                                    <path fill-rule="evenodd" d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"></path>
+                                                                    <path d="M6.445 11.688V6.354h-.633A12.6 12.6 0 0 0 4.5 7.16v.695c.375-.257.969-.62 1.258-.777h.012v4.61h.675zm1.188-1.305c.047.64.594 1.406 1.703 1.406 1.258 0 2-1.066 2-2.871 0-1.934-.781-2.668-1.953-2.668-.926 0-1.797.672-1.797 1.809 0 1.16.824 1.77 1.676 1.77.746 0 1.23-.376 1.383-.79h.027c-.004 1.316-.461 2.164-1.305 2.164-.664 0-1.008-.45-1.05-.82h-.684zm2.953-2.317c0 .696-.559 1.18-1.184 1.18-.601 0-1.144-.383-1.144-1.2 0-.823.582-1.21 1.168-1.21.633 0 1.16.398 1.16 1.23z"></path>
+                                                                    </svg>
+                                                                </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row ln pd-5">
+                                                        <div class="col-md-4 pdt-5">Date Receipt </div>
+                                                        <div class="col-md-8">
+                                                            <div class="input-group">
+                                                                <input  class="form-control text-danger fnb"name="dp" ngbDatepicker #dateexp="ngbDatepicker"  placeholder="{{dateformat}}"
+                                                                        [(ngModel)]="pm.dateexp">
+                                                                <div class="input-group-append">
+                                                                <button type="button" class="btn snaps-btngroup btn-prime" (click)="dateexp.toggle()" >
+                                                                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-calendar-date" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                                    <path fill-rule="evenodd" d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"></path>
+                                                                    <path d="M6.445 11.688V6.354h-.633A12.6 12.6 0 0 0 4.5 7.16v.695c.375-.257.969-.62 1.258-.777h.012v4.61h.675zm1.188-1.305c.047.64.594 1.406 1.703 1.406 1.258 0 2-1.066 2-2.871 0-1.934-.781-2.668-1.953-2.668-.926 0-1.797.672-1.797 1.809 0 1.16.824 1.77 1.676 1.77.746 0 1.23-.376 1.383-.79h.027c-.004 1.316-.461 2.164-1.305 2.164-.664 0-1.008-.45-1.05-.82h-.684zm2.953-2.317c0 .696-.559 1.18-1.184 1.18-.601 0-1.144-.383-1.144-1.2 0-.823.582-1.21 1.168-1.21.633 0 1.16.398 1.16 1.23z"></path>
+                                                                    </svg>
+                                                                </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row ln pd-5">
+                                                        <div class="col-md-4 pdt-5">Remarks</div>
+                                                        <div class="col-md-8">
+                                                            <input class="form-control form-control-sm  text-danger " 
+                                                            type="text" placeholder="Remarks" [(ngModel)]="pm.stkremarks">
+                                                        </div>
+                                                    </div>
+                                                    <div class="row ln pd-5">
+                                                        <div class="col-md-4 pdt-5">Serial no</div>
+                                                        <div class="col-md-8">
+                                                            <input class="form-control form-control-sm  text-danger " 
+                                                            type="text" placeholder="Serial no" [(ngModel)]="pm.serialno">
+                                                        </div>
+                                                    </div>                                                   
+
+
+                                                    <div class="row   pd-5">
+                                                        <div class="col-md-4">&nbsp;</div>
+                                                        <div class="col-md-8">
+                                                            <div class="d-grid gap-2">
+                        
+                                                                <button type="button" class="btn snaps-warning btn-block mp " (click)="fndproct()">
+                                                                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-search" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                                        <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z"/>
+                                                                        <path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>
+                                                                    </svg>
+                                                                    &nbsp;
+                                                                    Filter product
+                                                                </button>
+                        
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </ng-template>
+                                            <ng-template #popTitle >
+                                                <div style="width:280px">
+                                                    <span class="fn fn-08e fnb">Search parameter</span>
+                                                </div>
+                                            </ng-template>
+                                            <button type="button" class="btn btn-secondary snaps-btnblank fn-07e" placement="bottom" [autoClose]="'outside'" [ngbPopover]="popContent" [popoverTitle]="popTitle">
+                                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-funnel-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                    <path fill-rule="evenodd" d="M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.128.334L10 8.692V13.5a.5.5 0 0 1-.342.474l-3 1A.5.5 0 0 1 6 14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5v-2z"/>
+                                                </svg> Parameters
+                                            </button>
+                        
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3 ">
+                                        <div class="input-group fnb">
+                                            <input class="form-control fn-07e fnb text-danger "
+                                             placeholder="Article code , name or Third party" name="dp"                                              
+                                             [(ngModel)]="pm.searchall"
+                                            >
+                                            <div class="input-group-append">
+                                            <button type="button" class="btn snaps-btngroup btn-prime "  (click)="fndproct();">
+                                                <i class="fas fa-search"></i>
+                                            </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            
+                            </div>
+                        </div>
+
+
+                        <div class="row pdt-10 fn-07e bgsub-info">
+                            
+                                <div class="col-md-12">
+                                    <div class="lsset fn-07e "> 
+                                        <div class="head">
+                                            <div class="row mg-0 ln ">
+                                                <div class="col-md-2 ">Product </div>
+                                                <div class="col-md-7 ">Description</div>
+                                                <div class="col-md-1 text-center">Unit</div>
+                                                <div class="col-md-1 text-center">PU</div>
+                                                <div class="col-md-1 text-center">SKU</div>   
+                                            </div>
+                                        </div>
+                            
+                                        <div class="line bgsub-head dgproduct " >
+                                            <ng-scrollbar>
+                                                <div class="row mg-0 ln  fnb" *ngFor="let ln of lsstock;let i = index;" [class.row-active]="i== artrowselect" (click)="getinfo(ln,i)">
+                                                    <div class="col-md-2 "> <span class="text-danger">{{ln.article}}-{{ln.lv}}</span>  </div>
+                                                    <div class="col-md-7 text-truncate"> <span class="">{{ln.description}}</span>  </div>
+                                                    <div class="col-md-1 tx-center"> <span class="">{{ngDecUnitstock(ln.unitmanage)}}</span> </div>
+                                                    <div class="col-md-1 tx-right"> <span class="">{{cvunit(ln.cronhandpu)}}</span> </div>
+                                                    <div class="col-md-1 tx-right"> <span class="">{{ln.cronhand}}</span> </div>
+                                                </div>
+                                            </ng-scrollbar>                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row pdt-10 fn-07e bgsub-info">
+                                <div class="col-md-7">
+
+                                    <div class="lsset"> 
+                                        <div class="head">
+                                            <div class="row mg-0 ln ">
+                                                <div class="col-md-2 ">Huno </div>
+                                                <div class="col-md-2 ">Expire</div>
+                                                <div class="col-md-2 ">Batch no</div>
+                                                <div class="col-md-2 ">Location</div>
+                                                <div class="col-md-2 tx-right">Quantity</div>                                
+                                                <div class="col-md-2 ">State</div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="line bgsub-head dgstockline ">
+                                            <ng-scrollbar>
+                                            <div class="row mg-0 ln fnb " *ngFor="let ln of instock?.lines;let i = index;"  [class.row-active]="i== palrowselect" (click)="slcstock(ln,i)">
+                                                <div class="col-md-2 "> <span class="text-danger">{{ln.huno}}</span>  </div>
+                                                <div class="col-md-2 tx-overflow"> <span class="">{{ln.dateexp | date : dateformat }}</span>  </div>
+                                                <div class="col-md-2 tx-overflow"> <span class="text-success">{{ln.batchno}}</span> </div>
+                                                <div class="col-md-2 tx-overflow"> <span class="text-success">{{ln.loccode}}</span> </div>
+                                                <div class="col-md-2 tx-right"> <span class="text-dark">{{ln.qtysku}}</span> </div>
+                                                <div class="col-md-2 text-truncate" > 
+                                                    <span class="{{ngStockicon(ln.tflowsign,ln.tflow)}}"></span>
+                                                    <span class="">&nbsp; {{ln.stkremarks}}</span>
+                                                </div>
+                                            </div>
+                                        </ng-scrollbar>
+                                        </div>
+
+                                        <div class="head">
+                                            <div class="row mg-0 ln ">
+                                                <div class="col-md-8 text-right">Summary </div>
+                                                <div class="col-md-2 text-right ">{{instocksum | number }}</div>                              
+                                                <div class="col-md-2 ">SKU</div>
+                                            </div>
+                                        </div>                                        
+                                    </div>
+
+                                    
+                                </div>
+
+                                <div class="col-md-5">
+                                    <div class="lsset propset "> 
+                                        <div class="head" >
+                                            <div class="row mg-0 ln ">
+                                                <div class="col-md-12 ">Product selection </div>
+                                            </div>
+                                        </div>                         
+                                        <div class="line bgsub-head fnb dgtransfer" >
+                                            <div class="row mg-0 ln " >
+                                                <div class="col-md-3 lh-1e1">
+                                                    <span class="text-dark fnb">HU No.</span>
+                                                </div>
+                                                <div class="col-md-4 tx-overflow">
+                                                    <span class="text-danger fnb ">{{crcort?.huno}}</span>                  
+                                                </div>
+
+                                                <div class="col-md-2 text-dark tx-overflow"> PU Code
+                                                </div>
+                                                <div class="col-md-3 tx-center">
+                                                    <span class="text-danger fnb">{{ngDecUnitstock(crcort.unitmanage)}}</span>
+                                                </div> 
+                                                  
+                                            </div>
+        
+                                            <div class="row mg-0 ln " >
+                                                <div class="col-md-3 lh-1e1">
+                                                    <span class="text-dark fnb">Product</span>
+                                                </div>
+                                                <div class="col-md-4 tx-overflow">
+                                                    <span class="text-danger fnb ">{{crcort?.article}} - {{crcort?.pv}} - {{crcort?.lv}}</span>                  
+                                                </div>
+                                                
+                                                <div class="col-md-2 text-dark tx-overflow"> Ratio
+                                                </div>
+                                                <div class="col-md-3 tx-overflow fn-06e text-muted" *ngIf="crcort.unitratio">
+                                                    <span class="text-danger fnb fn-06e">1</span> PU = <span class="text-danger fnb fn-06e">{{crcort.unitratio}} </span> SKU 
+                                                </div>     
+                                            </div>
+                            
+                                            <div class="row mg-0 ln " >
+                                                <div class="col-md-3">
+                                                    <span class="text-dark fnb">Name</span>
+                                                </div>
+                                                <div class="col-md-9 text-truncate">
+                                                    <span class="text-danger fnb">{{crcort?.description}}</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="row mg-0 ln " >
+                                                <div class="col-md-3">
+                                                    <span class="text-dark fnb">MGF Date </span>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <span class="text-danger fnb">{{crcort?.datemfg | date : dateformat }}</span>
+                                                </div> 
+        
+                                                <div class="col-md-3">
+                                                    <span class="text-dark fnb">Expire Date </span>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <span class="text-danger fnb">{{crcort?.dateexp | date : dateformat }}</span>
+                                                </div> 
+                                            </div>
+
+                                            <div class="row mg-0 ln " >
+                                                <div class="col-md-3">
+                                                    <span class="text-dark fnb">Source.Location </span>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <span class="text-danger fnb">{{crcort?.loccode}}</span>
+                                                </div> 
+        
+                                                <div class="col-md-3">
+                                                    <span class="text-dark fnb">Batch no </span>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <span class="text-danger fnb">{{crcort?.batchno}}</span>
+                                                </div>
+                                                
+                                            </div>
+
+                                            <div class="row mg-0 ln " >
+                                                <div class="col-md-3 pdt-5">
+                                                    <span class="text-dark fnb">Target.Location</span>
+                                                </div>
+                                                <div class="col-md-9" >                                                    
+                                                        <ng-select class="fn-1e5 "  class="custom custom-sm mglr-5" bindLabel="desc" bindvalue="value" 
+                                                                    [clearable]="false"  [(ngModel)]="crloccode" [items]="lsloccode"
+                                                                    [addTag]="addLocation" (change)="resetcal()"  >
+                                                            <ng-template ng-label-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                                                            <ng-template ng-option-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                                                        </ng-select>
+                                                </div> 
+                                                <!-- <div class="col-md-5">
+                                                    <button type="button" class="btn snaps-primary btn-block mp fn-white" (click)="validate()"  *ngIf="validated == 0 && crcort.tflow == 'IO'">
+                                                        <i class="fas fa-map-marker-alt"></i>
+                                                        &nbsp;
+                                                        Validate
+                                                    </button>
+                                                </div>  -->
+                                            </div>    
+        
+                                            <div class="row mg-0 ln " >
+                                                <div class="col-md-3 text-dark tx-overflow"> Stock Before
+                                                </div>
+                                                <div class="col-md-3 tx-center">
+                                                    <span class="text-danger fnb">{{crcort.stockbeforesku}}</span>
+                                                </div> 
+                                                <div class="col-md-1">
+                                                    <span class="text-dark fn-06e">SKU</span>
+                                                </div>
+                                                <div class="col-md-3 tx-center">
+                                                    <span class="text-danger fnb">{{crcort.stockbeforepu}}</span>
+                                                </div>
+                                                <div class="col-md-1">
+                                                    <span class="text-dark fn-06e">{{ngDecUnitstock(crcort.unitmanage)}}</span>
+                                                </div>                                 
+                                            </div>
+                                            
+                                            <div class="row mg-0 ln " *ngIf="crloccode" >
+                                                <div class="col-md-3">
+                                                    Transfer<br/> ( <span class="text-danger fnb">SKU</span> )
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group form-control-xs mg-0" *ngIf="validated==0 && crcort.tflow == 'IO'">
+                                                        <input class="form-control  text-danger fnb tx-center" appOnlynumber type="text" placeholder="" 
+                                                                [(ngModel)]="crcort.variancesku" (change)="calstock('vrsku')"
+                                                                [disabled]="crloccode?.valopnfirst == 'reserve'"
+                                                                maxlength="5" >
+                                                    </div>
+                                                    <span class="text-danger fnb" *ngIf="validated==1|| crcort.tflow == 'ED' ">{{crcort.variancesku}}</span>
+                                                </div>         
+                                                <div class="col-md-3">
+                                                    Transfer<br/> ( <span class="text-danger fnb">PU</span> : {{ngDecUnitstock(crcort.unitmanage)}} )
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group form-control-xs mg-0"  *ngIf="validated==0 && crcort.tflow == 'IO'">
+                                                        <input class="form-control  text-danger fnb tx-center" appOnlynumber type="text" placeholder="" 
+                                                        [(ngModel)]="crcort.variancepu" (change)="calstock('vrpu')"
+                                                         maxlength="5" >
+                                                    </div>
+                                                    <span class="text-danger fnb" *ngIf="validated==1|| crcort.tflow == 'ED' ">{{crcort.variancepu}}</span>
+                                                </div> 
+                                            </div>
+
+                                            <div class="row mg-0 ln " *ngIf="crloccode"  >
+                                                <div class="col-md-3 ">
+                                                    After<br/> ( <span class="text-danger fnb">SKU</span> )
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group form-control-xs mg-0"  *ngIf="validated==0 && crcort.tflow == 'IO'">
+                                                        <input class="form-control  text-danger fnb tx-center" appOnlynumber type="text" placeholder="" 
+                                                        [(ngModel)]="crcort.aftersku" (change)="calstock('afsku')"
+                                                        [disabled]="crloccode?.valopnfirst == 'reserve'"
+                                                         maxlength="5" >
+                                                    </div>
+                                                    <span class="text-danger fnb" *ngIf="validated==1|| crcort.tflow == 'ED' ">{{crcort.aftersku}}</span>
+                                                </div>         
+                                                <div class="col-md-3">
+                                                    After<br/> ( <span class="text-danger fnb">PU</span> : {{ngDecUnitstock(crcort.unitmanage)}})
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group form-control-xs mg-0"  *ngIf="validated==0 && crcort.tflow == 'IO'">
+                                                        <input class="form-control  text-danger fnb tx-center" appOnlynumber type="text" placeholder="" 
+                                                        [(ngModel)]="crcort.afterpu" (change)="calstock('afpu')"
+                                                         maxlength="5" >
+                                                    </div>
+                                                    <span class="text-danger fnb" *ngIf="validated==1|| crcort.tflow == 'ED' ">{{crcort.afterpu}}</span>
+                                                </div> 
+                                            </div>
+        
+        
+                                            <div class="row mg-0 ln " *ngIf="crcort.tflow == 'IO'">
+                                                <div class="col-md-3">
+                                                    <span class="text-dark fnb">Remarks </span>
+                                                </div>
+                                                <div class="col-md-9">                                                    
+                                                    <input class="form-control form-control-xs text-danger fnb  mglr-5" type="text" placeholder="remarks must greater than 10 charactor" [(ngModel)]="crcort.reason" maxlength="100" >
+                                                    
+                                                </div>                                         
+                                            </div>
+        
+                                            <div class="row mg-0 ln " >
+                                                <div class="col-md-3">
+                                                    <span class="text-dark fnb">Task.Movement</span>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <span class="text-danger fnb" *ngIf="crcort.tflow == 'ED' ">{{crcort.rsltaskno}}</span>
+                                                </div> 
+                                                <div class="col-md-3 fnb" *ngIf="crcort.tflow == 'ED' ">New Huno.
+   
+                                                </div>
+                                                <div class="col-md-3" *ngIf="crcort.tflow == 'ED' ">
+                                                    <span class="text-dark fnb">{{crcort.rslhuno}}</span>
+                                                </div>
+        
+                                                <div class="col-md-6" *ngIf="crcort.tflow == 'IO' ">
+                                                    <button type="button" class="btn snaps-primary btn-block mp fn-white" (click)="opstransfer()" 
+                                                    [disabled]="crcort.reason?.length <= 9 ">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-all fn-palette-1" viewBox="0 0 16 16">
+                                                            <path fill-rule="evenodd" d="M8.97 4.97a.75.75 0 0 1 1.071 1.05l-3.992 4.99a.75.75 0 0 1-1.08.02L2.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093L8.95 4.992a.252.252 0 0 1 .02-.022zm-.92 5.14l.92.92a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 1 0-1.091-1.028L9.477 9.417l-.485-.486-.943 1.179z"/>
+                                                          </svg>
+                                                        &nbsp;
+                                                       Transfer stock
+                                                    </button>
+                                                </div> 
+                                            </div>
+        
+                                        </div>
+                                    </div> 
+                                </div>
+                           
+                        </div>
+                    </div>
+                  </ng-template>
+                </li>
+              </ul>              
+              <div [ngbNavOutlet]="nav" class="mt-2"></div>
+        </div>
+    </div>
+</div>

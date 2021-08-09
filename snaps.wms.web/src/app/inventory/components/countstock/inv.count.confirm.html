@@ -1,0 +1,199 @@
+<div class="row">
+    <div class="col-md-8">
+        <div class="row h35">
+
+            <div class="col-md-8 fnb fn ">
+                <span class="fn-palette-1">Count</span>&nbsp;<i class="fas fa-chevron-right fa-xs"></i>&nbsp;<span class="fn-palette-5"> Task</span>
+            </div>
+
+            <div class="col-md-4 ">
+    
+            </div>
+
+        </div>
+        <div class="row pdt-5">
+            <div class="lsset fn-07e pd-0"> 
+                <div class="head">
+                    <div class="row mg-0 ln ">
+                        <div class="col-md-1 ">Task no</div>
+                        <div class="col-md-2 ">Barcode</div>
+                        <div class="col-md-1 ">Article</div>
+                        <div class="col-md-1 ">Lv</div>
+                        <div class="col-md-4 ">Description</div> 
+                        <div class="col-md-1 text-center">Operator</div>  
+                        <div class="col-md-1 text-center">PU</div>                       
+                        <div class="col-md-1 text-center">SKU</div>
+                    </div>
+                </div>
+
+                <div class="line bgsub-head dgtask ">
+
+                    <ng-scrollbar>
+                        <div class="row mg-0 ln  fnb" *ngFor="let ln of coline">
+                            <div class="col-md-1 fnb">{{ln.countcode}}</div>
+                            <div class="col-md-2 fnb">{{ln.barcode}}</div>
+                            <div class="col-md-1 fnb text-danger">{{ln.article}}</div>
+                            <div class="col-md-1 fnb ">{{ln.lv}}</div>
+                            <div class="col-md-4 fnb">{{ln.description}}</div>
+                            <div class="col-md-1 fnb text-primary text-center">
+                                <i *ngIf="ln.corcode=='+'" class="fas fa-plus-circle text-success"></i>
+                                <i *ngIf="ln.corcode=='-'" class="fas fa-minus-circle text-danger"></i>
+                            </div>
+                            <div class="col-md-1 fnb text-danger text-center">{{ln.corqty}}</div>
+                            <div class="col-md-1 fnb text-danger text-center">{{ln.corsku}}</div>
+                            <!-- | number: "1.2-2" -->
+                        </div>
+                    </ng-scrollbar>    
+
+                </div>
+
+                <div class="foot bgsub-head fnb pd-5">
+                    <div class="row mg-0">
+                        <div class="col-md-4 pdt-5 tx-overflow">
+                            {{coline.length}} &nbsp; &nbsp; items
+                        </div>
+                         <div class="col-md-3">                    
+                            <!-- <ng-select class=" text-danger"  class="custom custom-sm" bindLabel="value" bindvalue="value" 
+                                        [clearable]="false"  [(ngModel)]="slrowlmt" [items]="lsrowlmt" (change)="ngChangeRowLimit()" >
+                                <ng-template ng-label-tmp let-item="item"><span class="text-danger b">{{item.value}}</span> </ng-template>
+                                <ng-template ng-option-tmp let-item="item"><span class="text-danger b">{{item.value}}</span> </ng-template>
+                            </ng-select> -->
+                        </div> 
+                        <div class="col-md-5">
+                            <ngb-pagination [(page)]="page" [pageSize]="pageSize" [collectionSize]="coline.length" class="d-flex justify-content-end" ></ngb-pagination>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 pdt-5 ">
+        <div class="h35 ">
+            <div class="row">
+                <div class="col-md-6">&nbsp;</div>
+                <div class="col-md-6">
+                    <!-- <button type="button" class="btn snaps-default btn-block mp btn-xs" >
+                        <i class="fas fa-check-circle"></i>
+                        &nbsp;
+                        Export
+                    </button>     -->
+                </div>
+            </div>
+        </div>
+        <div class="lsset propset fn-07e "> 
+            <div class="head" >
+                <div class="row mg-0 ln ">
+                    <div class="col-md-12 ">Count task summary</div>
+                </div>
+            </div>                         
+            <div class="line bgsub-head "  *ngIf="crtask.tflow != 'NW' ">
+                <div class="row mg-0 ln " >
+                    <div class="col-md-3 ">
+                        <span class="text-dark fnb">Task Type</span>
+                    </div>
+                    <div class="col-md-9" style="text-align: right;">
+                        <span class="text-danger fnb" >{{destask(crtask.counttype)}}</span>
+                    </div>                      
+                </div>
+
+                <div class="row mg-0 ln " >
+                    <div class="col-md-3">
+                        <span class="text-dark fnb tx-overflow">Task code </span>
+                    </div>
+                    <div class="col-md-9" style="text-align: right;">
+                        <span class="text-danger fnb" >{{crtask.countcode}}</span>
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln " >
+                    <div class="col-md-3">
+                        <span class="text-dark fnb tx-overflow">Task Name </span>
+                    </div>
+                    <div class="col-md-9" style="text-align: right;">
+                        <span class="text-danger fnb">{{crtask.countname}}</span>
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln " >
+                    <div class="col-md-3">
+                        <span class="text-dark fnb tx-overflow">Start Date </span>
+                    </div>
+                    <div class="col-md-9"  style="text-align: right;">
+                        <span class="text-danger fnb text-primary">{{crtask.datestart | date : dateformat }}</span>
+                    </div>
+                </div>
+                <div class="row mg-0 ln " >
+                    <div class="col-md-3">
+                        <span class="text-dark fnb tx-overflow">Finish Task </span>
+                    </div>
+                    <div class="col-md-9" style="text-align: right;">
+                        <span class="text-danger fnb" >{{crtask.dateend | date : dateformat }}</span>
+                    </div>
+
+                </div>
+                <!-- <div class="row mg-0 ln " >
+                    <div class="col-md-3">
+                        <span class="text-dark fnb tx-overflow">Valdate Count</span>
+                    </div>
+                    <div class="col-md-9" style="text-align: right;">
+                        <span class="text-danger fnb" >{{crtask.pctvld}} %</span>
+                    </div>
+
+                </div> -->
+                
+                <div class="row mg-0 ln " >
+                    <div class="col-md-3" >
+                        <span class="text-dark fnb tx-overflow">Total Product</span>
+                    </div>
+                    <div class="col-md-9" style="text-align: right;">
+                        <snap class="text-danger m-0 fnb">{{ttart|number}}</snap>
+                    </div>
+
+                </div>
+                <div class="row mg-0 ln " >
+                    <div class="col-md-3">
+                        <span class="text-dark fnb tx-overflow">Total Correction In</span>
+                    </div>
+                    <div class="col-md-9" style="text-align: right;" >
+                        <snap class="text-danger m-0 fnb">{{ttin|number}}</snap>
+                    </div>
+
+                </div>
+                <div class="row mg-0 ln " >
+                    <div class="col-md-3">
+                        <snap class="text-dark fnb tx-overflow">Total Correction Out</snap>
+                    </div>
+                    <div class="col-md-9" style="text-align: right;">
+                        <snap class="text-danger m-0 fnb">{{ttout|number}}</snap>
+                    </div>
+
+                </div>
+                <!-- <div class="row mg-0 ln " >
+                    <div class="col-md-3">
+                        <snap class="text-dark fnb tx-overflow">Total Correction Qty</snap>
+                    </div>
+                    <div class="col-md-9" style="text-align: right;">
+                        <h4 class="text-danger m-0" style="text-align: right;">{{ttqty|number}}</h4>
+                    </div>
+                </div> -->
+                <div class="row mg-0 ln " >
+                    <div class="col-md-12" >
+                        <snap class="text-primary m-0 text-danger" style="text-align: right;">*** auto generate correction</snap>
+                    </div>
+                </div>
+                <div class="row mg-0 ln " >
+                    <div class="col-md-12">
+                        <button type="button" class="btn snaps-success btn-block mp" [disabled]="disabledButton" (click)="ngConfirm()">
+                            <i class="fas fa-check-circle"></i>&nbsp;Confirm Correction Stock
+                        </button>
+
+                    </div> 
+                </div>
+
+
+            </div>
+        </div> 
+    </div>
+</div>

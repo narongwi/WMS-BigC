@@ -1,0 +1,38 @@
+<div class="bgsub-info">
+    <div class="bgprime" style="height: 44px;background-color: #ffffff;border-bottom: 1px solid #e0e0e0;"> </div>
+    <div class="container">        
+        <div class="row " style="margin-top:-34px">
+            <ul ngbNav #nav="ngbNav" [(activeId)]="crtab" (navChange)="feedCount($event)" class="nav-tabs" [destroyOnHide]="false">
+                <li [ngbNavItem]="1">
+                  <a ngbNavLink class="fn fn-07e">Counting Task </a>
+                  <ng-template ngbNavContent>
+                    <appinv-countask #obtask (selout)="ngSelc($event)" ></appinv-countask>
+                  </ng-template>
+                </li>
+
+                <li [ngbNavItem]="2" [disabled]="crplan==''">
+                    <a ngbNavLink class="fn fn-07e">Counting Plan of Task <span class="text-danger"> {{crplan}}</span> </a>
+                    <ng-template ngbNavContent>
+                        <appinv-counplan #obplan (selout)="ngSelc($event)"  [dateformat]="dateformat" [dateformatlong]="dateformatlong"></appinv-counplan>  
+                    </ng-template>
+                </li>
+
+                <li [ngbNavItem]="3" [disabled]="crplan==''">
+                    <a ngbNavLink class="fn fn-07e">Counting Input of Task <span class="text-danger"> {{crplan}}</span> </a>
+                    <ng-template ngbNavContent>
+                        <appinv-countline  #obline (selout)="ngSelc($event)" [dateformat]="dateformat" [dateformatlong]="dateformatlong"></appinv-countline>  
+                    </ng-template>
+                </li>
+                <li [ngbNavItem]="4" [disabled]="crplan==''">
+                    <a ngbNavLink class="fn fn-07e">Correction Stock of Task<span class="text-danger"> {{crplan}}</span> </a>
+                    <ng-template ngbNavContent >
+                        <appinv-countconfirm #obconf (selout)="ngSelc($event)" (reftask)="ngRefTask($event)" [dateformat]="dateformat" [dateformatlong]="dateformatlong"></appinv-countconfirm>  
+                    </ng-template>
+                </li>
+              </ul>
+              
+              <div [ngbNavOutlet]="nav" class="mt-2"></div>
+
+        </div>
+    </div>
+</div>

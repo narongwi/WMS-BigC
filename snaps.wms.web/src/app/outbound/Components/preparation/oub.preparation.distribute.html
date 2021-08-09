@@ -1,0 +1,341 @@
+<div class="row pd-4">
+
+    <div class="col-md-6 fnb fn fn-09e pdt-5">
+        <span class="fn-palette-1">Outbound</span>&nbsp;<i class="fas fa-chevron-right fa-xs"></i>&nbsp;<span class="fn-palette-5"> Distribution </span>&nbsp;<i class="fas fa-chevron-right fa-xs"></i>&nbsp;<span class="text-muted"> Monitor</span>
+    </div>
+
+    <div class="col-md-2 text-right">
+        <div class="d-grid gap-2">
+            <ng-template #popContent>
+                <div style="width:280px" class="fn fn-07e fnb">
+                    <!-- <div class="row ln pd-5">
+                      <div class="col-md-4 pdt-5">Third party</div>
+                      <div class="col-md-8">
+                          <input class="form-control form-control-sm  text-danger " 
+                          type="text" placeholder="Code or Name" [(ngModel)]="pm.thcode">
+                      </div>
+                  </div> -->
+                    <div class="row ln pd-5">
+                        <div class="col-md-4 pdt-5">HU No</div>
+                        <div class="col-md-8">
+                            <input class="form-control form-control-sm  text-danger " type="text" placeholder="HU No" [(ngModel)]="pm.huno">
+                        </div>
+                    </div>
+                    <div class="row ln pd-5">
+                        <div class="col-md-4 pdt-5">Inbound order</div>
+                        <div class="col-md-8">
+                            <input class="form-control form-control-sm  text-danger " type="text" placeholder="Inbound Order" [(ngModel)]="pm.spcorder">
+                        </div>
+                    </div>
+                    <div class="row ln pd-5">
+                        <div class="col-md-4 pdt-5">Product</div>
+                        <div class="col-md-8">
+                            <input class="form-control form-control-sm  text-danger " type="text" placeholder="Code or Description" [(ngModel)]="pm.spcarticle">
+                        </div>
+                    </div>
+                    <div class="row ln pd-5">
+                        <div class="col-md-4 pdt-5">Promotion</div>
+                        <div class="col-md-8">
+                            <input class="form-control form-control-sm  text-danger " type="text" placeholder="Promotion" [(ngModel)]="pm.oupromo">
+                        </div>
+                    </div>
+                    <div class="row ln pd-5">
+                        <div class="col-md-4 pdt-5">State</div>
+                        <div class="col-md-8">
+                            <ng-select class=" text-danger" class="custom custom-sm" bindLabel="desc" bindvalue="value" [clearable]="true" [(ngModel)]="slcstate" [items]="lsstatem">
+                                <ng-template ng-label-tmp let-item="item"><span class="text-danger b">{{item.desc}}</span> </ng-template>
+                                <ng-template ng-option-tmp let-item="item"><span class="text-danger b">{{item.desc}}</span> </ng-template>
+                            </ng-select>
+                        </div>
+                    </div>
+                    <div class="row   pd-5">
+                        <div class="col-md-4">&nbsp;</div>
+                        <div class="col-md-8">
+                            <div class="d-grid gap-2">
+
+                                <button type="button" class="btn snaps-warning btn-block mp " (click)="fnd()">
+                                  <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-search" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                      <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z"/>
+                                      <path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>
+                                  </svg>
+                                  &nbsp;
+                                  Filter Inbound order
+                              </button>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ng-template>
+            <ng-template #popTitle>
+                <div style="width:280px">
+                    <span class="fn fn-08e fnb">Search parameter</span>
+                </div>
+            </ng-template>
+            <button type="button" class="btn btn-secondary snaps-btnblank fn-07e" placement="bottom" [autoClose]="'outside'" [ngbPopover]="popContent" [popoverTitle]="popTitle">
+              <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-funnel-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" d="M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.128.334L10 8.692V13.5a.5.5 0 0 1-.342.474l-3 1A.5.5 0 0 1 6 14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5v-2z"/>
+              </svg> Parameters
+          </button>
+
+        </div>
+    </div>
+
+    <div class="col-md-2 ">
+        <div class="input-group fnb">
+            <input class="form-control fn-07e fnb text-danger " placeholder="Distribution plan no" [(ngModel)]="pm.prepno">
+            <div class="input-group-append">
+                <button type="button" class="btn snaps-btngroup btn-prime " (click)="fnd();">
+            <i class="fas fa-search  fa-sm"></i>
+        </button>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="row fn-07e fnb">
+
+    <div class="col-md-9 pd-5">
+
+        <div class="lsset  ">
+            <div class="head">
+                <div class="row mg-0 ln ">
+                    <div class="col-md-1 ">Plan.No</div>
+                    <div class="col-md-2 ">HU No. </div>
+                    <div class="col-md-1 ">Inb.Order</div>
+                    <div class="col-md-4 ">Product</div>
+                    <div class="col-md-1 ">Worker</div>
+                    <div class="col-md-2 ">Status </div>
+                    <div class="col-md-1 text-right">Prog. </div>
+                </div>
+            </div>
+
+            <div class="line bgsub-head dgprep text-muted">
+                <ng-scrollbar>
+                    <div class="row mg-0 ln fnb" *ngFor="let ln of lsprep;let i = index" [class.row-active]="i == ordrowselect" (click)="getinfo(ln,i)">
+                        <div class="col-md-1 text-danger tx-overflow"><i class="fas fa-dolly-flatbed text-success"></i>&nbsp;&nbsp;{{ln.prepno}}&nbsp;</div>
+                        <div class="col-md-2 tx-overflow">{{ ln.huno }} &nbsp; <span class="fas fa-star text-warning w20 fa-xs" *ngIf="ln.priority > 0"></span> </div>
+                        <div class="col-md-1 ">{{ ln.routeno }} </div>
+                        <div class="col-md-4 text-truncate "><span class="text-danger">{{ ln.thcode }}</span> : {{ ln.thname }} </div>
+                        <div class="col-md-1 ">{{ ln.picker }} </div>
+                        <div class="col-md-2 text-muted"><span class="{{ngDecIcon(ln.tflow)}} w15"></span> {{ ngDecState(ln.tflow) }} </div>
+                        <div class="col-md-1 text-right"><span class="{{decpct(ln.preppct)}}">{{ ln.preppct }}%</span></div>
+                    </div>
+                </ng-scrollbar>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col-md-3 pd-5">
+
+        <div class="propset lsset ">
+            <div class="head">
+                <div class="row mg-0 ln ">
+                    <div class="col-md-12 ">Preparation Status</div>
+                </div>
+            </div>
+            <div class="line bgsub-head dgprep ">
+                <div class="row pdtb-15">
+                    <div class="col-md-12">
+                        <div class="chart-wrapper pdt-10 " width="70" height="70">
+                            <canvas #pieChartCanvas> </canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln fnb">
+                    <div class="col-md-8"><span class="fas fa-square fn-palette-5 w15"></span>&nbsp;Waiting</div>
+                    <div class="col-md-4 tx-right">{{stwaiting}}</div>
+                </div>
+
+
+                <div class="row mg-0 ln fnb">
+                    <div class="col-md-8"><span class="fas fa-square fn-palette-3 w15"></span>&nbsp;Distributing</div>
+                    <div class="col-md-4 tx-right">{{stpreparation}}</div>
+                </div>
+
+                <div class="row mg-0 ln fnb">
+                    <div class="col-md-8"><span class="fas fa-square fn-palette-1 w15"></span>&nbsp;Completed</div>
+                    <div class="col-md-4 tx-right">{{stcompleted}}</div>
+                </div>
+
+                <div class="row mg-0 ln fnb">
+                    <div class="col-md-8"><span class="fas fa-square fn-palette-6 w15"></span>&nbsp;Cancelled</div>
+                    <div class="col-md-4 tx-right">{{stcancelled}}</div>
+                </div>
+
+                <div class="row mg-0 ln fnb">
+                    <div class="col-md-8 tx-right">Summary</div>
+                    <div class="col-md-4 tx-right text-danger">{{stsum}}</div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+</div>
+
+<div class="row fn-07e fnb">
+
+    <div class="col-md-9">
+        <div class="row pd-5 ">
+            <div class="lsset  pd-0 ">
+                <div class="head">
+                    <div class="row mg-0 ln ">
+                        <div class="col-md-2 ">Location</div>
+                        <div class="col-md-1 tx-overflow">THCode</div>
+                        <div class="col-md-2 ">HU.Empty</div>
+                        <div class="col-md-1 ">Order.No</div>
+
+                        <div class="col-md-1 ">Exp.Date</div>
+                        <div class="col-md-1 ">Batch</div>
+                        <div class="col-md-1 ">Serial</div>
+                        <div class="col-md-1 text-center">Unit</div>
+                        <div class="col-md-1 tx-center">Order</div>
+                        <div class="col-md-1 tx-center">Prep.</div>
+                    </div>
+                </div>
+
+                <div class="line bgsub-head   dglines">
+                    <div class="row mg-0 ln  fnb" *ngFor="let ln of crlines;let i = index" [class.row-active]="i == locrowselect" (click)="slcLoc(ln,i)">
+                        <div class="col-md-2 text-danger">{{ln.loccode}}</div>
+                        <div class="col-md-1 ">{{ln.thcode }}</div>
+                        <div class="col-md-2 ">{{ln.huno}}</div>
+                        <div class="col-md-1 ">{{ln.ouorder}}</div>
+                        <div class="col-md-1 ">{{ln.dateexp | date : dateformat }}</div>
+                        <div class="col-md-1 text-center">{{ln.batchno}}</div>
+                        <div class="col-md-1 text-center">{{ln.serialno}}</div>
+                        <div class="col-md-1 tx-center">{{ngDecUnitstock(ln.unitprep)}}</div>
+                        <div class="col-md-1 tx-center text-primary">
+                            {{ln.qtypuorder}}
+                        </div>
+                        <div class="col-md-1 tx-center text-danger">
+                            {{ln.qtypuops}}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="head bd-0">
+                    <div class="row mg-0 ln ">
+                        <div class="col-md-10 text-right">Summary</div>
+                        <div class="col-md-2  text-right text-danger">{{linesumorder}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="row pd-5">
+            <div class="propset lsset pd-0 fnb">
+                <div class="head">
+                    <div class="row mg-0 ln ">
+                        <div class="col-md-12 text-center">Preparation Detail </div>
+                    </div>
+                </div>
+                <div class="line bgsub-head fnb dglines ">
+                    <div class="row mg-0 ln ">
+                        <div class="col-md-4"> <span class="text-dark fnb">Prep</span> </div>
+                        <div class="col-md-8 text-danger fnb ">{{crprep?.prepno}}</div>
+                    </div>
+
+
+                    <div class="row mg-0 ln ">
+                        <div class="col-md-4 ">Order</div>
+                        <div class="col-md-6 text-danger">{{crprep?.spcorder}}</div>
+                        <div class="col-md-2 tx-center">
+                            <span class="fas fa-star text-warning w20 fa-sm" [ngClass]="{'text-warning': crprep?.priority > 0, 'text-muted':crprep?.priority == 0}" (click)="setpriority()"></span>
+                        </div>
+                    </div>
+                    <div class="row mg-0 ln ">
+                        <div class="col-md-3 ">Product</div>
+                        <div class="col-md-9 text-danger">{{crprep?.spcarticle}}</div>
+                    </div>
+                    <div class="row mg-0 ln ">
+                        <div class="col-md-3 ">Desc.</div>
+                        <div class="col-md-9 text-danger text-truncate">{{crprep?.thname}}</div>
+                    </div>
+                    <div class="row mg-0 ln ">
+                        <div class="col-md-3">Start</div>
+                        <div class="col-md-9 text-danger text-truncate">{{crprep?.datestart | date : dateformatlong}}</div>
+                    </div>
+                    <div class="row mg-0 ln " *ngIf="crprep?.tflow == 'PE'">
+                        <div class="col-md-3"> <span class="text-dark fnb">Finish</span> </div>
+                        <div class="col-md-9 text-danger text-truncate"> <span class="text-danger fnb "> {{crprep?.dateend | date : dateformatlong}} </span></div>
+                    </div>
+                    <div class="row mg-0 ln ">
+                        <div class="col-md-3"> <span class="text-dark fnb">Worker</span> </div>
+                        <div class="col-md-9 text-danger text-truncate"> <span class="text-danger fnb ">{{crprep?.picker}}</span> </div>
+                    </div>
+                    <div class="row mg-0 ln ">
+                        <div class="col-md-3"> <span class="text-dark fnb">Location</span> </div>
+                        <div class="col-md-9 text-danger text-truncate"> <span class="text-danger fnb ">{{slcline?.loccode}}</span> </div>
+                    </div>
+
+                    <div class="row mg-0 ln" *ngIf="crprep?.tflow == 'PA'">
+                        <div class="col-md-3 lh-08e">
+                            <span class="text-dark">HU</span><br/>
+                            <span class="text-muted">Empty</span>
+                        </div>
+                        <div class="col-md-9">
+                            <ng-select class=" " class="custom custom-sm" bindLabel="huno" bindvalue="huno" [clearable]="false" [(ngModel)]="slchuempty" [items]="lshuempty">
+                                <ng-template ng-label-tmp let-item="item"><span class="text-danger fnb">{{item.huno}}</span> </ng-template>
+                                <ng-template ng-option-tmp let-item="item"><span class="text-danger fnb">{{item.huno}}</span> </ng-template>
+                            </ng-select>
+                        </div>
+                    </div>
+
+                    <div class="row mg-0 ln ">
+                        <div class="col-md-4"> <span class="text-dark fnb">Order</span> </div>
+                        <div class="col-md-5 text-danger tx-center"> <span class="text-danger fnb ">{{slcline?.qtypuorder}}</span> </div>
+                        <div class="col-md-3">{{ngDecUnitstock(slcline.unitprep)}}</div>
+                    </div>
+                    <div class="row mg-0 ln " *ngIf="crprep?.tflow == 'PA'">
+                        <div class="col-md-4 pdt-5">
+                            <span class="text-dark">Put</span>
+                        </div>
+                        <div class="col-md-5 tx-center">
+                            <input class="form-control form-control-xs tx-center fnb text-danger " type="text" placeholder="{{slcline.qtypuorder}}" [(ngModel)]="slcline.qtypuops" appOnlynumber max="{{slcline.qtypuorder}}">
+                        </div>
+                        <div class="col-md-2 pdt-5">
+                            <span class="text-dark">{{ngDecUnitstock(slcline.unitprep)}}</span>
+                        </div>
+                    </div>
+
+                    <div class="row mg-0 ln">
+                        <div class="col-md-6">
+                            <button type="button" class="btn snaps-default btn-xs btn-block mp" (click)="getdistlist()">List</button>
+                        </div>
+                        <div class="col-md-6">
+                            <button type="button" class="btn snaps-primary btn-xs btn-block mp" (click)="opspick()" *ngIf="crprep?.tflow == 'PA'">Put line</button>
+                        </div>
+                    </div>
+
+                    <div class="row mg-0 ln">
+                        <div class="col-md-6">
+                            <button type="button" class="btn snaps-danger btn-xs btn-block mp" *ngIf="crprep?.tflow == 'IO'" (click)="opscancel()"> <i class="fas fa-trash-alt"></i> &nbsp; Cancel </button>
+                        </div>
+
+                        <div class="col-md-6">
+                            <button type="button" class="btn snaps-primary btn-xs btn-block mp" *ngIf="crprep?.tflow == 'IO'" (click)="setstart()"> <i class="fas fa-play"></i>  &nbsp; Start </button>
+                            <button type="button" class="btn snaps-success btn-xs btn-block mp" *ngIf="crprep?.tflow == 'PA'" (click)="setend()"> <i class="fas fa-check-circle"></i> &nbsp; Finish </button>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="head bd-0">
+                    <div class="row mg-0 ln ">
+                        <div class="col-md-4 tx-overflow">{{crprep?.accnmodify}} </div>
+                        <div class="col-md-8 tx-right text-danger">{{crprep?.datemodify | date : dateformatlong}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

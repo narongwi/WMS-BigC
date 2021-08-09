@@ -1,0 +1,96 @@
+<div class="bgsub-info fn-07e">
+  <div
+    class="bgprime"
+    style="
+      height: 44px;
+      background-color: #ffffff;
+      border-bottom: 1px solid #e0e0e0;
+    "
+  ></div>
+  <div class="container">
+    <div class="row" style="margin-top: -34px">
+      <ul
+        ngbNav
+        #nav="ngbNav"
+        [(activeId)]="crtab"
+        class="nav-tabs"
+        [destroyOnHide]="false"
+      >
+        <li [ngbNavItem]="1">
+          <a ngbNavLink class="w150 fn fn-07e">Role Permission</a>
+          <ng-template ngbNavContent>
+            <div class="row">
+              <div class="col-md-4">
+                <div class="row mg-0 custom fn-07e">
+                  <div class="col-md-8  pd-0">
+                    <ng-select
+                      class="custom fn-07e"
+                      bindLabel="desc"
+                      bindvalue="value"
+                      [compareWith]="ngSelcompare"
+                      [clearable]="false"
+                      [(ngModel)]="slcwarehouse"
+                      [items]="lswarehouse"
+                      (change)="fndrole()"
+                    >
+                      <ng-template ng-label-tmp let-item="item"
+                        ><span class="text-danger fnb">{{ item.desc }}</span>
+                      </ng-template>
+                      <ng-template ng-option-tmp let-item="item"
+                        ><span class="text-danger fnb">{{ item.desc }}</span>
+                      </ng-template>
+                    </ng-select>
+                  </div>
+                  <div class="col-md-4" style="padding-left: 10px;padding-right:0;">
+                    <button
+                      type="button"
+                      class="btn snaps-default mp btn-block"
+                      (click)="newrole()"
+                      [disabled]="slcwarehouse==null"
+                    >
+                      <span class="fas fa-check-circle"></span>
+                      &nbsp; New role
+                    </button>
+                  </div>
+                </div>
+
+                <div class="lsset mgt-5">
+                  <div class="head">
+                    <div class="row mg-0 ln">
+                      <div class="col-md-8">Role Permission</div>
+                      <div class="col-md-4"></div>
+                    </div>
+                  </div>
+                  <div class="line bgsub-head fnb dglines">
+                    <ng-scrollbar>
+                      <div
+                        class="row mg-0 ln bd-bottom-1"
+                        *ngFor="let ln of lsrole; let i = index"
+                        (click)="getrole(ln, i)"
+                      >
+                        <role-list
+                          [item]="ln"
+                          [iconstate]="getIcon(ln.tflow)"
+                        ></role-list>
+                      </div>
+                    </ng-scrollbar>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-8">
+                <role-opr
+                  [mdrole]="mdrole"
+                  (refresh)="refresh($event)"
+                  [lsstate]="lsstate"
+                ></role-opr>
+              </div>
+            </div>
+          </ng-template>
+        </li>
+      </ul>
+
+      <div [ngbNavOutlet]="nav" class="mt-2"></div>
+    </div>
+  </div>
+</div>

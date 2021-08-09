@@ -1,0 +1,453 @@
+
+  <div class="row mg-0 fn-07e fnb">
+
+    <div class="col-md-6 fnb fn fn-09e pdt-5">
+        <span class="fn-palette-1">Outbound</span>&nbsp;<i class="fas fa-chevron-right fa-xs"></i>&nbsp;<span class="fn-palette-5"> Preparation </span>&nbsp;<i class="fas fa-chevron-right fa-xs"></i>&nbsp;<span class="text-muted"> Monitor</span>
+    </div>
+    <div class="col-md-2 text-right">
+        <div class="d-grid gap-2">
+        
+          <ng-template #popContent>
+            <div  style="width:450px" class="fn fn-07e fnb">                                    
+                <div class="row ln pd-5">
+                    <div class="col-md-2 pdt-5">Prep date from </div>
+                    <div class="col-md-4">
+                        <div class="input-group">
+                            <input  class="form-control text-danger fnb"name="dp" ngbDatepicker #dateprepfrom="ngbDatepicker"  placeholder="{{dateformat}}"
+                                    [(ngModel)]="pm.dateprepfrom">
+                            <div class="input-group-append">
+                            <button type="button" class="btn snaps-btngroup btn-prime" (click)="dateprepfrom.toggle()" >
+                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-calendar-date" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"></path>
+                                <path d="M6.445 11.688V6.354h-.633A12.6 12.6 0 0 0 4.5 7.16v.695c.375-.257.969-.62 1.258-.777h.012v4.61h.675zm1.188-1.305c.047.64.594 1.406 1.703 1.406 1.258 0 2-1.066 2-2.871 0-1.934-.781-2.668-1.953-2.668-.926 0-1.797.672-1.797 1.809 0 1.16.824 1.77 1.676 1.77.746 0 1.23-.376 1.383-.79h.027c-.004 1.316-.461 2.164-1.305 2.164-.664 0-1.008-.45-1.05-.82h-.684zm2.953-2.317c0 .696-.559 1.18-1.184 1.18-.601 0-1.144-.383-1.144-1.2 0-.823.582-1.21 1.168-1.21.633 0 1.16.398 1.16 1.23z"></path>
+                                </svg>
+                            </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-2 pdt-5">Prep date to </div>
+                    <div class="col-md-4">
+                        <div class="input-group">
+                            <input class="form-control text-danger fnb " placeholder="{{dateformat}}"
+                                name="dp" [(ngModel)]="pm.dateprepto" ngbDatepicker #dateprepto="ngbDatepicker">
+                            <div class="input-group-append">
+                            <button type="button" class=" btn snaps-btngroup btn-prime" (click)="dateprepto.toggle()" >
+                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-calendar-date" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"></path>
+                                <path d="M6.445 11.688V6.354h-.633A12.6 12.6 0 0 0 4.5 7.16v.695c.375-.257.969-.62 1.258-.777h.012v4.61h.675zm1.188-1.305c.047.64.594 1.406 1.703 1.406 1.258 0 2-1.066 2-2.871 0-1.934-.781-2.668-1.953-2.668-.926 0-1.797.672-1.797 1.809 0 1.16.824 1.77 1.676 1.77.746 0 1.23-.376 1.383-.79h.027c-.004 1.316-.461 2.164-1.305 2.164-.664 0-1.008-.45-1.05-.82h-.684zm2.953-2.317c0 .696-.559 1.18-1.184 1.18-.601 0-1.144-.383-1.144-1.2 0-.823.582-1.21 1.168-1.21.633 0 1.16.398 1.16 1.23z"></path>
+                                </svg>
+                            </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row ln pd-5">
+                    <div class="col-md-2 pdt-5">Order from </div>
+                    <div class="col-md-4">
+                        <div class="input-group">
+                            <input class="form-control text-danger fnb " placeholder="{{dateformat}}"
+                                name="dp" [(ngModel)]="pm.dateorderfrom" ngbDatepicker #dateorderfrom="ngbDatepicker">
+                            <div class="input-group-append">
+                            <button type="button" class=" btn snaps-btngroup btn-prime" (click)="dateorderfrom.toggle()" >
+                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-calendar-date" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"></path>
+                                <path d="M6.445 11.688V6.354h-.633A12.6 12.6 0 0 0 4.5 7.16v.695c.375-.257.969-.62 1.258-.777h.012v4.61h.675zm1.188-1.305c.047.64.594 1.406 1.703 1.406 1.258 0 2-1.066 2-2.871 0-1.934-.781-2.668-1.953-2.668-.926 0-1.797.672-1.797 1.809 0 1.16.824 1.77 1.676 1.77.746 0 1.23-.376 1.383-.79h.027c-.004 1.316-.461 2.164-1.305 2.164-.664 0-1.008-.45-1.05-.82h-.684zm2.953-2.317c0 .696-.559 1.18-1.184 1.18-.601 0-1.144-.383-1.144-1.2 0-.823.582-1.21 1.168-1.21.633 0 1.16.398 1.16 1.23z"></path>
+                                </svg>
+                            </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-2 pdt-5">Order to </div>
+                    <div class="col-md-4">
+                        <div class="input-group">
+                            <input class="form-control text-danger fnb" placeholder="{{dateformat}}"
+                                name="dp" [(ngModel)]="pm.dateorderto" ngbDatepicker #dateorderto="ngbDatepicker">
+                            <div class="input-group-append">
+                            <button type="button" class=" btn snaps-btngroup btn-prime" (click)="dateorderto.toggle()" >
+                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-calendar-date" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"></path>
+                                <path d="M6.445 11.688V6.354h-.633A12.6 12.6 0 0 0 4.5 7.16v.695c.375-.257.969-.62 1.258-.777h.012v4.61h.675zm1.188-1.305c.047.64.594 1.406 1.703 1.406 1.258 0 2-1.066 2-2.871 0-1.934-.781-2.668-1.953-2.668-.926 0-1.797.672-1.797 1.809 0 1.16.824 1.77 1.676 1.77.746 0 1.23-.376 1.383-.79h.027c-.004 1.316-.461 2.164-1.305 2.164-.664 0-1.008-.45-1.05-.82h-.684zm2.953-2.317c0 .696-.559 1.18-1.184 1.18-.601 0-1.144-.383-1.144-1.2 0-.823.582-1.21 1.168-1.21.633 0 1.16.398 1.16 1.23z"></path>
+                                </svg>
+                            </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div class="row ln  pd-5 ">
+                    <div class="col-md-2 pdt-5">Prep type</div>
+                    <div class="col-md-4">
+                        <ng-select class="b text-danger"  class="custom custom-sm" bindLabel="desc" bindvalue="value" 
+                        [clearable]="true"  [(ngModel)]="slpreptype" [items]="lspreptype" >
+                        <ng-template ng-label-tmp let-item="item"><span class="text-danger b">{{item.desc}}</span> </ng-template>
+                        <ng-template ng-option-tmp let-item="item"><span class="text-danger b">{{item.desc}}</span> </ng-template>
+                        </ng-select>
+                    </div>
+
+                    <div class="col-md-2 pdt-5">priority</div>
+                    <div class="col-md-4">
+                        <ng-select class=" text-danger"  class="custom custom-sm" bindLabel="desc" bindvalue="value" 
+                        [clearable]="true"  [(ngModel)]="slpriority" [items]="lsyesno" >
+                        <ng-template ng-label-tmp let-item="item"><span class="text-danger b">{{item.desc}}</span> </ng-template>
+                        <ng-template ng-option-tmp let-item="item"><span class="text-danger b">{{item.desc}}</span> </ng-template>
+                        </ng-select>
+                    </div>
+                </div>
+
+                <div class="row ln pd-5">
+                    <div class="col-md-2 pdt-5">Third party</div>
+                    <div class="col-md-4">
+                        <input class="form-control form-control-sm  text-danger " 
+                        type="text" placeholder="Code or Name" [(ngModel)]="pm.thcode">
+                    </div>
+
+                    <div class="col-md-2 pdt-5">Order No</div>
+                    <div class="col-md-4">
+                        <input class="form-control form-control-sm  text-danger " type="text" placeholder="Order No" [(ngModel)]="pm.ouorder">
+                    </div>
+                </div>
+
+                <div class="row ln pd-5">
+                    <div class="col-md-2 pdt-5">Product</div>
+                    <div class="col-md-4">
+                        <input class="form-control form-control-sm  text-danger " type="text" placeholder="Code or Description" [(ngModel)]="pm.article">
+                    </div>
+
+                    <div class="col-md-2 pdt-5">Promotion</div>
+                    <div class="col-md-4">
+                        <input class="form-control form-control-sm  text-danger " type="text" placeholder="Promotion" [(ngModel)]="pm.oupromo">
+                    </div>
+
+                </div>
+
+                <div class="row ln pd-5">
+                    <div class="col-md-2 pdt-5">Remarks</div>
+                    <div class="col-md-4">
+                        <input class="form-control form-control-sm  text-danger " type="text" placeholder="Remarks"  [(ngModel)]="pm.ouflag">
+                    </div>
+
+                    <div class="col-md-2 pdt-5">Route</div>
+                    <div class="col-md-4">
+                        <input class="form-control form-control-sm  text-danger " type="text" placeholder="Route"  [(ngModel)]="pm.routeno">
+                    </div>
+                </div>
+
+              <div class="row ln pd-5">
+                <div class="col-md-2 pdt-5">HU No</div>
+                <div class="col-md-4">
+                    <input class="form-control form-control-sm  text-danger " type="text" placeholder="HU No"  [(ngModel)]="pm.huno">
+                </div>
+
+                <div class="col-md-2 pdt-5">State</div>
+                <div class="col-md-4">
+                    <ng-select class=" text-danger"  class="custom custom-sm" bindLabel="desc" bindvalue="value" 
+                    [clearable]="true"  [(ngModel)]="slstate" [items]="lsstate" >
+                    <ng-template ng-label-tmp let-item="item"><span class="text-danger b">{{item.desc}}</span> </ng-template>
+                    <ng-template ng-option-tmp let-item="item"><span class="text-danger b">{{item.desc}}</span> </ng-template>
+                </ng-select>
+                </div>
+              </div>
+
+                <div class="row   pd-5">
+                  <div class="col-md-2 pdt-5">Setno</div>
+                    <div class="col-md-4">
+                        <input class="form-control form-control-sm  text-danger " type="text" placeholder="Setno"  [(ngModel)]="pm.setno">
+                    </div>
+
+                    <div class="col-md-2">&nbsp;</div>
+                    <div class="col-md-4">
+                        <div class="d-grid gap-2">
+
+                            <button type="button" class="btn snaps-warning btn-block mp " 
+                            (click)="fnd()">
+                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-search" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z"/>
+                                    <path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>
+                                </svg>
+                                &nbsp;
+                                Filter Prep.
+                            </button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+        <ng-template #popTitle >
+            <div style="width:280px">
+                <span class="fn fn-08e fnb">Search parameter</span>
+            </div>
+        </ng-template>
+        <button type="button" class="btn btn-secondary snaps-btnblank fn-07e" placement="bottom" [autoClose]="'outside'" [ngbPopover]="popContent" [popoverTitle]="popTitle">
+            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-funnel-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" d="M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.128.334L10 8.692V13.5a.5.5 0 0 1-.342.474l-3 1A.5.5 0 0 1 6 14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5v-2z"/>
+            </svg> Parameters
+        </button>
+
+        </div>
+    </div>
+    <div class="col-md-2 ">
+      <div class="input-group fnb">
+          <input class="form-control fn-07e fnb text-danger "
+            placeholder="Prep date" name="dp" 
+            ngbDatepicker #dateprep="ngbDatepicker" 
+            [(ngModel)]="pm.prepdate"
+            (dateSelect)="fnd();">
+          <div class="input-group-append">
+          <button type="button" class="btn snaps-btngroup btn-prime " (click)="dateprep.toggle();" >
+              <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-calendar-date" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"></path>
+              <path d="M6.445 11.688V6.354h-.633A12.6 12.6 0 0 0 4.5 7.16v.695c.375-.257.969-.62 1.258-.777h.012v4.61h.675zm1.188-1.305c.047.64.594 1.406 1.703 1.406 1.258 0 2-1.066 2-2.871 0-1.934-.781-2.668-1.953-2.668-.926 0-1.797.672-1.797 1.809 0 1.16.824 1.77 1.676 1.77.746 0 1.23-.376 1.383-.79h.027c-.004 1.316-.461 2.164-1.305 2.164-.664 0-1.008-.45-1.05-.82h-.684zm2.953-2.317c0 .696-.559 1.18-1.184 1.18-.601 0-1.144-.383-1.144-1.2 0-.823.582-1.21 1.168-1.21.633 0 1.16.398 1.16 1.23z"></path>
+              </svg>
+          </button>
+          </div>
+      </div>
+  </div>
+  <div class="col-md-2 ">
+    <div class="input-group fnb">
+        <input class="form-control fn-07e fnb text-danger "
+          placeholder="Preparation no"
+          [(ngModel)]="pm.prepno" >
+        <div class="input-group-append">
+        <button type="button" class="btn snaps-btngroup btn-prime " (click)="fnd()" >
+           <span class="fa fa-search fa-sm"></span>
+        </button>
+        </div>
+    </div>
+</div>
+  </div>
+
+  <div class="row mg-0 fn-07e fnb pdt-10">
+
+    <div class="col-md-3 pdr-0">
+      <div class="lsset propset  ">
+        <div class="head">
+          <div class="row mg-0 ln ">
+            <div class="col-md-12 ">Preparation Status</div>
+          </div>
+        </div>
+        <div class="line bgsub-head dgchart " >
+          <ng-scrollbar>
+          <div class="chart-wrapper pdt-10 " width="40" height="40">
+            <canvas #pieChartCanvas > </canvas>
+          </div>
+
+          <div class="row mg-0 ln fnb">
+            <div class="col-md-9 tx-overflow text-truncate" title="Waiting start loose pick">
+              <span class="fas fa-square fn-palette-5 W20"></span>&nbsp;&nbsp;Wait start <span class="text-danger">loose</span> pick</div>
+            <div class="col-md-3 tx-right">{{stwaiting}}</div>
+          </div>
+  
+          <div class="row mg-0 ln fnb">
+            <div class="col-md-9 tx-overflow text-truncate" title="Waiting start pallet pick">
+              <span class="fas fa-square fn-palette-5 W20"></span>&nbsp;&nbsp;Wait start <span class="text-primary">pallet</span> pick</div>
+            <div class="col-md-3 tx-right">{{stwaitingpl}}</div>
+          </div>
+  
+          
+          <div class="row mg-0 ln fnb">
+            <div class="col-md-9 tx-overflow text-truncate" title="Preparing loose pick">
+              <span class="fas fa-square fn-palette-3 W20"></span>&nbsp;&nbsp;Prep <span class="text-danger">loose</span> pick</div>
+            <div class="col-md-3 tx-right">{{stpreparation}}</div>
+          </div>
+  
+          <div class="row mg-0 ln fnb">
+            <div class="col-md-9 tx-overflow text-truncate"  title="Preparing pallet pick">
+              <span class="fas fa-square fn-palette-3 W20"></span>&nbsp;&nbsp;Prep <span class="text-primary">pallet</span> pick</div>
+            <div class="col-md-3 tx-right">{{stpreparationpl}}</div>
+          </div>
+  
+          <div class="row mg-0 ln fnb">
+            <div class="col-md-9 tx-overflow"><span class="fas fa-square fn-palette-1 W20"></span>&nbsp;&nbsp;Completed</div>
+            <div class="col-md-3 tx-right">{{stcompleted}}</div>
+          </div>
+  
+          <div class="row mg-0 ln fnb">
+            <div class="col-md-9 tx-overflow"><span class="fas fa-square fn-palette-6 W20"></span>&nbsp;&nbsp;Cancelled</div>
+            <div class="col-md-3 tx-right">{{stcancelled}}</div>
+          </div>
+          </ng-scrollbar>
+        </div>  
+      </div>
+    </div>
+
+    <div class="col-md-9">
+      <div class="lsset pd-0">
+        <div class="head">
+          <div class="row mg-0 ln ">
+            <div class="col-md-1 ">Type</div>
+            <div class="col-md-1 ">Prep.No</div>
+            <div class="col-md-2 ">HU No. </div>
+            <div class="col-md-1 ">Route</div>
+            <div class="col-md-3 ">Customer</div>
+            <div class="col-md-1 ">Worker</div>
+            <div class="col-md-3 ">Status </div>
+          </div>
+        </div>
+
+        <div class="line bgsub-head dgprep" >
+          <ng-scrollbar>
+            <div class="row mg-0 ln fnb" *ngFor="let ln of lsprep | slice: (page-1) * pageSize : page * pageSize | orderBy: lssort : lsreverse ;let i=index" 
+            [class.row-active]="i == ordrowselect" (click)="getinfo(ln,i)">
+              <div class="col-md-1 tx-overflow"><span class="{{getIcon(ln.preptype)}}"></span>&nbsp;&nbsp;{{ln.preptypename}}</div>
+              <div class="col-md-1 text-danger">{{ln.prepno}}&nbsp;<span class="fas fa-star text-warning fa-sm" *ngIf=" ln.priority > 0 "></span></div>
+              <div class="col-md-2 ">{{ ln.huno }} </div>
+              <div class="col-md-1 ">{{ ln.routeno }} </div>
+              <div class="col-md-3 text-truncate"><span class="text-danger">{{ ln.thcode }}</span> : {{ ln.thname }} </div>
+              <div class="col-md-1 ">{{ ln.picker }} </div>
+              <div class="col-md-3 ">{{ ngDecState(ln.tflow) }}</div>
+            </div>
+          </ng-scrollbar>
+
+        </div>
+
+        <div class="foot bgsub-head fnb pd-5">
+          <div class="row mg-0">
+              <div class="col-md-2 pdt-5">
+                  Total &nbsp; &nbsp;<span class="text-danger">{{lsprep.length}}</span> &nbsp; &nbsp; Preps
+              </div>
+             
+              <div class="col-md-1 tx-right lh-07e">
+                  <div class="fn-06e fnb text-danger">Rows</div>
+                  <div class="fn-06e">Per Page</div>
+              </div>
+              <div class="col-md-3">
+
+                  <ng-select class=" text-danger"  class="custom custom-sm" bindLabel="value" bindvalue="value" 
+                              [clearable]="false"  [(ngModel)]="slrowlmt" [items]="lsrowlmt" (change)="changerowlmt()" >
+                      <ng-template ng-label-tmp let-item="item"><span class="text-danger b">{{item.value}}</span> </ng-template>
+                      <ng-template ng-option-tmp let-item="item"><span class="text-danger b">{{item.value}}</span> </ng-template>
+                  </ng-select>
+              
+              </div>
+              <div class="col-md-6">
+                  <ngb-pagination [(page)]="page" [pageSize]="pageSize" [collectionSize]="lsprep.length" class="d-flex justify-content-end" ></ngb-pagination>
+              </div>
+          </div>
+      </div>
+
+      </div>
+    </div>
+
+  </div>
+
+
+<div class="row mg-0 pdt-10 fn-07e fnb">
+  <div class="col-md-12">
+    <div class="lsset pd-0 ">
+      <div class="head bd-0">
+        <div class="row mg-0 ln ">
+          <div class="col-md-12 text-right">Preparation detail</div>
+        </div>
+      </div>
+      <div class="line bgsub-head ">
+        <div class="row mg-0 ln">
+          <div class="col-md-1 tx-overflow">Prep.No  <span *ngIf="crprep?.preptype=='P'" class="fas fa-star text-warning w20 fa-sm" [ngClass]="{'text-warning': crprep?.priority > 0, 'text-muted':crprep?.priority == 0}" (click)="setpriority()"></span> </div>
+          <div class="col-md-1 text-danter">{{crprep?.prepno}}</div>
+          <div class="col-md-1">Prep.Type</div>
+          <div class="col-md-1 text-danger">{{crprep?.preptype=="A"?"Pallet Pick":"Loose pick"}}</div>
+          <div class="col-md-1">Route</div>
+          <div class="col-md-1 text-danger">{{crprep?.routeno}}</div>
+          <div class="col-md-1">Customer</div>
+          <div class="col-md-3 tx-dark"><span class="text-danger">{{crprep?.thcode}}</span> : {{crprep?.thname}}</div>
+          <div class="col-md-1">Prep.zone</div>
+          <div class="col-md-1 text-danger">{{crprep?.przone}}</div>
+          <!-- <div class="col-md-2">
+            <button type="button" class="btn snaps-warning btn-block btn-xs mp">
+              &nbsp;
+              Start prep.
+            </button> 
+             <button type="button" class="btn btn-block btn-xs btn-primary" *ngIf="crprep?.tflow == 'IO'" (click)="setstart()">Start preparation</button>
+            <button type="button" class="btn btn-block btn-xs btn-primary" *ngIf="crprep?.tflow == 'PA'" (click)="opspick()">Save pick</button>
+            <button type="button" class="btn btn-block btn-xs btn-warning" *ngIf="crprep?.tflow == 'PE'" (click)="getlabel(crprep.huno)">Label</button>
+            <button type="button" class="btn btn-block btn-xs btn-default" (click)="getpicklist(crprep.prepno)">Pick List</button> 
+          </div> -->
+        </div>
+  
+        <div class="row mg-0 ln">
+          <div class="col-md-1 tx-overflow">Start/Finish </div>
+          <div class="col-md-3 "><span class="text-primary">{{crprep?.datestart | date : dateformatlong}}</span> - <span class="text-success">{{crprep?.dateend | date : dateformatlong}}</span></div>
+          <div class="col-md-1">Worker</div>
+          <div class="col-md-1 text-danger">{{crprep?.picker}}</div>
+          <div class="col-md-2">&nbsp;</div>
+          <div class="col-md-1 tx-overflow text-truncate" *ngIf="crprep?.preptype=='P'">
+            <button type="button" class="btn snaps-default btn-xs btn-block mp" (click)="getpicklist(crprep?.prepno)" *ngIf="!['LD','PE','ED'].includes(crprep?.tflow)" > Pick List </button>
+            <button type="button" class="btn snaps-default btn-xs btn-block mp" (click)="getshiplabel(crprep?.prepno)" *ngIf="['LD','PE','ED'].includes(crprep?.tflow)" > Ship Label</button>
+        </div>
+  
+          <div class="col-md-1 tx-overflow" *ngIf="crprep?.preptype=='P'">
+            <button type="button" class="btn snaps-primary btn-xs btn-block mp" *ngIf="crprep?.tflow == 'IO'" (click)="setstart()">
+                <i class="fas fa-play"></i>
+                &nbsp;
+                Start
+            </button>
+    
+            <button type="button" class="btn snaps-success btn-xs btn-block mp" *ngIf="crprep?.tflow == 'PA'"  (click)="setend()">
+              <i class="fas fa-check-circle"></i>
+              &nbsp;
+              Finish
+            </button>
+  
+          </div>
+          <div class="col-md-1" *ngIf="crprep?.preptype=='P'">
+            <button type="button" class="btn snaps-primary btn-xs btn-block mp" *ngIf="crprep?.tflow == 'PA'" (click)="opspick()">
+              <i class="fas fa-save"></i>
+              &nbsp;
+              Save
+          </button>  
+          </div>
+        </div>        
+      </div>
+      <div class="head">
+        <div class="row mg-0 ln ">
+          <div class="col-md-1 ">Location</div>
+          <div class="col-md-1 ">Barcode</div>
+          <div class="col-md-1 ">Product</div>
+          <div class="col-md-2 ">Name</div>
+          <div class="col-md-1 tx-center">Order No</div>
+          <div class="col-md-1 ">Exp.Date</div>
+          <div class="col-md-1 tx-center">Task.Supp</div>
+          <div class="col-md-1 text-center">Unit</div>
+          <div class="col-md-1 text-center">Order</div>
+          <div class="col-md-1 text-center">Prep.</div>
+          <div class="col-md-1 text-center">Digit</div>
+        </div>
+      </div>
+  
+      <div class="line bgsub-head dglines">
+        <div class="row mg-0 ln  fnb" *ngFor="let ln of crlines">
+          <div class="col-md-1 text-danger tx-overflow" title="{{ln.hunosource}}">{{ln.loccode}}</div>
+          <div class="col-md-1 ">{{ln.barcode}}</div>
+          <div class="col-md-1 tx-overflow">{{ln.article}}-{{ln.lv}}</div>
+          <div class="col-md-2 text-truncate">{{ln.description}}</div>
+          <div class="col-md-1 tx-center">{{ln.ouorder}}</div>
+          <div class="col-md-1 tx-overflow">{{ln.dateexp | date : dateformat }}</div>
+          <div class="col-md-1 tx-center">{{ln.taskno}}</div>
+          <div class="col-md-1 text-center text-primary">{{ngDecUnitstock(ln.unitprep)}}</div>
+          <div class="col-md-1 text-center text-danger">{{ln.qtyskuorder}}</div>
+          <div class="col-md-1 text-center text-danger"> 
+            <input class="form-control form-control-xs tx-center fnb text-danger " type="text" placeholder="{{ln.qtyskuorder}}" [(ngModel)]="ln.qtypuops" appOnlynumber max="{{ln.qtyskuorder}}" *ngIf="crprep?.tflow =='PA' " >
+            <span class="" *ngIf="crprep?.tflow == 'PE'">{{ln.qtypuops}}</span>
+          </div>
+          <div class="col-md-1 text-center">
+            <input class="form-control form-control-xs tx-center fnb  text-danger " type="text" placeholder="Digit" [(ngModel)]="ln.locdigit" appOnlynumber *ngIf="crprep?.tflow == 'PA' ">
+            <span class="" *ngIf="crprep?.tflow == 'PE'">{{ln.digit}}</span>
+          </div>
+        </div>
+      </div>
+  
+      <div class="head bd-0">
+        <div class="row mg-0 ln ">
+          <div class="col-md-9 text-right">Summary</div>
+          <div class="col-md-1 tx-center text-danger">{{smorder | number }}</div>
+          <div class="col-md-1 tx-center text-danger">{{smpick | number }}</div>
+          <div class="col-md-1 tx-right text-danger"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

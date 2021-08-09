@@ -1,0 +1,10 @@
+Logs/*
+bin/*
+Snaps.Library/*
+obj/*
+.vscode/*
+externallibs/*
+node_modules/*
+dist/*
+snaps-run.bat
+dotnet-package.bat

@@ -1,0 +1,425 @@
+<div class="bgsub-info">
+  <div
+    class="bgprime"
+    style="
+      height: 44px;
+      background-color: #ffffff;
+      border-bottom: 1px solid #e0e0e0;
+    "
+  ></div>
+  <div class="container">
+    <div class="row" style="margin-top: -34px">
+      <ul
+        ngbNav
+        #nav="ngbNav"
+        [(activeId)]="crtab"
+        class="nav-tabs"
+        [destroyOnHide]="false"
+      >
+        <li [ngbNavItem]="1">
+          <a ngbNavLink class="w150 fn fn-07e">WMS Report</a>
+          <ng-template ngbNavContent>
+            <div class="container">
+              <div class="row pdt-10">
+                <div class="col-md-12">
+                  <div class="row">
+                    <div class="col-md-8 fnb fn">
+                      <span class="fn-palette-1">Report</span>&nbsp;<i
+                        class="fas fa-chevron-right fa-xs"
+                      ></i
+                      >&nbsp;<span class="fn-palette-5">Export</span>
+                    </div>
+                    <div class="col-md-2 fnb fn">&nbsp;</div>
+                    <div class="col-md-2">
+                      <div class="input-group fnb">
+                        <input 
+                          class="form-control fn-07e fnb text-danger"
+                          placeholder="Report code or name"
+                          name="dp"
+                          [(ngModel)]="rpsFind"
+                        />
+                        <div class="input-group-append">
+                          <button
+                            type="button"
+                            class="btn snaps-btngroup btn-prime"
+                            (click)="fndproduct();"
+                          >
+                            <i class="fas fa-search"></i>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row pdt-10 fn-07e bgsub-info">
+                <div class="col-md-8">
+                  <div class="row mg-0">
+                    <div class="lsset pd-0">
+                      <div class="head">
+                        <div class="row mg-0 ln">
+                          <div class="col-md-2">Report</div>
+                          <div class="col-md-10">Name</div>
+                        </div>
+                      </div>
+
+                      <div class="line bgsub-head dgproduct">
+                        <ng-scrollbar>
+                          <div
+                            class="row mg-0 ln fnb"
+                            *ngFor="let rpt of reports|admTableFilter : {code:rpsFind,name:rpsFind};let i = index"
+                            [class.row-active]="i==reprowselect" (click)="selection(rpt.id,rpt.code,rpt.name,rpt.forms,i)"
+                          >
+                            <div class="col-md-2">
+                              <span class="text-danger">{{rpt.code}}</span>
+                            </div>
+                            <div class="col-md-10 text-truncate">
+                              <span class="">{{rpt.name}}</span>
+                            </div>
+                          </div>
+                          <!-- <div class="row mg-0 ln fnb">
+                                                <div class="col-md-2 "> <span class="text-danger">INB-0002</span>  </div>
+                                                <div class="col-md-10 text-truncate"> <span class="">Inbound planning vs actual report</span>  </div>
+                                            </div>
+                                            <div class="row mg-0 ln fnb">
+                                                <div class="col-md-2 "> <span class="text-danger">INB-0003</span>  </div>
+                                                <div class="col-md-10 text-truncate"> <span class="">Inbound shotage receipt report</span>  </div>
+                                            </div>
+                                            <div class="row mg-0 ln fnb">
+                                                <div class="col-md-2 "> <span class="text-danger">INB-0004</span>  </div>
+                                                <div class="col-md-10 text-truncate"> <span class="">Inbound receiption summary by supplier</span>  </div>
+                                            </div>
+                                            <div class="row mg-0 ln fnb">
+                                                <div class="col-md-2 "> <span class="text-danger">INB-0005</span>  </div>
+                                                <div class="col-md-10 text-truncate"> <span class="">Inbound receiption performance by supplier</span>  </div>
+                                            </div>
+                                            <div class="row mg-0 ln fnb">
+                                                <div class="col-md-2 "> <span class="text-danger">TAS-0001</span>  </div>
+                                                <div class="col-md-10 text-truncate"> <span class="">Task pending report</span>  </div>
+                                            </div>
+                                            <div class="row mg-0 ln fnb">
+                                                <div class="col-md-2 "> <span class="text-danger">TAS-0002</span>  </div>
+                                                <div class="col-md-10 text-truncate"> <span class="">Task performance report</span>  </div>
+                                            </div>
+                                            <div class="row mg-0 ln fnb">
+                                                <div class="col-md-2 "> <span class="text-danger">TAS-0003</span>  </div>
+                                                <div class="col-md-10 text-truncate"> <span class="">Task performance by worker</span>  </div>
+                                            </div>
+                                            <div class="row mg-0 ln fnb">
+                                                <div class="col-md-2 "> <span class="text-danger">OUB-0001</span>  </div>
+                                                <div class="col-md-10 text-truncate"> <span class="">Outbound planing report</span>  </div>
+                                            </div>
+                                            <div class="row mg-0 ln fnb">
+                                                <div class="col-md-2 "> <span class="text-danger">OUB-0002</span>  </div>
+                                                <div class="col-md-10 text-truncate"> <span class="">Outbound planning vs actual deliveyr report</span>  </div>
+                                            </div>
+                                            <div class="row mg-0 ln fnb">
+                                                <div class="col-md-2 "> <span class="text-danger">OUB-0003</span>  </div>
+                                                <div class="col-md-10 text-truncate"> <span class="">Outbound shotage report</span>  </div>
+                                            </div>
+                                            <div class="row mg-0 ln fnb">
+                                                <div class="col-md-2 "> <span class="text-danger">OUB-0004</span>  </div>
+                                                <div class="col-md-10 text-truncate"> <span class="">Outbound delivery summary by customer</span>  </div>
+                                            </div>
+                                            <div class="row mg-0 ln fnb">
+                                                <div class="col-md-2 "> <span class="text-danger">OUB-0005</span>  </div>
+                                                <div class="col-md-10 text-truncate"> <span class="">Outbound delivery performance by customer</span>  </div>
+                                            </div>
+
+                                            <div class="row mg-0 ln fnb">
+                                                <div class="col-md-2 "> <span class="text-danger">MAS-0001</span>  </div>
+                                                <div class="col-md-10 text-truncate"> <span class="">Product master </span>  </div>
+                                            </div>
+
+                                            <div class="row mg-0 ln fnb">
+                                                <div class="col-md-2 "> <span class="text-danger">MAS-0002</span>  </div>
+                                                <div class="col-md-10 text-truncate"> <span class="">Third party master </span>  </div>
+                                            </div>
+
+                                            <div class="row mg-0 ln fnb">
+                                                <div class="col-md-2 "> <span class="text-danger">MAS-0003</span>  </div>
+                                                <div class="col-md-10 text-truncate"> <span class="">Barcode master </span>  </div>
+                                            </div> -->
+                        </ng-scrollbar>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="propset lsset fn-07e fnb">
+                    <div class="head">
+                      <div class="row mg-0 ln">
+                        <div class="col-md-12">Report selection</div>
+                      </div>
+                    </div>
+                    <div class="line bgsub-head fnb dgcorrect">
+                      <form
+                        name="form"
+                        (ngSubmit)="onSubmit(f)"
+                        #f="ngForm"
+                        novalidate
+                        style="padding-left: 20px"
+                      >
+                        <div class="row mg-0 ln">
+                          <div class="col-md-3 pdt-5 text-dark">Report</div>
+                          <div class="col-md-9">
+                            <input
+                              class="form-control form-control-sm text-danger"
+                              type="hidden"
+                              readonly
+                              name="reh_id"
+                              [(ngModel)]="rpslId"
+                            />
+                            <input
+                              class="form-control form-control-sm text-danger"
+                              type="text"
+                              readonly
+                              name="reh_code"
+                              [(ngModel)]="rpslCode"
+                            />
+                          </div>
+                        </div>
+                        <div class="row mg-0 ln">
+                          <div class="col-md-3 pdt-5 text-dark">Name</div>
+                          <div class="col-md-9">
+                            <input
+                              class="form-control form-control-sm text-danger"
+                              type="text"
+                              readonly
+                              name="reh_name"
+                              [(ngModel)]="rpslName"
+                            />
+                          </div>
+                        </div>
+                        <!--- Forms Generating -->
+                        <div class="row mg-0 ln" *ngFor="let ctrl of forms">
+                          <div class="col-md-3 pdt-5 text-dark">
+                            {{ctrl.label}}
+                          </div>
+                          <div class="col-md-9">
+                            <input
+                              *ngIf="ctrl.typ=='T'"
+                              class="form-control form-control-sm text-danger"
+                              type="text"
+                              name="re{{ctrl.typ.toLowerCase()}}_{{ctrl.name}}"
+                              [(ngModel)]="ctrl.val"
+                              autocomplete="off"
+                            />
+
+                            <ng-select
+                              *ngIf="ctrl.typ=='C'"
+                              class="custom"
+                              [clearable]="false"
+                              bindLabel="text"
+                              bindvalue="id"
+                              name="re{{ctrl.typ.toLowerCase()}}_{{ctrl.name}}"
+                              [items]="ctrl.options"
+                              [(ngModel)]="ctrl.val"
+                            >
+                            </ng-select>
+
+                          
+                            <!-- <select
+                              *ngIf="ctrl.typ=='C'"
+                              name="{{ctrl.name}}"
+                              class="form-control form-control-sm text-danger"
+                              ngModel
+                            >
+                              <option
+                                value="{{item.id}}"
+                                *ngFor="let item of ctrl.options"
+                              >
+                                {{item.text}}
+                              </option>
+                            </select> -->
+
+                            <label class="input-group" *ngIf="ctrl.typ=='D'">
+                              <input
+                                class="form-control text-danger fnb"
+                                name="re{{ctrl.typ.toLowerCase()}}_{{ctrl.name}}"
+                                ngbDatepicker
+                                #d="ngbDatepicker"
+                                ngModel
+                              />
+                              <div class="input-group-append">
+                                <button
+                                  type="button"
+                                  class="btn snaps-btngroup btn-prime"
+                                  (click)="d.toggle()"
+                                >
+                                  <svg
+                                    width="1em"
+                                    height="1em"
+                                    viewBox="0 0 16 16"
+                                    class="bi bi-calendar-date"
+                                    fill="currentColor"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <path
+                                      fill-rule="evenodd"
+                                      d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"
+                                    ></path>
+                                    <path
+                                      d="M6.445 11.688V6.354h-.633A12.6 12.6 0 0 0 4.5 7.16v.695c.375-.257.969-.62 1.258-.777h.012v4.61h.675zm1.188-1.305c.047.64.594 1.406 1.703 1.406 1.258 0 2-1.066 2-2.871 0-1.934-.781-2.668-1.953-2.668-.926 0-1.797.672-1.797 1.809 0 1.16.824 1.77 1.676 1.77.746 0 1.23-.376 1.383-.79h.027c-.004 1.316-.461 2.164-1.305 2.164-.664 0-1.008-.45-1.05-.82h-.684zm2.953-2.317c0 .696-.559 1.18-1.184 1.18-.601 0-1.144-.383-1.144-1.2 0-.823.582-1.21 1.168-1.21.633 0 1.16.398 1.16 1.23z"
+                                    ></path>
+                                  </svg>
+                                </button>
+                              </div>
+                            </label>
+                          </div>
+                        </div>
+                        <div class="row mg-0 ln">
+                          <div class="col-md-3 pdt-5">
+                            <span class="text-dark fnb"></span>
+                          </div>
+                          <div class="col-md-9">
+                            <button
+                              type="submit"
+                              class="btn snaps-success btn-xs btn-block mp"
+                              [disabled]="forms.length == 0"
+                            >
+                              Process report
+                            </button>
+                          </div>
+                        </div>
+                      </form>
+                      <!-- <div class="row mg-0 ln">
+                        <div class="col-md-3 pdt-5 text-dark">Plan date</div>
+                        <div class="col-md-9">
+                          <div class="input-group">
+                            <input
+                              class="form-control text-danger fnb"
+                              name="dp"
+                              ngbDatepicker
+                              #dateexp="ngbDatepicker"
+                              placeholder="{{dateformat}}"
+                            />
+                            <div class="input-group-append">
+                              <button
+                                type="button"
+                                class="btn snaps-btngroup btn-prime"
+                                (click)="dateexp.toggle()"
+                              >
+                                <svg
+                                  width="1em"
+                                  height="1em"
+                                  viewBox="0 0 16 16"
+                                  class="bi bi-calendar-date"
+                                  fill="currentColor"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path
+                                    fill-rule="evenodd"
+                                    d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"
+                                  ></path>
+                                  <path
+                                    d="M6.445 11.688V6.354h-.633A12.6 12.6 0 0 0 4.5 7.16v.695c.375-.257.969-.62 1.258-.777h.012v4.61h.675zm1.188-1.305c.047.64.594 1.406 1.703 1.406 1.258 0 2-1.066 2-2.871 0-1.934-.781-2.668-1.953-2.668-.926 0-1.797.672-1.797 1.809 0 1.16.824 1.77 1.676 1.77.746 0 1.23-.376 1.383-.79h.027c-.004 1.316-.461 2.164-1.305 2.164-.664 0-1.008-.45-1.05-.82h-.684zm2.953-2.317c0 .696-.559 1.18-1.184 1.18-.601 0-1.144-.383-1.144-1.2 0-.823.582-1.21 1.168-1.21.633 0 1.16.398 1.16 1.23z"
+                                  ></path>
+                                </svg>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div> -->
+
+                      <!-- <div class="row mg-0 ln">
+                        <div class="col-md-3 pdt-5 text-dark">Request date</div>
+                        <div class="col-md-9">
+                          <div class="input-group">
+                            <input
+                              class="form-control text-danger fnb"
+                              name="dp"
+                              ngbDatepicker
+                              #dateexp="ngbDatepicker"
+                              placeholder="{{dateformat}}"
+                            />
+                            <div class="input-group-append">
+                              <button
+                                type="button"
+                                class="btn snaps-btngroup btn-prime"
+                                (click)="dateexp.toggle()"
+                              >
+                                <svg
+                                  width="1em"
+                                  height="1em"
+                                  viewBox="0 0 16 16"
+                                  class="bi bi-calendar-date"
+                                  fill="currentColor"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path
+                                    fill-rule="evenodd"
+                                    d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"
+                                  ></path>
+                                  <path
+                                    d="M6.445 11.688V6.354h-.633A12.6 12.6 0 0 0 4.5 7.16v.695c.375-.257.969-.62 1.258-.777h.012v4.61h.675zm1.188-1.305c.047.64.594 1.406 1.703 1.406 1.258 0 2-1.066 2-2.871 0-1.934-.781-2.668-1.953-2.668-.926 0-1.797.672-1.797 1.809 0 1.16.824 1.77 1.676 1.77.746 0 1.23-.376 1.383-.79h.027c-.004 1.316-.461 2.164-1.305 2.164-.664 0-1.008-.45-1.05-.82h-.684zm2.953-2.317c0 .696-.559 1.18-1.184 1.18-.601 0-1.144-.383-1.144-1.2 0-.823.582-1.21 1.168-1.21.633 0 1.16.398 1.16 1.23z"
+                                  ></path>
+                                </svg>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row mg-0 ln">
+                        <div class="col-md-3 pdt-5">
+                          <span class="text-dark fnb">Third party </span>
+                        </div>
+                        <div class="col-md-6">
+                          <input
+                            class="form-control form-control-sm text-danger"
+                            type="text"
+                          />
+                        </div>
+                      </div>
+
+                      <div class="row mg-0 ln">
+                        <div class="col-md-3 pdt-5">
+                          <span class="text-dark fnb">Product</span>
+                        </div>
+                        <div class="col-md-6">
+                          <input
+                            class="form-control form-control-sm text-danger"
+                            type="text"
+                          />
+                        </div>
+                      </div>
+
+                      <div class="row mg-0 ln">
+                        <div class="col-md-3 pdt-5">
+                          <span class="text-dark fnb">Barcode</span>
+                        </div>
+                        <div class="col-md-6">
+                          <input
+                            class="form-control form-control-sm text-danger"
+                            type="text"
+                          />
+                        </div>
+                      </div>
+
+                      <div class="row mg-0 ln">
+                        <div class="col-md-3 pdt-5">
+                          <span class="text-dark fnb"></span>
+                        </div>
+                        <div class="col-md-9">
+                          <button
+                            type="button"
+                            class="btn snaps-success btn-xs btn-block mp"
+                          >
+                            Process report
+                          </button>
+                        </div>
+                      </div> -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-template>
+        </li>
+      </ul>
+      <div [ngbNavOutlet]="nav" class="mt-2"></div>
+    </div>
+  </div>
+</div>

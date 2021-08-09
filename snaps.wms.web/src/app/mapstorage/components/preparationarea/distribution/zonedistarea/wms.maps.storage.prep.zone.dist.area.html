@@ -1,0 +1,113 @@
+<div class="row mg-0 pd-0">
+    <div class="col-md-7">
+        <div class="lsset fn fn-07e ">
+
+            <div class="head">
+                <div class="row mg-0 ln ">
+                    <div class="col-md-2 ">Zone Code</div>
+                    <div class="col-md-2 ">Zone Name</div>
+                    <div class="col-md-5 ">Description</div>
+                    <div class="col-md-3 ">Status</div>
+                </div>
+            </div>
+        
+            <div class="line bgsub-head fnb dgzone">
+                <div class="row mg-0 ln " *ngFor="let ln of lstzone " (click)="ngOpsslc(ln)" >
+                    <div class="col-md-2 ">{{ln.przone}}</div>
+                    <div class="col-md-2 text-truncate">{{ln.przonename}}</div>
+                    <div class="col-md-5 ">{{ln.przonedesc}}</div>
+                    <div class="col-md-3 "><span class="fa {{ngDecIcon(ln.tflow)}}"></span>&nbsp;{{ngDecStr(ln.tflow)}}</div>
+                </div>    
+            </div>
+
+        </div> 
+
+    </div>
+
+    <div class="col-md-5">
+        <div class="lsset fn fn-07e">
+            <div class="head">
+                <div class="row mg-0 ln">
+                   <div class="col-md-6">Zone preparation modify</div> 
+                   <div class="col-md-6 tx-right">
+                       <div (click)="ngOpsnew()"><i class="fas fa-plus-circle"></i>&nbsp;&nbsp;<span class="text-danger">New Zone</span></div>
+                   </div>
+                </div>
+
+                <div class="linebx bgsub-head dgzone">
+                    <div class="row mg-0 ln">
+                        <div class="col-md-3 pdt-5">Zone Code</div>
+                        <div class="col-md-6">
+                            <input *ngIf="sobzone.tflow == 'NW'" class="form-control form-control-sm  text-danger fnb " type="text" placeholder="Zone code" [(ngModel)]="sobzone.przone" >
+                            <span  *ngIf="sobzone.tflow != 'NW'" class="">{{sobzone.przone}}</span>
+                        </div>
+                    </div>
+
+                    <div class="row mg-0 ln">
+                        <div class="col-md-3 pdt-5">Zone Name</div>
+                        <div class="col-md-6"><input class="form-control form-control-sm  text-danger fnb " type="text" placeholder="Zone name" [(ngModel)]="sobzone.przonename" ></div>
+                    </div>
+
+                    <div class="row mg-0 ln">
+                        <div class="col-md-3 pdt-5">Desceiption</div>
+                        <div class="col-md-9"><input class="form-control form-control-sm  text-danger fnb " type="text" placeholder="Zone description"  [(ngModel)]="sobzone.przonedesc"  ></div>
+                    </div>
+
+                    <div class="row mg-0 ln">
+                        <div class="col-md-3 pdt-5">HU.Type</div>
+                        <div class="col-md-5">
+                            <ng-select class="fn-07e "  class="custom custom-sm" bindLabel="desc" bindvalue="value" 
+                            [clearable]="false"  [(ngModel)]="slchu" [items]="lsthu" >
+                            <ng-template ng-label-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                            <ng-template ng-option-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                            </ng-select>
+                        </div>
+                        <div class="col-md-4">
+                            <button type="button" class="btn snaps-warning btn-xs btn-block mp" (click)="ngOpsout()" *ngIf="sobzone.tflow != 'NW'">  
+                                <i class="fas fa-wrench"></i> &nbsp; Configuration
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- <div class="row mg-0 ln">
+                        <div class="col-md-3 ">Weight Capacity<br>( <span class="text-danger">Kgs.</span> )</div>
+                        <div class="col-md-5"><input class="form-control form-control-sm  text-danger fnb " type="text" placeholder="Weight kilogram" [(ngModel)]="sobzone.huvalweight" ></div>
+                    </div>
+                    <div class="row mg-0 ln">
+                        <div class="col-md-3 ">Weight Capacity<br>( <span class="text-danger">%</span> )</div>
+                        <div class="col-md-5"><input class="form-control form-control-sm  text-danger fnb " type="text" placeholder="Weight percentage" [(ngModel)]="sobzone.hucapweight" ></div>
+                    </div>
+                    <div class="row mg-0 ln">
+                        <div class="col-md-3 ">Volume Capacity<br>( <span class="text-danger">Cm3</span> )</div>
+                        <div class="col-md-5"><input class="form-control form-control-sm  text-danger fnb " type="text" placeholder="Volume cubic" [(ngModel)]="sobzone.huvalvolume" ></div>
+                    </div>
+                    <div class="row mg-0 ln">
+                        <div class="col-md-3 ">Volume Capacity<br>( <span class="text-danger">%</span> )</div>
+                        <div class="col-md-5"><input class="form-control form-control-sm  text-danger fnb " type="text" placeholder="Volume percentage" [(ngModel)]="sobzone.hucapvolume" ></div>
+                    </div>
+                     -->
+
+                    <div class="row mg-0 ln">
+                        <div class="col-md-3 pdt-5">Status</div>
+                        <div class="col-md-3"><ui-switch checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" [(ngModel)]="slctflow" ></ui-switch></div>
+                    </div>
+
+                    <div class="row mg-0 ln">
+                        <div class="col-md-4">
+                            <button type="button" class="btn snaps-danger btn-xs btn-block mp" *ngIf="slctflow == false" (click)="ngOpsremove()">
+                                <i class="fas fa-minus-circle"></i> &nbsp; Remove
+                            </button>
+                        </div>
+                        <div class="col-md-4">&nbsp;</div>
+                        <div class="col-md-4">
+                            <button type="button" class="btn snaps-primary btn-xs btn-block mp" (click)="ngOpsvalidate()">
+                                <i class="fas fa-check-circle"></i> &nbsp; Validate
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,32 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.8" />
+    <PackageReference Include="Microsoft.AspNetCore.Cors" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.8" />
+    <PackageReference Include="Serilog.AspNetCore" Version="3.4.0" />
+    <PackageReference Include="Serilog.Enrichers.Thread" Version="3.1.0" />
+    <PackageReference Include="Serilog.Extensions.Logging.File" Version="2.0.0" />
+    <PackageReference Include="Serilog.Filters.Expressions" Version="2.1.0" />
+    <PackageReference Include="Serilog.Settings.Configuration" Version="3.1.0" />
+    <PackageReference Include="Serilog.Sinks.Console" Version="3.1.1" />
+    <PackageReference Include="Serilog.Sinks.File" Version="4.1.0" />
+    <ProjectReference Include="..\snaps.helpers.dbcontext.sqlserver\Snaps.Helpers.DbContext.SQLServer.csproj" />
+    <ProjectReference Include="..\snaps.helpers.hash\Snaps.Helpers.Hash.csproj" />
+    <ProjectReference Include="..\snaps.helpers.json\Snaps.Helpers.Json.csproj" />
+    <ProjectReference Include="..\snaps.helpers.logging\Snaps.Helpers.Logging.csproj" />
+    <ProjectReference Include="..\snaps.helpers.stringext\Snaps.Helpers.StringExt.csproj" />
+    <!-- <Reference Include="Snaps.Helpers.StringExt"> <HintPath>..\..\Snaps.Library\Snaps.Helpers.StringExt.dll</HintPath> </Reference> -->
+
+    <!-- <Reference Include="Snaps.Helpers.Device"> <HintPath>..\..\Snaps.Library\snaps.wms.device.dll</HintPath> </Reference> -->
+    <ProjectReference Include="..\snaps.wms.inbound\snaps.wms.inbound.csproj" />
+    <!-- <Reference Include="Snaps.WMS.inbound"> <HintPath>..\..\Snaps.Library\snaps.wms.inbound.dll</HintPath> </Reference> -->
+    
+  </ItemGroup>
+
+
+</Project>

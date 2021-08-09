@@ -1,0 +1,125 @@
+<div class="row mg-0 pd-0">
+    <div class="col-md-7">
+        <div class="lsset fn fn-07e ">
+
+            <div class="head">
+                <div class="row mg-0 ln ">
+                    <div class="col-md-1 ">Zone</div>
+                    <div class="col-md-1 ">Aisle</div>
+                    <div class="col-md-1 ">Bay</div>
+                    <div class="col-md-1 ">Level</div>
+                    <div class="col-md-2 ">Location</div>
+                    <div class="col-md-2 ">Product</div>
+                    <div class="col-md-1 ">Unit</div>
+                    <div class="col-md-1 ">Seq.</div>
+                    <div class="col-md-2 ">Status</div>
+                </div>
+            </div>
+        
+            <div class="line bgsub-head fnb dgzone">
+                <div class="row mg-0 ln " *ngFor="let ln of lstline " (click)="ngOpsslc(ln)" >
+                    <div class="col-md-1 ">{{ln.lszone}}</div>
+                    <div class="col-md-1 ">{{ln.lsaisle}}</div>
+                    <div class="col-md-1 ">{{ln.lsbay}}</div>
+                    <div class="col-md-1 ">{{ln.lslevel}}</div>
+                    <div class="col-md-2 tx-overflow">{{ln.lscode}}</div>
+                    <div class="col-md-2 tx-overflow">{{ln.spcproduct}}-{{ln.spclv}}</div>
+                    <div class="col-md-1 tx-right">{{ngDecFlow(ln.spcunit)}}</div>
+                    <div class="col-md-1 tx-right">{{ln.lspath | number}}</div>
+                    <div class="col-md-2 "><span class="fa {{ngDecIcon(ln.tflow)}}"></span>&nbsp;{{ngDecStr(ln.tflow)}}</div>
+                </div>    
+            </div>
+
+        </div> 
+
+    </div>
+
+    <div class="col-md-5">
+        <div class="lsset fn fn-07e">
+            <div class="head">
+                <div class="row mg-0 ln">
+                   <div class="col-md-6">Zone preparation modify</div> 
+                   <div class="col-md-6 tx-right">
+                       <div (click)="ngOpsnew()"><i class="fas fa-plus-circle"></i>&nbsp;&nbsp;<span class="text-danger">New Location</span></div>
+                   </div>
+                </div>
+
+                <div class="linebx bgsub-head dgzone">
+                    <div class="row mg-0 ln">
+                        <div class="col-md-3 ">Zone Code</div>
+                        <div class="col-md-9 text-danger">{{sobzone.przone}}</div>
+                    </div>
+
+                    <div class="row mg-0 ln">
+                        <div class="col-md-3 ">Zone Name</div>
+                        <div class="col-md-9 text-danger">{{sobzone.przonename}}</div>
+                    </div>
+
+                    <div class="row mg-0 ln">
+                        <div class="col-md-3 ">Desceiption</div>
+                        <div class="col-md-9 text-danger">{{sobzone.przonedesc}}</div>
+                    </div>
+
+                    <div class="row mg-0 ln">
+                        <div class="col-md-3">Location</div>
+                        <div class="col-md-5"><input class="form-control form-control-sm  text-danger fnb " type="text" placeholder="Location code"  [(ngModel)]="sobline.lscode"  ></div>
+                    </div>
+
+                    <div class="row mg-0 ln">
+                        <div class="col-md-3">Product Code</div>
+                        <div class="col-md-5"><input class="form-control form-control-sm  text-danger fnb " type="text" placeholder="Product code"  [(ngModel)]="sobline.spcproduct"  ></div>
+                        <div class="col-md-2"><input class="form-control form-control-sm  text-danger fnb " type="text" placeholder="PV"  [(ngModel)]="sobline.spcpv"  ></div>
+                        <div class="col-md-2"><input class="form-control form-control-sm  text-danger fnb " type="text" placeholder="LV"  [(ngModel)]="sobline.spclv"  ></div>
+                    </div>
+
+                    <div class="row mg-0 ln">
+                        <div class="col-md-3">Preparation Unit</div>
+                        <div class="col-md-5">
+                            <ng-select class="fn-07e "  class="custom custom-sm" bindLabel="desc" bindvalue="value" 
+                                [clearable]="false"  [(ngModel)]="slcunit" [items]="lstunit" >
+                                <ng-template ng-label-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                                <ng-template ng-option-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                            </ng-select>
+                        </div>
+                    </div>
+
+                    <div class="row mg-0 ln">
+                        <div class="col-md-3">Direction</div>
+                        <div class="col-md-5">
+                            <ng-select class="fn-07e "  class="custom custom-sm" bindLabel="desc" bindvalue="value" 
+                                [clearable]="false"  [(ngModel)]="slcdirection" [items]="lstdirection" >
+                                <ng-template ng-label-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                                <ng-template ng-option-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                            </ng-select>
+                        </div>
+                    </div>
+
+                    <div class="row mg-0 ln">
+                        <div class="col-md-3">Sequence</div>
+                        <div class="col-md-3"><input class="form-control form-control-sm  text-danger fnb " type="text" placeholder="Location path"  [(ngModel)]="sobline.lspath"  ></div>
+                    </div>
+
+                    <div class="row mg-0 ln">
+                        <div class="col-md-3 pdt-5">Status</div> 
+                        <div class="col-md-3"><ui-switch checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" [(ngModel)]="slctflow" ></ui-switch></div>
+                    </div>
+
+                    <div class="row mg-0 ln">
+                        <div class="col-md-4">
+                            <button type="button" class="btn snaps-danger btn-xs btn-block mp" *ngIf="slctflow == false" (click)="ngOpsremove()">
+                                <i class="fas fa-minus-circle"></i> &nbsp; Remove
+                            </button>
+                        </div>
+                        <div class="col-md-4">&nbsp;</div>
+                        <div class="col-md-4">
+                            <button type="button" class="btn snaps-primary btn-xs btn-block mp" (click)="ngOpsvalidate()">
+                                <i class="fas fa-check-circle"></i> &nbsp; Validate
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

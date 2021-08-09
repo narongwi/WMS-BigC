@@ -1,0 +1,129 @@
+<div class="bgsub-info">
+    <div class="bgprime" style="height: 44px;background-color: #ffffff;border-bottom: 1px solid #e0e0e0;"> </div>
+    <div class="container">        
+        <div class="row " style="margin-top:-34px">
+            <ul ngbNav #nav="ngbNav" [(activeId)]="crtab" class="nav-tabs" [destroyOnHide]="false">
+                <li [ngbNavItem]="1">
+                  <a ngbNavLink class="fn fn-07e">Share Preparation</a>
+                  <ng-template ngbNavContent>
+                    <div class="row mg-0 pd-0">
+                        <div class="col-md-7">
+                            <!-- <div class="row mg-0">
+                                <div class="col-md-7"> </div>
+                                <div class="col-md-5">
+                                    <div class="input-group fnb">
+                                        <input class="form-control fn-07e fnb text-danger "
+                                            [(ngModel)]="pm.shprepdesc"
+                                            >
+                                        <div class="input-group-append">
+                                        <button type="button" class="btn snaps-btngroup btn-prime " (click)="ngFind();" >
+                                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-calendar-date" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                            <path fill-rule="evenodd" d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"></path>
+                                            <path d="M6.445 11.688V6.354h-.633A12.6 12.6 0 0 0 4.5 7.16v.695c.375-.257.969-.62 1.258-.777h.012v4.61h.675zm1.188-1.305c.047.64.594 1.406 1.703 1.406 1.258 0 2-1.066 2-2.871 0-1.934-.781-2.668-1.953-2.668-.926 0-1.797.672-1.797 1.809 0 1.16.824 1.77 1.676 1.77.746 0 1.23-.376 1.383-.79h.027c-.004 1.316-.461 2.164-1.305 2.164-.664 0-1.008-.45-1.05-.82h-.684zm2.953-2.317c0 .696-.559 1.18-1.184 1.18-.601 0-1.144-.383-1.144-1.2 0-.823.582-1.21 1.168-1.21.633 0 1.16.398 1.16 1.23z"></path>
+                                            </svg>
+                                        </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> -->
+                            <div class="row mg-0">
+                                <div class="lsset fn fn-07e pd-0">
+                    
+                                    <div class="head">
+                                        <div class="row mg-0 ln ">
+                                            <div class="col-md-2 ">Share Code</div>
+                                            <div class="col-md-2 ">Share Name</div>
+                                            <div class="col-md-5 ">Desceiption</div>
+                                            <div class="col-md-3 ">Status</div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="line bgsub-head fnb dgzone">
+                                        <ng-scrollbar>
+                                            <div class="row mg-0 ln " *ngFor="let ln of lsshareprep " (click)="ngSelect(ln)" >
+                                                <div class="col-md-2 ">{{ln.shprep}}</div>
+                                                <div class="col-md-2 ">{{ln.shprepname}}</div>
+                                                <div class="col-md-5 ">{{ln.shprepdesc}}</div>
+                                                <div class="col-md-3 "><span class="fa {{ss.ngDecIcon(ln.tflow)}}"></span>&nbsp;{{ss.ngDecStr(ln.tflow)}}</div>
+                                            </div>
+                                        </ng-scrollbar>
+                                    </div>
+                        
+                                </div> 
+                            </div>
+
+                            
+                    
+                        </div>
+                    
+                        <div class="col-md-5">
+                            <div class="lsset fn fn-07e">
+                                <div class="head">
+                                    <div class="row mg-0 ln">
+                                       <div class="col-md-6">Share preparation modify</div> 
+                                       <div class="col-md-6 tx-right">
+                                           <div (click)="ngNew()"><i class="fas fa-plus-circle"></i>&nbsp;&nbsp;<span class="text-danger">New Share</span></div>
+                                       </div>
+                                    </div>
+                    
+                                    <div class="linebx bgsub-head dgzone">
+                                        <div class="row mg-0 ln">
+                                            <div class="col-md-3 pdt-5">Share Code</div>
+                                            <div class="col-md-6">
+                                                <span class="">{{slc.shprep}}</span>
+                                            </div>
+                                        </div>
+                    
+                                        <div class="row mg-0 ln">
+                                            <div class="col-md-3 pdt-5">Share Name</div>
+                                            <div class="col-md-6"><input class="form-control form-control-sm  text-danger fnb " type="text" placeholder="Share preparation name" [(ngModel)]="slc.shprepname" ></div>
+                                        </div>
+                    
+                                        <div class="row mg-0 ln">
+                                            <div class="col-md-3 pdt-5">Desceiption</div>
+                                            <div class="col-md-9"><input class="form-control form-control-sm  text-danger fnb " type="text" placeholder="Share preparation description"  [(ngModel)]="slc.shprepdesc"  ></div>
+                                        </div>                
+                    
+                                        <div class="row mg-0 ln">
+                                            <div class="col-md-3 pdt-5">Status</div>
+                                            <div class="col-md-3"><ui-switch checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" [(ngModel)]="slctflow" ></ui-switch></div>
+                                        </div>
+                    
+                                        <div class="row mg-0 ln">
+                                            <div class="col-md-4">
+                                                <button type="button" class="btn snaps-danger btn-xs btn-block mp" *ngIf="slctflow == false" (click)="ngRemove()">
+                                                    <i class="fas fa-minus-circle"></i> &nbsp; Remove
+                                                </button>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <button type="button" class="btn snaps-warning btn-xs btn-block mp" (click)="ngConfig()" *ngIf="slc.tflow != 'NW'">  
+                                                    <i class="fas fa-wrench"></i> &nbsp; Configuration
+                                                </button>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <button type="button" class="btn snaps-primary btn-xs btn-block mp" (click)="ngUpsert()">
+                                                    <i class="fas fa-check-circle"></i> &nbsp; Validate
+                                                </button>
+                                            </div>
+                                        </div>
+                    
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                  </ng-template>
+                </li>
+                <li [ngbNavItem]="2">
+                  <a ngbNavLink class="fn fn-07e">Share Preparation &nbsp;<span class="text-danger">{{slcshprep}}</span>&nbsp; configuration</a>
+                    <ng-template ngbNavContent>  
+                    <app-maps-share-prep-line [dateformat]="dateformat" [dateformatlong]="dateformatlong" #sobline></app-maps-share-prep-line>
+                    </ng-template>
+                </li>
+              </ul>
+              
+              <div [ngbNavOutlet]="nav" class="mt-2"></div>
+
+        </div>
+    </div>
+</div>

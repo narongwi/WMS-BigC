@@ -1,0 +1,238 @@
+<div class="bgsub-head">
+    <div class="container">
+        <div class="row bgsub-head bd-bottom-1 pdt-25">
+            <div class="col-md-6">
+                <ul class="nav nav-tabs h6" id="myTab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Pick-patch management</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-6 lh-1e2 text-right">
+                <span class="fn-3e fnb">
+                    Pick Patch
+                </span><br/>
+                <span class="fn-1e text-dark fnb">
+                    Pivot for putway path on warehouse 
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="bgsub-info fn-1e15">
+    <div class="container">
+        <div class="row bgsub-info">
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <ng-select class="custom" [items]="lszone" bindLabel="desc" bindvalue="value" [(ngModel)]="slczone" [searchable]="false">
+                                        <ng-template ng-label-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                                        <ng-template ng-option-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                                    </ng-select>
+                                </div>
+                                <div class="col-md-2">
+                                    <ng-select class="custom" [items]="lsaisle" bindLabel="desc" bindvalue="value" [(ngModel)]="slcaisle" [searchable]="false">
+                                        <ng-template ng-label-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                                        <ng-template ng-option-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                                    </ng-select>
+                                </div>
+                                <div class="col-md-2">
+                                    <ng-select class="custom" [items]="lsbay" bindLabel="desc" bindvalue="value" [(ngModel)]="slcbay" [searchable]="false">
+                                        <ng-template ng-label-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                                        <ng-template ng-option-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                                    </ng-select>
+                                </div>
+                                <div class="col-md-2">
+                                    <ng-select class="custom" [items]="lslevel" bindLabel="desc" bindvalue="value" [(ngModel)]="slclevel" [searchable]="false">
+                                        <ng-template ng-label-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                                        <ng-template ng-option-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                                    </ng-select>
+                                </div>
+
+                                <div class="col-md-2">
+                                    <button type="button" class="btn btn-primary btn-xs btn-block mp" (click)="fndlocation()">Find address</button>
+                                </div>
+                            </div>
+                            <div class="lsset mgt-10">
+                                <div class="head">
+                                    <div class="row mg-0 ln ">
+                                        <div class="col-md-1 ">Zone</div>
+                                        <div class="col-md-1 ">Aisle</div>
+                                        <div class="col-md-1 ">Bay</div>
+                                        <div class="col-md-1 ">Level</div>
+                                        <div class="col-md-4 ">Location</div>
+                                        <div class="col-md-1 text-center">Path</div> 
+                                        <div class="col-md-1 ">Article</div>
+                                        <div class="col-md-1 ">Unit</div>
+                                        <div class="col-md-1 ">Replen</div>            
+                                        
+                                    </div>
+                                </div>
+                            
+                                <div class="line bgsub-head  ">
+                                    <div class="row mg-0 ln mpswitch " *ngFor="let ln of lslocation" >
+                                        <div class="col-md-1 ">{{ln.lszone}}</div>
+                                        <div class="col-md-1 ">{{ln.lsaisle}}</div>
+                                        <div class="col-md-1 ">{{ln.lsbay}}</div>
+                                        <div class="col-md-1 ">{{ln.lslevel}}</div>
+                                        <div class="col-md-4 ">{{ln.lscodealt}}</div>
+                                        <div class="col-md-1 fnb text-center ">
+                                            <span class="dp">{{ln.spcseqpath}}</span>
+                                            <span class="fas fa-wrench text-warning w20 hd" (click)="selpivot(ln)"></span>
+                                        </div> 
+                                        <div class="col-md-1 ">{{ln.spcarticle}}</div>
+                                        <div class="col-md-1 ">{{ln.spcpickunit}}</div>  
+                                        <div class="col-md-1 ">{{ln.spcrpn}}</div>                                     
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <div class="col-md-4">
+                            <div class="lsset fn-1e ">
+                                <div class="head">
+                                    <div class="row mg-0 ln ">
+                                        <div class="col-md-12 fn-1e15">Pivot configuration</div>
+                                    </div>
+                                </div>
+                            
+                                <div class="line bgsub-head ">
+                                    <div class="row mg-0 ln " >
+                                        <div class="col-md-7 lh-1e1">
+                                            <span class="text-dark fnb fn-1e15">Site </span><br />
+                                            <span class="text-mute">site code of warehouse</span>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <span class="text-danger fnb fn-1e5">{{slcmd.site}}</span>
+                                        </div>
+                                    </div>
+                                    <div class="row mg-0 ln " >
+                                        <div class="col-md-7 lh-1e1">
+                                            <span class="text-dark fnb fn-1e15">Depot</span><br />
+                                            <span class="text-mute">depot code of warehouse</span>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <span class="text-danger fnb fn-1e5">{{slcmd.depot}}</span>
+                                        </div>
+                                    </div>
+                                    <div class="row mg-0 ln " >
+                                        <div class="col-md-7 lh-1e1 pdt-5">
+                                            <span class="text-dark fnb fn-1e15">Zone</span><br />
+                                            <span class="text-mute">Zone code on warehouse</span>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <span class="text-danger fnb fn-1e5 ">{{slcmd.spcarea}}</span>
+                                        </div>
+                                    </div>
+                                    <div class="row mg-0 ln " >
+                                        <div class="col-md-7 lh-1e1 pdt-5">
+                                            <span class="text-dark fnb fn-1e15">Aisle</span><br />
+                                            <span class="text-mute">Aisle code for short description</span>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <span class="text-danger fnb fn-1e5 ">{{slcmd.lsaisle}}</span>
+                                        </div>
+                                    </div>
+                                    <div class="row mg-0 ln " >
+                                        <div class="col-md-7 lh-1e1 pdt-5">
+                                            <span class="text-dark fnb fn-1e15">Bay</span><br />
+                                            <span class="text-mute">Bay code for short description</span>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <span class="text-danger fnb fn-1e5 ">{{slcmd.lsbay}}</span>
+                                        </div>
+                                    </div>
+                                    <div class="row mg-0 ln " >
+                                        <div class="col-md-7 lh-1e1 pdt-5">
+                                            <span class="text-dark fnb fn-1e15">Level</span><br />
+                                            <span class="text-mute">Level for short description</span>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <span class="text-danger fnb fn-1e5 ">{{slcmd.lslevel}}</span>
+                                        </div>
+                                    </div>
+                                    <div class="row mg-0 ln " >
+                                        <div class="col-md-7 lh-1e1 pdt-5">
+                                            <span class="text-dark fnb fn-1e15">Location</span><br />
+                                            <span class="text-mute">Level for short description</span>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <span class="text-danger fnb fn-1e5 ">{{slcmd.lscodealt}}</span>
+                                        </div>
+                                    </div>
+                                    <div class="row mg-0 ln " >
+                                        <div class="col-md-7 lh-1e1 pdt-5">
+                                            <span class="text-dark fnb fn-1e15">Pick Sequence</span><br />
+                                            <span class="text-mute">Pick sequence for preparation</span>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <div class="form-group form-control-sm mg-0">
+                                                <input class="form-control text-danger fnb fn-1e" type="text" placeholder=""  [(ngModel)]="slcmd.spcseqpath">
+                                            </div> 
+                                        </div>
+                                    </div>
+                                    <div class="row mg-0 ln " >
+                                        <div class="col-md-7 lh-1e1 pdt-5">
+                                            <span class="text-dark fnb fn-1e15">Product</span><br />
+                                            <span class="text-mute">Set up product code for specific picking</span>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <div class="form-group form-control-sm mg-0">
+                                                <input class="form-control text-danger fnb fn-1e" type="text" placeholder=""  [(ngModel)]="slcmd.spcarticle">
+                                            </div> 
+                                        </div>
+                                    </div>
+                                    <div class="row mg-0 ln " >
+                                        <div class="col-md-7 lh-1e1 pdt-5">
+                                            <span class="text-dark fnb fn-1e15">Pick unit</span><br />
+                                            <span class="text-mute">Pick unit for preparation</span>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <div class="form-group form-control-sm mg-0">
+                                                <input class="form-control text-danger fnb fn-1e" type="text" placeholder=""  [(ngModel)]="slcmd.spcpickunit">
+                                            </div> 
+                                        </div>
+                                    </div>
+                                    <div class="row mg-0 ln " >
+                                        <div class="col-md-7 lh-1e1 pdt-5">
+                                            <span class="text-dark fnb fn-1e15">Replenishment class</span><br />
+                                            <span class="text-mute">Class of replenishment</span>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <div class="form-group form-control-sm mg-0">
+                                                <input class="form-control text-danger fnb fn-1e " type="text" placeholder=""  [(ngModel)]="slcmd.spcrpn">
+                                            </div> 
+                                        </div>
+                                    </div>
+                                    <div class="row mg-0 ln " >
+                                        <div class="col-md-7 lh-1e1 pdt-5">
+                                            <span class="text-dark fnb fn-1e15">Minimum stock</span><br />
+                                            <span class="text-mute">trigger the replenishment</span>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <div class="form-group form-control-sm mg-0">
+                                                <input class="form-control text-danger fnb fn-1e" type="text" placeholder=""  [(ngModel)]="slcmd.lsmnsafety">
+                                            </div> 
+                                        </div>
+                                    </div>
+                    
+                                    <div class="row mg-0 ln pdt-25">
+                                        <div class="col-md-7 lh-1e1 pdt-5">
+                                        </div>
+                                        <div class="col-md-5">
+                                            <button type="button" class="btn btn-primary btn-xs btn-block mp" (click)="validate()">Save pivot</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+        </div>
+    </div>
+</div>

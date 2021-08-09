@@ -1,0 +1,212 @@
+
+<div class="row fnb fn-07e">
+    <div class="col-md-8">
+        <div class="lsset  ">
+            <div class="head">
+                <div class="row mg-0 ln ">
+                    <div class="col-md-1 ">Code</div>
+                    <div class="col-md-2 ">Name</div>                   
+                    <div class="col-md-6 ">Description</div>
+                    <div class="col-md-1 ">Seq.</div>
+                    <div class="col-md-2 ">State</div>
+                </div>
+            </div>
+        
+            <div class="line bgsub-head dgreturn ">
+                <div class="row mg-0 ln mpswitch " *ngFor="let ln of lsreturn" >
+                    <div class="col-md-1 text-danger ">{{ln.lscode}}</div>
+                    <div class="col-md-2 text-success">{{ln.lscodealt}}</div>
+                    <div class="col-md-6 ">{{ln.lsdesc}}</div>
+                    <div class="col-md-1 text-center">{{ln.lsseq}}</div>
+                    <div class="col-md-2 "(click)="selreturn(ln)">
+                        <span class="{{ngDecIcon(ln.tflow)}} w20 dp"></span>
+                        <span class="fas fa-wrench text-warning w20 hd" ></span>
+                        &nbsp;&nbsp;{{ngDecState(ln.tflow)}}
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="foot bgsub-head fnb pd-5">
+                <div class="row mg-0">
+                    <div class="col-md-2 pdt-5">
+                        Total &nbsp; &nbsp;<span class="text-danger">{{lsreturn.length | number }}</span> &nbsp; &nbsp; return
+                    </div>
+                   
+                    <div class="col-md-1 tx-right lh-07e">
+                        <div class="fn-06e fnb text-danger">Rows</div>
+                        <div class="fn-06e">Per Page</div>
+                    </div>
+                    <div class="col-md-2">
+
+                        <ng-select class=" text-danger"  class="custom custom-sm" bindLabel="value" bindvalue="value" 
+                                    [clearable]="false"  [(ngModel)]="slrowlmt" [items]="lsrowlmt" (change)="ngChangeRowlmt()" >
+                            <ng-template ng-label-tmp let-item="item"><span class="text-danger b">{{item.value}}</span> </ng-template>
+                            <ng-template ng-option-tmp let-item="item"><span class="text-danger b">{{item.value}}</span> </ng-template>
+                        </ng-select>
+                    
+                    </div>
+                    <div class="col-md-7 tx-right">
+                        <ngb-pagination [(page)]="page" [pageSize]="pageSize" [collectionSize]="lsreturn.length" class="d-flex justify-content-end" ></ngb-pagination>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="lsset  ">
+            <div class="head">
+                <div class="row mg-0 ln ">
+                    <div class="col-md-6 ">Configuration</div>
+                    <div class="col-md-6 ">
+                        <span class=" mp" (click)="newreturn()">
+                            <i class="fas fa-plus-square text-primary fa-lg"></i>&nbsp;
+                            New Return
+                        </span>
+                        
+                    </div>
+                </div>
+            </div>
+        
+            <div class="line bgsub-head dgreturn">
+                <div class="row mg-0 ln " >
+                    <div class="col-md-7 lh-08e pdt-3">
+                        <span class="text-dark fnb">Site </span><br />
+                        <span class="text-mute">site code of warehouse</span>
+                    </div>
+                    <div class="col-md-5">
+                        <span class="text-danger fnb ">{{crreturn.site}}</span>
+                    </div>
+                </div>
+                <div class="row mg-0 ln " >
+                    <div class="col-md-7 lh-08e pdt-3">
+                        <span class="text-dark fnb">Depot</span><br />
+                        <span class="text-mute">depot code of warehouse</span>
+                    </div>
+                    <div class="col-md-5">
+                        <span class="text-danger fnb ">{{crreturn.depot}}</span>
+                    </div>
+                </div>
+                <div class="row mg-0 ln " >
+                    <div class="col-md-7 lh-1e1">
+                        <span class="text-dark fnb ">Return Category</span><br />
+                        <span class="text-mute">Category of return</span>
+                    </div>
+                    <div class="col-md-5">
+                        <ng-select class=" "  class="custom" bindLabel="desc" bindvalue="value" 
+                                    [clearable]="false"  [(ngModel)]="slccategory" [items]="msdcategory"
+                                    >
+                            <ng-template ng-label-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                            <ng-template ng-option-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                        </ng-select>
+                    </div>
+                </div>
+                <div class="row mg-0 ln " >
+                    <div class="col-md-7 lh-08e pdt-3">
+                        <span class="text-dark fnb">Return Code</span><br />
+                        <span class="text-mute">Identity of location</span>
+                    </div>
+                    <div class="col-md-5">
+                        <span class="text-danger fnb " *ngIf="crreturn.tflow != 'NW'">{{crreturn.lscode}}</span>
+                        <input class="form-control form-control-xs  text-danger fnb" type="text" placeholder="" [(ngModel)]="crreturn.lscode" *ngIf="crreturn.tflow == 'NW'">
+                    </div>
+                </div>
+                <div class="row mg-0 ln " >
+                    <div class="col-md-7 lh-08epdt-3">
+                        <span class="text-dark fnb">Return name</span><br />
+                        <span class="text-mute">Code name of return</span>
+                    </div>
+                    <div class="col-md-5">
+                        <input class="form-control form-control-xs  text-danger fnb" type="text" placeholder="" [(ngModel)]="crreturn.lscodealt">
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln " >
+                    <div class="col-md-7 lh-08epdt-3">
+                        <span class="text-dark fnb">Sequence</span><br />
+                        <span class="text-mute">Sequence no for align priority</span>
+                    </div>
+                    <div class="col-md-5">
+                        <input class="form-control form-control-xs  text-danger fnb" type="text" placeholder="" [(ngModel)]="crreturn.lsseq">
+                    </div>
+                </div> 
+
+                <div class="row mg-0 ln">
+                    <div class="col-md-7 lh-08epdt-3">
+                        <span class="text-dark fnb">Description</span><br />
+                        <span class="text-mute">Return description</span>
+                    </div>
+                    <div class="col-md-5">
+                        <input class="form-control form-control-xs  text-danger fnb" type="text" placeholder="" [(ngModel)]="crreturn.lsdesc">
+                    </div> 
+                </div>
+
+                <div class="row mg-0 ln " >
+                    <div class="col-md-7 lh-07e pdt-3">
+                        <span class="text-dark fnb">Third Party</span><br />
+                        <span class="text-mute  fnnb">Setup third party code for specific</span>
+                    </div>
+                    <div class="col-md-5">
+                        <input class="form-control form-control-xs  text-danger fnb" type="text" placeholder="" [(ngModel)]="lnreturn.spcthcode">
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln " >
+                    <div class="col-md-7 lh-07e pdt-3">
+                        <span class="text-dark fnb">Maximum HU</span><br />
+                        <span class="text-mute  fnnb">Capacity of staging to support HU</span>
+                    </div>
+                    <div class="col-md-5">
+                        <input class="form-control form-control-xs  text-danger fnb" type="text" placeholder="" [(ngModel)]="lnreturn.lsmxhuno" appOnlynumber>
+                    </div>
+                </div> 
+
+                <div class="row mg-0 ln">
+                    <div class="col-md-7 lh-08e">
+                        <span class="text-dark fnb   pdt-3">State</span><br />
+                        <span class="text-mute">Status of return </span>
+                    </div>
+                    <div class="col-md-5 text-center">
+                        <ui-switch checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" [(ngModel)]="crstate" ></ui-switch></div>
+                </div>
+
+
+                <div class="row mg-0 ln">
+                    <div class="col-md-7 lh-07e pdt-5">
+                        <span class="text-danger fnb ">{{crreturn.orgcode}}-{{crreturn.site}}-{{crreturn.depot}}-{{crreturn.lscode}}</span><br />
+                        <span class="text-dark">Full name of return</span>
+                    </div>
+                    <div class="col-md-5">
+                        <button type="button" class="btn snaps-primary btn-xs btn-block mp"  (click)="validate()">
+                            <i class="fas fa-check-circle"></i>
+                            Save
+                        </button>
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln">
+                    <div class="col-md-7 lh-07e">
+                    </div>
+                    <div class="col-md-5">
+                        <button type="button" class="btn snaps-danger btn-xs btn-block mp"  (click)="drop()" *ngIf="crstate == false && crreturn.tflow != 'NW'">
+                            <i class="fas fa-trash-alt"></i>
+                            Delete 
+                        </button> 
+                    </div>
+                </div>
+                
+            </div>
+
+            <div class="foot bgsub-head fnb pd-5 h38">
+                <div class="row mg-0 pdt-5">
+                    <div class="col-md-3 tx-overflow"> Modify date </div>                   
+                    <div class="col-md-8"> {{crreturn.datemodify | date : formatdatelong}} by <span class="text-danger">{{crreturn.accnmodify}}</span> </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>

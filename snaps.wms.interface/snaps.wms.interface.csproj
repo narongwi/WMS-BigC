@@ -1,0 +1,52 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    
+    <RootNamespace>Snaps.WMS.Interface</RootNamespace>
+    <Product>Snaps.WMS.Interface</Product>
+    <Description>External and Internal Interface </Description>
+    
+    <Version>1.0.0.1</Version>
+    <AssemblyVersion>1.0.0.1</AssemblyVersion>
+    <FileVersion>1.0.0.1</FileVersion>
+
+    <TargetFramework>netstandard2.1</TargetFramework>
+	<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+
+    <Authors>Sitthinun Muangthai</Authors>
+    <Company>Snaps Solutions Co,Ltd.</Company> 
+    <Copyright>Snaps Solution @ 2020+</Copyright>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DebugType Condition=" '$(Configuration)' == 'Release' ">None</DebugType>
+    <GenerateDependencyFile Condition=" '$(GenerateDependencyFile)' == '' ">None</GenerateDependencyFile> 
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>    
+    <OutputPath Condition="'$(OutputPath)'=='' ">..\..\Snaps.Library\</OutputPath>
+  </PropertyGroup>
+
+
+  <ItemGroup>
+    <PackageReference Include="System.ComponentModel.Annotations" Version="4.7.0" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
+    <PackageReference Include="Oracle.ManagedDataAccess.Core" Version="2.19.100" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <ProjectReference Include="..\snaps.helpers.dbcontext.sqlserver\Snaps.Helpers.DbContext.SQLServer.csproj" />
+    <ProjectReference Include="..\snaps.helpers.logging\Snaps.Helpers.Logging.csproj" />
+    <ProjectReference Include="..\Snaps.WMS\snaps.wms.notify\snaps.wms.notify.csproj" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Reference Include="Snaps.Helpers.Hash">
+      <HintPath>..\Snaps.Library\Snaps.Helpers.Hash.dll</HintPath>
+    </Reference>
+    <Reference Include="Snaps.Helpers.StringExt">
+      <HintPath>..\Snaps.Library\Snaps.Helpers.StringExt.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

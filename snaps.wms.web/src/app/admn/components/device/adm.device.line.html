@@ -1,0 +1,286 @@
+<div class="row">
+    <div class="col-md-8">
+        <div class="lsset fn-1e15 ">
+            <div class="head">
+                <div class="row mg-0 ln ">
+                    <div class="col-md-1 ">Type</div>
+                    <div class="col-md-2 ">Code</div>
+                    <div class="col-md-2 ">Model</div>                   
+                    <div class="col-md-4 ">Last active</div>
+                    <div class="col-md-1 ">State</div>
+                    <div class="col-md-2 ">Permission</div>
+                </div>
+            </div>
+        
+            <div class="line bgsub-head  ">
+                <div class="row mg-0 ln mpswitch " *ngFor="let ln of lsdevice" >
+                    <div class="col-md-1">{{ln.devtype}}</div>
+                    <div class="col-md-2 fnb">{{ln.devcode}}</div>
+                    <div class="col-md-2 ">{{ln.devmodel}}</div>
+                    <div class="col-md-4">{{ln.datelastactive}}</div>
+                    <div class="col-md-1">
+                        <span class="{{dscicon(ln.tflow)}} w20 dp"></span>
+                        <span class="fas fa-wrench text-warning w20 hd" (click)="seldevice(ln)"></span>
+                    </div>
+                    <div class="col-md-2">
+                        <span class=" w20 dp"></span>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="lsset fn-1e15 ">
+            <div class="head">
+                <div class="row mg-0 ln ">
+                    <div class="col-md-8 fn-1e15">Configuration</div>
+                    <div class="col-md-4 ">
+                        <span class="fn-1e15 mp" (click)="newdevice()">
+                            <i class="fas fa-plus-square text-primary"></i>&nbsp;
+                            New Device
+                        </span>
+                        
+                    </div>
+                </div>
+            </div>
+        
+            <div class="line bgsub-head ">
+                <div class="row mg-0 ln " >
+                    <div class="col-md-7 lh-1e2 pdt-3">
+                        <span class="text-dark fnb">Site </span><br />
+                        <span class="text-mute">site code of warehouse</span>
+                    </div>
+                    <div class="col-md-5">
+                        <span class="text-danger fnb fn-1e5">{{crdevice.site}}</span>
+                    </div>
+                </div>
+                <div class="row mg-0 ln " >
+                    <div class="col-md-7 lh-1e2 pdt-3">
+                        <span class="text-dark fnb">Depot</span><br />
+                        <span class="text-mute">depot code of warehouse</span>
+                    </div>
+                    <div class="col-md-5">
+                        <span class="text-danger fnb fn-1e5">{{crdevice.depot}}</span>
+                    </div>
+                </div>
+                <div class="row mg-0 ln " >
+                    <div class="col-md-7 lh-1e1">
+                        <span class="text-dark fnb fn-1e15">Staging Category</span><br />
+                        <span class="text-mute">Category of Staging for receive</span>
+                    </div>
+                    <div class="col-md-5">
+                        <ng-select class="fn-1e5 "  class="custom" bindLabel="desc" bindvalue="value" 
+                                    [clearable]="false"  [(ngModel)]="slccategory" [items]="msdcategory"
+                                    *ngIf="crdevice.devid == 0">
+                            <ng-template ng-label-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                            <ng-template ng-option-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                        </ng-select>
+                        <span class="text-danger fnb fn-1e1 " *ngIf="crdevice.devid != 0">{{spcareadsc}}</span>
+                    </div>
+                </div>
+                <div class="row mg-0 ln " >
+                    <div class="col-md-7 lh-1e1 pdt-3">
+                        <span class="text-dark fnb">Device Code</span><br />
+                        <span class="text-mute">Code name of device</span>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="form-group form-control-sm mg-0">
+                            <input class="form-control fn-1e5 text-danger fnb" type="text" placeholder="" [(ngModel)]="crdevice.devcode">
+                        </div> 
+                    </div>
+                </div>
+                <div class="row mg-0 ln " >
+                    <div class="col-md-7 lh-1e1 pdt-3">
+                        <span class="text-dark fnb">Device model</span><br />
+                        <span class="text-mute">Model of device </span>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="form-group form-control-sm mg-0">
+                            <input class="form-control fn-1e5 text-danger fnb" type="text" placeholder="" [(ngModel)]="crdevice.devmodel">
+                        </div> 
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln">
+                    <div class="col-md-8 lh-1e1 ">
+                        <span class="text-dark fnb fn-1e15  pdt-3">State</span><br />
+                        <span class="text-mute">Status of device </span>
+                    </div>
+                    <div class="col-md-4 text-center">
+                        <ui-switch checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" [(ngModel)]="crstate" ></ui-switch>
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln">
+                    <div class="col-md-8 lh-1e2 ">
+                        <span class="text-dark fnb fn-1e1  pdt-3">Enable Receipt process</span><br />
+                        <span class="text-mute">Allow device to do receipt process</span>
+                    </div>
+                    <div class="col-md-4 text-center">
+                        <ui-switch checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" [(ngModel)]="crisreceipt" ></ui-switch>
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln">
+                    <div class="col-md-8 lh-1e2 ">
+                        <span class="text-dark fnb fn-1e1  pdt-3">Enable Putaway process</span><br />
+                        <span class="text-mute">Allow device to do putaway process</span>
+                    </div>
+                    <div class="col-md-4 text-center">
+                        <ui-switch checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" [(ngModel)]="cristaskptw" ></ui-switch>
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln">
+                    <div class="col-md-8 lh-1e2 ">
+                        <span class="text-dark fnb fn-1e1  pdt-3">Enable Transfer process</span><br />
+                        <span class="text-mute">Allow device to do transfer process</span>
+                    </div>
+                    <div class="col-md-4 text-center">
+                        <ui-switch checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" [(ngModel)]="cristasktrf" ></ui-switch>
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln">
+                    <div class="col-md-8 lh-1e2 ">
+                        <span class="text-dark fnb fn-1e1  pdt-3">Enable Load to truck process</span><br />
+                        <span class="text-mute">Allow device to do load HU to truck process</span>
+                    </div>
+                    <div class="col-md-4 text-center">
+                        <ui-switch checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" [(ngModel)]="cristaskload" ></ui-switch>
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln">
+                    <div class="col-md-8 lh-1e2 ">
+                        <span class="text-dark fnb fn-1e1  pdt-3">Enable Replenishment process</span><br />
+                        <span class="text-mute">Allow device to do replenishmen task process</span>
+                    </div>
+                    <div class="col-md-4 text-center">
+                        <ui-switch checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" [(ngModel)]="cristaskrpn" ></ui-switch>
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln">
+                    <div class="col-md-8 lh-1e2 ">
+                        <span class="text-dark fnb fn-1e1  pdt-3">Enable manaual generate task</span><br />
+                        <span class="text-mute">Allow device to do manual task process</span>
+                    </div>
+                    <div class="col-md-4 text-center">
+                        <ui-switch checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" [(ngModel)]="cristaskgen" ></ui-switch>
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln">
+                    <div class="col-md-8 lh-1e2 ">
+                        <span class="text-dark fnb fn-1e1  pdt-3">Enable pick product</span><br />
+                        <span class="text-mute">Allow device to do pick product on picking</span>
+                    </div>
+                    <div class="col-md-4 text-center">
+                        <ui-switch checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" [(ngModel)]="crispick" ></ui-switch>
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln">
+                    <div class="col-md-8 lh-1e2 ">
+                        <span class="text-dark fnb fn-1e1  pdt-3">Enable distribute product</span><br />
+                        <span class="text-mute">Allow device to do distribute product on grid</span>
+                    </div>
+                    <div class="col-md-4 text-center">
+                        <ui-switch checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" [(ngModel)]="crisdistribute" ></ui-switch>
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln">
+                    <div class="col-md-8 lh-1e2 ">
+                        <span class="text-dark fnb fn-1e1  pdt-3">Enable forward process</span><br />
+                        <span class="text-mute">Allow device to do forwarding product</span>
+                    </div>
+                    <div class="col-md-4 text-center">
+                        <ui-switch checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" [(ngModel)]="crisforward" ></ui-switch>
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln">
+                    <div class="col-md-8 lh-1e2 ">
+                        <span class="text-dark fnb fn-1e1  pdt-3">Enable cycle count process</span><br />
+                        <span class="text-mute">Allow device to do cycle count process</span>
+                    </div>
+                    <div class="col-md-4 text-center">
+                        <ui-switch checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" [(ngModel)]="criscount" ></ui-switch>
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln " >
+                    <div class="col-md-7 lh-1e1 pdt-3">
+                        <span class="text-dark fnb">Max height</span><br />
+                        <span class="text-mute">Maximum height that device can operate</span>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="form-group form-control-sm mg-0">
+                            <input class="form-control fn-1e5 text-danger fnb" type="text" placeholder="" [(ngModel)]="crdevice.opsmaxheight">
+                        </div> 
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln " >
+                    <div class="col-md-7 lh-1e1 pdt-3">
+                        <span class="text-dark fnb">Max weight</span><br />
+                        <span class="text-mute">Maximum weight that device can operate</span>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="form-group form-control-sm mg-0">
+                            <input class="form-control fn-1e5 text-danger fnb" type="text" placeholder="" [(ngModel)]="crdevice.opsmaxweight">
+                        </div> 
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln " >
+                    <div class="col-md-7 lh-1e1 pdt-3">
+                        <span class="text-dark fnb">Max volumn</span><br />
+                        <span class="text-mute">Maximum volumn that device can operate</span>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="form-group form-control-sm mg-0">
+                            <input class="form-control fn-1e5 text-danger fnb" type="text" placeholder="" [(ngModel)]="crdevice.opsmaxvolume">
+                        </div> 
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln">
+                    <div class="col-md-12">
+                        <div class="form-group form-control-sm mg-0 pdb-5 ">
+                            <label for="formGroupExampleInput fn-1e15">Remarks</label>
+                            <textarea class="form-control fn-1e text-dark" id="formGroupExampleInput" rows="2" [(ngModel)]="crdevice.devremarks" maxlength="80"></textarea>
+                          </div>
+                    </div> 
+                </div>
+
+                <div class="row mg-0 ln pdt-25">
+                    <div class="col-md-7 lh-1e1 pdt-5">
+                        <span class="text-danger fnb fn-1e1">{{crdevice.orgcode}}-{{crdevice.site}}-{{crdevice.depot}}-{{crdevice.devcode}}</span><br />
+                        <span class="text-dark fn-1e">Full name of device</span>
+                    </div>
+                    <div class="col-md-5">
+                        <button type="button" class="btn btn-primary btn-xs btn-block mp" (click)="validate()">Save Device</button>
+                    </div>
+                </div>
+
+                
+
+                <div class="row mg-0 ln" >
+                    <div class="col-md-5 lh-1e1">
+                        <span class="text-mute fn-1e">{{crdevice.datemodify}}</span><br />
+                        <span class="text-mute">Modify date</span>
+                    </div>
+                    <div class="col-md-5 lh-1e1">
+                        <span class="text-mute fn-1e">{{crdevice.accnmodify}}</span><br />
+                        <span class="text-mute">Modify account</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

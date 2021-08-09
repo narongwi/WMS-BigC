@@ -1,0 +1,42 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <Version>1.0.0.1</Version>
+    <AssemblyVersion>1.0.0.1</AssemblyVersion>
+    <FileVersion>1.0.0.1</FileVersion>
+    <Authors>Snaps Solutions Co,Ltd</Authors>
+    <Company>Snaps Solutions Co,Ltd.</Company>
+    <Product>Snaps.Helpers.Logging</Product>
+    <Description>Catching exception on dotnet core</Description>
+    <Copyright>Snaps Solution @ 2020+</Copyright>
+    <UserSecretsId>ad5a0a5e-b910-4fbd-af8d-48c42034b609</UserSecretsId>
+  </PropertyGroup>
+
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DebugType Condition=" '$(Configuration)' == 'Release' ">None</DebugType>
+    <GenerateDependencyFile Condition=" '$(GenerateDependencyFile)' == '' ">None</GenerateDependencyFile> 
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>    
+    <OutputPath Condition="'$(OutputPath)'=='' ">..\..\Snaps.Library\</OutputPath>
+  </PropertyGroup>
+
+
+  <ItemGroup>
+	  <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="NLog" Version="4.7.10" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <ProjectReference Include="..\snaps.helpers.json\Snaps.Helpers.Json.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="NLog.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

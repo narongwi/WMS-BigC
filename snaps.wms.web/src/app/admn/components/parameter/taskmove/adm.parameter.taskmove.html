@@ -1,0 +1,737 @@
+<div class="row pdt-10">
+
+    <div class="col-md-12 fn-palette-1 ">
+
+        <!-- PutAway -->
+        <div class="lsset fn fn-07e fnb ">
+            <div class="head">
+                <div class="row mg-0 ln ">
+                    <div class="col-md-10">Put Away movement</div>
+                    <div class="col-md-2 ">Last modify</div>
+                </div>
+            </div>
+        
+            <div class="line bgsub-head ">
+
+                <div class="row mg-0 ln pd-8" *ngIf="tpallowscanhuongrap">
+                    <div class="col-md-9 col-xs-10 lh-1e">
+                        <span class="">{{tpallowscanhuongrap.pmdesc}}</span><br />
+                        <span class="text-muted">{{tpallowscanhuongrap.pmdescalt}}</span>
+                    </div>
+                    <div class="col-md-1 col-xs-2 pdt-3">
+                        <ui-switch  checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" 
+                                    [(ngModel)]="tpallowscanhuongrap.pmvalue" (change)="save(tpallowscanhuongrap)"
+                        ></ui-switch>
+                    </div>
+                    <div class="col-md-2 lh-1e">
+                        <span class="text-danger fnb">{{tpallowscanhuongrap.datemodify | date : dateformatlong }}</span><br>
+                        <span class="text-muted">{{tpallowscanhuongrap.accnmodify}}</span>
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln pd-8" *ngIf="tpallowautoassign">
+                    <div class="col-md-9 col-xs-10 lh-1e">
+                        <span class="">{{tpallowautoassign.pmdesc}}</span><br />
+                        <span class="text-muted">{{tpallowautoassign.pmdescalt}}</span>
+                    </div>
+                    <div class="col-md-1 col-xs-2 pdt-3">
+                        <ui-switch  checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" 
+                                    [(ngModel)]="tpallowautoassign.pmvalue" (change)="save(tpallowautoassign)"
+                        ></ui-switch>
+                    </div>
+                    <div class="col-md-2 lh-1e">
+                        <span class="text-danger fnb">{{tpallowautoassign.datemodify | date : dateformatlong }}</span><br>
+                        <span class="text-muted">{{tpallowautoassign.accnmodify}}</span>
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln pd-8" *ngIf="tpallowscansourcelocation">
+                    <div class="col-md-9 col-xs-10 lh-1e">
+                        <span class="">{{tpallowscansourcelocation.pmdesc}}</span><br />
+                        <span class="text-muted">{{tpallowscansourcelocation.pmdescalt}}</span>
+                    </div>
+                    <div class="col-md-1 col-xs-2 pdt-3">
+                        <ui-switch  checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" 
+                                    [(ngModel)]="tpallowscansourcelocation.pmvalue" (change)="save(tpallowscansourcelocation)"
+                        ></ui-switch>
+                    </div>
+                    <div class="col-md-2 lh-1e">
+                        <span class="text-danger fnb">{{tpallowscansourcelocation.datemodify | date : dateformatlong }}</span><br>
+                        <span class="text-muted">{{tpallowscansourcelocation.accnmodify}}</span>
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln pd-8" *ngIf="tpallowscanbarcode">
+                    <div class="col-md-9 col-xs-10 lh-1e">
+                        <span class="">{{tpallowscanbarcode.pmdesc}}</span><br />
+                        <span class="text-muted">{{tpallowscanbarcode.pmdescalt}}</span>
+                    </div>
+                    <div class="col-md-1 col-xs-2 pdt-3">
+                        <ui-switch  checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" 
+                                    [(ngModel)]="tpallowscanbarcode.pmvalue" (change)="save(tpallowscanbarcode)"
+                        ></ui-switch>
+                    </div>
+                    <div class="col-md-2 lh-1e">
+                        <span class="text-danger fnb">{{tpallowscanbarcode.datemodify | date : dateformatlong }}</span><br>
+                        <span class="text-muted">{{tpallowscanbarcode.accnmodify}}</span>
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln pd-8" *ngIf="tpallowinputqtyongrap">
+                    <div class="col-md-9 col-xs-10 lh-1e">
+                        <span class="">{{tpallowinputqtyongrap.pmdesc}}</span><br />
+                        <span class="text-muted">{{tpallowinputqtyongrap.pmdescalt}}</span>
+                    </div>
+                    <div class="col-md-1 col-xs-2 pdt-3">
+                        <ui-switch  checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" 
+                                    [(ngModel)]="tpallowinputqtyongrap.pmvalue" (change)="save(tpallowinputqtyongrap)"
+                        ></ui-switch>
+                    </div>
+                    <div class="col-md-2 lh-1e">
+                        <span class="text-danger fnb">{{tpallowinputqtyongrap.datemodify | date : dateformatlong }}</span><br>
+                        <span class="text-muted">{{tpallowinputqtyongrap.accnmodify}}</span>
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln pd-8" *ngIf="tpallowpickndrop">
+                    <div class="col-md-9 col-xs-10 lh-1e">
+                        <span class="">{{tpallowpickndrop.pmdesc}}</span><br />
+                        <span class="text-muted">{{tpallowpickndrop.pmdescalt}}</span>
+                    </div>
+                    <div class="col-md-1 col-xs-2 pdt-3">
+                        <ui-switch  checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" 
+                                    [(ngModel)]="tpallowpickndrop.pmvalue" (change)="save(tpallowpickndrop)"
+                        ></ui-switch>
+                    </div>
+                    <div class="col-md-2 lh-1e">
+                        <span class="text-danger fnb">{{tpallowpickndrop.datemodify | date : dateformatlong }}</span><br>
+                        <span class="text-muted">{{tpallowpickndrop.accnmodify}}</span>
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln pd-8" *ngIf="tpallowcheckdigit">
+                    <div class="col-md-9 col-xs-10 lh-1e">
+                        <span class="">{{tpallowcheckdigit.pmdesc}}</span><br />
+                        <span class="text-muted">{{tpallowcheckdigit.pmdescalt}}</span>
+                    </div>
+                    <div class="col-md-1 col-xs-2 pdt-3">
+                        <ui-switch  checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" 
+                                    [(ngModel)]="tpallowcheckdigit.pmvalue" (change)="save(tpallowcheckdigit)"
+                        ></ui-switch>
+                    </div>
+                    <div class="col-md-2 lh-1e">
+                        <span class="text-danger fnb">{{tpallowcheckdigit.datemodify | date : dateformatlong }}</span><br>
+                        <span class="text-muted">{{tpallowcheckdigit.accnmodify}}</span>
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln pd-8" *ngIf="tpallowfullygrap">
+                    <div class="col-md-9 col-xs-10 lh-1e">
+                        <span class="">{{tpallowfullygrap.pmdesc}}</span><br />
+                        <span class="text-muted">{{tpallowfullygrap.pmdescalt}}</span>
+                    </div>
+                    <div class="col-md-1 col-xs-2 pdt-3">
+                        <ui-switch  checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" 
+                                    [(ngModel)]="tpallowfullygrap.pmvalue" (change)="save(tpallowfullygrap)"
+                        ></ui-switch>
+                    </div>
+                    <div class="col-md-2 lh-1e">
+                        <span class="text-danger fnb">{{tpallowfullygrap.datemodify | date : dateformatlong }}</span><br>
+                        <span class="text-muted">{{tpallowfullygrap.accnmodify}}</span>
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln pd-8" *ngIf="tpallowfullycollect">
+                    <div class="col-md-9 col-xs-10 lh-1e">
+                        <span class="">{{tpallowfullycollect.pmdesc}}</span><br />
+                        <span class="text-muted">{{tpallowfullycollect.pmdescalt}}</span>
+                    </div>
+                    <div class="col-md-1 col-xs-2 pdt-3">
+                        <ui-switch  checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" 
+                                    [(ngModel)]="tpallowfullycollect.pmvalue" (change)="save(tpallowfullycollect)"
+                        ></ui-switch>
+                    </div>
+                    <div class="col-md-2 lh-1e">
+                        <span class="text-danger fnb">{{tpallowfullycollect.datemodify | date : dateformatlong }}</span><br>
+                        <span class="text-muted">{{tpallowfullycollect.accnmodify}}</span>
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln pd-8" *ngIf="tpallowchangetarget">
+                    <div class="col-md-9 col-xs-10 lh-1e">
+                        <span class="">{{tpallowchangetarget.pmdesc}}</span><br />
+                        <span class="text-muted">{{tpallowchangetarget.pmdescalt}}</span>
+                    </div>
+                    <div class="col-md-1 col-xs-2 pdt-3">
+                        <ui-switch  checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" 
+                                    [(ngModel)]="tpallowchangetarget.pmvalue" (change)="save(tpallowchangetarget)"
+                        ></ui-switch>
+                    </div>
+                    <div class="col-md-2 lh-1e">
+                        <span class="text-danger fnb">{{tpallowchangetarget.datemodify | date : dateformatlong }}</span><br>
+                        <span class="text-muted">{{tpallowchangetarget.accnmodify}}</span>
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln pd-8" *ngIf="tpallowputawaypicking">
+                    <div class="col-md-9 col-xs-10 lh-1e">
+                        <span class="">{{tpallowputawaypicking.pmdesc}}</span><br />
+                        <span class="text-muted">{{tpallowputawaypicking.pmdescalt}}</span>
+                    </div>
+                    <div class="col-md-1 col-xs-2 pdt-3">
+                        <ui-switch  checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" 
+                                    [(ngModel)]="tpallowputawaypicking.pmvalue" (change)="save(tpallowputawaypicking)"
+                        ></ui-switch>
+                    </div>
+                    <div class="col-md-2 lh-1e">
+                        <span class="text-danger fnb">{{tpallowputawaypicking.datemodify | date : dateformatlong }}</span><br>
+                        <span class="text-muted">{{tpallowputawaypicking.accnmodify}}</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+        <!-- Pallet Pick / Approach -->
+        <div class="lsset fn fn-07e fnb mgt-10">
+            <div class="head">
+                <div class="row mg-0 ln ">
+                    <div class="col-md-10">HU Pick / Approach</div>
+                    <div class="col-md-2 ">Last modify</div>
+                </div>
+            </div>
+        
+            <div class="line bgsub-head ">
+
+                <div class="row mg-0 ln pd-8" *ngIf="taallowchangeworker">
+                    <div class="col-md-9 col-xs-10 lh-1e">
+                        <span class="">{{taallowchangeworker.pmdesc}}</span><br />
+                        <span class="text-muted">{{taallowchangeworker.pmdescalt}}</span>
+                    </div>
+                    <div class="col-md-1 col-xs-2 pdt-3">
+                        <ui-switch  checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" 
+                                    [(ngModel)]="taallowchangeworker.pmvalue" (change)="save(taallowchangeworker)"
+                        ></ui-switch>
+                    </div>
+                    <div class="col-md-2 lh-1e">
+                        <span class="text-danger fnb">{{taallowchangeworker.datemodify | date : dateformatlong }}</span><br>
+                        <span class="text-muted">{{taallowchangeworker.accnmodify}}</span>
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln pd-8" *ngIf="taallowscanhuno">
+                    <div class="col-md-9 col-xs-10 lh-1e">
+                        <span class="">{{taallowscanhuno.pmdesc}}</span><br />
+                        <span class="text-muted">{{taallowscanhuno.pmdescalt}}</span>
+                    </div>
+                    <div class="col-md-1 col-xs-2 pdt-3">
+                        <ui-switch  checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" 
+                                    [(ngModel)]="taallowscanhuno.pmvalue" (change)="save(taallowscanhuno)"
+                        ></ui-switch>
+                    </div>
+                    <div class="col-md-2 lh-1e">
+                        <span class="text-danger fnb">{{taallowscanhuno.datemodify | date : dateformatlong }}</span><br>
+                        <span class="text-muted">{{taallowscanhuno.accnmodify}}</span>
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln pd-8" *ngIf="taallowautoassign">
+                    <div class="col-md-9 col-xs-10 lh-1e">
+                        <span class="">{{taallowautoassign.pmdesc}}</span><br />
+                        <span class="text-muted">{{taallowautoassign.pmdescalt}}</span>
+                    </div>
+                    <div class="col-md-1 col-xs-2 pdt-3">
+                        <ui-switch  checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" 
+                                    [(ngModel)]="taallowautoassign.pmvalue" (change)="save(taallowautoassign)"
+                        ></ui-switch>
+                    </div>
+                    <div class="col-md-2 lh-1e">
+                        <span class="text-danger fnb">{{taallowautoassign.datemodify | date : dateformatlong }}</span><br>
+                        <span class="text-muted">{{taallowautoassign.accnmodify}}</span>
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln pd-8" *ngIf="taallowscansourcelocation">
+                    <div class="col-md-9 col-xs-10 lh-1e">
+                        <span class="">{{taallowscansourcelocation.pmdesc}}</span><br />
+                        <span class="text-muted">{{taallowscansourcelocation.pmdescalt}}</span>
+                    </div>
+                    <div class="col-md-1 col-xs-2 pdt-3">
+                        <ui-switch  checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" 
+                                    [(ngModel)]="taallowscansourcelocation.pmvalue" (change)="save(taallowscansourcelocation)"
+                        ></ui-switch>
+                    </div>
+                    <div class="col-md-2 lh-1e">
+                        <span class="text-danger fnb">{{taallowscansourcelocation.datemodify | date : dateformatlong }}</span><br>
+                        <span class="text-muted">{{taallowscansourcelocation.accnmodify}}</span>
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln pd-8" *ngIf="taallowscanbarcode">
+                    <div class="col-md-9 col-xs-10 lh-1e">
+                        <span class="">{{taallowscanbarcode.pmdesc}}</span><br />
+                        <span class="text-muted">{{taallowscanbarcode.pmdescalt}}</span>
+                    </div>
+                    <div class="col-md-1 col-xs-2 pdt-3">
+                        <ui-switch  checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" 
+                                    [(ngModel)]="taallowscanbarcode.pmvalue" (change)="save(taallowscanbarcode)"
+                        ></ui-switch>
+                    </div>
+                    <div class="col-md-2 lh-1e">
+                        <span class="text-danger fnb">{{taallowscanbarcode.datemodify | date : dateformatlong }}</span><br>
+                        <span class="text-muted">{{taallowscanbarcode.accnmodify}}</span>
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln pd-8" *ngIf="taallowchangequantity">
+                    <div class="col-md-9 col-xs-10 lh-1e">
+                        <span class="">{{taallowchangequantity.pmdesc}}</span><br />
+                        <span class="text-muted">{{taallowchangequantity.pmdescalt}}</span>
+                    </div>
+                    <div class="col-md-1 col-xs-2 pdt-3">
+                        <ui-switch  checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" 
+                                    [(ngModel)]="taallowchangequantity.pmvalue" (change)="save(taallowchangequantity)"
+                        ></ui-switch>
+                    </div>
+                    <div class="col-md-2 lh-1e">
+                        <span class="text-danger fnb">{{taallowchangequantity.datemodify | date : dateformatlong }}</span><br>
+                        <span class="text-muted">{{taallowchangequantity.accnmodify}}</span>
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln pd-8" *ngIf="taallowpickndrop">
+                    <div class="col-md-9 col-xs-10 lh-1e">
+                        <span class="">{{taallowpickndrop.pmdesc}}</span><br />
+                        <span class="text-muted">{{taallowpickndrop.pmdescalt}}</span>
+                    </div>
+                    <div class="col-md-1 col-xs-2 pdt-3">
+                        <ui-switch  checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" 
+                                    [(ngModel)]="taallowpickndrop.pmvalue" (change)="save(taallowpickndrop)"
+                        ></ui-switch>
+                    </div>
+                    <div class="col-md-2 lh-1e">
+                        <span class="text-danger fnb">{{taallowpickndrop.datemodify | date : dateformatlong }}</span><br>
+                        <span class="text-muted">{{taallowpickndrop.accnmodify}}</span>
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln pd-8" *ngIf="taallowcheckdigit">
+                    <div class="col-md-9 col-xs-10 lh-1e">
+                        <span class="">{{taallowcheckdigit.pmdesc}}</span><br />
+                        <span class="text-muted">{{taallowcheckdigit.pmdescalt}}</span>
+                    </div>
+                    <div class="col-md-1 col-xs-2 pdt-3">
+                        <ui-switch  checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" 
+                                    [(ngModel)]="taallowcheckdigit.pmvalue" (change)="save(taallowcheckdigit)"
+                        ></ui-switch>
+                    </div>
+                    <div class="col-md-2 lh-1e">
+                        <span class="text-danger fnb">{{taallowcheckdigit.datemodify | date : dateformatlong }}</span><br>
+                        <span class="text-muted">{{taallowcheckdigit.accnmodify}}</span>
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln pd-8" *ngIf="taallowfullycollect">
+                    <div class="col-md-9 col-xs-10 lh-1e">
+                        <span class="">{{taallowfullycollect.pmdesc}}</span><br />
+                        <span class="text-muted">{{taallowfullycollect.pmdescalt}}</span>
+                    </div>
+                    <div class="col-md-1 col-xs-2 pdt-3">
+                        <ui-switch  checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" 
+                                    [(ngModel)]="taallowfullycollect.pmvalue" (change)="save(taallowfullycollect)"
+                        ></ui-switch>
+                    </div>
+                    <div class="col-md-2 lh-1e">
+                        <span class="text-danger fnb">{{taallowfullycollect.datemodify | date : dateformatlong }}</span><br>
+                        <span class="text-muted">{{taallowfullycollect.accnmodify}}</span>
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln pd-8" *ngIf="taallowchangetarget">
+                    <div class="col-md-9 col-xs-10 lh-1e">
+                        <span class="">{{taallowchangetarget.pmdesc}}</span><br />
+                        <span class="text-muted">{{taallowchangetarget.pmdescalt}}</span>
+                    </div>
+                    <div class="col-md-1 col-xs-2 pdt-3">
+                        <ui-switch  checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" 
+                                    [(ngModel)]="taallowchangetarget.pmvalue" (change)="save(taallowchangetarget)"
+                        ></ui-switch>
+                    </div>
+                    <div class="col-md-2 lh-1e">
+                        <span class="text-danger fnb">{{taallowchangetarget.datemodify | date : dateformatlong }}</span><br>
+                        <span class="text-muted">{{taallowchangetarget.accnmodify}}</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+        <!-- Replenishment -->
+        <div class="lsset fn fn-07e fnb mgt-10">
+            <div class="head">
+                <div class="row mg-0 ln ">
+                    <div class="col-md-10">Replenishment</div>
+                    <div class="col-md-2 ">Last modify</div>
+                </div>
+            </div>
+        
+            <div class="line bgsub-head ">
+                
+                <div class="row mg-0 ln pd-8" *ngIf="trallowmanual">
+                    <div class="col-md-9 col-xs-10 lh-1e">
+                        <span class="">{{trallowmanual.pmdesc}}</span><br />
+                        <span class="text-muted">{{trallowmanual.pmdescalt}}</span>
+                    </div>
+                    <div class="col-md-1 col-xs-2 pdt-3">
+                        <ui-switch  checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" 
+                                    [(ngModel)]="trallowmanual.pmvalue" (change)="save(trallowmanual)"
+                        ></ui-switch>
+                    </div>
+                    <div class="col-md-2 lh-1e">
+                        <span class="text-danger fnb">{{trallowmanual.datemodify | date : dateformatlong }}</span><br>
+                        <span class="text-muted">{{trallowmanual.accnmodify}}</span>
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln pd-8" *ngIf="trallowchangeworker">
+                    <div class="col-md-9 col-xs-10 lh-1e">
+                        <span class="">{{trallowchangeworker.pmdesc}}</span><br />
+                        <span class="text-muted">{{trallowchangeworker.pmdescalt}}</span>
+                    </div>
+                    <div class="col-md-1 col-xs-2 pdt-3">
+                        <ui-switch  checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" 
+                                    [(ngModel)]="trallowchangeworker.pmvalue" (change)="save(trallowchangeworker)"
+                        ></ui-switch>
+                    </div>
+                    <div class="col-md-2 lh-1e">
+                        <span class="text-danger fnb">{{trallowchangeworker.datemodify | date : dateformatlong }}</span><br>
+                        <span class="text-muted">{{trallowchangeworker.accnmodify}}</span>
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln pd-8" *ngIf="trallowscanhuno">
+                    <div class="col-md-9 col-xs-10 lh-1e">
+                        <span class="">{{trallowscanhuno.pmdesc}}</span><br />
+                        <span class="text-muted">{{trallowscanhuno.pmdescalt}}</span>
+                    </div>
+                    <div class="col-md-1 col-xs-2 pdt-3">
+                        <ui-switch  checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" 
+                                    [(ngModel)]="trallowscanhuno.pmvalue" (change)="save(trallowscanhuno)"
+                        ></ui-switch>
+                    </div>
+                    <div class="col-md-2 lh-1e">
+                        <span class="text-danger fnb">{{trallowscanhuno.datemodify | date : dateformatlong }}</span><br>
+                        <span class="text-muted">{{trallowscanhuno.accnmodify}}</span>
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln pd-8" *ngIf="trallowscanbarcode">
+                    <div class="col-md-9 col-xs-10 lh-1e">
+                        <span class="">{{trallowscanbarcode.pmdesc}}</span><br />
+                        <span class="text-muted">{{trallowscanbarcode.pmdescalt}}</span>
+                    </div>
+                    <div class="col-md-1 col-xs-2 pdt-3">
+                        <ui-switch  checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" 
+                                    [(ngModel)]="trallowscanbarcode.pmvalue" (change)="save(trallowscanbarcode)"
+                        ></ui-switch>
+                    </div>
+                    <div class="col-md-2 lh-1e">
+                        <span class="text-danger fnb">{{trallowscanbarcode.datemodify | date : dateformatlong }}</span><br>
+                        <span class="text-muted">{{trallowscanbarcode.accnmodify}}</span>
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln pd-8" *ngIf="trallowautoassign">
+                    <div class="col-md-9 col-xs-10 lh-1e">
+                        <span class="">{{trallowautoassign.pmdesc}}</span><br />
+                        <span class="text-muted">{{trallowautoassign.pmdescalt}}</span>
+                    </div>
+                    <div class="col-md-1 col-xs-2 pdt-3">
+                        <ui-switch  checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" 
+                                    [(ngModel)]="trallowautoassign.pmvalue" (change)="save(trallowautoassign)"
+                        ></ui-switch>
+                    </div>
+                    <div class="col-md-2 lh-1e">
+                        <span class="text-danger fnb">{{trallowautoassign.datemodify | date : dateformatlong }}</span><br>
+                        <span class="text-muted">{{trallowautoassign.accnmodify}}</span>
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln pd-8" *ngIf="trallowscansourcelocation">
+                    <div class="col-md-9 col-xs-10 lh-1e">
+                        <span class="">{{trallowscansourcelocation.pmdesc}}</span><br />
+                        <span class="text-muted">{{trallowscansourcelocation.pmdescalt}}</span>
+                    </div>
+                    <div class="col-md-1 col-xs-2 pdt-3">
+                        <ui-switch  checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" 
+                                    [(ngModel)]="trallowscansourcelocation.pmvalue" (change)="save(trallowscansourcelocation)"
+                        ></ui-switch>
+                    </div>
+                    <div class="col-md-2 lh-1e">
+                        <span class="text-danger fnb">{{trallowscansourcelocation.datemodify | date : dateformatlong }}</span><br>
+                        <span class="text-muted">{{trallowscansourcelocation.accnmodify}}</span>
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln pd-8" *ngIf="trallowchangequantity">
+                    <div class="col-md-9 col-xs-10 lh-1e">
+                        <span class="">{{trallowchangequantity.pmdesc}}</span><br />
+                        <span class="text-muted">{{trallowchangequantity.pmdescalt}}</span>
+                    </div>
+                    <div class="col-md-1 col-xs-2 pdt-3">
+                        <ui-switch  checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" 
+                                    [(ngModel)]="trallowchangequantity.pmvalue" (change)="save(trallowchangequantity)"
+                        ></ui-switch>
+                    </div>
+                    <div class="col-md-2 lh-1e">
+                        <span class="text-danger fnb">{{trallowchangequantity.datemodify | date : dateformatlong }}</span><br>
+                        <span class="text-muted">{{trallowchangequantity.accnmodify}}</span>
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln pd-8" *ngIf="trallowpickndrop">
+                    <div class="col-md-9 col-xs-10 lh-1e">
+                        <span class="">{{trallowpickndrop.pmdesc}}</span><br />
+                        <span class="text-muted">{{trallowpickndrop.pmdescalt}}</span>
+                    </div>
+                    <div class="col-md-1 col-xs-2 pdt-3">
+                        <ui-switch  checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" 
+                                    [(ngModel)]="trallowpickndrop.pmvalue" (change)="save(trallowpickndrop)"
+                        ></ui-switch>
+                    </div>
+                    <div class="col-md-2 lh-1e">
+                        <span class="text-danger fnb">{{trallowpickndrop.datemodify | date : dateformatlong }}</span><br>
+                        <span class="text-muted">{{trallowpickndrop.accnmodify}}</span>
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln pd-8" *ngIf="trallowcheckdigit">
+                    <div class="col-md-9 col-xs-10 lh-1e">
+                        <span class="">{{trallowcheckdigit.pmdesc}}</span><br />
+                        <span class="text-muted">{{trallowcheckdigit.pmdescalt}}</span>
+                    </div>
+                    <div class="col-md-1 col-xs-2 pdt-3">
+                        <ui-switch  checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" 
+                                    [(ngModel)]="trallowcheckdigit.pmvalue" (change)="save(trallowcheckdigit)"
+                        ></ui-switch>
+                    </div>
+                    <div class="col-md-2 lh-1e">
+                        <span class="text-danger fnb">{{trallowcheckdigit.datemodify | date : dateformatlong }}</span><br>
+                        <span class="text-muted">{{trallowcheckdigit.accnmodify}}</span>
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln pd-8" *ngIf="trallowfullycollect">
+                    <div class="col-md-9 col-xs-10 lh-1e">
+                        <span class="">{{trallowfullycollect.pmdesc}}</span><br />
+                        <span class="text-muted">{{trallowfullycollect.pmdescalt}}</span>
+                    </div>
+                    <div class="col-md-1 col-xs-2 pdt-3">
+                        <ui-switch  checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" 
+                                    [(ngModel)]="trallowfullycollect.pmvalue" (change)="save(trallowfullycollect)"
+                        ></ui-switch>
+                    </div>
+                    <div class="col-md-2 lh-1e">
+                        <span class="text-danger fnb">{{trallowfullycollect.datemodify | date : dateformatlong }}</span><br>
+                        <span class="text-muted">{{trallowfullycollect.accnmodify}}</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Transfer Location -->
+        <div class="lsset fn fn-07e fnb mgt-10">
+            <div class="head">
+                <div class="row mg-0 ln ">
+                    <div class="col-md-10">Transfer HU.</div>
+                    <div class="col-md-2 ">Last modify</div>
+                </div>
+            </div>
+        
+            <div class="line bgsub-head ">
+
+                <div class="row mg-0 ln pd-8" *ngIf="tfallowmanual">
+                    <div class="col-md-9 col-xs-10 lh-1e">
+                        <span class="">{{tfallowmanual.pmdesc}}</span><br />
+                        <span class="text-muted">{{tfallowmanual.pmdescalt}}</span>
+                    </div>
+                    <div class="col-md-1 col-xs-2 pdt-3">
+                        <ui-switch  checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" 
+                                    [(ngModel)]="tfallowmanual.pmvalue" (change)="save(tfallowmanual)"
+                        ></ui-switch>
+                    </div>
+                    <div class="col-md-2 lh-1e">
+                        <span class="text-danger fnb">{{tfallowmanual.datemodify | date : dateformatlong }}</span><br>
+                        <span class="text-muted">{{tfallowmanual.accnmodify}}</span>
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln pd-8" *ngIf="tfallowchangeworker">
+                    <div class="col-md-9 col-xs-10 lh-1e">
+                        <span class="">{{tfallowchangeworker.pmdesc}}</span><br />
+                        <span class="text-muted">{{tfallowchangeworker.pmdescalt}}</span>
+                    </div>
+                    <div class="col-md-1 col-xs-2 pdt-3">
+                        <ui-switch  checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" 
+                                    [(ngModel)]="tfallowchangeworker.pmvalue" (change)="save(tfallowchangeworker)"
+                        ></ui-switch>
+                    </div>
+                    <div class="col-md-2 lh-1e">
+                        <span class="text-danger fnb">{{tfallowchangeworker.datemodify | date : dateformatlong }}</span><br>
+                        <span class="text-muted">{{tfallowchangeworker.accnmodify}}</span>
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln pd-8" *ngIf="tfallowscanhuno">
+                    <div class="col-md-9 col-xs-10 lh-1e">
+                        <span class="">{{tfallowscanhuno.pmdesc}}</span><br />
+                        <span class="text-muted">{{tfallowscanhuno.pmdescalt}}</span>
+                    </div>
+                    <div class="col-md-1 col-xs-2 pdt-3">
+                        <ui-switch  checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" 
+                                    [(ngModel)]="tfallowscanhuno.pmvalue" (change)="save(tfallowscanhuno)"
+                        ></ui-switch>
+                    </div>
+                    <div class="col-md-2 lh-1e">
+                        <span class="text-danger fnb">{{tfallowscanhuno.datemodify | date : dateformatlong }}</span><br>
+                        <span class="text-muted">{{tfallowscanhuno.accnmodify}}</span>
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln pd-8" *ngIf="tfallowautoassign">
+                    <div class="col-md-9 col-xs-10 lh-1e">
+                        <span class="">{{tfallowautoassign.pmdesc}}</span><br />
+                        <span class="text-muted">{{tfallowautoassign.pmdescalt}}</span>
+                    </div>
+                    <div class="col-md-1 col-xs-2 pdt-3">
+                        <ui-switch  checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" 
+                                    [(ngModel)]="tfallowautoassign.pmvalue" (change)="save(tfallowautoassign)"
+                        ></ui-switch>
+                    </div>
+                    <div class="col-md-2 lh-1e">
+                        <span class="text-danger fnb">{{tfallowautoassign.datemodify | date : dateformatlong }}</span><br>
+                        <span class="text-muted">{{tfallowautoassign.accnmodify}}</span>
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln pd-8" *ngIf="tfallowscansourcelocation">
+                    <div class="col-md-9 col-xs-10 lh-1e">
+                        <span class="">{{tfallowscansourcelocation.pmdesc}}</span><br />
+                        <span class="text-muted">{{tfallowscansourcelocation.pmdescalt}}</span>
+                    </div>
+                    <div class="col-md-1 col-xs-2 pdt-3">
+                        <ui-switch  checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" 
+                                    [(ngModel)]="tfallowscansourcelocation.pmvalue" (change)="save(tfallowscansourcelocation)"
+                        ></ui-switch>
+                    </div>
+                    <div class="col-md-2 lh-1e">
+                        <span class="text-danger fnb">{{tfallowscansourcelocation.datemodify | date : dateformatlong }}</span><br>
+                        <span class="text-muted">{{tfallowscansourcelocation.accnmodify}}</span>
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln pd-8" *ngIf="tfallowscanbarcode">
+                    <div class="col-md-9 col-xs-10 lh-1e">
+                        <span class="">{{tfallowscanbarcode.pmdesc}}</span><br />
+                        <span class="text-muted">{{tfallowscanbarcode.pmdescalt}}</span>
+                    </div>
+                    <div class="col-md-1 col-xs-2 pdt-3">
+                        <ui-switch  checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" 
+                                    [(ngModel)]="tfallowscanbarcode.pmvalue" (change)="save(tfallowscanbarcode)"
+                        ></ui-switch>
+                    </div>
+                    <div class="col-md-2 lh-1e">
+                        <span class="text-danger fnb">{{tfallowscanbarcode.datemodify | date : dateformatlong }}</span><br>
+                        <span class="text-muted">{{tfallowscanbarcode.accnmodify}}</span>
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln pd-8" *ngIf="tfallowchangequantity">
+                    <div class="col-md-9 col-xs-10 lh-1e">
+                        <span class="">{{tfallowchangequantity.pmdesc}}</span><br />
+                        <span class="text-muted">{{tfallowchangequantity.pmdescalt}}</span>
+                    </div>
+                    <div class="col-md-1 col-xs-2 pdt-3">
+                        <ui-switch  checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" 
+                                    [(ngModel)]="tfallowchangequantity.pmvalue" (change)="save(tfallowchangequantity)"
+                        ></ui-switch>
+                    </div>
+                    <div class="col-md-2 lh-1e">
+                        <span class="text-danger fnb">{{tfallowchangequantity.datemodify | date : dateformatlong }}</span><br>
+                        <span class="text-muted">{{tfallowchangequantity.accnmodify}}</span>
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln pd-8" *ngIf="tfallowpickndrop">
+                    <div class="col-md-9 col-xs-10 lh-1e">
+                        <span class="">{{tfallowpickndrop.pmdesc}}</span><br />
+                        <span class="text-muted">{{tfallowpickndrop.pmdescalt}}</span>
+                    </div>
+                    <div class="col-md-1 col-xs-2 pdt-3">
+                        <ui-switch  checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" 
+                                    [(ngModel)]="tfallowpickndrop.pmvalue" (change)="save(tfallowpickndrop)"
+                        ></ui-switch>
+                    </div>
+                    <div class="col-md-2 lh-1e">
+                        <span class="text-danger fnb">{{tfallowpickndrop.datemodify | date : dateformatlong }}</span><br>
+                        <span class="text-muted">{{tfallowpickndrop.accnmodify}}</span>
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln pd-8" *ngIf="tfallowcheckdigit">
+                    <div class="col-md-9 col-xs-10 lh-1e">
+                        <span class="">{{tfallowcheckdigit.pmdesc}}</span><br />
+                        <span class="text-muted">{{tfallowcheckdigit.pmdescalt}}</span>
+                    </div>
+                    <div class="col-md-1 col-xs-2 pdt-3">
+                        <ui-switch  checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" 
+                                    [(ngModel)]="tfallowcheckdigit.pmvalue" (change)="save(tfallowcheckdigit)"
+                        ></ui-switch>
+                    </div>
+                    <div class="col-md-2 lh-1e">
+                        <span class="text-danger fnb">{{tfallowcheckdigit.datemodify | date : dateformatlong }}</span><br>
+                        <span class="text-muted">{{tfallowcheckdigit.accnmodify}}</span>
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln pd-8" *ngIf="tfallowfullycollect">
+                    <div class="col-md-9 col-xs-10 lh-1e">
+                        <span class="">{{tfallowfullycollect.pmdesc}}</span><br />
+                        <span class="text-muted">{{tfallowfullycollect.pmdescalt}}</span>
+                    </div>
+                    <div class="col-md-1 col-xs-2 pdt-3">
+                        <ui-switch  checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" 
+                                    [(ngModel)]="tfallowfullycollect.pmvalue" (change)="save(tfallowfullycollect)"
+                        ></ui-switch>
+                    </div>
+                    <div class="col-md-2 lh-1e">
+                        <span class="text-danger fnb">{{tfallowfullycollect.datemodify | date : dateformatlong }}</span><br>
+                        <span class="text-muted">{{tfallowfullycollect.accnmodify}}</span>
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln pd-8" *ngIf="tfallowchangetarget">
+                    <div class="col-md-9 col-xs-10 lh-1e">
+                        <span class="">{{tfallowchangetarget.pmdesc}}</span><br />
+                        <span class="text-muted">{{tfallowchangetarget.pmdescalt}}</span>
+                    </div>
+                    <div class="col-md-1 col-xs-2 pdt-3">
+                        <ui-switch  checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" 
+                                    [(ngModel)]="tfallowchangetarget.pmvalue" (change)="save(tfallowchangetarget)"
+                        ></ui-switch>
+                    </div>
+                    <div class="col-md-2 lh-1e">
+                        <span class="text-danger fnb">{{tfallowchangetarget.datemodify | date : dateformatlong }}</span><br>
+                        <span class="text-muted">{{tfallowchangetarget.accnmodify}}</span>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+</div>

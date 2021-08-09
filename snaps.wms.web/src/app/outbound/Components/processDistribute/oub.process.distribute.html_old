@@ -1,0 +1,372 @@
+
+
+<div class="bgsub-info">
+    <div class="bgprime" style="height: 44px;background-color: #ffffff;border-bottom: 1px solid #e0e0e0;"> </div>
+    <div class="container">        
+        <div class="row " style="margin-top:-34px">
+            <ul ngbNav #nav="ngbNav" [(activeId)]="crtab" class="nav-tabs" [destroyOnHide]="false">
+                <li [ngbNavItem]="1">
+                  <a ngbNavLink class="w150 fn fn-07e">Distribution Plan</a>
+                  <ng-template ngbNavContent>
+                    
+                        <div class="col-md-12 fn-07e">
+                            <div class="row">
+                                <div class="col-md-8 fnb fn-09e pdt-5 ">
+                                    <span class="fn-palette-1">Process</span>&nbsp;<i class="fas fa-chevron-right fa-xs"></i>&nbsp;<span class="fn-palette-5"> Distribution</span>&nbsp;<i class="fas fa-chevron-right fa-xs"></i>&nbsp;<span class="text-muted"> Selection</span>
+                                </div>
+                            
+                                <div class="col-md-2 ">
+                                    <div class="input-group fnb">
+                                        <input class="form-control fn-07e fnb text-danger "
+                                            placeholder="{{dateformat}}" name="dp" 
+                                            ngbDatepicker #datefrom="ngbDatepicker" 
+                                            [(ngModel)]="pm.datereqfrom"
+                                            (dateSelect)="fnd();">
+                                        <div class="input-group-append">
+                                        <button type="button" class="btn snaps-btngroup btn-prime " (click)="datefrom.toggle();" >
+                                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-calendar-date" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                            <path fill-rule="evenodd" d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"></path>
+                                            <path d="M6.445 11.688V6.354h-.633A12.6 12.6 0 0 0 4.5 7.16v.695c.375-.257.969-.62 1.258-.777h.012v4.61h.675zm1.188-1.305c.047.64.594 1.406 1.703 1.406 1.258 0 2-1.066 2-2.871 0-1.934-.781-2.668-1.953-2.668-.926 0-1.797.672-1.797 1.809 0 1.16.824 1.77 1.676 1.77.746 0 1.23-.376 1.383-.79h.027c-.004 1.316-.461 2.164-1.305 2.164-.664 0-1.008-.45-1.05-.82h-.684zm2.953-2.317c0 .696-.559 1.18-1.184 1.18-.601 0-1.144-.383-1.144-1.2 0-.823.582-1.21 1.168-1.21.633 0 1.16.398 1.16 1.23z"></path>
+                                            </svg>
+                                        </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                                <div class="col-md-2 text-right">
+                                    <div class="d-grid gap-2">
+                                    
+                                        <ng-template #popContent>
+                                            <div  style="width:280px" class="fn fn-07e fnb">                                    
+                                                <div class="row ln pd-5">
+                                                    <div class="col-md-4 pdt-5">Plan from </div>
+                                                    <div class="col-md-8">
+                                                        <div class="input-group">
+                                                            <input  class="form-control text-danger fnb"name="dp" ngbDatepicker #dateplanfrom="ngbDatepicker"  placeholder="{{dateformat}}"
+                                                                    [(ngModel)]="pm.dateplanfrom">
+                                                            <div class="input-group-append">
+                                                            <button type="button" class="btn snaps-btngroup btn-prime" (click)="dateplanfrom.toggle()" >
+                                                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-calendar-date" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                                <path fill-rule="evenodd" d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"></path>
+                                                                <path d="M6.445 11.688V6.354h-.633A12.6 12.6 0 0 0 4.5 7.16v.695c.375-.257.969-.62 1.258-.777h.012v4.61h.675zm1.188-1.305c.047.64.594 1.406 1.703 1.406 1.258 0 2-1.066 2-2.871 0-1.934-.781-2.668-1.953-2.668-.926 0-1.797.672-1.797 1.809 0 1.16.824 1.77 1.676 1.77.746 0 1.23-.376 1.383-.79h.027c-.004 1.316-.461 2.164-1.305 2.164-.664 0-1.008-.45-1.05-.82h-.684zm2.953-2.317c0 .696-.559 1.18-1.184 1.18-.601 0-1.144-.383-1.144-1.2 0-.823.582-1.21 1.168-1.21.633 0 1.16.398 1.16 1.23z"></path>
+                                                                </svg>
+                                                            </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row ln pd-5">
+                                                    <div class="col-md-4 pdt-5">Plan to </div>
+                                                    <div class="col-md-8">
+                                                        <div class="input-group">
+                                                            <input class="form-control text-danger fnb " placeholder="{{dateformat}}"
+                                                                name="dp" [(ngModel)]="pm.dateplanto" ngbDatepicker #dateplanto="ngbDatepicker">
+                                                            <div class="input-group-append">
+                                                            <button type="button" class=" btn snaps-btngroup btn-prime" (click)="dateplanto.toggle()" >
+                                                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-calendar-date" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                                <path fill-rule="evenodd" d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"></path>
+                                                                <path d="M6.445 11.688V6.354h-.633A12.6 12.6 0 0 0 4.5 7.16v.695c.375-.257.969-.62 1.258-.777h.012v4.61h.675zm1.188-1.305c.047.64.594 1.406 1.703 1.406 1.258 0 2-1.066 2-2.871 0-1.934-.781-2.668-1.953-2.668-.926 0-1.797.672-1.797 1.809 0 1.16.824 1.77 1.676 1.77.746 0 1.23-.376 1.383-.79h.027c-.004 1.316-.461 2.164-1.305 2.164-.664 0-1.008-.45-1.05-.82h-.684zm2.953-2.317c0 .696-.559 1.18-1.184 1.18-.601 0-1.144-.383-1.144-1.2 0-.823.582-1.21 1.168-1.21.633 0 1.16.398 1.16 1.23z"></path>
+                                                                </svg>
+                                                            </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row ln pd-5">
+                                                    <div class="col-md-4 pdt-5">Order from </div>
+                                                    <div class="col-md-8">
+                                                        <div class="input-group">
+                                                            <input class="form-control text-danger fnb " placeholder="{{dateformat}}"
+                                                                name="dp" [(ngModel)]="pm.dateorderfrom" ngbDatepicker #dateorderfrom="ngbDatepicker">
+                                                            <div class="input-group-append">
+                                                            <button type="button" class=" btn snaps-btngroup btn-prime" (click)="dateorderfrom.toggle()" >
+                                                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-calendar-date" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                                <path fill-rule="evenodd" d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"></path>
+                                                                <path d="M6.445 11.688V6.354h-.633A12.6 12.6 0 0 0 4.5 7.16v.695c.375-.257.969-.62 1.258-.777h.012v4.61h.675zm1.188-1.305c.047.64.594 1.406 1.703 1.406 1.258 0 2-1.066 2-2.871 0-1.934-.781-2.668-1.953-2.668-.926 0-1.797.672-1.797 1.809 0 1.16.824 1.77 1.676 1.77.746 0 1.23-.376 1.383-.79h.027c-.004 1.316-.461 2.164-1.305 2.164-.664 0-1.008-.45-1.05-.82h-.684zm2.953-2.317c0 .696-.559 1.18-1.184 1.18-.601 0-1.144-.383-1.144-1.2 0-.823.582-1.21 1.168-1.21.633 0 1.16.398 1.16 1.23z"></path>
+                                                                </svg>
+                                                            </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row ln pd-5">
+                                                    <div class="col-md-4 pdt-5">Order to </div>
+                                                    <div class="col-md-8">
+                                                        <div class="input-group">
+                                                            <input class="form-control text-danger fnb" placeholder="{{dateformat}}"
+                                                                name="dp" [(ngModel)]="pm.dateorderto" ngbDatepicker #dateorderto="ngbDatepicker">
+                                                            <div class="input-group-append">
+                                                            <button type="button" class=" btn snaps-btngroup btn-prime" (click)="dateorderto.toggle()" >
+                                                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-calendar-date" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                                <path fill-rule="evenodd" d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"></path>
+                                                                <path d="M6.445 11.688V6.354h-.633A12.6 12.6 0 0 0 4.5 7.16v.695c.375-.257.969-.62 1.258-.777h.012v4.61h.675zm1.188-1.305c.047.64.594 1.406 1.703 1.406 1.258 0 2-1.066 2-2.871 0-1.934-.781-2.668-1.953-2.668-.926 0-1.797.672-1.797 1.809 0 1.16.824 1.77 1.676 1.77.746 0 1.23-.376 1.383-.79h.027c-.004 1.316-.461 2.164-1.305 2.164-.664 0-1.008-.45-1.05-.82h-.684zm2.953-2.317c0 .696-.559 1.18-1.184 1.18-.601 0-1.144-.383-1.144-1.2 0-.823.582-1.21 1.168-1.21.633 0 1.16.398 1.16 1.23z"></path>
+                                                                </svg>
+                                                            </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row ln  pd-5 ">
+                                                    <div class="col-md-4 pdt-5">Order type</div>
+                                                    <div class="col-md-8">
+                                                        <ng-select class="b text-danger"  class="custom custom-sm" bindLabel="desc" bindvalue="value" 
+                                                        [clearable]="true"  [(ngModel)]="slcordertype" [items]="lsordertype" >
+                                                        <ng-template ng-label-tmp let-item="item"><span class="text-danger b">{{item.desc}}</span> </ng-template>
+                                                        <ng-template ng-option-tmp let-item="item"><span class="text-danger b">{{item.desc}}</span> </ng-template>
+                                                        </ng-select>
+                                                    </div>
+                                                </div>
+                                                <div class="row ln pd-5">
+                                                    <div class="col-md-4 pdt-5">Area</div>
+                                                    <div class="col-md-8">
+                                                        <ng-select class=" text-danger"  class="custom custom-sm" bindLabel="desc" bindvalue="value" 
+                                                        [clearable]="true"  [(ngModel)]="slcspcarea" [items]="lsstate" >
+                                                        <ng-template ng-label-tmp let-item="item"><span class="text-danger b">{{item.desc}}</span> </ng-template>
+                                                        <ng-template ng-option-tmp let-item="item"><span class="text-danger b">{{item.desc}}</span> </ng-template>
+                                                        </ng-select>
+                                                    </div>
+                                                </div>
+                                                <div class="row ln pd-5">
+                                                    <div class="col-md-4 pdt-5">Priority</div>
+                                                    <div class="col-md-8">
+                                                        <ng-select class=" text-danger"  class="custom custom-sm" bindLabel="desc" bindvalue="value" 
+                                                        [clearable]="true"  [(ngModel)]="slcpriority" [items]="lsreqmsm" >
+                                                        <ng-template ng-label-tmp let-item="item"><span class="text-danger b">{{item.desc}}</span> </ng-template>
+                                                        <ng-template ng-option-tmp let-item="item"><span class="text-danger b">{{item.desc}}</span> </ng-template>
+                                                        </ng-select>
+                                                    </div>
+                                                </div>
+                                                <div class="row ln pd-5">
+                                                    <div class="col-md-4 pdt-5">Supplier</div>
+                                                    <div class="col-md-8">
+                                                        <input class="form-control form-control-sm  text-danger " 
+                                                        type="text" placeholder="Code or Name" [(ngModel)]="pm.thcode">
+                                                    </div>
+                                                </div>
+                                                <div class="row ln pd-5">
+                                                    <div class="col-md-4 pdt-5">Order</div>
+                                                    <div class="col-md-8">
+                                                        <input class="form-control form-control-sm  text-danger " type="text" placeholder="Order No" [(ngModel)]="pm.inorder">
+                                                    </div>
+                                                </div>
+                                                <div class="row ln pd-5">
+                                                    <div class="col-md-4 pdt-5">Product</div>
+                                                    <div class="col-md-8">
+                                                        <input class="form-control form-control-sm  text-danger " type="text" placeholder="Code or Description" [(ngModel)]="pm.article">
+                                                    </div>
+                                                </div>
+                                                <div class="row ln pd-5">
+                                                    <div class="col-md-4 pdt-5">Promotion</div>
+                                                    <div class="col-md-8">
+                                                        <input class="form-control form-control-sm  text-danger " type="text" placeholder="Promotion" [(ngModel)]="pm.inpromo">
+                                                    </div>
+                                                </div>
+                                                <div class="row ln pd-5">
+                                                    <div class="col-md-4 pdt-5">Remarks</div>
+                                                    <div class="col-md-8">
+                                                        <input class="form-control form-control-sm  text-danger " type="text" placeholder="Remarks"  [(ngModel)]="pm.inflag">
+                                                    </div>
+                                                </div>
+                                                <div class="row ln pd-5">
+                                                    <div class="col-md-4 pdt-5">Staging</div>
+                                                    <div class="col-md-8">
+                                                        <ng-select class=" text-danger"  class="custom custom-sm" bindLabel="desc" bindvalue="value" 
+                                                        [clearable]="true"  [(ngModel)]="slcdockno" [items]="lsstaging" >
+                                                        <ng-template ng-label-tmp let-item="item"><span class="text-danger b">{{item.desc}}</span> </ng-template>
+                                                        <ng-template ng-option-tmp let-item="item"><span class="text-danger b">{{item.desc}}</span> </ng-template>
+                                                    </ng-select>
+                                                    </div>
+                                                </div>
+                                                <div class="row ln pd-5">
+                                                    <div class="col-md-4 pdt-5">State</div>
+                                                    <div class="col-md-8">
+                                                        <ng-select class=" text-danger"  class="custom custom-sm" bindLabel="desc" bindvalue="value" 
+                                                        [clearable]="true"  [(ngModel)]="slcstate" [items]="lsstate" >
+                                                        <ng-template ng-label-tmp let-item="item"><span class="text-danger b">{{item.desc}}</span> </ng-template>
+                                                        <ng-template ng-option-tmp let-item="item"><span class="text-danger b">{{item.desc}}</span> </ng-template>
+                                                    </ng-select>
+                                                    </div>
+                                                </div>
+                                                <div class="row ln pd-5">
+                                                    <div class="col-md-4 pdt-5">Measurement</div>
+                                                    <div class="col-md-8">
+                                                        <ng-select class=" text-danger"  class="custom custom-sm" bindLabel="desc" bindvalue="value" 
+                                                        [clearable]="true"  [(ngModel)]="slrqmsm" [items]="lsreqmsm" >
+                                                        <ng-template ng-label-tmp let-item="item"><span class="text-danger b">{{item.desc}}</span> </ng-template>
+                                                        <ng-template ng-option-tmp let-item="item"><span class="text-danger b">{{item.desc}}</span> </ng-template>
+                                                        </ng-select>
+                                                    </div>
+                                                </div>
+                                                <div class="row   pd-5">
+                                                    <div class="col-md-4">&nbsp;</div>
+                                                    <div class="col-md-8">
+                                                        <div class="d-grid gap-2">
+                            
+                                                            <button type="button" class="btn snaps-warning btn-block mp " (click)="findorder()">
+                                                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-search" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                                    <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z"/>
+                                                                    <path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>
+                                                                </svg>
+                                                                &nbsp;
+                                                                Filter Inbound order
+                                                            </button>
+                            
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </ng-template>
+                                        <ng-template #popTitle >
+                                            <div style="width:280px">
+                                                <span class="fn fn-08e fnb">Search parameter</span>
+                                            </div>
+                                        </ng-template>
+                                        <button type="button" class="btn btn-secondary snaps-btnblank fn-07e" placement="bottom" [autoClose]="'outside'" [ngbPopover]="popContent" [popoverTitle]="popTitle">
+                                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-funnel-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                <path fill-rule="evenodd" d="M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.128.334L10 8.692V13.5a.5.5 0 0 1-.342.474l-3 1A.5.5 0 0 1 6 14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5v-2z"/>
+                                            </svg> Parameters
+                                        </button>
+                            
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mg-0 ln">
+                                <div class="propset lsset pd-0 fnb  "> 
+                                    <div class="head">
+                                        <div class="row mg-0 ln ">
+                                            <div class="col-md-1 ">Inbound</div>
+                                            <div class="col-md-3 ">Supplier </div>  
+                                            <div class="col-md-1 ">Product</div>                                    
+                                            <div class="col-md-4 ">Description</div>                                     
+                                            <div class="col-md-1 ">Plan Date </div>
+                                            <div class="col-md-1 ">Exp Date </div>                                 
+                                            <div class="col-md-1 text-center text-truncate "><span class="fas fa-check-circle tx-mute  fa-lg"  (click)="ngLnselcAll()"></span></div>
+                                        </div>
+                                    </div>
+                        
+                                    <div class="line bgsub-head dgorder ">
+                                        <ng-scrollbar>
+                                        <div class="row mg-0 ln  fnb" *ngFor="let ln of lsorder" (click)="getinfo(ln)">                                    
+                                            <div class="col-md-1 text-primary text-truncate">{{ln.ouorder}} &nbsp;
+                                                <span class="fas fa-star text-warning w20 fa-sm" *ngIf="ln.inpriority > 0"></span> </div>
+                                            <div class="col-md-3 text-truncate">{{ln.thcode}} : {{ln.thname}}</div>   
+                                            <div class="col-md-1 text-danger">{{ln.disproduct}}</div>                                 
+                                            <div class="col-md-4 text-truncate">{{ln.disproductdesc}}</div>
+                                            <div class="col-md-1 text-danger">{{ln.dateprep | date : 'yy.MM.dd'}}</div>
+                                            <div class="col-md-1 text-danger">{{ln.dateexpire | date : 'yy.MM.dd'}}</div>
+                                            <div class="col-md-1 tx-center">
+                                                <span class="fas fa-check-circle text-primary fa-lg" *ngIf="ln.selc == 1" (click)="ngLnselc(ln)"></span>
+                                                <span class="fas fa-check-circle tx-mute  fa-lg" *ngIf="ln.selc == 0" (click)="ngLnselc(ln)"></span>
+                                            </div>
+                                        </div>
+                                        </ng-scrollbar>
+                                    </div>
+                        
+                                    <div class="head bd-0">
+                                    <div class="row mg-0 ln pd-2 ">
+                                        <div class="col-md-9 text-right">&nbsp;</div>
+                                        <div class="col-md-3 ">
+                                            <button type="button" class="btn snaps-warning btn-xs btn-block mp">
+                                                <i class="fas fa-check-circle "></i>
+                                                &nbsp;
+                                                Process Distribution
+                                            </button>
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <div class="col-md-12 fn-07e">
+                            <div class="row mg-0 ln">
+                                <div class="propset lsset pd-0 fnb "> 
+                                    <div class="head" >
+                                        <div class="row mg-0 ln ">
+                                            <div class="col-md-12 ">Order Detail  </div>
+                                        </div>
+                                    </div>                         
+                                    <div class="line bgsub-head " >
+                                        <div class="row mg-0 ln " >
+                                            <div class="col-md-1">Inb.Order</div>
+                                            <div class="col-md-1 text-danger text-truncate">{{slcorder?.ouorder}}
+                                                &nbsp;<span class="fas fa-star w20 fa-sm"                                                
+                                                ></span>
+                                            </div> 
+                                            <div class="col-md-1">Third party </div>
+                                            <div class="col-md-1 text-danger">{{slcthcode}}</div>     
+                                            <div class="col-md-4">{{slcthname}}</div> 
+                                            <div class="col-md-1">Promo. </div>
+                                            <div class="col-md-1">{{ slcorder?.oupromo }}</div> 
+                                            <div class="col-md-1">Plan.Delivery </div>
+                                            <div class="col-md-1 text-danger">{{slcdateplan | date : dateformat }}</div>                                      
+                                        </div>
+                    
+                                        <div class="row mg-0 ln " >
+                                            <div class="col-md-1 text-danger">{{slcorder?.ouorder}}</div> 
+                                            <div class="col-md-1">Product </div>
+                                            <div class="col-md-1 text-danger">{{slcproduct }}</div>     
+                                            <div class="col-md-6">{{slcprodesc}}</div> 
+                                            <div class="col-md-1">Expire  </div>
+                                            <div class="col-md-1 text-danger">{{slcdateexp | date : dateformat }}</div>                  
+                                        </div>
+                    
+                                        <div class="row mg-0 ln pd-0" >
+                                            <div class="lsset  pd-0 " style="border: 0px !important;"> 
+                                                <div class="head">
+                                                    <div class="row mg-0 ln ">
+                                                        <div class="col-md-1 ">Customer</div>
+                                                        <div class="col-md-1 ">Order No</div>
+                                                        <div class="col-md-1 ">Order Ref</div>  
+                                                        <div class="col-md-4 ">Customer name</div>
+                                                        <div class="col-md-1 ">Batch no</div>  
+                                                        <div class="col-md-1 ">M.F.G Date</div>   
+                                                        <div class="col-md-1 ">E.X.P Date</div>     
+                                                        <div class="col-md-1 ">Unit</div>   
+                                                        <div class="col-md-1 ">Quantity</div>
+                                                    </div>
+                                                </div>
+                                    
+                                                <div class="line bgsub-head  " style="height: 437px;" >
+                                                    <div class="row mg-0 ln  fnb" *ngFor="let ds of slclines">
+                                                        <div class="col-md-1 text-danger">{{ds.disthcode}}</div> 
+                                                        <div class="col-md-1 text-danger">{{ds.ouorder}}</div>
+                                                        <div class="col-md-1 text-danger">{{ds.ourefno}}</div> 
+                                                        <div class="col-md-4 text-truncate">{{ds.disthname}}</div>
+                                                        <div class="col-md-1 text-truncate">{{ds.batchno}}</div>
+                                                        <div class="col-md-1 text-truncate">{{ds.datemfg}}</div>
+                                                        <div class="col-md-1 text-truncate">{{ds.dateexp}}</div>
+                                                        <div class="col-md-1 ">{{ds.unitops}}</div>
+                                                        <div class="col-md-1 text-right text-danger">{{ds.qtypu}}</div>
+                                                    </div>
+                                                </div>
+                    
+                                                <div class="head bd-0">
+                                                    <div class="row mg-0 ln ">
+                                                        <div class="col-md-10 text-right">Summary</div>
+                                                        <div class="col-md-2  text-right text-danger">1</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                    
+                                    </div>
+                                </div>
+                            </div>                           
+                            
+                        </div>
+                     
+                  </ng-template>
+                </li>
+
+              </ul>
+              
+              <div [ngbNavOutlet]="nav" class="mt-2"></div>
+
+        </div>
+    </div>
+</div>
+
+
+

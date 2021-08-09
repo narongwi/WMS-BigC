@@ -1,0 +1,284 @@
+<div class="row ">
+    <div class="col-md-8">
+        <div class="row fn-07e fnb">
+            <div class="col-md-6 fnb fn pdt-5 ">
+                <span class="fn-palette-1">Master</span>&nbsp;<i class="fas fa-chevron-right fa-xs"></i>&nbsp;<span class="fn-palette-5"> Barcode</span>
+            </div>
+
+            <div class="col-md-3 text-right">
+                <div class="d-grid gap-2">
+                
+                    <ng-template #popContent>
+                        <div  style="width:280px" class="fn fn-07e fnb"> 
+                            <div class="row ln  pd-5 ">
+                                <div class="row ln pd-5">
+                                    <div class="col-md-4 pdt-5">Article</div>
+                                    <div class="col-md-8">
+                                        <input class="form-control form-control-sm  text-danger " type="text" placeholder="Product code" [(ngModel)]="pm.article">
+                                    </div>
+                                </div>
+
+                                <div class="row ln pd-5">
+                                    <div class="col-md-4 pdt-5">TH.Code</div>
+                                    <div class="col-md-8">
+                                        <input class="form-control form-control-sm  text-danger " type="text" placeholder="Third party code" [(ngModel)]="pm.thcode">
+                                    </div>
+                                </div>
+        
+                            </div>
+        
+                            <div class="row   pd-5">
+                                <div class="col-md-4">&nbsp;</div>
+                                <div class="col-md-8">
+                                    <div class="d-grid gap-2">
+        
+                                        <button type="button" class="btn snaps-warning btn-block mp " (click)="fndbarcode()">
+                                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-search" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z"/>
+                                                <path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>
+                                            </svg>
+                                            &nbsp;
+                                            Filter Barcode
+                                        </button>
+        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                    <ng-template #popTitle >
+                        <div style="width:280px">
+                            <span class="fn fn-08e fnb">Search parameter</span>
+                        </div>
+                    </ng-template>
+                    <button type="button" class="btn btn-secondary snaps-btnblank fn-07e" placement="bottom" [autoClose]="'outside'" [ngbPopover]="popContent" [popoverTitle]="popTitle" >
+                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-funnel-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.128.334L10 8.692V13.5a.5.5 0 0 1-.342.474l-3 1A.5.5 0 0 1 6 14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5v-2z"/>
+                        </svg> Parameters
+                    </button>
+        
+                </div>
+            </div>
+        
+            <div class="col-md-3 ">
+                <div class="input-group fnb">
+                    <input class="form-control fn-07e fnb text-danger "
+                     placeholder="Barcode" 
+                     [(ngModel)]="pm.searchall" >
+                    <div class="input-group-append">
+                    <button type="button" class="btn snaps-btngroup btn-prime " (click)="fndbarcode()">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                        </svg>
+                    </button>
+                    </div>
+                </div>
+            </div>
+        
+          
+        </div>
+
+        <div class="row pdt-10">
+            <div class="lsset fn-07e fnb pd-0">
+                <div class="head">
+                    <div class="row mg-0 ln ">
+                        <div class="col-md-1 ">Type</div>
+                        <div class="col-md-1 ">Operate</div>
+                        <div class="col-md-2 ">Barcode</div>  
+                        <div class="col-md-2 ">Article</div> 
+                        <div class="col-md-3 ">Description</div>
+                        <div class="col-md-2 ">Third party</div>
+                        <div class="col-md-1 ">State</div>
+                    </div>
+                </div>
+            
+                <div class="line bgsub-head dgbarcode  ">
+                    <ng-scrollbar>
+                    <div class="row mg-0 ln mpswitch " *ngFor="let ln of lsbarcode | slice: (page-1) * pageSize : page * pageSize | orderBy: lssort : lsreverse" >
+                        <div class="col-md-1">{{ln.bartype}}</div>
+                        <div class="col-md-1">{{ln.barops}}</div>
+                        <div class="col-md-2 text-danger">{{ln.barcode}}</div>
+                        <div class="col-md-2 text-primary">{{ln.article}}-{{ln.lv}}</div>
+                        <div class="col-md-3 text-truncate">{{ln.articledsc}}</div>
+                        <div class="col-md-2">{{ln.thcode}}</div>
+                        <div class="col-md-1">
+                            <span class="{{dscicon(ln.tflow)}} w20 dp"></span>
+                            <span class="fas fa-wrench text-warning w20 hd" (click)="selbarcode(ln)"></span>
+                        </div>
+                    </div>
+                </ng-scrollbar>
+                </div>
+
+                <div class="foot bgsub-head fnb pd-5">
+                    <div class="row mg-0">
+                        <div class="col-md-3 pdt-5">
+                            Total &nbsp; &nbsp;<span class="text-danger">{{lsbarcode.length}}</span> &nbsp; &nbsp; Barcodes
+                        </div>
+                        <div class="col-md-2"></div>
+                        <div class="col-md-2 text-right lh-08e">
+                            <div class="fn-06e fnb text-danger">Row Limit</div>
+                            <div class="fn-06e">Per Page</div>
+                        </div>
+                        <div class="col-md-2">
+
+                            <ng-select class=" text-danger"  class="custom custom-sm" bindLabel="value" bindvalue="value" 
+                                        [clearable]="false"  [(ngModel)]="slrowlmt" [items]="lsrowlmt" (change)="changerowlmt()" >
+                                <ng-template ng-label-tmp let-item="item"><span class="text-danger b">{{item.value}}</span> </ng-template>
+                                <ng-template ng-option-tmp let-item="item"><span class="text-danger b">{{item.value}}</span> </ng-template>
+                            </ng-select>
+                        
+                        </div>
+                        <div class="col-md-3">
+                            <ngb-pagination [(page)]="page" [pageSize]="pageSize" [collectionSize]="lsbarcode.length" class="d-flex justify-content-end" ></ngb-pagination>
+                        </div>
+                    </div>
+                </div>
+
+            </div>            
+        </div>
+
+    </div>
+
+    <div class="col-md-4  pdt-40">
+        <div class="lsset fnb fn-07e">
+            <div class="head">
+                <div class="row mg-0 ln ">
+                    <div class="col-md-6 ">Configuration</div>
+                    <div class="col-md-6 ">
+                        <span class="mp" (click)="newbarcode()">
+                            <i class="fas fa-plus-square text-primary"></i>&nbsp;
+                            New barcode
+                        </span>
+                        
+                    </div>
+                </div>
+            </div>
+        
+            <div class="line bgsub-head ">
+                <div class="row mg-0 ln " >
+                    <div class="col-md-3 lh-07e pdt-3 tx-overflow">
+                        <span class="text-dark fnb">Site </span><br />
+                        <span class="tx-mute fnnb">Site code</span>
+                    </div>
+                    <div class="col-md-3 pdt-5">
+                        <span class="text-danger fnb ">{{crbarcode.site}}</span>
+                    </div>
+                    <div class="col-md-3 lh-07e pdt-3 tx-overflow">
+                        <span class="text-dark fnb">Depot</span><br />
+                        <span class="tx-mute fnnb">Depot code</span>
+                    </div>
+                    <div class="col-md-3 pdt-5">
+                        <span class="text-danger fnb ">{{crbarcode.depot}}</span>
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln " >
+                    <div class="col-md-3 lh-07e tx-overflow">
+                        <span class="text-dark fnb ">Operate</span><br />
+                        <span class="tx-mute fnnb">Of barcode</span>
+                    </div>
+                    <div class="col-md-6">
+                        <ng-select class=" "  class="custom custom-sm" bindLabel="desc" bindvalue="value" 
+                                   [clearable]="false"  [(ngModel)]="slcbarops" [items]="msdops"  [disabled]="!allowchangeofexsource">
+                            <ng-template ng-label-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                            <ng-template ng-option-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                        </ng-select>
+                        <span class="text-danger fnb  " *ngIf="crbarcode.tflow != 'NW'">{{spcareadsc}}</span>
+                    </div>
+                </div>
+                <div class="row mg-0 ln " >
+                    <div class="col-md-3 lh-07e tx-overflow">
+                        <span class="text-dark fnb ">Type</span><br />
+                        <span class="tx-mute fnnb">of barcode</span>
+                    </div>
+                    <div class="col-md-6">
+                        <ng-select class=" "  class="custom custom-sm" bindLabel="desc" bindvalue="value" 
+                                   [clearable]="false"  [(ngModel)]="slcbartype" [items]="msdtype"  [disabled]="!allowchangeofexsource">
+                            <ng-template ng-label-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                            <ng-template ng-option-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                        </ng-select>
+                        <span class="text-danger fnb  " *ngIf="crbarcode.tflow != 'NW'">{{spcareadsc}}</span>
+                    </div>
+                </div>
+                <div class="row mg-0 ln " >
+                    <div class="col-md-3 lh-07e pdt-3 tx-overflow">
+                        <span class="text-dark fnb">Barcode</span><br />
+                        <span class="tx-mute fnnb">-</span>
+                    </div>
+                    <div class="col-md-6">
+                        <input class="form-control form-control-xs text-danger fnb" type="text" placeholder="Barcode" [(ngModel)]="crbarcode.barcode" *ngIf="crbarcode.tflow == 'NW'">
+                        <div class="text-danger pdt-5 fn-1e" *ngIf="crbarcode.tflow != 'NW'">{{crbarcode.barcode}}</div>
+                    </div>
+                </div>
+                <div class="row mg-0 ln " >
+                    <div class="col-md-3 lh-07e pdt-3 tx-overflow">
+                        <span class="text-dark fnb">Third Party</span><br />
+                        <span class="tx-mute fnnb">of barcode</span>
+                    </div>
+                    <div class="col-md-6">
+                        <input class="form-control form-control-xs text-danger fnb" type="text" placeholder="Thirdparty code" [(ngModel)]="crbarcode.thcode" [disabled]="!allowchangeofexsource">
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln " >
+                    <div class="col-md-3 lh-07e pdt-3 tx-overflow">
+                        <span class="text-dark fnb">Product code</span><br />
+                        <span class="tx-mute fnnb">of barcode</span>
+                    </div>
+                    <div class="col-md-6">
+                        <input class="form-control form-control-xs text-danger fnb" type="text" placeholder="Product Code" [(ngModel)]="crbarcode.article" [disabled]="!allowchangeofexsource">
+                    </div>
+                    <div class="col-md-2">
+                        <input class="form-control form-control-xs text-danger fnb" type="text" placeholder="LV" [(ngModel)]="crbarcode.lv" [disabled]="!allowchangeofexsource">
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln">
+                    <div class="col-md-3 lh-07e  tx-overflow">
+                        <span class="text-dark fnb pdt-3">State</span><br />
+                        <span class="tx-mute fnnb">Status of barcode </span>
+                    </div>
+                    <div class="col-md-6 text-center">
+                        <ui-switch checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" [(ngModel)]="crstate" [disabled]="!allowchangeofexsource"></ui-switch>
+                    </div>
+                </div>
+               
+
+                <div class="row mg-0 ln">                    
+                    <div class="form-group form-control-sm mg-0 pdb-5 ">
+                        <label for="formGroupExampleInput fn-07e">Remarks</label>
+                        <textarea class="form-control fn-1e text-dark" id="formGroupExampleInput" rows="2" [(ngModel)]="crbarcode.barremarks" maxlength="80"></textarea>
+                    </div>         
+                </div>
+
+                <div class="row mg-0 ln">
+                    <div class="col-md-7 lh-07e pdt-5">
+                        <span class="text-danger fnb ">{{crbarcode.orgcode}}-{{crbarcode.site}}-{{crbarcode.depot}}-{{crbarcode.barcode}}</span><br />
+                        <span class="tx-mute fnnb">Full name of barcode</span>
+                    </div>
+                    <div class="col-md-5">
+                        <button type="button" class="btn snaps-primary btn-xs btn-block mp" (click)="validate()">
+                            <i class="fas fa-check-circle fa-lg"></i>
+                            &nbsp;
+                           Validate
+                        </button>
+
+                    </div>
+                </div>
+
+                
+
+                <div class="row mg-0 ln" >
+                    <div class="col-md-5 lh-07e">
+                        <span class="tx-mute fnnb ">{{crbarcode.datemodify | date : dateformatlong}}</span><br />
+                        <span class="tx-mute fnnb">Modify date</span>
+                    </div>
+                    <div class="col-md-5 lh-07e">
+                        <span class="tx-mute fnnb ">{{crbarcode.accnmodify}}</span><br />
+                        <span class="tx-mute fnnb">Modify account</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

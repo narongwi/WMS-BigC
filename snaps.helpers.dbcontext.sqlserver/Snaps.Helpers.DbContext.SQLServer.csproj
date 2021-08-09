@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    <Version>1.0.0.20</Version>
+    <AssemblyVersion>1.0.0.20</AssemblyVersion>
+    <FileVersion>1.0.0.20</FileVersion>
+    <Authors>Snaps Solutions Co,Ltd</Authors>
+    <Company>Snaps Solutions Co,Ltd.</Company>
+    <Product>Snaps.Helpers.DbContext.SQLServer</Product>
+    <Description>DbContext for Microsoft SQL Server Database</Description>
+    <Copyright>Snaps Solution @ 2020+</Copyright>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\snaps.helpers.stringext\Snaps.Helpers.StringExt.csproj" />
+  </ItemGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DebugType Condition=" '$(Configuration)' == 'Release' ">None</DebugType>
+    <GenerateDependencyFile Condition=" '$(GenerateDependencyFile)' == '' ">None</GenerateDependencyFile> 
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>    
+    <OutputPath Condition="'$(OutputPath)'=='' ">..\..\Snaps.Library\</OutputPath>
+  </PropertyGroup>
+
+</Project>

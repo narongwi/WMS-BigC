@@ -1,0 +1,417 @@
+<div class="row pdt-10 fn-07e">
+    <div class="col-md-4">
+        <div class="lsset  ">
+            <div class="head">
+                <div class="row mg-0 ln ">
+                    <div class="col-md-12 ">Location entity</div>
+                </div>
+            </div>
+        
+            <div class="line bgsub-head dgentity">
+                <div class="row mg-0 ln " >
+                    <div class="col-md-3 lh-09e">
+                        <span class="text-dark fnb ">Site </span>
+                    </div>
+                    <div class="col-md-3">
+                        <span class="text-danger fnb 5">{{crlocdw.site}}</span>
+                    </div>
+
+                    <div class="col-md-3 lh-09e">
+                        <span class="text-dark fnb ">Depot</span>
+                    </div>
+                    <div class="col-md-3">
+                        <span class="text-danger fnb 5">{{crlocdw.depot}}</span>
+                    </div>
+
+                </div>
+
+                <div class="row mg-0 ln " >
+                    <div class="col-md-3 lh-09e">
+                        <span class="text-dark fnb ">Zone</span>
+                    </div>
+                    <div class="col-md-3">
+                        <span class="text-danger fnb 5">{{crlocdw.lszone}}</span>
+                    </div>
+
+                    <div class="col-md-3 lh-09e tx-overflow">
+                        <span class="text-dark fnb ">Aisle</span>
+                    </div>
+                    <div class="col-md-3">
+                        <span class="text-danger fnb 5">{{crlocdw.lsaisle}}</span>
+                    </div>
+                </div>
+   
+                <div class="row mg-0 ln " >
+                    <div class="col-md-3 lh-09e tx-overflow">
+                        <span class="text-dark fnb ">Bay</span>
+                    </div>
+                    <div class="col-md-3">
+                        <span class="text-danger fnb 5">{{crlocdw.lsbay}}</span>
+                    </div>
+
+                    <div class="col-md-3 lh-09e tx-overflow">
+                        <span class="text-dark fnb ">Level</span>
+                    </div>
+                    <div class="col-md-3">
+                        <span class="text-danger fnb 5">{{crlocdw.lslevel}}</span>
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln " >
+                    <div class="col-md-3 lh-09e tx-overflow">
+                        <span class="text-dark fnb ">location</span>
+                    </div>
+                    <div class="col-md-3">
+                        <span class="text-danger fnb 5">{{crlocdw.lsstack}}</span>
+                    </div>
+
+                    <div class="col-md-3 lh-09e tx-overflow">
+                        <span class="text-dark fnb ">Sequence</span>
+                    </div>
+                    <div class="col-md-3">
+                        <span class="text-danger fnb 5">{{crlocdw.lsseq}}</span>
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln " >
+                    <div class="col-md-6 lh-09e ">
+                        <span class="text-dark fnb  pdt-3">Code</span><br />
+                        <span class="text-mute">Location code</span>
+                    </div>
+                    <div class="col-md-6">
+                        <input class="form-control form-control-xs  text-danger fnb" type="text" [(ngModel)]="crlocdw.lscode">
+                    </div>
+                </div>
+
+
+                <div class="row mg-0 ln " >
+                    <div class="col-md-6 lh-09e ">
+                        <span class="text-dark fnb  pdt-3">Alternate</span><br />
+                        <span class="text-mute">Location with format</span>
+                    </div>
+                    <div class="col-md-6">
+                        <input class="form-control form-control-xs  text-danger fnb" type="text" [(ngModel)]="crlocdw.lscodealt">
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln " >
+                    <div class="col-md-3 lh-09e tx-overflow">
+                        <span class="text-dark fnb ">Full Name</span>
+                    </div>
+                    <div class="col-md-9">
+                        <span class="text-danger fnb 5">{{crlocdw.lscodefull}}</span>
+                    </div>
+                </div>
+                <div class="row mg-0 ln " >
+                    <div class="col-md-5 lh-09e tx-overflow">
+                        <span class="text-dark fnb ">Allow to stock In</span><br />
+                        <span class="text-mute  tx-overflow">of location</span>
+                    </div>
+                    <div class="col-md-7 pdt-3">                        
+                            <ui-switch checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" [(ngModel)]="swflowin" ></ui-switch>
+                    </div>
+                </div>
+                <div class="row mg-0 ln " >
+                    <div class="col-md-5 lh-09e tx-overflow">
+                        <span class="text-dark fnb ">Allow to stock Out</span><br />
+                        <span class="text-mute  tx-overflow">of location</span>
+                    </div>
+                    <div class="col-md-7 pdt-3">                        
+                            <ui-switch checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" [(ngModel)]="swflowou" ></ui-switch>
+                    </div>
+                </div>
+
+
+                <div class="row mg-0 ln " >
+                    <div class="col-md-6 lh-09e ">
+                        <span class="text-dark fnb  pdt-3">Digit</span><br />
+                        <span class="text-mute">Verify digit of location</span>
+                    </div>
+                    <div class="col-md-3">
+                        <input class="form-control form-control-xs  text-danger fnb" type="text" [(ngModel)]="crlocdw.lsdigit">
+                    </div>
+                </div>
+
+
+                <div class="row mg-0 ln " >
+                    <div class="col-md-7 lh-09e">
+                        <span class="text-dark fnb ">Current capacity</span>
+                    </div>
+                    <div class="col-md-3 tx-right">
+                        <span class="text-danger fnb 5">{{crlocdw.crfreepct}}</span>
+                    </div>
+                    <div class="col-md-2 tx-left fnb "> % </div>
+                </div>
+                <div class="row mg-0 ln " >
+                    <div class="col-md-7 lh-09e">
+                        <span class="text-dark fnb ">Current weight</span>
+                    </div>
+                    <div class="col-md-3 tx-right">
+                        <span class="text-danger fnb 5">{{crlocdw.crweight}}</span>
+                    </div>
+                    <div class="col-md-2 tx-left fnb"> Kgs </div>
+                </div>
+                <div class="row mg-0 ln " >
+                    <div class="col-md-7 lh-09e">
+                        <span class="text-dark fnb ">Current volume</span>
+                    </div>
+                    <div class="col-md-3 tx-right">
+                        <span class="text-danger fnb 5">{{crlocdw.crvolume}}</span>
+                    </div>
+                    <div class="col-md-2 tx-left fnb"> Cm3 </div>
+                </div>
+
+                <div class="row mg-0 ln " >
+                    <div class="col-md-6 lh-09e">
+                        <button type="button" class="btn snaps-danger btn-xs btn-block mp"  
+                                (click)="drop()" *ngIf="swflowin == false && swflowou == false">
+                            <i class="fas fa-trash-alt"></i>
+                            Delete 
+                        </button> 
+
+                    </div>
+                    <div class="col-md-6 lh-09e">
+                        <button type="button" class="btn snaps-primary btn-xs btn-block mp"  (click)="validate()">
+                            <i class="fas fa-check-circle"></i>
+                            Save
+                        </button>
+                    </div>
+
+                </div>
+            </div>        
+        </div>
+    </div>
+    <div class="col-md-8">
+        
+        <div class="lsset ">
+            <div class="head">
+                <div class="row mg-0 ln ">
+                    <div class="col-md-12 ">Location Dimension</div>
+                </div>
+            </div>
+
+            <div class="line bgsub-head ">
+                <div class="row mg-0 ln " >
+                    <div class="col-md-6 lh-09e">
+                        <span class="text-dark fnb ">Dimemnsion</span><br />
+                        <span class="text-mute">No of Length x Width x Height </span>
+                    </div>
+                    <div class="col-md-2">
+                        <input class="form-control form-control-xs  text-danger fnb" type="text" [(ngModel)]="crlocdw.lsdmlength">
+                    </div>
+                    <div class="col-md-2">
+                        <input class="form-control form-control-xs  text-danger fnb" type="text" [(ngModel)]="crlocdw.lsdmwidth">
+                    </div>
+                    <div class="col-md-2">
+                        <input class="form-control form-control-xs  text-danger fnb" type="text" [(ngModel)]="crlocdw.lsdmheight">
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln " >
+                    <div class="col-md-6 lh-09e">
+                        <span class="text-dark fnb ">Gap storage</span><br />
+                        <span class="text-mute">Gap area in location</span>
+                    </div>
+                    <div class="col-md-2">
+                        <input class="form-control form-control-xs  text-danger fnb" type="text" [(ngModel)]="crlocdw.lsgapleft">
+                    </div>
+                    <div class="col-md-2">
+                        <input class="form-control form-control-xs  text-danger fnb" type="text" [(ngModel)]="crlocdw.lsgaptop">
+                    </div>
+                    <div class="col-md-2">
+                        <input class="form-control form-control-xs  text-danger fnb" type="text" [(ngModel)]="crlocdw.lsgapright">
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln " >
+                    <div class="col-md-6 lh-09e">
+                        <span class="text-dark fnb ">Maximum weight</span><br />
+                        <span class="text-mute">No of maximum weight that can storage in location </span>
+                    </div>
+                    <div class="col-md-3">
+                        <input class="form-control form-control-xs  text-danger fnb" type="text" [(ngModel)]="crlocdw.lsmxweight">
+                    </div>
+                    <div class="col-md-3"></div>
+                </div>
+                <div class="row mg-0 ln " >
+                    <div class="col-md-6 lh-09e">
+                        <span class="text-dark fnb ">Maximum volume</span><br />
+                        <span class="text-mute">No of maximum volume that can storage in location</span>
+                    </div>
+                    <div class="col-md-3">
+                        <input class="form-control form-control-xs  text-danger fnb" type="text" [(ngModel)]="crlocdw.lsmxvolume">
+                    </div>
+                    <div class="col-md-3"></div>
+                </div>
+
+                <div class="row mg-0 ln " >
+                    <div class="col-md-6 lh-09e">
+                        <span class="text-dark fnb ">Maximum Handling</span><br />
+                        <span class="text-mute">No of maximum HU that can storage in location</span>
+                    </div>
+                    <div class="col-md-3">
+                        <input class="form-control form-control-xs  text-danger fnb" type="text" [(ngModel)]="crlocdw.lsmxhuno">
+                    </div>
+                    <div class="col-md-3"></div>
+                </div>
+
+
+                <div class="row mg-0 ln " >
+                    <div class="col-md-6 lh-09e">
+                        <span class="text-dark fnb ">Stackable</span><br />
+                        <span class="text-mute">Allow to stack product on location</span>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group form-control-sm mg-0">
+                            <ui-switch checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" [(ngModel)]="swstacking" ></ui-switch>
+                        </div> 
+                    </div>
+                    <div class="col-md-2 lh-09e">
+                        <span class="text-dark fnb ">Stack Limit</span><br />
+                        <span class="text-mute">No of level</span>
+                    </div>
+                    <div class="col-md-2">
+                        <input class="form-control form-control-xs  text-danger fnb" type="text" [(ngModel)]="crlocdw.lsstacklimit">
+    
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="lsset  mgt-10">
+            <div class="head">
+                <div class="row mg-0 ln ">
+                    <div class="col-md-12 ">Specificaton</div>
+                </div>
+            </div>
+
+            <div class="line bgsub-head ">
+
+                <div class="row mg-0 ln " >
+                    <div class="col-md-4 lh-09e">
+                        <span class="text-dark fnb ">Mixing product</span><br />
+                        <span class="text-mute">Allow to mixing product</span>
+                    </div>
+                    <div class="col-md-2">
+                        <ui-switch checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" [(ngModel)]="swmixproduct" ></ui-switch>
+                        
+                    </div>
+                    <div class="col-md-4 lh-09e">
+                        <span class="text-dark fnb ">Mixing Aging</span><br />
+                        <span class="text-mute">Allow to mixing agingproduct</span>
+                    </div>
+                    <div class="col-md-2">
+                        <ui-switch checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" [(ngModel)]="swmixaging" ></ui-switch>
+                    </div>
+                </div>
+                <!-- <div class="row mg-0 ln " >
+                    <div class="col-md-4 lh-09e">
+                        <span class="text-dark fnb ">Pick-face</span><br />
+                        <span class="text-mute">Specification that the location</span>
+                    </div>
+                    <div class="col-md-2">
+                        <ui-switch checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" [(ngModel)]="swpicking" ></ui-switch>
+                    </div>
+
+                    <div class="col-md-3"></div>
+                </div> -->
+                <div class="row mg-0 ln " >
+                    <div class="col-md-4 lh-09e">
+                        <span class="text-dark fnb ">Mixing Lot mfg</span><br />
+                        <span class="text-mute">Allow to mixing Lot MFG</span>
+                    </div>
+                    <div class="col-md-2">
+                        <ui-switch checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" [(ngModel)]="swmixlot" ></ui-switch>                        
+                    </div>
+
+                    
+                </div>
+
+                <div class="row mg-0 ln " >
+                    <div class="col-md-4 lh-09e ">
+                        <span class="text-dark fnb  pdt-3">Aging</span><br />
+                        <span class="text-mute">Specification aging</span>
+                    </div>
+                    <div class="col-md-2">
+                        <input class="form-control form-control-xs  text-danger fnb" type="text" [(ngModel)]="crlocdw.spcmnaging">
+                    </div>
+                    <div class="col-md-2">
+                        <input class="form-control form-control-xs  text-danger fnb" type="text" [(ngModel)]="crlocdw.spcmxaging">
+                    </div>
+                </div>
+             
+                <div class="row mg-0 ln " >
+                    <div class="col-md-4 lh-09e ">
+                        <span class="text-dark fnb  pdt-3">Pick-face</span><br />
+                        <span class="text-mute">Specification that the location is picking</span>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group form-control-sm mg-0">
+                            <ui-switch checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" [(ngModel)]="swpicking" ></ui-switch>
+                        </div> 
+                    </div>
+                    <div class="col-md-2">
+                        <input class="form-control form-control-sm fnb text-danger" placeholder="Min. Ratio" type="text" >
+                    </div>
+                    <div class="col-md-2">
+                        <input class="form-control form-control-sm fnb text-danger"  placeholder="Mix. Ratio" type="text" >
+                    </div>
+                </div> 
+                
+            
+                <div class="row mg-0 ln " >
+                    <div class="col-md-4 lh-09e ">
+                        <span class="text-dark fnb  pdt-3">Product</span><br />
+                        <span class="text-mute">Specification product</span>
+                    </div>
+                    <div class="col-md-2">
+                        <input class="form-control form-control-xs  text-danger fnb" type="text" [(ngModel)]="crlocdw.spcarticle">
+                    </div>
+                    <div class="col-md-4">
+                    </div>
+                </div>
+            
+                <div class="row mg-0 ln " >
+                    <div class="col-md-4 lh-09e ">
+                        <span class="text-dark fnb  pdt-3">Third party</span><br />
+                        <span class="text-mute">Specification third party</span>
+                    </div>
+                    <div class="col-md-2">
+                        <input class="form-control form-control-xs  text-danger fnb" type="text" [(ngModel)]="crlocdw.spcthcode">
+                    </div>
+                    <div class="col-md-4">
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln " >
+                    <div class="col-md-4 lh-09e ">
+                        <span class="text-dark fnb  pdt-3">Handling unit no</span><br />
+                        <span class="text-mute">Specification HU no</span>
+                    </div>
+                    <div class="col-md-2">
+                        <input class="form-control form-control-xs  text-danger fnb" type="text" [(ngModel)]="crlocdw.spchuno">
+                    </div>
+                    <div class="col-md-4">
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln " >
+                    <div class="col-md-4 lh-09e ">
+                        <span class="text-dark fnb  pdt-3">Last touch</span><br />
+                        <span class="text-mute">Last article that storage</span>
+                    </div>
+                    <div class="col-md-3">
+                        <input class="form-control form-control-xs  text-danger fnb" type="text" [(ngModel)]="crlocdw.spclasttouch">
+                    </div>
+                </div>
+
+                
+
+            </div>           
+        </div>
+        
+       
+
+    </div>
+</div>

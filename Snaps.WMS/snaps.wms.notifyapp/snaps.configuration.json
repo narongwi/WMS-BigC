@@ -1,0 +1,12 @@
+{
+  "task": {
+    "folder": "\\Microsoft\\Office",
+    "errorOnly": false
+  },
+  "notify": {
+    "title": "WMS Task Scheduler",
+    "token": "MtrAzPDMHWNFnFFwafOO4o6O1Mt8XyAO7kXme76Hs98",
+    "proxy": "172.15.64.40:8080",
+    "issticker": true
+  }
+}

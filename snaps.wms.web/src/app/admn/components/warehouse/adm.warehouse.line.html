@@ -1,0 +1,253 @@
+<div class="row">
+    <div class="col-md-6">
+        <div class="lsset fn-1e15 ">
+            <div class="head">
+                <div class="row mg-0 ln ">
+                    <div class="col-md-1 ">Code</div>
+                    <div class="col-md-6 ">Name </div>
+                    <div class="col-md-4 ">Alternate</div>
+                    <div class="col-md-1 ">State</div>
+                </div>
+            </div>
+        
+            <div class="line bgsub-head dgline ">
+                <div class="row mg-0 ln mpswitch " *ngFor="let ln of lswarehouse" >
+                    <div class="col-md-1 ">{{ln.sitecode}}</div>
+                    <div class="col-md-6 ">{{ln.sitename}}</div>
+                    <div class="col-md-4 ">{{ln.sitenamealt}}</div>
+                    <div class="col-md-1  text-center ">
+                        <span class="{{dscicon(ln.tflow)}} w20 dp"></span>
+                        <span class="fas fa-wrench text-warning w20 hd" (click)="selwarehouse(ln)"></span>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="lsset fn-1e ">
+            <div class="head">
+                <div class="row mg-0 ln ">
+                    <div class="col-md-8 fn-1e15">Configuration</div>
+                    <div class="col-md-4 ">
+                        <span class="fn-1e15 mp" (click)="newwarehouse()">
+                            <i class="fas fa-plus-square text-primary"></i>&nbsp;
+                            New site
+                        </span>                        
+                    </div>
+                </div>
+            </div>
+        
+            <div class="line bgsub-head ">
+                <div class="row mg-0 ln " >
+                    <div class="col-md-3 lh-1e1">
+                        <span class="text-dark fnb fn-1e15">Site code</span><br />
+                        <span class="text-mute">site code of warehouse</span>
+                    </div>
+                    <div class="col-md-3">
+                        <span class="text-danger fnb fn-1e15" *ngIf="crwarehouse.siteid != 0">{{crwarehouse.sitecode}}</span>
+                        <div class="form-group form-control-sm mg-0" *ngIf="crwarehouse.siteid == 0">
+                            <input class="form-control text-danger fnb fn-1e1" type="text" placeholder=""  [(ngModel)]="crwarehouse.sitecode">
+                        </div> 
+                    </div>
+                </div>
+                <div class="row mg-0 ln " >
+                    <div class="col-md-3 lh-1e1">
+                        <span class="text-dark fnb fn-1e15">Offical name</span><br />
+                        <span class="text-mute">Official name of site </span>
+                    </div>
+                    <div class="col-md-9">
+                        <div class="form-group form-control-sm mg-0">
+                            <input class="form-control text-danger fnb fn-1e1" type="text" placeholder=""  [(ngModel)]="crwarehouse.sitename">
+                        </div> 
+                    </div>
+                </div>
+                <div class="row mg-0 ln " >
+                    <div class="col-md-3 lh-1e1">
+                        <span class="text-dark fnb fn-1e15">Alternate</span><br />
+                        <span class="text-mute">Alternate name of site </span>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group form-control-sm mg-0">
+                            <input class="form-control text-danger fnb fn-1e1" type="text" placeholder=""  [(ngModel)]="crwarehouse.sitenamealt">
+                        </div> 
+                    </div>
+                </div>
+                <div class="row mg-0 ln " >
+                    <div class="col-md-3 lh-1e1">
+                        <span class="text-dark fnb fn-1e15">Authenticate Key</span><br />
+                        <span class="text-mute">Authenticate key</span>
+                    </div>
+                    <div class="col-md-9">
+                        <div class="form-group form-control-sm mg-0">
+                            <input class="form-control text-danger fnb fn-1e1" type="text" placeholder=""  [(ngModel)]="crwarehouse.sitekey">
+                        </div> 
+                    </div>
+                </div>
+                <div class="row mg-0 ln " >
+                    <div class="col-md-3 lh-1e1">
+                        <span class="text-dark fnb fn-1e15">Operation type</span><br />
+                        <span class="text-mute">Operation type on warehouse</span>
+                    </div>
+                    <div class="col-md-5">
+                        <ng-select class="fn-1e15 "  class="custom" bindLabel="desc" bindvalue="value" 
+                                   [clearable]="false"  [(ngModel)]="slcopstype" [items]="msdopstype" >
+                            <ng-template ng-label-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                            <ng-template ng-option-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                        </ng-select>
+                        <span class="text-danger fnb fn-1e1 " *ngIf="crwarehouse.siteid != 0 ">{{spcareadsc}}</span>
+                    </div>
+                </div>
+                <div class="row mg-0 ln " >
+                    <div class="col-md-3 lh-1e1 pdt-5">
+                        <span class="text-dark fnb fn-1e15">Start date</span><br />
+                        <span class="text-mute">First date of operate</span>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group form-control-sm mg-0">
+                            <input class="form-control text-danger fnb fn-1e1" type="text" placeholder="" [(ngModel)]="crwarehouse.datestart" datetime="yyyy.MM.dd">
+                        </div> 
+                    </div>
+                </div>
+                <div class="row mg-0 ln " >
+                    <div class="col-md-3 lh-1e1 pdt-5">
+                        <span class="text-dark fnb fn-1e15">Last date</span><br />
+                        <span class="text-mute">Last date of operate</span>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group form-control-sm mg-0">
+                            <input class="form-control text-danger fnb fn-1e1" type="text" placeholder=""  [(ngModel)]="crwarehouse.dateend">
+                        </div> 
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln " >
+                    <div class="col-md-3 lh-1e1 pdt-5">
+                        <span class="text-dark fnb fn-1e15">VAT Code</span><br />
+                        <span class="text-mute">VAT Code</span>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group form-control-sm mg-0">
+                            <input class="form-control text-danger fnb fn-1e1" type="text" placeholder=""  [(ngModel)]="craddress.vatcode">
+                        </div> 
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln " >
+                    <div class="col-md-3 lh-1e1 pdt-3">
+                        <span class="text-dark fnb fn-1e15">House No & Road name</span><br />
+                        <span class="text-mute">House no & road of customer</span>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="form-group form-control-sm mg-0">
+                            <input class="form-control fn-1e15 text-danger fnb" type="text" placeholder="" [(ngModel)]="craddress.addressln1">
+                        </div> 
+                    </div>
+                </div>
+    
+                <div class="row mg-0 ln " >
+                    <div class="col-md-3 lh-1e1 pdt-3">
+                        <span class="text-dark fnb fn-1e15">Villeage name</span><br />
+                        <span class="text-mute">Villeage of customer </span>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="form-group form-control-sm mg-0">
+                            <input class="form-control fn-1e15 text-danger fnb" type="text" placeholder="" [(ngModel)]="craddress.addressln2">
+                        </div> 
+                    </div>
+                </div>
+    
+                <div class="row mg-0 ln " >
+                    <div class="col-md-3 lh-1e1 pdt-3">
+                        <span class="text-dark fnb fn-1e15">Sub district</span><br />
+                        <span class="text-mute">Sub-district of customer</span>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="form-group form-control-sm mg-0">
+                            <input class="form-control fn-1e15 text-danger fnb" type="text" placeholder="" [(ngModel)]="craddress.subdistrict">
+                        </div> 
+                    </div>
+                </div>
+    
+                <div class="row mg-0 ln " >
+                    <div class="col-md-3 lh-1e1 pdt-3">
+                        <span class="text-dark fnb fn-1e15">City</span><br />
+                        <span class="text-mute">City of customer</span>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="form-group form-control-sm mg-0">
+                            <input class="form-control fn-1e15 text-danger fnb" type="text" placeholder="" [(ngModel)]="craddress.city">
+                        </div> 
+                    </div>
+                </div>
+    
+                <div class="row mg-0 ln " >
+                    <div class="col-md-3 lh-1e1 pdt-3">
+                        <span class="text-dark fnb fn-1e15">Country</span><br />
+                        <span class="text-mute">Country of customer</span>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="form-group form-control-sm mg-0">
+                            <input class="form-control fn-1e15 text-danger fnb" type="text" placeholder="" [(ngModel)]="craddress.country">
+                        </div> 
+                    </div>
+                </div>
+    
+                <div class="row mg-0 ln " >
+                    <div class="col-md-3 lh-1e1 pdt-3">
+                        <span class="text-dark fnb fn-1e15">Region</span><br />
+                        <span class="text-mute">Region of customer</span>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="form-group form-control-sm mg-0">
+                            <input class="form-control fn-1e15 text-danger fnb" type="text" placeholder="" [(ngModel)]="craddress.region">
+                        </div> 
+                    </div>
+                </div>
+    
+                <div class="row mg-0 ln " >
+                    <div class="col-md-3 lh-1e1 pdt-3">
+                        <span class="text-dark fnb fn-1e15">Post code</span><br />
+                        <span class="text-mute">Postcode of customer</span>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group form-control-sm mg-0">
+                            <input class="form-control fn-1e15 text-danger fnb" type="text" placeholder="" [(ngModel)]="craddress.postcode">
+                        </div> 
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln">
+                    <div class="col-md-3 lh-1e1 ">
+                        <span class="text-dark fnb fn-1e15">State</span><br />
+                        <span class="text-mute">Status of warehouse </span>
+                    </div>
+                    <div class="col-md-2 text-center">
+                        <ui-switch checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" [(ngModel)]="crstate" ></ui-switch></div>
+                </div>
+
+                <div class="row mg-0 ln pdt-25">
+                    <div class="col-md-7 lh-1e1 pdt-5">
+                        <span class="text-danger fnb fn-1e1">{{crwarehouse.orgcode}}-{{crwarehouse.sitecode}}</span><br />
+                        <span class="text-dark fn-1e">Full code of site</span>
+                    </div>
+                    <div class="col-md-5">
+                        <button type="button" class="btn btn-primary btn-xs btn-block mp" (click)="validate()">Save Site</button>
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln" >
+                    <div class="col-md-7 lh-1e1">
+                        <span class="text-mute fn-1e">{{crwarehouse.datemodify}}</span><br />
+                        <span class="text-mute">Modify date</span>
+                    </div>
+                    <div class="col-md-5 lh-1e1">
+                        <span class="text-mute fn-1e">{{crwarehouse.accnmodify}}</span><br />
+                        <span class="text-mute">Modify account</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

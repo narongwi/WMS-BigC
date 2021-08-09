@@ -1,0 +1,198 @@
+
+<div class="row fn-07e fnb">
+    <div class="col-md-8">
+        <div class="lsset ">
+            <div class="head">
+                <div class="row mg-0 ln ">
+                    <div class="col-md-1 ">Site</div>
+                    <div class="col-md-1 ">Depot </div>
+                    <div class="col-md-1 ">Cate.</div>
+                    <div class="col-md-1 ">Zone</div>
+                    <div class="col-md-3 ">Name</div>                   
+                    <div class="col-md-3 ">Description</div>
+                    <div class="col-md-1 ">Seq.</div>
+                    <div class="col-md-1 ">State</div>
+                </div>
+            </div>
+        
+            <div class="line bgsub-head  dgzone ">
+                <ng-scrollbar>
+                    <div class="row mg-0 ln mpswitch " *ngFor="let ln of lszone" >
+                        <div class="col-md-1 ">{{ln.site}}</div>
+                        <div class="col-md-1 ">{{ln.depot}}</div>
+                        <div class="col-md-1 ">{{ln.spcarea}}</div>
+                        <div class="col-md-1 text-danger">{{ln.lscodealt}}</div>
+                        <div class="col-md-3 text-primary">{{ln.lscodefull}}</div>
+                        <div class="col-md-3 ">{{ln.lsdesc}}</div>
+                        <div class="col-md-1 text-center">{{ln.lsseq}}</div>
+                        <div class="col-md-1  text-center " (click)="selzone(ln)">
+                            <span class="{{dscicon(ln.tflow)}} w20 dp"></span>
+                            <span class="fas fa-wrench text-warning w20 hd" ></span>
+                        </div>                    
+                    </div>
+                </ng-scrollbar>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="lsset propset ">
+            <div class="head">
+                <div class="row mg-0 ln ">
+                    <div class="col-md-8">Configuration</div>
+                    <div class="col-md-4 ">
+                        <span class="mp" (click)="newzone()">
+                            <i class="fas fa-plus-square text-primary"></i>&nbsp;
+                            New zone
+                        </span>
+                        
+                    </div>
+                </div>
+            </div>
+        
+            <div class="line bgsub-head dgzone ">
+                <div class="row mg-0 ln " >
+                    <div class="col-md-7 lh-07e pdt-3">
+                        <span class="text-dark fnb">Site </span><br />
+                        <span class="tx-mute fnnb">of warehouse</span>
+                    </div>
+                    <div class="col-md-5">
+                        <span class="text-danger fnb ">{{crzone.site}}</span>
+                    </div>
+                </div>
+                <div class="row mg-0 ln " >
+                    <div class="col-md-7 lh-07e pdt-3">
+                        <span class="text-dark fnb">Depot</span><br />
+                        <span class="tx-mute fnnb">of warehouse</span>
+                    </div>
+                    <div class="col-md-5">
+                        <span class="text-danger fnb ">{{crzone.depot}}</span>
+                    </div>
+                </div>
+                <div class="row mg-0 ln " >
+                    <div class="col-md-7 lh-07e pdt-3">
+                        <span class="text-dark fnb">Code</span><br />
+                        <span class="tx-mute fnnb">for identify</span>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="form-group form-control-sm mg-0" *ngIf="crzone.tflow != 'NW'">
+                            <span class="text-danger fnb ">{{crzone.lscode}}</span>
+                        </div>
+                        <input class="form-control form-control-xs  text-danger fnb" type="text" placeholder="Zone code " [(ngModel)]="crzone.lscode" maxlength="18"  *ngIf="crzone.tflow == 'NW'">
+                    </div>
+                </div>
+                <div class="row mg-0 ln " >
+                    <div class="col-md-7 lh-07e">
+                        <span class="text-dark fnb">Alternate Code</span><br />
+                        <span class="tx-mute fnnb">Zone short description</span>
+                    </div>
+                    <div class="col-md-5">
+                        <input class="form-control form-control-xs  text-danger fnb" type="text" placeholder="Alternate zone code " [(ngModel)]="crzone.lscodealt" maxlength="18" >
+                    </div>
+                </div>
+                <div class="row mg-0 ln " >
+                    <div class="col-md-7 lh-07e">
+                        <span class="text-dark fnb ">Category</span><br />
+                        <span class="tx-mute fnnb">Category of zone</span>
+                    </div>
+                    <div class="col-md-5">
+                        <ng-select class=" "  class="custom custom-sm" bindLabel="desc" bindvalue="value" 
+                                    [clearable]="false"  [(ngModel)]="slccategory" [items]="msdcategory"
+                                    *ngIf="crzone.tflow == 'NW'">
+                            <ng-template ng-label-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                            <ng-template ng-option-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                        </ng-select>
+                        <span class="text-danger fnb  " *ngIf="crzone.tflow != 'NW'">{{spcareadsc}}</span>
+                    </div>
+                </div>
+                <div class="row mg-0 ln " >
+                    <div class="col-md-7 lh-07e pdt-3">
+                        <span class="text-dark fnb">Sequence</span><br />
+                        <span class="tx-mute fnnb">Sequence no for align priority</span>
+                    </div>
+                    <div class="col-md-5">
+                        <input class="form-control form-control-xs  text-danger fnb" type="text" placeholder="Sequence zone code " [(ngModel)]="crzone.lsseq">
+                    </div>
+                </div>
+
+                <!-- <div class="row mg-0 ln " >
+                    <div class="col-md-7 lh-07e">
+                        <span class="text-dark fnb ">Handerling Unit</span><br />
+                        <span class="tx-mute fnnb">of zone</span>
+                    </div>
+                    <div class="col-md-5">
+                        <ng-select class=" "  class="custom custom-sm" bindLabel="desc" bindvalue="value" 
+                                    [clearable]="false"  [(ngModel)]="slchu" [items]="lshus"
+                                   >
+                            <ng-template ng-label-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                            <ng-template ng-option-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                        </ng-select>
+                    </div>
+                </div> -->
+
+
+                <div class="row mg-0 ln">
+                    <div class="col-md-4">
+                        Format<br />
+                        <span class="tx-mute fnnb">of zone</span>
+                    </div>
+                    <div class="col-md-8">
+                        <input class="form-control form-control-xs  text-danger fnb" type="text" placeholder="Format code" [(ngModel)]="crzone.lsformat">
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln">
+                    <div class="col-md-4">
+                        Description<br />
+                        <span class="tx-mute fnnb">of zone</span>
+                    </div>
+                    <div class="col-md-8">
+                        <input class="form-control form-control-xs  text-danger fnb" type="text" placeholder="Description" [(ngModel)]="crzone.lsdesc">
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln">
+                    <div class="col-md-7 lh-07e ">
+                        <span class="text-dark fnb pdt-3">State</span><br />
+                        <span class="tx-mute fnnb">Status of zone </span>
+                    </div>
+                    <div class="col-md-5 text-center">
+                        <ui-switch checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" [(ngModel)]="crstate" ></ui-switch>
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln">
+                    <div class="col-md-7 lh-07e ">
+                        <div *ngIf="crstate == true" class="pdt-5">
+                            <span class="text-danger fnb ">{{crzone.orgcode}}-{{crzone.site}}-{{crzone.depot}}-{{crzone.lscode}}</span><br />
+                            <span class="text-dark">Full name of zone</span>
+                        </div>
+
+                        <button type="button" class="btn snaps-danger btn-xs btn-block mp"  (click)="remove()" *ngIf="crstate == false">
+                            <i class="fas fa-check-circle"></i>
+                            Delete
+                        </button>
+                    </div>
+
+                    <div class="col-md-5">
+                        <button type="button" class="btn snaps-primary btn-xs btn-block mp"  (click)="validate()">
+                            <i class="fas fa-check-circle"></i>
+                            Save
+                        </button>
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln" >
+                    <div class="col-md-7 lh-07e fn-06e">
+                        <span class="text-dark fnb ">{{crzone.datemodify | date : formatdatelong }}</span><br />
+                        <span class="tx-muted fnnb">Modify date</span>
+                    </div>
+                    <div class="col-md-5 lh-07e fn-06e">
+                        <span class="text-danger fnb ">{{crzone.accnmodify}}</span><br />
+                        <span class="tx-muted fnnb">Modify account</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

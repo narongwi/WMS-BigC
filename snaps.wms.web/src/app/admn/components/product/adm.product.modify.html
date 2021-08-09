@@ -1,0 +1,1136 @@
+<div class="row">
+
+    <div class="col-sm-12 col-md-5 fn-07e fnb pdt-10">
+        <div class="row mg-0">
+            <div class="lsset pd-0">
+            <div class="head">
+                <div class="row mg-0 ln ">
+                    <div class="col-md-8  ">Configuration</div>
+                    <div class="col-md-4 ">
+                        <span class="  mp" (click)="newproduct()">
+                            <i class="fas fa-plus-square text-primary"></i>&nbsp;
+                            New product
+                        </span>
+                        
+                    </div>
+                </div>
+            </div>
+
+            <div class="linebx bgsub-head ">
+                <div class="row mg-0 ln " >
+                    <div class="col-md-4 lh-07e pdt-3">
+                        <span class=" fnb">Site </span><br />
+                        <span class=" tx-mute fnnb">Site code</span>
+                    </div>
+                    <div class="col-md-2">
+                        <span class="text-danger fnb">{{crproduct.site}}</span>
+                    </div>
+
+                    <div class="col-md-4 lh-07e pdt-3">
+                        <span class=" fnb">Depot</span><br />
+                        <span class=" tx-mute fnnb">Depot code</span>
+                    </div>
+                    <div class="col-md-2">
+                        <span class="text-danger fnb">{{crproduct.depot}}</span>
+                    </div>
+
+                </div>
+
+                <div class="row mg-0 ln " >
+                    <div class="col-md-4 lh-07e">
+                        <span class=" fnb  ">Type</span><br />
+                        <span class=" tx-mute fnnb">Type of product</span>
+                    </div>
+                    <div class="col-md-8">
+                        <ng-select class="fn-07e"  class="custom custom-sm" bindLabel="desc" bindvalue="value" 
+                                [clearable]="false"  [(ngModel)]="slctype" [items]="msdtype" >
+                            <ng-template ng-label-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                            <ng-template ng-option-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                        </ng-select>
+                        <span class="text-danger fnb " *ngIf="crproduct.tflow != 'NW'">{{spcareadsc}}</span>
+                    </div>
+                </div>
+                <div class="row mg-0 ln " >
+                    <div class="col-md-4 lh-07e pdt-3">
+                        <span class=" fnb">Product Code</span><br />
+                        <span class=" tx-mute fnnb">Identity code</span>
+                    </div>
+                    <div class="col-md-8">
+                        <input class="form-control form-control-xs  text-danger fnb" type="text" placeholder="Product code" [(ngModel)]="crproduct.article" [disabled]="true" > 
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln " >
+                    <div class="col-md-4 lh-07e pdt-3">
+                        <span class=" fnb">PV</span><br />
+                        <span class=" tx-mute fnnb tx-overflow">Purchase variance</span>
+                    </div>
+                    <div class="col-md-2">
+                        <input class="form-control form-control-xs  text-danger fnb" type="text" placeholder="PV" [(ngModel)]="crproduct.pv" appOnlynumber [disabled]="true" >
+                    </div>
+                    <div class="col-md-4 lh-07e pdt-3">
+                        <span class=" fnb">LV</span><br />
+                        <span class=" tx-mute fnnb tx-overflow">logistic variance</span>
+                    </div>
+                    <div class="col-md-2">
+                        <input class="form-control form-control-xs  text-danger fnb" type="text" placeholder="LV" [(ngModel)]="crproduct.lv" appOnlynumber [disabled]="true">                        
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln ">
+                    <div class="col-md-7 lh-07e">
+                        <span class="text-danger fnb ">{{crproduct.orgcode}}-{{crproduct.site}}-{{crproduct.depot}}-{{crproduct.article}}-{{crproduct.lv}}</span><br />
+                        <span class="tx-mute fnnb">Full name of product</span>
+                    </div>
+                    <div class="col-md-5">
+                        <button type="button" class="btn snaps-primary btn-xs btn-block mp" [disabled]="crproduct.tflow=='CL'" (click)="validate();">
+                            <i class="fas fa-check-circle fa-lg"></i>
+                            &nbsp;
+                           Validate product 
+                        </button>
+
+                    </div>
+                </div>
+
+                
+                <div class="row mg-0 ln" >
+                    <div class="col-md-5 lh-07e">
+                        <span class=" tx-mute fnnb fnb"></span>Last modify<br />
+                        <span class=" tx-mute fnnb">Account & date</span>
+                    </div>
+                    <div class="col-md-7 lh-07e">
+                        <span class=" text-danger fnb ">{{crproduct.accnmodify}}</span><br />
+                        <span class=" tx-dark fnb fn-06e">{{crproduct.datemodify | date : formatdatelong }}</span>
+                    </div>
+                </div>
+
+            </div>
+            </div>
+        </div>
+
+        <div class="row mg-0 pdt-10">
+            <div class="lsset  pd-0  ">
+                <div class="head">
+                    <div class="row mg-0 ln ">
+                        <div class="col-md-8  ">Product type</div>
+                        <div class="col-md-4 ">
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="line bgsub-head ">
+                    <div class="row mg-0 ln">
+                        <div class="col-md-4 lh-07e tx-overflow">
+                            <span class=" fnb    pdt-3">Dangerous</span><br />
+                            <span class=" tx-mute fnnb ">Product is dangeroud </span>
+                        </div>
+                        <div class="col-md-2 text-center">
+                            <ui-switch checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" [(ngModel)]="crproduct.isdangerous" ></ui-switch>
+                        </div>
+
+                        <div class="col-md-4 lh-07e tx-overflow">
+                            <span class=" fnb    pdt-3">High value</span><br />
+                            <span class=" tx-mute fnnb">Product is high value </span>
+                        </div>
+                        <div class="col-md-2 text-center">
+                            <ui-switch checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" [(ngModel)]="crproduct.ishighvalue"  ></ui-switch>
+                        </div>
+
+                    </div>
+    
+                    <div class="row mg-0 ln">
+                        <div class="col-md-4 lh-07e tx-overflow ">
+                            <span class=" fnb    pdt-3">Prescription</span><br />
+                            <span class=" tx-mute fnnb">Product is prescription </span>
+                        </div>
+                        <div class="col-md-2 text-center">
+                            <ui-switch checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" [(ngModel)]="crproduct.isprescription"  ></ui-switch>
+                        </div>
+                        <div class="col-md-4 lh-07e tx-overflow ">
+                            <span class=" fnb    pdt-3">DLC Control</span><br />
+                            <span class=" tx-mute fnnb">Downloadable content control </span>
+                        </div>
+                        <div class="col-md-2 text-center">
+                            <ui-switch checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" [(ngModel)]="crproduct.isdlc"  ></ui-switch>
+                        </div>
+                    </div>
+    
+                    <div class="row mg-0 ln">
+                        <div class="col-md-4 lh-07e tx-overflow ">
+                            <span class=" fnb    pdt-3">Material</span><br />
+                            <span class=" tx-mute fnnb">Product is material </span>
+                        </div>
+                        <div class="col-md-2 text-center">
+                            <ui-switch checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" [(ngModel)]="crproduct.ismaterial" ></ui-switch>
+                        </div>
+                        <div class="col-md-4 lh-07e tx-overflow ">
+                            <span class=" fnb    pdt-3">Finish goods</span><br />
+                            <span class=" tx-mute fnnb">Product is finished goods </span>
+                        </div>
+                        <div class="col-md-2 text-center">
+                            <ui-switch checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" [(ngModel)]="crproduct.isfinishgoods" ></ui-switch>
+                        </div>
+                    </div>
+    
+                    <div class="row mg-0 ln">
+                        <div class="col-md-4 lh-07e tx-overflow ">
+                            <span class=" fnb    pdt-3">Batch no</span><br />
+                            <span class=" tx-mute fnnb">will force control by batcno no</span>
+                        </div>
+                        <div class="col-md-2 text-center">
+                            <ui-switch checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" [(ngModel)]="crproduct.isbatchno" ></ui-switch>
+                        </div>
+                        <div class="col-md-4 lh-07e tx-overflow ">
+                            <span class=" fnb    pdt-3">Unique stock</span><br />
+                            <span class=" tx-mute fnnb">will force control by serail no</span>
+                        </div>
+                        <div class="col-md-2 text-center">
+                            <ui-switch checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" [(ngModel)]="crproduct.isunique" ></ui-switch>
+                        </div>
+                    </div>
+
+                    <div class="row mg-0 ln">
+                        <div class="col-md-4 lh-07e tx-overflow ">
+                            <span class=" fnb    pdt-3">Alcohol</span><br />
+                            <span class=" tx-mute fnnb">Product have mixing some alcohol</span>
+                        </div>
+                        <div class="col-md-2 text-center">
+                            <ui-switch checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" [(ngModel)]="crproduct.isalcohol" ></ui-switch>
+                        </div>
+                        <div class="col-md-4 lh-07e tx-overflow ">
+                            <span class=" fnb    pdt-3">Temperature</span><br />
+                            <span class=" tx-mute fnnb">Control temperature storage</span>
+                        </div>
+                        <div class="col-md-2 text-center">
+                            <ui-switch checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" [(ngModel)]="crproduct.istemperature" ></ui-switch>
+                        </div>
+                    </div>
+    
+                    <div class="row mg-0 ln">
+                        <div class="col-md-4 lh-07e tx-overflow ">
+                            <span class=" fnb    pdt-3">Mixing Preparation</span><br />
+                            <span class=" tx-mute fnnb">Can mixing Batch no in storage</span>
+                        </div>
+                        <div class="col-md-2 text-center">
+                            <ui-switch checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" [(ngModel)]="crproduct.ismixingprep" ></ui-switch>
+                        </div>
+                        <div class="col-md-4 lh-07e tx-overflow ">
+                            <span class=" fnb    pdt-3">Natural loss</span><br />
+                            <span class=" tx-mute fnnb">Control natural loss</span>
+                        </div>
+                        <div class="col-md-2 text-center">
+                            <ui-switch checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" [(ngModel)]="crproduct.isnaturalloss" ></ui-switch>
+                        </div>
+                    </div>
+    
+                    <div class="row mg-0 ln">
+                        <div class="col-md-4 lh-07e tx-overflow ">
+                            <span class=" fnb    pdt-3">Require measurement</span><br />
+                            <span class=" tx-mute fnnb">before receipt </span>
+                        </div>
+                        <div class="col-md-2 text-center">
+                            <!-- <ui-switch checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" [(ngModel)]="crstate" [disabled]="true"></ui-switch> -->
+                            <ui-switch checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" [(ngModel)]="crproduct.ismeasurement" ></ui-switch>
+                        </div>
+                        <div class="col-md-4 lh-07e tx-overflow ">
+                            <span class=" fnb    pdt-3">State</span><br />
+                            <span class=" tx-mute fnnb">Status of product </span>
+                        </div>
+                        <div class="col-md-2 text-center">
+                            <!-- <ui-switch checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" [(ngModel)]="crstate" [disabled]="true"></ui-switch> -->
+                            <ui-switch [disabled]="crproduct.tflow=='CL'" checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" [(ngModel)]="crstate" ></ui-switch>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>            
+        </div>
+
+        <div class="row mg-0 pdt-10">
+            <div class="lsset pd-0 ">
+                <div class="head">
+                    <div class="row mg-0 ln ">
+                        <div class="col-md-7 ">Barcode Reference {{ allowchangebarcode }}</div>
+                        <div class="col-md-3 ">Operate Type</div>
+                        <div class="col-md-2 ">Active</div>
+                    </div>
+                </div>
+    
+                <div class="line bgsub-head dglines" >
+                    <ng-scrollbar>
+                    <div class="row mg-0 ln" *ngFor="let ln of lsbarcode">
+                        <div class="col-md-2">{{ln.bartype}}</div>
+                        <div class="col-md-5">{{ln.barcode}}</div>
+                        <div class="col-md-3">{{ln.barops}}</div>
+                        <div class="col-md-2 text-center">
+                            <span class="fa fa-check-circle {{ngDecColor(ln.isprimary)}} fa-lg" (click)="setBarcode(ln)" ></span>
+                        </div>
+                    </div>
+                    </ng-scrollbar>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+    <div class="col-md-7 fn-07e fnb pdt-10">
+
+         
+        <!-- Product Description -->
+        <div class="row ">
+            <div class="lsset pd-0">
+                <div class="head">
+                    <div class="row mg-0 ln ">
+                        <div class="col-md-12  ">Product Description</div>
+                    </div>
+                </div>
+            
+                <div class="linebx bgsub-head ">
+                    <div class="row mg-0 ln " >
+                        <div class="col-md-3 ">
+                            <span class=" fnb">Product name </span><br />
+                        </div>
+                        <div class="col-md-9">  {{crproduct.description}} </div>
+                    </div>
+                    <div class="row mg-0 ln " >
+                        <div class="col-md-3 lh-07e ">
+                            <span class=" fnb">Alternate  </span><br />
+                            <span class=" tx-mute fnnb">Alternate description </span>
+                        </div>
+                        <div class="col-md-9">
+                            <input class="form-control form-control-xs  text-danger fnb" type="text" placeholder="Alternate description" [(ngModel)]="crproduct.descalt"> 
+                        </div>
+                    </div>
+                    <div class="row mg-0 ln " >
+                        <div class="col-md-3 lh-07e ">
+                            <span class=" fnb">Third party  </span><br />
+                            <span class=" tx-mute fnnb">Owner code of product </span>
+                        </div>
+                        <div class="col-md-3">
+                            <input class="form-control form-control-xs  text-danger fnb" type="text" placeholder="Alternate description" [(ngModel)]="crproduct.thcode"  [disabled]="true"> 
+                        </div>
+                        <div class="col-md-6 lh-07e pdt-2 text-truncate">
+                            <span class=" text-dakr fnb fn-palette-6">{{crproduct.thname}}</span><br />
+                            <span class=" tx-mute fnb fn-06e">Third party name</span>                            
+                        </div>
+                    </div>
+
+                    <div class="row mg-0 ln " >
+                        <div class="col-md-3 lh-07e pdt-3">
+                            <span class=" fnb">Division code</span><br />
+                            <span class=" tx-mute fnnb tx-overflow">Level 1 of hierarchy</span>
+                        </div>
+                        <div class="col-md-3">
+                            <input class="form-control form-control-xs  text-danger fnb" type="text" placeholder="Level 1 of hierarchy" [(ngModel)]="crproduct.hdivison" [disabled]="allowchangehirachy">        
+                        </div>
+                        <div class="col-md-6 lh-07e pdt-2 text-truncate">
+                            <span class=" text-dakr fnb fn-palette-6">{{crproduct.hdivisionname}}</span><br />
+                            <span class=" tx-mute fnb fn-06e">Division name</span>                            
+                        </div>                        
+                    </div>
+
+                    <div class="row mg-0 ln " >
+                        <div class="col-md-3 lh-07e pdt-3">
+                            <span class=" fnb">Department</span><br />
+                            <span class=" tx-mute fnnb tx-overflow">Level 2 of hierarchy</span>
+                        </div>
+                        <div class="col-md-3">
+                            <input class="form-control form-control-xs  text-danger fnb" type="text" placeholder="Level 2 of hierarchy" [(ngModel)]="crproduct.hdepartment" [disabled]="allowchangehirachy">        
+                        </div>
+                        <div class="col-md-6 lh-07e pdt-2 text-truncate">
+                            <span class=" text-dakr fnb fn-palette-6">{{crproduct.hdepartmentname}}</span><br />
+                            <span class=" tx-mute fnb fn-06e">Department name</span>                            
+                        </div>
+                    </div>
+
+                    <div class="row mg-0 ln " >
+                        <div class="col-md-3 lh-07e pdt-3">
+                            <span class=" fnb">Sub department</span><br />
+                            <span class=" tx-mute fnnb">Level 3 of hierarchy</span>
+                        </div>
+                        <div class="col-md-3">
+                            <input class="form-control form-control-xs  text-danger fnb" type="text" placeholder="Level 3 of hierarchy" [(ngModel)]="crproduct.hsubdepart" [disabled]="allowchangehirachy"> 
+                        </div>
+                        <div class="col-md-6 lh-07e pdt-2 text-truncate">
+                            <span class=" text-dakr fnb fn-palette-6">{{crproduct.hsubdepartname}}</span><br />
+                            <span class=" tx-mute fnb fn-06e">Sub-department name</span>                            
+                        </div>
+                    </div>
+                    <div class="row mg-0 ln " >
+                        <div class="col-md-3 lh-07e pdt-3">
+                            <span class=" fnb">Class</span><br />
+                            <span class=" tx-mute fnnb">Level 4 of hierarchy</span>
+                        </div>
+                        <div class="col-md-3">
+                            <input class="form-control form-control-xs  text-danger fnb" type="text" placeholder="Level 4 of hierarchy" [(ngModel)]="crproduct.hclass" [disabled]="allowchangehirachy">
+                        </div>
+                        <div class="col-md-6 lh-07e pdt-2 text-truncate">
+                            <span class=" text-dakr fnb fn-palette-6">{{crproduct.hclassname}}</span><br />
+                            <span class=" tx-mute fnb fn-06e">Class name</span>                            
+                        </div>
+                    </div>
+
+                    <div class="row mg-0 ln " >
+                        <div class="col-md-3 lh-07e pdt-3">
+                            <span class=" fnb">Sub class</span><br />
+                            <span class=" tx-mute fnnb">Level 5 of hierarchy</span>
+                        </div>
+                        <div class="col-md-3">
+                            <input class="form-control form-control-xs  text-danger fnb" type="text" placeholder="Level 5 of hierarchy" [(ngModel)]="crproduct.hsubclass" [disabled]="allowchangehirachy">
+                        </div>
+                        <div class="col-md-6 lh-07e pdt-2 text-truncate">
+                            <span class=" text-dakr fnb fn-palette-6">{{crproduct.hclassname}}</span><br />
+                            <span class=" tx-mute fnb fn-06e">Class name</span>                            
+                        </div>
+                    </div>
+                    <div class="row mg-0 ln " >
+                        <div class="col-md-3 lh-07e pdt-3">
+                            <span class=" fnb">Cost average</span><br />
+                            <span class=" tx-mute fnnb">of product</span>
+                        </div>
+                        <div class="col-md-2 tx-center">
+                            <input class="form-control form-control-xs text-danger tx-center fnb" type="text" placeholder="Level 5 of hierarchy" [(ngModel)]="crproduct.costavg" >
+                        </div>
+                        <div class="col-md-1 pdt-5">
+                            <span class="tx-primary">THB</span>
+                        </div>
+                        <div class="col-md-3 lh-07e">
+                            <span class=" fnb">Handling Unit</span><br />
+                            <span class=" tx-mute fnnb">storage of product</span>
+                        </div>
+                        <div class="col-md-3">
+                            <ng-select class="fn-07e"  class="custom custom-sm" bindLabel="desc" bindvalue="value" 
+                                        [clearable]="false"  [(ngModel)]="slchutype" [items]="msdhutype" [disabled]="allowchangeunit">
+                                <ng-template ng-label-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                                <ng-template ng-option-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                            </ng-select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stock threadhold -->
+        <div class="row">
+            <div class="lsset mgt-10 pd-0">
+                <div class="head">
+                    <div class="row mg-0 ln ">
+                        <div class="col-md-8">Stock Threshold</div>
+                        <div class="col-md-2 tx-center">Minimum</div>
+                        <div class="col-md-2 tx-center">Maximum</div>
+                    </div>                    
+                </div>
+                <div class="linebx bgsub-head ">
+                    <div class="row mg-0 ln">
+                        <div class="col-md-8 lh-07e ">
+                            <span class=" fnb">Stock Threshold</span><br />
+                            <span class=" tx-mute fnnb">setup minimum and muximum stock Threshold</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input class="form-control form-control-xs tx-center  text-danger fnb" type="text" placeholder="Minimum" [(ngModel)]="crproduct.stockthresholdmin" >        
+                        </div>
+                        <div class="col-md-2">
+                            <input class="form-control form-control-xs tx-center text-danger fnb" type="text" placeholder="Maximum" [(ngModel)]="crproduct.stockthresholdmax" >        
+                        </div>
+                    </div>
+                </div>          
+            </div>           
+        </div>
+
+         
+        <!-- Unit for Operation -->
+        <div class="row ">
+            <div class="lsset mgt-10 pd-0">
+                <div class="head">
+                    <div class="row mg-0 ln ">
+                        <div class="col-md-12  ">Unit for operation</div>
+                    </div>
+                </div>
+
+                <div class="linebx bgsub-head ">
+                    <div class="row mg-0 ln ">
+                        <div class="col-md-3 lh-07e">
+                            <span class=" fnb">Type of manage</span><br />
+                            <span class=" tx-mute fnnb">Type stock for manage</span>
+                        </div>
+                        <div class="col-md-3">
+                            <ng-select class="fn-07e"  class="custom custom-sm" bindLabel="desc" bindvalue="value" 
+                                        [clearable]="false"  [(ngModel)]="slctypemanage" [items]="msdtypemanage" [disabled]="allowchangeunit" >
+                                <ng-template ng-label-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                                <ng-template ng-option-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                            </ng-select>
+                        </div>
+
+                        <div class="col-md-3 lh-07e">
+                            <span class=" fnb">Manage unit</span><br />
+                            <span class=" tx-mute fnnb">Unit for receiption process</span>
+                        </div>
+                        <div class="col-md-3">
+                            <ng-select class="fn-07e "  class="custom custom-sm" bindLabel="desc" bindvalue="value" 
+                                        [clearable]="false"  [(ngModel)]="slcunitmanage" [items]="msdstockunit" (change)="ngselcstockdesc()" [disabled]="allowchangeunit">
+                                <ng-template ng-label-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                                <ng-template ng-option-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                            </ng-select>
+                        </div>
+                    </div>
+
+                    <div class="row mg-0 ln linebx ">
+                        <div class="col-md-3 lh-07e">
+                            <span class=" fnb">Receipt unit</span><br />
+                            <span class=" tx-mute fnnb">Unit for receiption</span>
+                        </div>
+                        <div class="col-md-3 overflowbx">
+                            <ng-select class="fn-07e "  class="custom custom-sm" bindLabel="desc" bindvalue="value" 
+                                        [clearable]="false"  [(ngModel)]="slcunitreceipt" [items]="msdstockunit" [disabled]="allowchangeunit" >
+                                <ng-template ng-label-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                                <ng-template ng-option-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                            </ng-select>
+                        </div>
+
+                        <div class="col-md-3 lh-07e">
+                            <span class=" fnb">Preparation unit</span><br />
+                            <span class=" tx-mute fnnb">Unit for preparation</span>
+                        </div>
+                        <div class="col-md-3 overflowbx">
+                            <ng-select class="fn-07e "  class="custom custom-sm" bindLabel="desc" bindvalue="value" 
+                                        [clearable]="false"  [(ngModel)]="slcunitprep" [items]="msdstockunit" [disabled]="allowchangeunit">
+                                <ng-template ng-label-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                                <ng-template ng-option-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                            </ng-select>
+                        </div>
+                    </div>
+
+                    <div class="row mg-0 ln ">
+                        <div class="col-md-3 lh-07e">
+                            <span class=" fnb">Description unit</span><br />
+                            <span class=" tx-mute fnnb">Alternate unit name</span>
+                        </div>
+                        <div class="col-md-3">
+                            <ng-select class="fn-07e "  class="custom custom-sm" bindLabel="desc" bindvalue="value" 
+                                        [clearable]="false"  [(ngModel)]="slcunitdesc" [items]="msdunitdesc" [disabled]="allowchangeunit" >
+                                <ng-template ng-label-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                                <ng-template ng-option-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                            </ng-select>  
+                        </div>
+                        <div class="col-md-3 lh-07e">
+                            <span class=" fnb tx-overflow">Net weight ( <span class="text-danger">Kgs</span> ) per sku </span><br />
+                            <span class=" tx-mute fnnb">net weight of product</span>
+                        </div>
+                        <div class="col-md-2">
+                            <input class="form-control form-control-xs  text-danger fnb" type="text" placeholder="net weight" [allowDigit]="true" [(ngModel)]="crproduct.skuweight" appOnlynumber>
+                        </div>
+                        <div class="col-md-1 pdt-5">
+                            <span class="tx-primary">Kgs</span>
+                        </div>
+                    </div>
+
+                
+                </div>
+            </div>
+        </div>
+
+         
+        <!-- Product Ratio -->
+        <div class="row ">
+            <div class="lsset mgt-10 pd-0 ">
+                <div class="head">
+                    <div class="row mg-0 ln ">
+                        <div class="col-md-6 ">Product ratio</div>
+                        <div class="col-md-2 text-center">Ratio</div>
+                        <div class="col-md-2 text-center">Weight</div>
+                        <div class="col-md-2 text-center">SKU / Level</div>
+                    </div>
+                </div>
+            
+                <div class="line bgsub-head ">
+                    <div class="row mg-0 ln pd-5" >
+                        <div class="col-md-6 lh-07e pdt-3">
+                            <span class=" fnb">Level 1 ( <span class="text-danger">SKU / IPCK</span> ) </span><br />
+                            <span class=" tx-mute fnnb">Inner package ratio </span>
+                        </div>
+                        <div class="col-md-2">
+                            <input class="form-control form-control-xs tx-center text-danger fnb" type="text" placeholder="Quantity" 
+                                    [(ngModel)]="crproduct.rtoskuofipck" appOnlynumber  (keyup)="caldimension()" [disabled]="allowchangedimension">
+                        </div>
+                        <div class="col-md-2">
+                            <input class="form-control form-control-xs tx-center text-danger fnb" type="text" placeholder="IPCK Wight" 
+                            [(ngModel)]="crproduct.ipckweight" appOnlynumber  (keyup)="caldimension()" [disabled]="allowchangedimension">
+                        </div>
+                        <div class="col-md-2">
+                            <input class="form-control form-control-xs tx-center text-danger fnb" type="text" placeholder="IPCK Wight" 
+                            [(ngModel)]="crproduct.rtoskuofipck" appOnlynumber  (keyup)="caldimension()" [disabled]="allowchangedimension">
+                        </div>
+                    </div>
+
+                    <div class="row mg-0 ln pd-5" >
+                        <div class="col-md-6 lh-07e pdt-3">
+                            <span class=" fnb">Level 2 ( <span class="text-danger">IPCK / PCK</span> ) </span><br />
+                            <span class=" tx-mute fnnb">Package ratio </span>
+                        </div>
+                        <div class="col-md-2">
+                            <input class="form-control form-control-xs tx-center text-danger fnb" type="text" placeholder="Quantity" 
+                            [(ngModel)]="crproduct.rtoipckofpck" appOnlynumber  (keyup)="caldimension()" [disabled]="allowchangedimension">
+                        </div>
+                        <div class="col-md-2">
+                            <input class="form-control form-control-xs tx-center text-danger fnb" type="text" placeholder="Quantity" 
+                            [(ngModel)]="crproduct.pckweight" appOnlynumber  (keyup)="caldimension()" [disabled]="allowchangedimension">
+                        </div>
+                        <div class="col-md-2">
+                            <input class="form-control form-control-xs tx-center text-danger fnb" type="text" placeholder="Quantity" 
+                            [(ngModel)]="crproduct.rtoskuofpck" appOnlynumber  (keyup)="caldimension()" [disabled]="allowchangedimension">
+                        </div>
+                    </div>
+
+                    <div class="row mg-0 ln " >
+                        <div class="col-md-6 lh-07e">
+                            <span class=" fnb">Level 3 ( <span class="text-danger">PCK / Layer, TI </span> ) </span><br />
+                            <span class=" tx-mute fnnb">Layer ratio </span>
+                        </div>
+                        <div class="col-md-2">
+                            <input class="form-control form-control-xs tx-center text-danger fnb" type="text" placeholder="Quantity" 
+                            [(ngModel)]="crproduct.rtopckoflayer" appOnlynumber  (keyup)="caldimension()" >
+                        </div>
+                        <div class="col-md-2">
+                            <input class="form-control form-control-xs tx-center text-danger fnb" type="text" placeholder="Quantity" 
+                            [(ngModel)]="crproduct.layerweight" appOnlynumber  (keyup)="caldimension()" [disabled]="allowchangedimension">
+                        </div>
+                        <div class="col-md-2">
+                            <input class="form-control form-control-xs tx-center text-danger fnb" type="text" placeholder="Quantity" 
+                            [(ngModel)]="crproduct.rtoskuoflayer" appOnlynumber  (keyup)="caldimension()" [disabled]="allowchangedimension">
+                        </div>
+                    </div>
+
+                    <div class="row mg-0 ln " >
+                        <div class="col-md-6 lh-07e">
+                            <span class=" fnb">Level 4 ( <span class="text-danger">Layer / HU, HI </span> ) </span><br />
+                            <span class=" tx-mute fnnb">Handling unit ratio </span>
+                        </div>
+                        <div class="col-md-2">
+                            <input class="form-control form-control-xs tx-center text-danger fnb" type="text" placeholder="Quantity" 
+                            [(ngModel)]="crproduct.rtolayerofhu" appOnlynumber  (keyup)="caldimension()" >
+                        </div>
+                        <div class="col-md-2">
+                            <input class="form-control form-control-xs tx-center text-danger fnb" type="text" placeholder="Quantity" 
+                            [(ngModel)]="crproduct.huweight" appOnlynumber  (keyup)="caldimension()" [disabled]="allowchangedimension">
+                        </div>
+                        <div class="col-md-2">
+                            <input class="form-control form-control-xs tx-center text-danger fnb" type="text" placeholder="Quantity" 
+                            [(ngModel)]="crproduct.rtoskuofhu" appOnlynumber  (keyup)="caldimension()" [disabled]="allowchangedimension">
+                        </div>
+                    </div>
+                </div>
+            </div>
+         </div>
+
+
+        <!-- Product dimension -->
+        <div class="row ">
+            <div class="lsset mgt-10 pd-0 ">
+                <div class="head">
+                    <div class="row mg-0 ln ">
+                        <div class="col-md-4  ">Product dimension</div>
+                        <div class="col-md-2 text-center">Length</div>
+                        <div class="col-md-2 text-center">Width</div>
+                        <div class="col-md-2 text-center">Height</div>
+                        <div class="col-md-2 text-center tx-overflow">Volume [<span class="text-danger">Cm3</span>]</div>
+                    </div>
+                </div>
+            
+                <div class="line bgsub-head ">
+
+                    <div class="row mg-0 ln " >
+                        <div class="col-md-4 lh-07e">
+                            <span class=" fnb"> <span class="text-danger">SKU</span> Level ( <span class="text-danger">cm</span> ) </span><br />
+                            <span class=" tx-mute fnnb">Dimension of SKU </span>
+                        </div>
+                        <div class="col-md-2">
+                            <input class="form-control form-control-xs tx-center text-danger fnb" type="text" placeholder="Quantity" 
+                            [(ngModel)]="crproduct.skulength" appOnlynumber [allowDigit]="true" (keyup)="caldimensionsku()" [disabled]="allowchangedimension">
+                        </div>
+                        <div class="col-md-2">
+                            <input class="form-control form-control-xs tx-center text-danger fnb" type="text" placeholder="Quantity" 
+                            [(ngModel)]="crproduct.skuwidth" appOnlynumber [allowDigit]="true" (keyup)="caldimensionsku()" [disabled]="allowchangedimension">
+                        </div>
+                        <div class="col-md-2">
+                            <input class="form-control form-control-xs tx-center text-danger fnb" type="text" placeholder="Quantity" 
+                            [(ngModel)]="crproduct.skuheight" appOnlynumber [allowDigit]="true" (keyup)="caldimensionsku()" [disabled]="allowchangedimension">
+                        </div>
+                        <div class="col-md-2">
+                            <input class="form-control form-control-xs tx-center text-danger fnb" type="text" placeholder="Quantity" 
+                            [(ngModel)]="crproduct.skuvolume" appOnlynumber  [disabled]="allowchangedimension" >
+                        </div>
+                    </div>
+
+                    <div class="row mg-0 ln " >
+                        <div class="col-md-4 lh-07e">
+                            <span class=" fnb"><span class="text-danger">IPCK</span> Level ( <span class="text-danger">cm</span> )</span><br />
+                            <span class=" tx-mute fnnb">Dimension of IPCK  </span>
+                        </div>
+                        <div class="col-md-2">
+                            <input class="form-control form-control-xs tx-center text-danger fnb" type="text" placeholder="Quantity" 
+                            [(ngModel)]="crproduct.ipcklength" appOnlynumber  (keyup)="caldimensionipck()" [disabled]="allowchangedimension">
+                        </div>
+                        <div class="col-md-2">
+                            <input class="form-control form-control-xs tx-center text-danger fnb" type="text" placeholder="Quantity" 
+                            [(ngModel)]="crproduct.ipckwidth" appOnlynumber  (keyup)="caldimensionipck()" [disabled]="allowchangedimension">
+                        </div>
+                        <div class="col-md-2">
+                            <input class="form-control form-control-xs tx-center text-danger fnb" type="text" placeholder="Quantity" 
+                            [(ngModel)]="crproduct.ipckheight" appOnlynumber  (keyup)="caldimensionipck()" [disabled]="allowchangedimension">
+                        </div>
+                        <div class="col-md-2">
+                            <input class="form-control form-control-xs tx-center text-danger fnb" type="text" placeholder="Quantity" 
+                            [(ngModel)]="crproduct.ipckvolume" appOnlynumber [disabled]="allowchangedimension">
+                        </div>
+                    </div>
+
+                    <div class="row mg-0 ln " >
+                        <div class="col-md-4 lh-07e">
+                            <span class=" fnb"><span class="text-danger">PCK</span> Level ( <span class="text-danger">cm</span> )</span><br />
+                            <span class=" tx-mute fnnb">Dimension of package unit  </span>
+                        </div>
+                        <div class="col-md-2">
+                            <input class="form-control form-control-xs tx-center text-danger fnb" type="text" placeholder="Quantity" 
+                            [(ngModel)]="crproduct.pcklength" appOnlynumber  (keyup)="caldimensionpck()" [disabled]="allowchangedimension">
+                        </div>
+                        <div class="col-md-2">
+                            <input class="form-control form-control-xs tx-center text-danger fnb" type="text" placeholder="Quantity" 
+                            [(ngModel)]="crproduct.pckwidth" appOnlynumber  (keyup)="caldimensionpck()" [disabled]="allowchangedimension">
+                        </div>
+                        <div class="col-md-2">
+                            <input class="form-control form-control-xs tx-center text-danger fnb" type="text" placeholder="Quantity" 
+                            [(ngModel)]="crproduct.pckheight" appOnlynumber  (keyup)="caldimensionpck()" [disabled]="allowchangedimension">
+                        </div>
+                        <div class="col-md-2">
+                            <input class="form-control form-control-xs tx-center text-danger fnb" type="text" placeholder="Quantity" 
+                            [(ngModel)]="crproduct.pckvolume" appOnlynumber  (keyup)="caldimensionpck()" [disabled]="allowchangedimension">
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Product Specification -->
+        <div class="row pd-0">
+            <div class="col-md-6 pdl-0">
+                <div class="lsset mgt-10">
+                    <div class="head">
+                        <div class="row mg-0 ln ">
+                            <div class="col-md-12 ">Receiption & Putaway Specific</div>
+                        </div>
+                    </div>
+    
+                    <div class="linebx bgsub-head dg4line ">
+                        <div class="row mg-0 ln ">
+                            <div class="col-md-3 lh-07e">
+                                <span class=" fnb">Zone </span><br />
+                                <span class=" tx-mute fnnb">Storage</span>
+                            </div>
+                            <div class="col-md-9">
+                                <ng-select class="fn-07e "  class="custom custom-sm" bindLabel="desc" bindvalue="value" 
+                                            [clearable]="false"  [(ngModel)]="slczoneputway" [items]="msdzone" (change)="ngselcstockdesc()" >
+                                    <ng-template ng-label-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                                    <ng-template ng-option-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                                </ng-select>
+                            </div>
+                        </div>
+    
+                        <div class="row mg-0 ln ">
+                            <div class="col-md-3 lh-07e tx-overflow">
+                                <span class=" fnb">Aisle from </span><br />
+                                <span class=" tx-mute fnnb">Storage</span>
+                            </div>
+                            <div class="col-md-3">
+                                <input class="form-control form-control-xs tx-center text-danger fnb" type="text" placeholder="" 
+                                [(ngModel)]="crproduct.spcrecvaisle" >
+                            </div>
+                            <div class="col-md-3 lh-07e tx-overflow">
+                                <span class=" fnb">Aisle to </span><br />
+                                <span class=" tx-mute fnnb">Storage</span>
+                            </div>
+                            <div class="col-md-3">
+                                <input class="form-control form-control-xs tx-center text-danger fnb" type="text" placeholder="" 
+                                [(ngModel)]="crproduct.spcrecvaisleto" >
+                            </div>
+                        </div>
+
+                        <div class="row mg-0 ln ">
+                            <div class="col-md-3 lh-07e tx-overflow">
+                                <span class=" fnb">Bay from</span><br />
+                                <span class=" tx-mute fnnb">Storage</span>
+                            </div>
+                            <div class="col-md-3">
+                                <input class="form-control form-control-xs tx-center text-danger fnb" type="text" placeholder="" 
+                                [(ngModel)]="crproduct.spcrecvbay" >
+                            </div>
+                            <div class="col-md-3 lh-07e tx-overflow">
+                                <span class=" fnb">Bay to</span><br />
+                                <span class=" tx-mute fnnb">Storage</span>
+                            </div>
+                            <div class="col-md-3">
+                                <input class="form-control form-control-xs tx-center text-danger fnb" type="text" placeholder="" 
+                                [(ngModel)]="crproduct.spcrecvbayto" >
+                            </div>
+                        </div>
+    
+                        <div class="row mg-0 ln ">
+                            <div class="col-md-3 lh-07e  tx-overflow">
+                                <span class=" fnb">Level from</span><br />
+                                <span class=" tx-mute fnnb">Storage</span>
+                            </div>
+                            <div class="col-md-3">
+                                <input class="form-control form-control-xs tx-center text-danger fnb" type="text" placeholder="" 
+                                [(ngModel)]="crproduct.spcrecvlevel" >
+                            </div>
+
+                            <div class="col-md-3 lh-07e">
+                                <span class=" fnb">Level to</span><br />
+                                <span class=" tx-mute fnnb">Storage</span>
+                            </div>
+                            <div class="col-md-3">
+                                <input class="form-control form-control-xs tx-center text-danger fnb" type="text" placeholder="" 
+                                [(ngModel)]="crproduct.spcrecvlevelto" >
+                            </div>
+                            
+                        </div>
+
+                        <div class="row mg-0 ln ">
+                            <div class="col-md-3 lh-07e">
+                                <span class=" fnb">Location </span><br />
+                                <span class=" tx-mute fnnb">Storage</span>
+                            </div>
+                            <div class="col-md-9">
+                                <input class="form-control form-control-xs tx-center text-danger fnb" type="text" placeholder="" 
+                                [(ngModel)]="crproduct.spcrecvlocation" >
+                            </div>
+                        </div>
+
+                        <div class="row mg-0 ln">
+                            
+                            <div class="col-md-3 lh-07e ">
+                                <span class=" fnb pdt-3  tx-overflow">Fast move</span><br />
+                                <span class=" tx-mute fnnb  tx-overflow">to front line </span>
+                            </div>
+                            <div class="col-md-3 text-center">
+                                <ui-switch checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" [(ngModel)]="crproduct.isfastmove" ></ui-switch>
+                            </div>
+
+                            <div class="col-md-3 lh-07e ">
+                                <span class=" fnb pdt-3 tx-overflow">Slow move</span><br />
+                                <span class=" tx-mute fnnb tx-overflow ">to end line </span>
+                            </div>
+                            <div class="col-md-3 text-center">
+                                <ui-switch checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" [(ngModel)]="crproduct.isslowmove" ></ui-switch>
+                            </div>
+                           
+                        </div>
+
+    
+                    </div>
+    
+                </div>
+            </div>
+
+            <div class="col-md-6 pdl-0 pdr-0">
+                <div class="lsset mgt-10">
+                    <div class="head">
+                        <div class="row mg-0 ln ">
+                            <div class="col-md-12 ">Preparation Specific</div>
+                        </div>
+                    </div>
+    
+                    <div class="linebx bgsub-head dg4line">
+
+                        <div class="row mg-0 ln pd-5 ">
+                            <div class="col-md-9 lh-07e pdt-2">
+                                <span class=" fnb">Dynamic Pick</span><br />
+                                <span class=" tx-mute fnnb">Auto assign picking</span>
+                            </div>
+                            <div class="col-md-3 pdt-3">
+                                <ui-switch checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" [(ngModel)]="crproduct.isdynamicpick" ></ui-switch>
+                            </div>
+                        </div>
+
+                        <div class="row mg-0 ln pd-5 ">
+                            <div class="col-md-9 lh-07e pdt-2">
+                                <span class=" fnb">Cluster Pick</span><br />
+                                <span class=" tx-mute fnnb">Bulk picking</span>
+                            </div>
+                            <div class="col-md-3 pdt-3">
+                                <ui-switch checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" [(ngModel)]="crproduct.isclusterpick" ></ui-switch>
+                            </div>
+                        </div>
+
+                        <div class="row mg-0 ln ">
+                            <div class="col-md-5 lh-07e">
+                                <span class=" fnb">Preparation zone </span><br />
+                                <span class=" tx-mute fnnb tx-overflow">Preparation </span>
+                            </div>
+                            <div class="col-md-7">
+                                <ng-select class="fn-07e "  class="custom custom-sm" bindLabel="desc" bindvalue="value" 
+                                            [clearable]="false"  [(ngModel)]="slczoneprep" [items]="msdzoneprep" (change)="ngselcstockdesc()" >
+                                    <ng-template ng-label-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                                    <ng-template ng-option-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                                </ng-select>
+                            </div>
+                        </div>
+
+                        <div class="row mg-0 ln ">
+                            <div class="col-md-5 lh-07e">
+                                <span class=" fnb">Distribution zone</span><br />
+                                <span class=" tx-mute fnnb tx-overflow">Distribution</span>
+                            </div>
+                            <div class="col-md-7">
+                                <ng-select class="fn-07e "  class="custom custom-sm" bindLabel="desc" bindvalue="value" 
+                                            [clearable]="false"  [(ngModel)]="slczonedist" [items]="msdzonedist" (change)="ngselcstockdesc()" >
+                                    <ng-template ng-label-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                                    <ng-template ng-option-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                                </ng-select>
+                            </div>
+                        </div>
+
+                        <div class="row mg-0 ln ">
+                            <div class="col-md-5 lh-07e">
+                                <span class=" fnb">Distribution share</span><br />
+                                <span class=" tx-mute fnnb tx-overflow">Distribution</span>
+                            </div>
+                            <div class="col-md-7">
+                                <ng-select class="fn-07e "  class="custom custom-sm" bindLabel="desc" bindvalue="value" 
+                                            [clearable]="false"  [(ngModel)]="slcsharedist" [items]="msdsharedist"  >
+                                    <ng-template ng-label-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                                    <ng-template ng-option-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                                </ng-select>
+                            </div>
+                        </div> 
+    
+                    </div>
+    
+                </div>
+            </div>
+            
+        </div>
+
+        <!-- Dangerous and DLC indicator -->
+        <div class="row pd-0">
+            <div class="col-md-4 pdl-0">
+                <div class="lsset mgt-10">
+                    <div class="head">
+                        <div class="row mg-0 ln ">
+                            <div class="col-md-12  ">Dangerous</div>
+                        </div>
+                    </div>
+    
+                    <div class="line bgsub-head ">
+                        <div class="row mg-0 ln ">
+                            <div class="col-md-5 lh-07e tx-overflow">
+                                <span class=" fnb">Category</span><br />
+                                <span class=" tx-mute fnnb">of dangerous</span>
+                            </div>
+                            <div class="col-md-7">
+                                <input class="form-control form-control-xs tx-center text-danger fnb" type="text" placeholder="" 
+                                [(ngModel)]="crproduct.dangercategory" >
+                            </div>
+                        </div>
+                        <div class="row mg-0 ln ">
+                            <div class="col-md-5 lh-07e tx-overflow">
+                                <span class=" fnb">Level</span><br />
+                                <span class=" tx-mute fnnb">of dangerous</span>
+                            </div>
+                            <div class="col-md-7">
+                                <input class="form-control form-control-xs tx-center text-danger fnb" type="text" placeholder="" 
+                                [(ngModel)]="crproduct.dangerlevel" >
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8 pdr-0">
+                <div class="lsset mgt-10">
+                    <div class="head">
+                        <div class="row mg-0 ln ">
+                            <div class="col-md-8  ">Downloadable content product</div>
+                            <div class="col-md-4 tx-right  "> <span class="text-danger">{{crproduct.dlcall | number}}</span> Days</div>
+                        </div>
+                    </div>
+    
+                    <div class="line bgsub-head ">
+                        <div class="row mg-0 ln ">
+                            <div class="col-md-3 lh-07e tx-overflow">
+                                <span class=" fnb">Factory</span>&nbsp;<span class="text-danger">%</span><br />
+                                <span class=" tx-mute fnnb">Shelf life</span>
+                            </div>
+                            <div class="col-md-3">
+                                <input class="form-control form-control-xs tx-center text-danger fnb" type="text" placeholder="" 
+                                [(ngModel)]="crproduct.dlcfactory" [disabled]="allowchangedlc" (change)="caldlc('factory')">
+                            </div>
+                            <div class="col-md-3 lh-07e tx-overflow">
+                                <span class=" fnb">Warehouse</span>&nbsp;<span class="text-danger">%</span><br />
+                                <span class=" tx-mute fnnb">Shelf life</span>
+                            </div>
+                            <div class="col-md-3">
+                                <input class="form-control form-control-xs tx-center text-danger fnb" type="text" placeholder="" 
+                                [(ngModel)]="crproduct.dlcwarehouse" [disabled]="allowchangedlc" (change)="caldlc('warehouse')">
+                            </div>
+
+                        </div>
+                        <div class="row mg-0 ln ">
+                            <div class="col-md-3 lh-07e tx-overflow">
+                                <span class=" fnb">Shop</span>&nbsp;<span class="text-danger">%</span><br />
+                                <span class=" tx-mute fnnb">Shelf life</span>
+                            </div>
+                            <div class="col-md-3">
+                                <input class="form-control form-control-xs tx-center text-danger fnb" type="text" placeholder="" 
+                                [(ngModel)]="crproduct.dlcshop" [disabled]="allowchangedlc"  (change)="caldlc('shop')">
+
+                            </div>
+                            <div class="col-md-3 lh-07e tx-overflow">
+                                <span class=" fnb">Consumer</span>&nbsp;<span class="text-danger">%</span><br />
+                                <span class=" tx-mute fnnb">Shelf life (%)</span>
+                            </div>
+                            <div class="col-md-3">
+                                <input class="form-control form-control-xs tx-center text-danger fnb" type="text" placeholder="" 
+                                [(ngModel)]="crproduct.dlconsumer" [disabled]="allowchangedlc" (change)="caldlc('consumer')">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            
+        </div>
+
+        <!-- Natural loss and  alcohol -->
+        <div class="row">
+            <div class="col-md-4 pdl-0">
+                <div class="lsset mgt-10">
+                    <div class="head">
+                        <div class="row mg-0 ln ">
+                            <div class="col-md-12  ">Natural loss control</div>
+                        </div>
+                    </div>
+    
+                    <div class="line bgsub-head ">
+                        <div class="row mg-0 ln ">
+                            <div class="col-md-5 lh-07e tx-overflow">
+                                <span class=" fnb">Inbound</span><br />
+                                <span class=" tx-mute fnnb">Natural loss</span>
+                            </div>
+                            <div class="col-md-7">
+                                <input class="form-control form-control-xs tx-center text-danger fnb" type="text" placeholder="" 
+                                [(ngModel)]="crproduct.innaturalloss" >
+                            </div>
+                        </div>
+                        <div class="row mg-0 ln ">
+                            <div class="col-md-5 lh-07e tx-overflow">
+                                <span class=" fnb">Outbound</span><br />
+                                <span class=" tx-mute fnnb">Natural loss</span>
+                            </div>
+                            <div class="col-md-7">
+                                <input class="form-control form-control-xs tx-center text-danger fnb" type="text" placeholder="" 
+                                [(ngModel)]="crproduct.ounaturalloss"  >
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8 pdr-0">
+                <div class="lsset mgt-10">
+                    <div class="head">
+                        <div class="row mg-0 ln ">
+                            <div class="col-md-8  ">Alcohol manage</div>
+                            <div class="col-md-4 tx-right  "></div>
+                        </div>
+                    </div>
+    
+                    <div class="line bgsub-head ">
+                        <div class="row mg-0 ln ">
+                            <div class="col-md-3 lh-07e tx-overflow">
+                                <span class=" fnb">Manage type</span><br />
+                                <span class=" tx-mute fnnb">type for manage</span>
+                            </div>
+                            <div class="col-md-3">
+                                <input class="form-control form-control-xs tx-center text-danger fnb" type="text" placeholder="" 
+                                [(ngModel)]="crproduct.alcmanage" >
+                            </div>
+                            <div class="col-md-3 lh-07e tx-overflow">
+                                <span class=" fnb">Category</span><br />
+                                <span class=" tx-mute fnnb">Category on algohol</span>
+                            </div>
+                            <div class="col-md-3">
+                                <input class="form-control form-control-xs tx-center text-danger fnb" type="text" placeholder="" 
+                                [(ngModel)]="crproduct.alccategory"  >
+                            </div>
+
+                        </div>
+                        <div class="row mg-0 ln ">
+                            <div class="col-md-3 lh-07e tx-overflow">
+                                <span class=" fnb">Content</span><br />
+                                <span class=" tx-mute fnnb">Content of algohol</span>
+                            </div>
+                            <div class="col-md-3">
+                                <input class="form-control form-control-xs tx-center text-danger fnb" type="text" placeholder="" 
+                                [(ngModel)]="crproduct.alccontent" >
+
+                            </div>
+                            <div class="col-md-3 lh-07e tx-overflow">
+                                <span class=" fnb">Color</span><br />
+                                <span class=" tx-mute fnnb">color of beverage</span>
+                            </div>
+                            <div class="col-md-3">
+                                <input class="form-control form-control-xs tx-center text-danger fnb" type="text" placeholder="" 
+                                [(ngModel)]="crproduct.alccolor" >
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Temperate Indicator -->
+        <div class="row">
+            <div class="lsset mgt-10 pd-0">
+                <div class="head">
+                    <div class="row mg-0 ln ">
+                        <div class="col-md-4 ">Temperature control</div>
+                        <div class="col-md-4 ">Room type</div>
+                        <div class="col-md-2 ">Minimum</div>
+                        <div class="col-md-2 ">Maximum</div>
+                    </div>
+                </div>
+
+                <div class="linebx bgsub-head ">
+                    <div class="row mg-0 ln ">
+                        <div class="col-md-4 lh-07e">
+                            <span class=" fnb">Room Type</span><br />
+                            <span class=" tx-mute fnnb">Room type for keeping stock</span>
+                        </div>
+                        <div class="col-md-4">
+                            <ng-select class="fn-07e "  class="custom custom-sm" bindLabel="desc" bindvalue="value" 
+                                            [clearable]="false"  [(ngModel)]="slcroomtype" [items]="msdroomtype" >
+                                    <ng-template ng-label-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                                    <ng-template ng-option-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                                </ng-select>
+                        </div>
+
+                        <div class="col-md-2">
+                            <input class="form-control form-control-xs tx-center text-danger fnb" type="text" placeholder="" 
+                            [(ngModel)]="crproduct.tempmin" >
+                        </div>
+
+                        <div class="col-md-2">
+                            <input class="form-control form-control-xs tx-center text-danger fnb" type="text" placeholder="" 
+                            [(ngModel)]="crproduct.tempmax" >
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+
+</div>

@@ -1,0 +1,263 @@
+<div class="row pd-4">
+
+  <div class="col-md-6 fnb fn fn-09e pdt-5">
+    <span class="fn-palette-1">Outbound</span>&nbsp;<i class="fas fa-chevron-right fa-xs"></i>&nbsp;<span class="fn-palette-5"> Handling Unit </span>&nbsp;<i class="fas fa-chevron-right fa-xs"></i>&nbsp;<span class="text-muted"> Monitor</span>
+  </div>
+
+  <div class="col-md-2 text-right">
+    <div class="d-grid gap-2">      
+        <ng-template #popContent>
+            <div  style="width:280px" class="fn fn-07e fnb">
+
+                <div class="row ln pd-5">
+                    <div class="col-md-4 pdt-5">Third party</div>
+                    <div class="col-md-8">
+                        <input class="form-control form-control-sm  text-danger " 
+                        type="text" placeholder="Code or Name" [(ngModel)]="pmprep.thcode">
+                    </div>
+                </div>
+                <div class="row ln pd-5">
+                    <div class="col-md-4 pdt-5">HU No</div>
+                    <div class="col-md-8">
+                        <input class="form-control form-control-sm  text-danger " type="text" placeholder="HU No" [(ngModel)]="pmprep.huno">
+                    </div>
+                </div>
+                <div class="row ln pd-5">
+                    <div class="col-md-4 pdt-5">Route</div>
+                    <div class="col-md-8">
+                        <input class="form-control form-control-sm  text-danger " type="text" placeholder="Route" [(ngModel)]="pmprep.routeno">
+                    </div>
+                </div>
+                <div class="row ln pd-5">
+                    <div class="col-md-4 pdt-5">State</div>
+                    <div class="col-md-8">
+                        <ng-select class=" text-danger"  class="custom custom-sm" bindLabel="desc" bindvalue="value" 
+                        [clearable]="true"  [(ngModel)]="slcstate" [items]="lsstatem" >
+                        <ng-template ng-label-tmp let-item="item"><span class="text-danger b">{{item.desc}}</span> </ng-template>
+                        <ng-template ng-option-tmp let-item="item"><span class="text-danger b">{{item.desc}}</span> </ng-template>
+                    </ng-select>
+                    </div>
+                </div>
+                <div class="row   pd-5">
+                    <div class="col-md-4">&nbsp;</div>
+                    <div class="col-md-8">
+                        <div class="d-grid gap-2">
+
+                            <button type="button" class="btn snaps-warning btn-block mp " 
+                            (click)="fnd()">
+                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-search" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z"/>
+                                    <path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>
+                                </svg>
+                                &nbsp;
+                                Filter Inbound order
+                            </button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+        <ng-template #popTitle >
+            <div style="width:280px">
+                <span class="fn fn-07e fnb">Search parameter</span>
+            </div>
+        </ng-template>
+        <button type="button" class="btn btn-secondary snaps-btnblank fn-07e" placement="bottom" [autoClose]="'outside'" [ngbPopover]="popContent" [popoverTitle]="popTitle">
+            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-funnel-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" d="M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.128.334L10 8.692V13.5a.5.5 0 0 1-.342.474l-3 1A.5.5 0 0 1 6 14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5v-2z"/>
+            </svg> Parameters
+        </button>
+
+    </div>
+</div>
+
+  <div class="col-md-2 ">
+      <div class="input-group fnb">
+          <input class="form-control fn-07e fnb text-danger " placeholder="HU.no"
+              [(ngModel)]="pmprep.huno">
+          <div class="input-group-append">
+          <button type="button" class="btn snaps-btngroup btn-prime " (click)="fnd();" >
+              <i class="fas fa-search fa-sm"></i>
+          </button>
+          </div>
+      </div>
+  </div>
+
+  <div class="col-md-2 ">
+    <div class="input-group fnb">
+        <input class="form-control fn-07e fnb text-danger " placeholder="TH Code"
+            [(ngModel)]="pmprep.thcode">
+        <div class="input-group-append">
+        <button type="button" class="btn snaps-btngroup btn-prime " (click)="fnd();" >
+            <i class="fas fa-search fa-sm"></i>
+        </button>
+        </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="row fnb fn-07e">
+
+  <div class="col-md-2 pd-5">
+
+    <div class="propset lsset ">
+      <div class="head">
+        <div class="row mg-0 ln ">
+          <div class="col-md-12 ">Preparation Status</div>
+        </div>
+      </div>
+      <div class="line bgsub-head dgprep " >
+        <div class="row pdtb-15">
+          <div class="col-md-12">
+            <div class="chart-wrapper ">
+              <canvas #pieChartCanvas> </canvas>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mg-0 ln fnb">
+          <div class="col-md-7"><span class="fas fa-square fn-palette-5"></span>&nbsp;&nbsp;Free</div>
+          <div class="col-md-5 tx-right">{{stfree}}</div>
+        </div>
+
+        <div class="row mg-0 ln fnb">
+          <div class="col-md-7 tx-overflow"><span class="fas fa-square fn-palette-3"></span>&nbsp;&nbsp;Operate</div>
+          <div class="col-md-5 tx-right">{{stwaiting}}</div>
+        </div>
+
+        <div class="row mg-0 ln fnb">
+          <div class="col-md-7 tx-overflow"><span class="fas fa-square text-warning"></span>&nbsp;&nbsp;Reaching cap.</div>
+          <div class="col-md-5 tx-right">{{streach}}</div>
+        </div>
+
+        <div class="row mg-0 ln fnb">
+          <div class="col-md-7 tx-overflow"><span class="fas fa-square fn-palette-2"></span>&nbsp;&nbsp;Base Close</div>
+          <div class="col-md-5 tx-right">{{stcompleted}}</div>
+        </div>
+
+        <div class="row mg-0 ln fnb">
+          <div class="col-md-7 tx-overflow"><span class="fas fa-square fn-palette-1"></span>&nbsp;&nbsp;Loaded</div>
+          <div class="col-md-5 tx-right">{{stload}}</div>
+        </div>
+
+        <div class="row mg-0 ln fnb">
+          <div class="col-md-7 tx-right">Total</div>
+          <div class="col-md-5 tx-right text-danger">{{stsum}}</div>
+        </div>
+
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="col-md-10 pd-5">
+
+    <div class="lsset  ">
+      <div class="head">
+        <div class="row mg-0 ln ">
+          <div class="col-md-2 ">HU No. </div>
+          <div class="col-md-1 ">Customer</div>
+          <div class="col-md-3 ">Name</div>
+          <div class="col-md-1 ">Route</div>
+          <div class="col-md-1 ">Grid.No </div>
+          <div class="col-md-3 ">Status </div>
+          <div class="col-md-1 ">Cap. </div>
+        </div>
+      </div>
+
+      <div class="line bgsub-head dgprep " >
+        <ng-scrollbar>
+          <div class="row mg-0 ln  fnb" *ngFor="let ln of lshu;let i=index" (click)="getinfo(ln,i)" [class.row-active]="i == ordrowselect">
+            <div class="col-md-2 ">
+              <i class="fas fa-pallet text-danger "></i>&nbsp;&nbsp;{{ ln.huno }}
+              <span class="fas fa-star text-warning w20 fa-sm" *ngIf="ln.priority > 0"></span>
+            </div>
+            <div class="col-md-1 text-danger">{{ ln.thcode }} </div>
+            <div class="col-md-3 ">{{ ln.thname }} </div>
+            <div class="col-md-1 text-primary">{{ ln.routeno }} </div>
+            <div class="col-md-1 text-danger">{{ ln.loccode }} </div>
+            <div class="col-md-3 "><span class="{{ngDecIcon(ln.tflow)}} w20 "></span> {{ ngDecState(ln.tflow) }} </div>
+            <div class="col-md-1 "><span class="{{ngDecSquare(ln.tflow, ln.crcapacity)}}"></span>&nbsp;{{ ln.crcapacity }}%</div>
+          </div>
+        </ng-scrollbar>
+      </div>
+    </div>
+
+  </div>
+
+
+</div>
+
+<div class="row fnb fn-07e">
+
+  <div class="col-md-12">
+    <div class="row pd-5 ">
+
+      <div class="lsset  pd-0 ">
+        <div class="head bgsub-head">
+          <div class="row mg-0 ln ">
+            <div class="col-md-1 pdt-5">HU.No</div>
+            <div class="col-md-2 pdt-5 text-danger">{{crhu?.huno}}</div>
+            <div class="col-md-1 pdt-5 ">Customer</div>
+            <div class="col-md-4 pdt-5 text-truncate">{{crhu?.thcode}} : {{crhu?.thname}}</div>
+            <div class="col-md-2 "> <button type="button" class="btn snaps-default btn-xs btn-block mp" (click)="gethuemptylabel(crhu.huno)" *ngIf="['IO'].includes(this.crhu.tflow)">Label empty HU</button></div>
+            <div class="col-md-2 text-danger">
+              <button type="button" class="btn snaps-success btn-xs btn-block mp" (click)="closehu()"  *ngIf="['IO'].includes(this.crhu.tflow)">Close HU</button>
+              <button type="button" class="btn snaps-default btn-xs btn-block mp" (click)="getdistlabel()" *ngIf="!['IO','XX'].includes(this.crhu.tflow)">Label HU</button>
+             
+            </div>
+          </div>
+          
+        </div>
+
+        <div class="head">
+          <div class="row mg-0 ln ">
+            <div class="col-md-1 ">Prep</div>
+            <div class="col-md-1 ">In.order</div>
+            <div class="col-md-1 ">Ou.order</div>
+            <div class="col-md-3 ">Product</div>
+            <div class="col-md-1 tx-center">Quantity</div>
+            <div class="col-md-1 tx-center">Unit</div>
+            <div class="col-md-1 tx-right">Weight</div>
+            <div class="col-md-1 ">Batch</div>
+            <div class="col-md-1 ">Date.Exp</div>
+            <div class="col-md-1 ">Serial</div>
+          </div>
+        </div>
+
+        <div class="line bgsub-head  dglines ">
+          <ng-scrollbar>          
+            <div class="row mg-0 ln  fnb" *ngFor="let ln of crlines">
+              <div class="col-md-1 text-danger">{{ln.prepno}}</div>
+              <div class="col-md-1 text-primary">{{ln.inorder}}</div>
+              <div class="col-md-1 text-success">{{ln.ouorder}}</div>
+              <div class="col-md-3 text-truncate">{{ln.article}} : {{ln.descalt}}</div>
+              <div class="col-md-1 text-danger tx-center">{{ln.qtypu}}</div>
+              <div class="col-md-1 text-dark tx-center">{{ngDecUnitstock(ln.unitprep)}}</div>
+              <div class="col-md-1 tx-right">{{ln.qtyweight  | number}}</div>
+              <div class="col-md-1 text-center">{{ln.batchno}}</div>
+             
+              <div class="col-md-1 text-center">{{ln.dateexp  | date : dateformat}}</div>
+              <div class="col-md-1 text-center">{{ln.serialno}}</div>            
+            </div>
+          </ng-scrollbar>
+        </div>
+
+        <div class="head bd-0">
+          <div class="row mg-0 ln ">
+            <div class="col-md-6 text-right">Summary</div>
+            <div class="col-md-1 text-right text-danger">{{crsumlnhu}}</div>
+            <div class="col-md-2">Last modify</div>
+            <div class="col-md-3 ">{{crprep?.datemodify | date : dateformatlong}}</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>

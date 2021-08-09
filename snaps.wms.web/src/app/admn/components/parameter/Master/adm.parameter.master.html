@@ -1,0 +1,174 @@
+<div class="row pdt-10">
+
+    <div class="col-md-12 fn-palette-1 ">
+        <div class="lsset fn fn-07e fnb ">
+            <div class="head">
+                <div class="row mg-0 ln ">
+                    <div class="col-md-10 ">Product Master</div>
+                    <div class="col-md-2 ">Last modify</div>
+                </div>
+            </div>
+        
+            <div class="line bgsub-head ">
+
+
+                <div class="row mg-0 ln pd-8" *ngIf="prallowchangehirachy">
+                    <div class="col-md-9 col-xs-10 lh-1e">
+                        <span class="">{{prallowchangehirachy.pmdesc}}</span><br />
+                        <span class="text-muted">{{prallowchangehirachy.pmdescalt}}</span>
+                    </div>
+                    <div class="col-md-1 col-xs-2 pdt-3">
+                        <ui-switch  checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" 
+                                    [(ngModel)]="prallowchangehirachy.pmvalue" (change)="save(prallowchangehirachy)"
+                        ></ui-switch>
+                    </div>
+                    <div class="col-md-2 lh-1e">
+                        <span class="text-danger fnb">{{prallowchangehirachy.datemodify | date : dateformatlong }}</span><br>
+                        <span class="text-muted">{{prallowchangehirachy.accnmodify}}</span>
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln pd-8" *ngIf="prallowchangedimension">
+                    <div class="col-md-9 col-xs-10 lh-1e">
+                        <span class="">{{prallowchangedimension.pmdesc}}</span><br />
+                        <span class="text-muted">{{prallowchangedimension.pmdescalt}}</span>
+                    </div>
+                    <div class="col-md-1 col-xs-2 pdt-3">
+                        <ui-switch  checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" 
+                                    [(ngModel)]="prallowchangedimension.pmvalue" (change)="save(prallowchangedimension)"
+                        ></ui-switch>
+                    </div>
+                    <div class="col-md-2 lh-1e">
+                        <span class="text-danger fnb">{{prallowchangedimension.datemodify | date : dateformatlong }}</span><br>
+                        <span class="text-muted">{{prallowchangedimension.accnmodify}}</span>
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln pd-8" *ngIf="prallowchangedlc">
+                    <div class="col-md-9 col-xs-10 lh-1e">
+                        <span class="">{{prallowchangedlc.pmdesc}}</span><br />
+                        <span class="text-muted">{{prallowchangedlc.pmdescalt}}</span>
+                    </div>
+                    <div class="col-md-1 col-xs-2 pdt-3">
+                        <ui-switch  checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" 
+                                    [(ngModel)]="prallowchangedlc.pmvalue" (change)="save(prallowchangedlc)"
+                        ></ui-switch>
+                    </div>
+                    <div class="col-md-2 lh-1e" >
+                        <span class="text-danger fnb">{{prallowchangedlc.datemodify | date : dateformatlong }}</span><br>
+                        <span class="text-muted">{{prallowchangedlc.accnmodify}}</span>
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln pd-8" *ngIf="prallowchangeunit">
+                    <div class="col-md-9 col-xs-10 lh-1e">
+                        <span class="">{{prallowchangeunit.pmdesc}}</span><br />
+                        <span class="text-muted">{{prallowchangeunit.pmdescalt}}</span>
+                    </div>
+                    <div class="col-md-1 col-xs-2 pdt-3">
+                        <ui-switch  checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" 
+                                    [(ngModel)]="prallowchangeunit.pmvalue" (change)="save(prallowchangeunit)"
+                        ></ui-switch>
+                    </div>
+                    <div class="col-md-2 lh-1e">
+                        <span class="text-danger fnb">{{prallowchangeunit.datemodify | date : dateformatlong }}</span><br>
+                        <span class="text-muted">{{prallowchangeunit.accnmodify}}</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Third party -->
+        <div class="lsset fn fn-07e fnb mgt-10 ">
+            <div class="head">
+                <div class="row mg-0 ln ">
+                    <div class="col-md-10 ">Third Party Master</div>
+                    <div class="col-md-2 ">Last modify</div>
+                </div>
+            </div>
+        
+            <div class="line bgsub-head ">
+
+                <div class="row mg-0 ln pd-8" *ngIf="thallowchangeofexsource">
+                    <div class="col-md-9 col-xs-10 lh-1e">
+                        <span class="">{{thallowchangeofexsource.pmdesc}}</span><br />
+                        <span class="text-muted">{{thallowchangeofexsource.pmdescalt}}</span>
+                    </div>
+                    <div class="col-md-1 col-xs-2 pdt-3">
+                        <ui-switch  checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" 
+                                    [(ngModel)]="thallowchangeofexsource.pmvalue" (change)="save(thallowchangeofexsource)"
+                        ></ui-switch>
+                    </div>
+                    <div class="col-md-2 lh-1e">
+                        <span class="text-danger fnb">{{thallowchangeofexsource.datemodify | date : dateformatlong }}</span><br>
+                        <span class="text-muted">{{thallowchangeofexsource.accnmodify}}</span>
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln pd-8" *ngIf="thallowchangeplandate">
+                    <div class="col-md-9 col-xs-10 lh-1e">
+                        <span class="">{{thallowchangeplandate.pmdesc}}</span><br />
+                        <span class="text-muted">{{thallowchangeplandate.pmdescalt}}</span>
+                    </div>
+                    <div class="col-md-1 col-xs-2 pdt-3">
+                        <ui-switch  checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" 
+                                    [(ngModel)]="thallowchangeplandate.pmvalue" (change)="save(thallowchangeplandate)"
+                        ></ui-switch>
+                    </div>
+                    <div class="col-md-2 lh-1e">
+                        <span class="text-danger fnb">{{thallowchangeplandate.datemodify | date : dateformatlong }}</span><br>
+                        <span class="text-muted">{{thallowchangeplandate.accnmodify}}</span>
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln pd-8" *ngIf="thallowchangestate">
+                    <div class="col-md-9 col-xs-10 lh-1e">
+                        <span class="">{{thallowchangestate.pmdesc}}</span><br />
+                        <span class="text-muted">{{thallowchangestate.pmdescalt}}</span>
+                    </div>
+                    <div class="col-md-1 col-xs-2 pdt-3">
+                        <ui-switch  checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" 
+                                    [(ngModel)]="thallowchangestate.pmvalue" (change)="save(thallowchangestate)"
+                        ></ui-switch>
+                    </div>
+                    <div class="col-md-2 lh-1e">
+                        <span class="text-danger fnb">{{thallowchangestate.datemodify | date : dateformatlong }}</span><br>
+                        <span class="text-muted">{{thallowchangestate.accnmodify}}</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Barcode -->
+        <div class="lsset fn fn-07e fnb mgt-10 ">
+            <div class="head">
+                <div class="row mg-0 ln ">
+                    <div class="col-md-10 ">Barcode Master</div>
+                    <div class="col-md-2 ">Last modify</div>
+                </div>
+            </div>
+        
+            <div class="line bgsub-head ">
+
+                <div class="row mg-0 ln pd-8" *ngIf="brallowchangeofexsource">
+                    <div class="col-md-9 col-xs-10 lh-1e">
+                        <span class="">{{brallowchangeofexsource.pmdesc}}</span><br />
+                        <span class="text-muted">{{brallowchangeofexsource.pmdescalt}}</span>
+                    </div>
+                    <div class="col-md-1 col-xs-2 pdt-3">
+                        <ui-switch  checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" 
+                                    [(ngModel)]="brallowchangeofexsource.pmvalue" (change)="save(brallowchangeofexsource)"
+                        ></ui-switch>
+                    </div>
+                    <div class="col-md-2 lh-1e">
+                        <span class="text-danger fnb">{{brallowchangeofexsource.datemodify | date : dateformatlong }}</span><br>
+                        <span class="text-muted">{{brallowchangeofexsource.accnmodify}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

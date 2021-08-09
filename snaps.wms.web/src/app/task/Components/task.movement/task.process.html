@@ -1,0 +1,233 @@
+<div class="lsset fn fn-07e fnb "> 
+        <div class="head">
+            <div class="row mg-0 ln ">
+                <div class="col-md-8 ">Task movement </div>
+                <div class="col-md-4 ">                   
+                </div>
+            </div>
+        </div>
+    
+        <div class="line bgsub-head text-muted fnb" style="height: 225px;" >
+
+            <div class="row mg-0 ln " >
+                <div class="col-md-1">Task No</div>
+                <div class="col-md-2">
+                    <span class="text-danger fnb ">{{crtask.taskno}}</span>&nbsp;&nbsp;                    
+                    <span class="fas fa-star text-warning w20 fa-sm " 
+                    [ngClass]="{'text-warning': crtask.priority > 0,  'text-muted': crtask.priority == 0}"
+                    (click)="setpriority()"></span>                    
+                </div>
+                
+                <div class="col-md-1">Product</div>
+                <div class="col-md-5 text-truncate"><span class="fnb text-danger">{{ crline.article }}</span> - {{ crline.pv }} - {{ crline.lv }} : {{crline.descalt}} </div>               
+               
+                <div class="col-md-1">Loc.Source </div>
+                <div class="col-md-2 text-primary">{{crline.sourceloc}} </div>
+
+            </div>
+
+            <div class="row mg-0 ln ">
+
+                <div class="col-md-1">HU.No </div>
+                <div class="col-md-2 text-danger">{{crline.soucehuno}} </div>
+                <div class="col-md-1">Creator </div>
+                <div class="col-md-2 text-danger ">{{crtask.accncreate }}</div>
+
+                <div class="col-md-1">Task.Date  </div>
+                <div class="col-md-2 text-danger ">{{crtask.taskdate | date : dateformatlong }}</div>
+
+               <div class="col-md-1">Loc.Suggest </div>
+               <div class="col-md-2 text-danger">{{crline.targetadv}} </div>
+            </div>
+
+            <div class="row mg-0 ln " >
+                <div class="col-md-1">
+                    <span class="fnb">{{crline.ioreftype}}</span> 
+                </div>
+                <div class="col-md-2">
+                    <span class="text-danger fnb">{{ crline.iorefno }} </span>
+                </div>
+                <div class="col-md-1 tx-overflow">Worker asgn</div>
+                <div class="col-md-2 tx-overflow">{{crline.accnassign }}</div>
+                <div class="col-md-1 tx-overflow">Date assign</div>
+                <div class="col-md-2 tx-overflow">{{crline.dateassign | date : dateformatlong}}</div>
+                <div class="col-md-1">&nbsp;</div>
+                <div class="col-md-2">
+                    <div class="input-group" *ngIf="crtask.tflow == 'IO'">
+                        <input class="form-control text-danger fnb tx-center" [(ngModel)]="crtask.confirmdigit" placeholder="Confirm digit"
+                            name="dp"  >
+                        <div class="input-group-append">
+                        <button type="button" class=" btn snaps-btngroup btn-prime" (click)="confirmTask()" >
+                            <i class="fas fa-check-circle fa-xs"></i>
+                        </button>
+                        </div>
+                      </div>
+                </div>
+            </div>
+
+            <div class="row mg-0 ln " >
+                <div class="col-md-1">Promotion </div>
+                <div class="col-md-2">{{crtask.iopromo}} </div>
+                <div class="col-md-1 tx-overflow">Worker grap</div>
+                <div class="col-md-2 tx-overflow">{{crline.accnwork }}</div>
+                <div class="col-md-1 tx-overflow">Date grap</div>
+                <div class="col-md-2 tx-overflow">{{crline.dateassign | date : dateformatlong}}</div>
+
+                <div class="col-md-1">&nbsp;</div>
+                <div class="col-md-2" *ngIf="crtask.tasktype=='P'||crtask.tasktype=='T'">
+                    <span class="mp" (click)="getputaway()"><i class="fas fa-tag"></i> &nbsp;Generate label</span>
+                </div>
+                <div class="col-md-2" *ngIf="crtask.tasktype=='A'">
+                    <span class="mp" (click)="getfullpallet()"><i class="fas fa-tag"></i> &nbsp;Generate label</span>
+                </div>
+            </div>
+
+            <div class="row mg-0 ln ">
+                <div class="col-md-1">Serial No </div>
+                <div class="col-md-2 text-danger tx-overflow">{{ crline.serialno }} </div>
+                <div class="col-md-1 tx-overflow">Worker fill </div>
+                <div class="col-md-2 text-danger tx-overflow">{{crline.accnfill }} </div>
+                <div class="col-md-1 tx-overflow">Date Fill  </div>
+                <div class="col-md-2 text-danger tx-overflow">{{crline.datefill  | date : dateformatlong }}</div>
+                <div class="col-md-1 tx-overflow">Loc. Fill</div>
+                <div class="col-md-2 text-danger tx-overflow">{{crline.targetloc }}</div>
+            </div>
+
+            <div class="row mg-0 ln ">
+                <div class="col-md-1 tx-overflow">Batch No </div>
+                <div class="col-md-2 text-danger tx-overflow">{{crline.batchno }} </div>
+                <div class="col-md-1 tx-overflow">Worker Col. </div>
+                <div class="col-md-2 text-danger tx-overflow">{{crline.accncollect }} </div>
+                <div class="col-md-1 tx-overflow">Date Col </div>
+                <div class="col-md-2 text-danger tx-overflow">{{crline.datecollect  | date : dateformatlong }} </div>
+                <div class="col-md-1 tx-overflow">Loc. Col. </div>
+                <div class="col-md-2 text-danger tx-overflow">
+                    <div class="" *ngIf="crtask.tflow != 'IO'">{{ crline.collectloc }}</div>
+                    <div>
+                        <button type="button" class="btn snaps-danger btn-xs btn-block mp" (click)="cancelTask()" *ngIf="crtask.tflow == 'IO'">
+                            <i class="fas fa-trash-alt"></i>
+                            &nbsp;
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+            </div>
+        
+        </div>
+
+        <!-- <div class="line bgsub-head " style="height: 580px;" *ngIf="reqnew == 1">
+            <div class="row mg-0 ln " >
+                    <div class="col-md-8">
+                        <div class="form-group form-control-sm mg-0">
+                            <label>Product</label>
+                            <input class="form-control fn-1e1 text-danger fnb" type="text" placeholder="" [(ngModel)]="crproduct.article">
+                        </div> 
+                    </div>
+                    <div class="col-md-4  pdt-23">
+                        <button type="button" class="btn btn-primary btn-xs btn-block mp "  (click)="getinfo()">Find</button>
+                    </div>
+                </div>
+                
+                <div class="row mg-0 ln " >
+                    <div class="col-md-12">
+                        <div class="lsset fn-1e "> 
+                            <div class="head">
+                                <div class="row mg-0 ln ">
+                                    <div class="col-md-qw  text-center">Product </div>
+                                </div>
+                            </div>
+                
+                            <div class="line bgsub-head " style="height: 225px;">
+                                <ng-scrollbar>
+                                
+                                        <div class="row mg-0 ln  fnb mpswitch" *ngFor="let ln of instock?.lines" (click)="slcstock(ln)" >
+                                            <div class="col-md-6 "> 
+                                                HU: <span class="text-danger">{{ln.huno}}</span> <br>
+                                                Stock : <span class="text-dark">{{ln.qtysku}}</span> 
+                                            </div>
+                                            <div class="col-md-6 text-right "> 
+                                                <span class="text-success">{{ln.loccode}}</span>  <br> 
+                                                <span class="">&nbsp; {{ln.stkremarks}}</span>
+                                            </div>
+                                        </div>           
+                                    
+                                </ng-scrollbar>
+                            </div>
+                        </div>
+                    </div>  
+                </div>
+                <div class="row mg-0 ln fnb">
+                    <div class="col-md-3">
+                        Product
+                    </div>
+                    <div class="col-md-7">
+                        <span class="text-danger"> {{crstsock.article}}</span>
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln fnb">
+                    <div class="col-md-3">
+                        HU no.
+                    </div>
+                    <div class="col-md-7">
+                        <span class="text-danger"> {{crstsock.huno}}</span>
+                    </div>
+                </div>
+                
+                <div class="row mg-0 ln fnb">
+                    <div class="col-md-3">
+                        Batch.
+                    </div>
+                    <div class="col-md-7">
+                        <span class="text-danger"> {{crstsock.batchno}}</span>
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln fnb">
+                    <div class="col-md-3">
+                        Receive.
+                    </div>
+                    <div class="col-md-7">
+                        <span class="text-danger"> {{crstsock.daterec | date : 'yyyy.mm.dd hh:mm'}}</span>
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln fnb">
+                    <div class="col-md-3">
+                        Mfg.
+                    </div>
+                    <div class="col-md-7">
+                        <span class="text-danger"> {{crstsock.datemfg | date : 'yyyy.mm.dd hh:mm'}}</span>
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln fnb">
+                    <div class="col-md-3">
+                        Exp.
+                    </div>
+                    <div class="col-md-7">
+                        <span class="text-danger"> {{crstsock.dateexp | date : 'yyyy.mm.dd hh:mm'}}</span>
+                    </div>
+                </div>
+                <div class="row mg-0 ln">
+                    <div class="col-md-5">
+                        <div class="form-group form-control-sm mg-0">
+                            <label>Target Location</label>
+                            <input class="form-control fn-1e1 text-danger fnb" type="text" placeholder="" >
+                        </div>                        
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group form-control-sm mg-0">
+                            <label>Quantity</label>
+                            <input class="form-control fn-1e1 text-danger fnb" type="text" placeholder="" [(ngModel)]="crstsock.qtypu">
+                        </div>                        
+                    </div>
+                    <div class="col-md-4 pdt-23">
+                        <button type="button" class="btn btn-primary btn-xs btn-block mp" (click)="gentask()" >Confirm</button>
+                    </div>
+                </div>
+
+        </div> -->
+               
+
+        </div>

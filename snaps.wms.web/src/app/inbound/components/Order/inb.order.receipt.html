@@ -1,0 +1,496 @@
+<div class="row pdt-10">
+    <div class="col-md-4 ">
+        <div class="lsset fn fn-07e "> 
+                <div class="head">
+                    <div class="row mg-0 ln ">
+                        <div class="col-md-9 ">Inbound order detail</div>
+                        <div class="col-md-1 ">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-gear mp" viewBox="0 0 16 16" *ngIf="['SA','IO'].includes(opsorder.tflow)" (click)="setonf()">
+                                <path fill-rule="evenodd" d="M8.837 1.626c-.246-.835-1.428-.835-1.674 0l-.094.319A1.873 1.873 0 0 1 4.377 3.06l-.292-.16c-.764-.415-1.6.42-1.184 1.185l.159.292a1.873 1.873 0 0 1-1.115 2.692l-.319.094c-.835.246-.835 1.428 0 1.674l.319.094a1.873 1.873 0 0 1 1.115 2.693l-.16.291c-.415.764.42 1.6 1.185 1.184l.292-.159a1.873 1.873 0 0 1 2.692 1.116l.094.318c.246.835 1.428.835 1.674 0l.094-.319a1.873 1.873 0 0 1 2.693-1.115l.291.16c.764.415 1.6-.42 1.184-1.185l-.159-.291a1.873 1.873 0 0 1 1.116-2.693l.318-.094c.835-.246.835-1.428 0-1.674l-.319-.094a1.873 1.873 0 0 1-1.115-2.692l.16-.292c.415-.764-.42-1.6-1.185-1.184l-.291.159A1.873 1.873 0 0 1 8.93 1.945l-.094-.319zm-2.633-.283c.527-1.79 3.065-1.79 3.592 0l.094.319a.873.873 0 0 0 1.255.52l.292-.16c1.64-.892 3.434.901 2.54 2.541l-.159.292a.873.873 0 0 0 .52 1.255l.319.094c1.79.527 1.79 3.065 0 3.592l-.319.094a.873.873 0 0 0-.52 1.255l.16.292c.893 1.64-.902 3.434-2.541 2.54l-.292-.159a.873.873 0 0 0-1.255.52l-.094.319c-.527 1.79-3.065 1.79-3.592 0l-.094-.319a.873.873 0 0 0-1.255-.52l-.292.16c-1.64.893-3.433-.902-2.54-2.541l.159-.292a.873.873 0 0 0-.52-1.255l-.319-.094c-1.79-.527-1.79-3.065 0-3.592l.319-.094a.873.873 0 0 0 .52-1.255l-.16-.292c-.892-1.64.902-3.433 2.541-2.54l.292.159a.873.873 0 0 0 1.255-.52l.094-.319z"/>
+                                <path fill-rule="evenodd" d="M8 5.754a2.246 2.246 0 1 0 0 4.492 2.246 2.246 0 0 0 0-4.492zM4.754 8a3.246 3.246 0 1 1 6.492 0 3.246 3.246 0 0 1-6.492 0z"/>
+                            </svg>
+                        </div>
+                        <div class="col-md-2 ">
+                            <span class="fas fa-star text-warning w20 fa-sm "  (click)="setpriority()"
+                            [ngClass]="{'text-warning': opsorder.inpriority > 0,  'text-muted': opsorder.inpriority == 0}"
+                            ></span>
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="linebx bgsub-head fnb dgordline ">
+                    <div class="row mg-0 ln " >
+                        <div class="col-md-3 pdt-3 pdt-5">
+                            <span class="fn-palette-1 ">Order No </span>
+                        </div>
+                        <div class="col-md-3 fn-09e pdt-5">
+                            <span class="text-danger fnb">{{opsorder.inorder}}</span>                                
+                        </div>
+                        <div class="col-md-6 tx-right">
+                            <!-- <span class="text-danger fnb">{{opsorder.spcarea}}</span> -->
+                           
+
+                            <button type="button" class="btn snaps-warning btn-xs btn-block mp" *ngIf="opsorder.tflow == 'SA'" (click)="setstartload()" >
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-all fn-palette-1" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M8.97 4.97a.75.75 0 0 1 1.071 1.05l-3.992 4.99a.75.75 0 0 1-1.08.02L2.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093L8.95 4.992a.252.252 0 0 1 .02-.022zm-.92 5.14l.92.92a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 1 0-1.091-1.028L9.477 9.417l-.485-.486-.943 1.179z"/>
+                                </svg>
+                                &nbsp;
+                                <span class="pdt-5">Start</span>
+                            </button>
+
+                            <!-- <button type="button" class="btn snaps-primary btn-xs btn-block mp" *ngIf="opsorder.tflow == 'SS'" (click)="setfinishload()">
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="15" fill="currentColor" class="bi bi-stop-fill fn-palette-4" viewBox="0 0 16 16">
+                                    <path d="M5 3.5h6A1.5 1.5 0 0 1 12.5 5v6a1.5 1.5 0 0 1-1.5 1.5H5A1.5 1.5 0 0 1 3.5 11V5A1.5 1.5 0 0 1 5 3.5z"/>
+                                  </svg>
+                                &nbsp;
+                                <span class="pdt-5">Finish</span>
+                            </button> -->
+
+                            <button type="button" class="btn snaps-success btn-xs btn-block mp" *ngIf="opsorder.tflow == 'SE' && isbtnfinish==false && isbtnconf == false" [disabled]="opsorder?.waitconfirm > 0||opsorder?.pendinginf > 0" (click)="setclose()">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-all fn-palette-1" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M8.97 4.97a.75.75 0 0 1 1.071 1.05l-3.992 4.99a.75.75 0 0 1-1.08.02L2.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093L8.95 4.992a.252.252 0 0 1 .02-.022zm-.92 5.14l.92.92a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 1 0-1.091-1.028L9.477 9.417l-.485-.486-.943 1.179z"/>
+                                </svg>
+                                &nbsp;
+                                <span class="pdt-5">{{opsorder?.waitconfirm > 0?'Wait Confirm':opsorder?.pendinginf > 0?'Wait Finish':'Close Order'}}</span>
+                            </button>
+
+                        </div>
+                    </div>
+    
+                    <div class="row mg-0 ln fnb" >
+                        <div class="col-md-3 tx-overflow fn-palette-1">Order Type</div>
+                        <div class="col-md-3 text-danger fnb">{{dscordtype(opsorder.spcarea)}}</div>
+                        <div class="col-md-3 fn-palette-1">Staging</div>
+                        <div class="col-md-3 text-danger">{{opsorder.dockrec}}</div>
+                        
+                    </div>
+    
+                    <div class="row mg-0 ln fnb" >
+                        <div class="col-md-3 fn-palette-1 "> Supplier </div>
+                        <div class="col-md-9 text-truncate"><span class="text-danger">{{opsorder.thcode}}</span>&nbsp;&nbsp;{{opsorder.thname}}</div>
+                    </div>
+    
+                    <div class="row mg-0 ln " >
+                        <div class="col-md-3 fn-palette-1 tx-overflow">Plan date</div>
+                        <div class="col-md-3 text-danger tx-overflow"> {{opsorder.dateplan | date: dateformat }}  </div>
+                        <div class="col-md-3 fn-palette-1 tx-overflow">Expire date</div>
+                        <div class="col-md-3 text-danger tx-overflow">{{opsorder.dateexpire | date: dateformat }} </div>
+                    </div>
+            
+                    <div class="row mg-0 ln " *ngIf="['SA','IO'].includes(opsorder.tflow)">
+                        <div class="col-md-3">
+                            <span class="fn-palette-1 ">Estimate</span> 
+                        </div>
+                        <div class="col-md-3 text-center text-danger"> {{opsorder.huestimate}} </div>
+                        <div class="col-md-3 fn-palette-1 ">
+                            HUs.
+                        </div>
+                    </div>
+    
+                    <div class="row mg-0 ln overflowbx " *ngIf="['SA','IO'].includes(opsorder.tflow)">
+                        <div class="col-md-3 ">
+                            <span class="fn-palette-1 ">Staging</span>
+                        </div>
+                        <div class="col-md-5">
+                            <ng-select  class="fn-1e5 "  class="custom custom-sm" bindLabel="desc" bindvalue="value" 
+                                        [clearable]="false"  [(ngModel)]="slstaging" [items]="lsstaging" >
+                                <ng-template ng-label-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                                <ng-template ng-option-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                            </ng-select>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="d-grid gap-2">
+                                <button type="button" class="btn snaps-warning btn-xs btn-block mp" (click)="setstaging()"  >
+                                    <span class="pdt-5">Assign</span>
+                                </button>
+
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="row mg-0 ln " *ngIf="!['IO','CL'].includes(opsorder.tflow)" >
+                        <div class="col-md-3 lh-1e1 tx-overflow">
+                            <span class="fn-palette-1 ">Assign-Finish</span> 
+                        </div>
+                        <div class="col-md-9 text-truncate">
+                            <span class="text-danger"> {{opsorder.dateassign | date: dateformatlong }}</span> - <span class="text-primary"> {{opsorder.datefinish | date:  dateformatlong }}</span>
+                        </div>
+                    </div>
+    
+                    <div class="row mg-0 ln " *ngIf="['SS','SE','ED'].includes(opsorder.tflow)">
+                        <div class="col-md-3">Unload</div>
+                        <div class="col-md-9 text-truncate">
+                            <span class="text-danger">{{opsorder.dateunloadstart | date: dateformatlong }}</span> - <span class="text-primary">{{opsorder.dateunloadend | date: dateformatlong }}</span>
+                        </div>
+                    </div>
+    
+    
+                    <div class="row mg-0 ln " >
+                        <div class="col-md-3 lh-08e pdt-2">
+                            <span class="fn-palette-1 ">Remarks</span><br />
+                            <span class="text-muted">on order</span>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="input-group" *ngIf="!['CL', 'ED'].includes(opsorder.tflow)">
+                                <input class="form-control fn-07e fnb text-danger " [(ngModel)]="opsorder.remarkrec">
+                                <div class="input-group-append">
+                                <button type="button" class="btn snaps-btngroup btn-prime " (click)="setremark()">
+                                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-chat-square-quote" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" d="M14 1H2a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h2.5a2 2 0 0 1 1.6.8L8 14.333 9.9 11.8a2 2 0 0 1 1.6-.8H14a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 0a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2.5a1 1 0 0 1 .8.4l1.9 2.533a1 1 0 0 0 1.6 0l1.9-2.533a1 1 0 0 1 .8-.4H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+                                        <path fill-rule="evenodd" d="M7.066 4.76A1.665 1.665 0 0 0 4 5.668a1.667 1.667 0 0 0 2.561 1.406c-.131.389-.375.804-.777 1.22a.417.417 0 1 0 .6.58c1.486-1.54 1.293-3.214.682-4.112zm4 0A1.665 1.665 0 0 0 8 5.668a1.667 1.667 0 0 0 2.561 1.406c-.131.389-.375.804-.777 1.22a.417.417 0 1 0 .6.58c1.486-1.54 1.293-3.214.682-4.112z"/>
+                                    </svg>
+                                </button>
+                                </div>
+                            </div> 
+                            <div class="text-danger" *ngIf="['CL', 'ED'].includes(opsorder.tflow)" >
+                                {{opsorder.remarkrec}}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mg-0 ln " *ngIf="!['IO','CL'].includes(opsorder.tflow)">
+                        <div class="col-md-3 lh-08e pdt-2">
+                            <span class="fn-palette-1 ">Invoice</span><br />
+                            <span class="text-muted">of order</span>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="input-group" *ngIf="!['ED'].includes(opsorder.tflow)" >
+                                <input class="form-control fn-07e fnb text-danger " [(ngModel)]="opsorder.invno" maxlength="15" (change)="setinvoice()" >
+                                <div class="input-group-append">
+                                <button type="button" class="btn snaps-btngroup btn-prime " (click)="setinvoice()">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmark-check-fill" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd" d="M4 0a2 2 0 0 0-2 2v13.5a.5.5 0 0 0 .74.439L8 13.069l5.26 2.87A.5.5 0 0 0 14 15.5V2a2 2 0 0 0-2-2H4zm6.854 5.854a.5.5 0 0 0-.708-.708L7.5 7.793 6.354 6.646a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0l3-3z"/>
+                                      </svg>
+                                </button>
+                                </div>                          
+                            </div>
+                            <div class="text-danger" *ngIf="opsorder.tflow == 'ED'">
+                                {{opsorder.invno}}
+                            </div>                            
+                        </div>
+                    </div>
+
+                    <div class="row mg-0 ln" *ngIf="isconf == 1">
+                        <div class="col-md-8">&nbsp;</div>
+                        <div class="col-md-4">
+                            <div class="d-grid gap-2" *ngIf="syspam.allowcancel">                            
+                                <button type="button" class="btn snaps-danger btn-xs btn-block mp" (click)="setcancel()"  >
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="bi bi-lightning-fill" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd" d="M11.251.068a.5.5 0 0 1 .227.58L9.677 6.5H13a.5.5 0 0 1 .364.843l-8 8.5a.5.5 0 0 1-.842-.49L6.323 9.5H3a.5.5 0 0 1-.364-.843l8-8.5a.5.5 0 0 1 .615-.09z"/>
+                                     </svg>
+                                    &nbsp;
+                                    <span>Cancel</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Finish Unload -->
+                    <div class="row mg-0 ln " >
+                        <div class="col-md-3">
+                        </div>
+     
+                        <div class="col-md-6">
+                            <button type="button" class="btn snaps-primary btn-block btn-xs mp" *ngIf="isbtnfinish" (click)="setfinishload()">
+                              <span class="pdt-5" style="color:white">Finish</span>
+                          </button>
+            
+                        </div>
+
+                        <div class="col-md-3">
+                        </div>
+                    </div>
+                    <!-- Finish Unload -->
+                </div>
+
+                <div class="foot bgsub-head fnb pd-5">
+                    <div class="row mg-0">
+                        <div class="col-md-3 tx-overflow">Last modify</div>
+                        <div class="col-md-9 ">
+                            <span class="text-danger">{{opsorder.accnmodify}}</span>&nbsp; @ &nbsp;<span class="text-muted fnb "> {{opsorder.datemodify | date: 'yyyy.MM.dd hh:mm'}}</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div> 
+    </div>
+    <div class="col-md-8 ">
+        <div class="lsset fn-07e fn-palette-1">
+            <div class="head">
+                <div class="row mg-0 ln ">
+                    <div class="col-md-2">Barcode </div>                   
+                    <div class="col-md-4">Description </div>
+                    <div class="col-md-1">Order </div>
+                    <div class="col-md-1">Recv. </div>
+                    <div class="col-md-1">Pend. </div>
+                    <div class="col-md-1">Unit </div>                    
+                    <div class="col-md-2 tx-overflow">Specific / Serial No. </div>
+                </div>
+            </div>
+
+            <div class="line bgsub-head dgordline fn fnb">
+                <ng-scrollbar>
+                <div class="row mg-0 ln fn fn-07e text-muted" *ngFor="let ln of opsorder?.lines;let i = index" 
+                    (click)="selline(ln,i)" [class.row-active]="i==itmrowselect">
+                    <div class="col-md-2">{{ln.barcode}}</div>
+                    <div class="col-md-4 "><span class="text-danger">{{ln.article}}-{{ln.pv}}-{{ln.lv}}</span></div>                    
+                    <div class="col-md-1 tx-right"><span *ngIf="syspam.allowshowqtyorder">{{ln.qtypu}}</span></div>
+                    <div class="col-md-1 tx-right text-primary">{{ln.qtypurec}}</div>
+                    <div class="col-md-1 tx-right text-danger"><span *ngIf="syspam.allowshowqtyorder">{{ln.qtypnd}}</span></div>
+                    <div class="col-md-1 tx-right">{{ngDecUnit(ln.unitreceipt)}}</div>
+                    <div class="col-md-2 ">
+                        <span class="" *ngIf="ln.serialno != ''">{{ln.serialno}}</span>
+                        <span class="" *ngIf="ln.expdate != null">Exp:<span class="text-danger">{{ln.expdate}}</span></span>
+                    </div>
+                </div>
+                </ng-scrollbar>
+            </div>
+
+            <div class="foot bgsub-head fnb pd-5">
+                <div class="row mg-0">
+                    <div class="col-md-6 tx-right">Total &nbsp; &nbsp;<span class="text-danger">{{smitems}}</span> &nbsp; &nbsp; Items</div>
+                    <div class="col-md-1 tx-right">{{smpu}}</div>
+                    <div class="col-md-1 tx-right text-primary">{{smpurec}}</div>
+                    <div class="col-md-1 tx-right text-danger">{{smpupnd}}</div>
+                    <div class="col-md-3"></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="row pdt-10">
+
+    <div class="col-md-12">
+        <div class="lsset fn fn-07e fnb fn-palette-1">
+            <div class="head">
+                <div class="row mg-0 ln ">
+                    <div class="col-md-8 ">Product Input</div>
+                    <div class="col-md-4">
+                        <!-- <span class=" mp" (click)="newline()">
+                            <i class="fas fa-plus-square text-primary"></i>&nbsp;
+                            New Item
+                        </span> -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="linebx bgsub-head " >
+                <div class="row mg-0 ln overflowbx">
+                    <div class="col-md-1">Product</div>
+                    <div class="col-md-3 lh-1e">
+                        <span class="">{{crline.description}}</span><br>
+                        <span class="text-danger">{{crline.article}}</span> - {{crline.pv}} - {{crline.lv}} : <span class="text-primary">{{crline.barcode}}</span>
+                    </div>
+
+                    <div class="col-md-1" *ngIf=" crline.isdlc == 1 ">M.F.G Date</div>
+                    <div class="col-md-2" *ngIf=" crline.isdlc == 1 ">
+                        <div class="input-group">
+                            <input class="form-control text-danger fnb" placeholder="{{dateformat}}" name="dp" 
+                                [(ngModel)]="slcmfgdate" 
+                                ngbDatepicker #objmfgdate="ngbDatepicker" 
+                                [ngClass]="{'tx-error-addon': slcmfgdate < acpmfgdate }"
+                                (dateSelect)="calexpdate();"
+                                >
+                            <div class="input-group-append">
+                            <button type="button" class=" btn snaps-btngroup btn-prime"
+                                [ngClass]="{'tx-error-addon': slcmfgdate < acpmfgdate }"
+                                (click)="objmfgdate.toggle(); " >
+                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-calendar-date" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"></path>
+                                <path d="M6.445 11.688V6.354h-.633A12.6 12.6 0 0 0 4.5 7.16v.695c.375-.257.969-.62 1.258-.777h.012v4.61h.675zm1.188-1.305c.047.64.594 1.406 1.703 1.406 1.258 0 2-1.066 2-2.871 0-1.934-.781-2.668-1.953-2.668-.926 0-1.797.672-1.797 1.809 0 1.16.824 1.77 1.676 1.77.746 0 1.23-.376 1.383-.79h.027c-.004 1.316-.461 2.164-1.305 2.164-.664 0-1.008-.45-1.05-.82h-.684zm2.953-2.317c0 .696-.559 1.18-1.184 1.18-.601 0-1.144-.383-1.144-1.2 0-.823.582-1.21 1.168-1.21.633 0 1.16.398 1.16 1.23z"></path>
+                                </svg>
+                            </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-1 tx-overflow" *ngIf=" crline.isdlc == 1 ">
+                        <span class="text-danger fnb">{{acpmfgdate | date : dateformat}}</span><br>
+                        <span class="text-muted">Accept&nbsp;<span class="text-danger">{{crline.dlcfactory}}</span> Days </span>
+                    </div>
+
+                    <div class="col-md-1" *ngIf=" crline.isdlc == 1 ">Expire Date</div>
+                    <div class="col-md-2" *ngIf=" crline.isdlc == 1 ">
+                        <div class="input-group">
+                            <input class="form-control text-danger fnb" placeholder="{{dateformat}}"
+                                name="dp" [(ngModel)]="slcexpdate" 
+                                ngbDatepicker #objexpdate="ngbDatepicker" 
+                                [ngClass]="{'tx-error-group': slcexpdate < acpexpdate }"
+                                (dateSelect)="calmfgdate();"
+                                >
+                            <div class="input-group-append">
+                            <button type="button" class=" btn snaps-btngroup btn-prime" 
+                                    (click)="objexpdate.toggle()"
+                                    [ngClass]="{'tx-error-addon': slcexpdate < acpexpdate }"
+                                    >
+                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-calendar-date" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"></path>
+                                <path d="M6.445 11.688V6.354h-.633A12.6 12.6 0 0 0 4.5 7.16v.695c.375-.257.969-.62 1.258-.777h.012v4.61h.675zm1.188-1.305c.047.64.594 1.406 1.703 1.406 1.258 0 2-1.066 2-2.871 0-1.934-.781-2.668-1.953-2.668-.926 0-1.797.672-1.797 1.809 0 1.16.824 1.77 1.676 1.77.746 0 1.23-.376 1.383-.79h.027c-.004 1.316-.461 2.164-1.305 2.164-.664 0-1.008-.45-1.05-.82h-.684zm2.953-2.317c0 .696-.559 1.18-1.184 1.18-.601 0-1.144-.383-1.144-1.2 0-.823.582-1.21 1.168-1.21.633 0 1.16.398 1.16 1.23z"></path>
+                                </svg>
+                            </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-1 tx-overflow" *ngIf=" crline.isdlc == 1 ">
+                        <span class="text-danger fnb">{{acpexpdate | date : dateformat}}</span><br>
+                        <span class="text-muted">Accept&nbsp;<span class="text-danger">{{crline.dlcwarehouse}}</span> Days</span>
+                    </div>
+
+                </div>
+                <div class="row mg-0 ln">
+                    <div class="col-md-1 lh-1e">Dimension<br>Weight</div>
+                    <div class="col-md-3 lh-1e">
+                        L&nbsp;:&nbsp;<span class="text-danger">{{crline.skulength}}</span>&nbsp;&nbsp;x&nbsp;&nbsp;
+                        W&nbsp;:&nbsp;<span class="text-danger">{{crline.skuwidth}}</span>&nbsp;&nbsp;x&nbsp;&nbsp;
+                        H&nbsp;:&nbsp;<span class="text-danger">{{crline.skuheight}}</span><br>
+                        <span class="text-danger">{{crline.skuweight}}</span> Kgs
+                    </div>
+
+                    <div class="col-md-1 lh-1e" *ngIf=" crline.isbatchno == 1 " >Batch No</div>
+                    <div class="col-md-2" *ngIf=" crline.isbatchno == 1 " >
+                        <div class="form-group mg-0">
+                            <input class="form-control  text-danger fnb" type="text" placeholder="" [(ngModel)]="opsline.batchno">
+                        </div> 
+                    </div>
+                    <div class="col-md-1 tx-overflow" *ngIf=" crline.isbatchno == 1 " >
+                        <span class="text-danger fnb">{{crline.lasbatchno }}</span><br>
+                        <span class="text-muted">Last batch no</span>
+                    </div>
+
+                    <div class="col-md-1 lh-1e" *ngIf=" crline.isunique == 1 "  >Serial No <br/>
+                        <span class="text-danger"></span>
+                    </div>
+                    <div class="col-md-2" *ngIf=" crline.isunique == 1 ">
+                        <div class="form-group mg-0">
+                            <input class="form-control fnb text-danger fnb" type="text" placeholder="" [(ngModel)]="opsline.serialno">
+                        </div> 
+                    </div>
+                    <div class="col-md-1 tx-overflow" *ngIf=" crline.isunique == 1 ">
+                        <span class="text-danger fnb">{{crline.lasserialno }}</span><br>
+                        <span class="text-muted">Last serial no</span>
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln">
+                    <div class="col-md-2 ln-1e ">
+                        <button type="button" class="btn snaps-primary btn-xs btn-block mp" (click)="commitline()" *ngIf="isbtnconf">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-all fn-palette-4" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M8.97 4.97a.75.75 0 0 1 1.071 1.05l-3.992 4.99a.75.75 0 0 1-1.08.02L2.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093L8.95 4.992a.252.252 0 0 1 .02-.022zm-.92 5.14l.92.92a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 1 0-1.091-1.028L9.477 9.417l-.485-.486-.943 1.179z"/>
+                              </svg>
+                            &nbsp;
+                            Confirm Receipt
+                        </button>
+                    </div>       
+                    
+
+                    <div class="col-md-2 lh-09e tx-overflow">
+                        <span class="">Unit Receive</span><br>
+                        1 <span class="text-danger"> {{slratio?.desc}} </span> = <span class="text-danger ">{{slratio?.value}}</span> SKU
+                    </div>
+                    <div class="col-md-2 ">
+                        <ng-select class="fn-1e5 " class="custom custom-sm" bindLabel="desc" bindvalue="value" 
+                            [clearable]="false"  [(ngModel)]="slratio" [items]="lsratio" (change)="cvSKU()"
+                            [disabled]="!syspam.allowchangeunit && opsorder.subtype != 'RW'">
+                            <ng-template ng-label-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                            <ng-template ng-option-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                        </ng-select>
+                    </div>
+
+                    <div class="col-md-1 lh-09e tx-right">
+                        PU<br>Quantity
+                     </div>
+                     <div class="col-md-1">
+                         <div class="form-group mg-0 tx-center">
+                             <input  class="form-control fnb text-danger tx-center" type="text" placeholder="Quantity" 
+                                     [(ngModel)]="opsline.qtypurec" 
+                                     (keyup)="cvSKU()" 
+                                     appOnlynumber max="{{crline.qtypnd}}">
+                         </div> 
+                     </div>
+
+                     <div class="col-md-1 lh-07e tx-center">
+                        <span class="text-danger ">{{opsline.qtyskurec}}</span><br><span class="text-muted"> SKU&nbsp;QTY. </span>
+                    </div>
+                    <div class="col-md-1 lh-07e tx-center">
+                        <span class="text-danger ">{{opsline.qtyhurec}}</span><br><span class="text-muted"> HU&nbsp;QTY. </span>
+                    </div>
+                    
+                    <div class="col-md-2 tx-right">
+                        <button type="button" class="btn snaps-warning btn-xs btn-block mp " (click)="saveline()"  *ngIf="isbtnsave">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check fn-palette-1" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M10.97 4.97a.75.75 0 0 1 1.071 1.05l-3.992 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.236.236 0 0 1 .02-.022z"/>
+                            </svg>
+                            &nbsp;
+                            Save Receipt
+                        </button>
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="head">
+                <div class="row mg-0 ln ">
+                    <div class="col-md-1 ">M.F.G&nbsp;Date</div>
+                    <div class="col-md-1 ">Expire&nbsp;Date</div>                         
+                    <div class="col-md-1 ">Batch&nbsp;no.</div>
+                    <div class="col-md-2 ">Serial&nbsp;No </div>
+                    <div class="col-md-1 tx-center ">Unit </div>
+                    <div class="col-md-1 tx-right ">PU </div>
+                    <div class="col-md-1 tx-right ">SKU </div>
+                    <div class="col-md-1 tx-right ">HU </div>
+                    <div class="col-md-3 ">State </div>
+                </div>
+            </div>
+
+            <div class="line bgsub-head dgstock" >
+                <ng-scrollbar>
+                <div class="row mg-0 ln mpswitch " *ngFor="let dn of crline?.details" >   
+                    <div class="col-md-1 text-primary tx-overflow"> {{dn.datemfg | date: dateformat}} </div>
+                    <div class="col-md-1 text-danger tx-overflow"> {{dn.dateexp  | date: dateformat}} </div>
+                    <div class="col-md-1 ">{{dn.batchno}} </div>
+                    <div class="col-md-2 text-danger"> {{dn.serialno}} </div>
+                    <div class="col-md-1 tx-right">{{ngDecUnit(dn.unitops)}} </div>
+                    <div class="col-md-1 tx-right">{{dn.qtypurec}} </div>
+                    <div class="col-md-1 tx-right">{{dn.qtyskurec}} </div>
+                    <div class="col-md-1 tx-right">{{dn.qtyhurec}} </div>
+                    <div class="col-md-3 text-truncate">
+                        <span *ngIf="dn.tflow == 'SV'">
+                            <div class="hd"  (click)="remline(dn)">                           
+                                <i class="fas fa-minus-circle fa-lg text-danger"></i>
+                                &nbsp;<span class="fnb">Remove item</span>
+                            </div>
+
+                            <div class="dp">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-question-diamond-fill" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M9.05.435c-.58-.58-1.52-.58-2.1 0L.436 6.95c-.58.58-.58 1.519 0 2.098l6.516 6.516c.58.58 1.519.58 2.098 0l6.516-6.516c.58-.58.58-1.519 0-2.098L9.05.435zM5.495 6.033a.237.237 0 0 1-.24-.247C5.35 4.091 6.737 3.5 8.005 3.5c1.396 0 2.672.73 2.672 2.24 0 1.08-.635 1.594-1.244 2.057-.737.559-1.01.768-1.01 1.486v.105a.25.25 0 0 1-.25.25h-.81a.25.25 0 0 1-.25-.246l-.004-.217c-.038-.927.495-1.498 1.168-1.987.59-.444.965-.736.965-1.371 0-.825-.628-1.168-1.314-1.168-.803 0-1.253.478-1.342 1.134-.018.137-.128.25-.266.25h-.825zm2.325 6.443c-.584 0-1.009-.394-1.009-.927 0-.552.425-.94 1.01-.94.609 0 1.028.388 1.028.94 0 .533-.42.927-1.029.927z"/>
+                                </svg> 
+                                &nbsp;<span class="fnb">Waiting to confirm</span>
+                            </div>
+                              
+                        </span>
+                        <span *ngIf="dn.tflow == 'ED'"> 
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmark-check-fill text-success" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M4 0a2 2 0 0 0-2 2v13.5a.5.5 0 0 0 .74.439L8 13.069l5.26 2.87A.5.5 0 0 0 14 15.5V2a2 2 0 0 0-2-2H4zm6.854 5.854a.5.5 0 0 0-.708-.708L7.5 7.793 6.354 6.646a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0l3-3z"/>
+                            </svg>
+                            &nbsp;<span class="fnb">Confirm</span>
+                        </span>&nbsp;on&nbsp;{{dn.datemodify | date : dateformatlong}}
+                    </div>
+                </div>
+                </ng-scrollbar>
+            </div>
+
+            <div class="foot bgsub-head fnb pd-5 mpswitch">
+                <div class="row mg-0">
+                    <div class="col-md-6 tx-right">Total &nbsp; &nbsp;<span class="text-danger">{{smlnitem}}</span> &nbsp; &nbsp; Lines</div>
+                    <div class="col-md-1 tx-right">{{smlnpu}}</div>
+                    <div class="col-md-1 tx-right text-primary">{{smlnsku}}</div>
+                    <div class="col-md-1 tx-right text-danger">{{smlnhu}}</div>
+                    <div class="col-md-3">
+                       
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>

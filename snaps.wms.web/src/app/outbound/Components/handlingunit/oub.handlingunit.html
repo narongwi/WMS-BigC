@@ -1,0 +1,365 @@
+<div class="bgsub-info">
+    <div class="bgprime" style="height: 44px;background-color: #ffffff;border-bottom: 1px solid #e0e0e0;"> </div>
+    <div class="container">
+        <div class="row " style="margin-top:-34px">
+            <ul ngbNav #nav="ngbNav" [(activeId)]="crtab" class="nav-tabs" [destroyOnHide]="false">
+                <li [ngbNavItem]="1">
+                    <a ngbNavLink class="w150 fn fn-07e">Handerling Unit </a>
+                    <ng-template ngbNavContent>
+
+                        <div class="row mg-0">
+
+                            <div class="col-md-7 fnb fn ">
+                                <span class="fn-palette-1">Handerling Unit</span>&nbsp;<i class="fas fa-chevron-right fa-xs"></i>&nbsp;<span class="fn-palette-5"> Management</span>
+                            </div>
+
+                            <div class="col-md-3 ">
+                                <div class="input-group fnb">
+                                    <input class="form-control fn-07e fnb text-danger " placeholder="HU no" [(ngModel)]="pm.huno">
+                                    <div class="input-group-append">
+                                        <button type="button" class="btn snaps-btngroup btn-prime " (click)="fnd();">
+                              <i class="fas fa-search fa-sm"></i>
+                          </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-2 text-right">
+                                <div class="d-grid gap-2">
+
+                                    <ng-template #popContent>
+                                        <div style="width:280px" class="fn fn-07e fnb">
+                                            <div class="row ln  pd-5 ">
+                                                <div class="col-md-4 pdt-5">Handling type</div>
+                                                <div class="col-md-8">
+                                                    <ng-select class="b text-danger" class="custom custom-sm" bindLabel="huno" bindvalue="huno" [clearable]="true" [(ngModel)]="slhandling" [items]="lshandling">
+                                                        <ng-template ng-label-tmp let-item="item"><span class="text-danger b">{{item.huno}}</span> </ng-template>
+                                                        <ng-template ng-option-tmp let-item="item"><span class="text-danger b">{{item.huno}}</span> </ng-template>
+                                                    </ng-select>
+                                                    <!-- <ng-select class="custom" [items]="lshandling" bindLabel="huno" bindvalue="huno" [clearable]="false" [(ngModel)]="slcgentype" (change)="seltype()">
+                                                      <ng-template ng-label-tmp let-item="item"><span class="text-danger fnb">{{item.huno}}</span> </ng-template>
+                                                      <ng-template ng-option-tmp let-item="item"><span class="text-danger fnb">{{item.huno}}</span> </ng-template>
+                                                  </ng-select> -->
+                                                </div>
+                                            </div>
+                                            <div class="row ln pd-5">
+                                                <div class="col-md-4 pdt-5">HU No</div>
+                                                <div class="col-md-8">
+                                                    <input class="form-control form-control-sm  text-danger " type="text" placeholder="Code or Name" [(ngModel)]="pm.huno">
+                                                </div>
+                                            </div>
+                                            <div class="row ln pd-5">
+                                                <div class="col-md-4 pdt-5">Route</div>
+                                                <div class="col-md-8">
+                                                    <input class="form-control form-control-sm  text-danger " type="text" placeholder="Order No" [(ngModel)]="pm.routeno">
+                                                </div>
+                                            </div>
+                                            <div class="row ln pd-5">
+                                                <div class="col-md-4 pdt-5">Third party</div>
+                                                <div class="col-md-8">
+                                                    <input class="form-control form-control-sm  text-danger " type="text" placeholder="Code or Description" [(ngModel)]="pm.thcode">
+                                                </div>
+                                            </div>
+                                            <div class="row ln pd-5">
+                                                <div class="col-md-4 pdt-5">Location</div>
+                                                <div class="col-md-8">
+                                                    <input class="form-control form-control-sm  text-danger " type="text" placeholder="Code or Description" [(ngModel)]="pm.loccode">
+                                                </div>
+                                            </div>
+                                            <div class="row ln pd-5">
+                                                <div class="col-md-4 pdt-5">State</div>
+                                                <div class="col-md-8">
+                                                    <ng-select class=" text-danger" class="custom custom-sm" bindLabel="desc" bindvalue="value" [clearable]="true" [(ngModel)]="slcstate" [items]="lsstate">
+                                                        <ng-template ng-label-tmp let-item="item"><span class="text-danger b">{{item.desc}}</span> </ng-template>
+                                                        <ng-template ng-option-tmp let-item="item"><span class="text-danger b">{{item.desc}}</span> </ng-template>
+                                                    </ng-select>
+                                                </div>
+                                            </div>
+                                            <div class="row pd-5">
+                                                <div class="col-md-4">&nbsp;</div>
+                                                <div class="col-md-8">
+                                                    <div class="d-grid gap-2">
+
+                                                        <button type="button" class="btn snaps-warning btn-block mp " (click)="fnd()">
+                                                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-search" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                        <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z"/>
+                                                        <path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>
+                                                    </svg>
+                                                    &nbsp;
+                                                    Filter Handling unit
+                                                </button>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ng-template>
+                                    <ng-template #popTitle>
+                                        <div style="width:280px">
+                                            <span class="fn fn-08e fnb">Search parameter</span>
+                                        </div>
+                                    </ng-template>
+                                    <button type="button" class="btn btn-secondary snaps-btnblank fn-07e" placement="bottom" [autoClose]="'outside'" [ngbPopover]="popContent" [popoverTitle]="popTitle">
+                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-funnel-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" d="M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.128.334L10 8.692V13.5a.5.5 0 0 1-.342.474l-3 1A.5.5 0 0 1 6 14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5v-2z"/>
+                                </svg> Parameters
+                            </button>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col-md-8 pdt-10">
+                                <div class="row mg-0 ">
+                                    <div class="col-md-12">
+                                        <div class="lsset fn fn-07e">
+                                            <div class="head">
+                                                <div class="row mg-0 ln ">
+                                                    <div class="col-md-2 ">HU.No</div>
+                                                    <div class="col-md-1 ">Route</div>
+                                                    <div class="col-md-1 ">HU.Type</div>
+                                                    <div class="col-md-1 ">Code</div>
+                                                    <div class="col-md-4 ">Name</div>
+                                                    <div class="col-md-3 ">State</div>
+                                                </div>
+                                            </div>
+
+                                            <div class="line bgsub-head dghus ">
+                                                <ng-scrollbar>
+                                                    <div class="row mg-0 ln  fnb" *ngFor="let ln of lshu  | slice: (page-1) * pageSize : page * pageSize | orderBy: lssort : lsreverse " (click)="selhu(ln)">
+                                                        <div class="col-md-2 text-danger">{{ln.huno}}</div>
+                                                        <div class="col-md-1 ">{{ln.routeno}}</div>
+                                                        <div class="col-md-1 ">{{ln.hutype}}</div>
+                                                        <div class="col-md-1 ">{{ln.thcode}}</div>
+                                                        <div class="col-md-4 text-truncate">{{ln.thname}}</div>
+                                                        <div class="col-md-3 ">
+                                                            <span class="text-dark">{{ngDecState(ln.tflow)}}</span> used <span class="{{ngDecColor(ln.crcapacity)}}">{{ ln.crcapacity}}</span>&nbsp;%</div>
+                                                    </div>
+                                                </ng-scrollbar>
+                                            </div>
+
+                                            <div class="foot bgsub-head fnb pd-5">
+                                                <div class="row mg-0">
+                                                    <div class="col-md-3 pdt-5">
+                                                        Total &nbsp; &nbsp;<span class="text-danger">{{lshu.length}}</span> &nbsp; &nbsp; HUs
+                                                    </div>
+                                                    <div class="col-md-2 text-right lh-08e">
+                                                        <div class="fn-06e fnb text-danger">Row Limit</div>
+                                                        <div class="fn-06e">Per Page</div>
+                                                    </div>
+                                                    <div class="col-md-2  " style="overflow-x : none !important;">
+                                                        <ng-select class=" text-danger" class="custom custom-sm" bindLabel="value" bindvalue="value" [clearable]="false" [(ngModel)]="slrowlmt" [items]="lsrowlmt" (change)="changerowlmt()">
+                                                            <ng-template ng-label-tmp let-item="item"><span class="text-danger b">{{item.value}}</span> </ng-template>
+                                                            <ng-template ng-option-tmp let-item="item"><span class="text-danger b">{{item.value}}</span> </ng-template>
+                                                        </ng-select>
+
+                                                    </div>
+                                                    <div class="col-md-2"></div>
+
+                                                    <div class="col-md-3">
+                                                        <ngb-pagination [(page)]="page" [pageSize]="pageSize" [collectionSize]="lshu.length" class="d-flex justify-content-end"></ngb-pagination>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+                            </div>
+
+                            <div class="col-md-4 pdt-10">
+                                <div class="lsset propset fn-07e">
+                                    <div class="head">
+                                        <div class="row mg-0 ln">
+                                            <div class="col-md-12 text-center">Generate Handerling unit</div>
+                                        </div>
+                                    </div>
+                                    <div class="line bgsub-head fn fn-07e fnb ">
+                                        <div class="row mg-0 ln ">
+                                            <div class="col-md-4"> <span class="text-dark fnb">HU.No</span> </div>
+                                            <div class="col-md-7">
+                                                <span class="text-danger fnb ">{{crhu.huno }}</span>
+
+                                            </div>
+                                            <div class="col-md-1">
+                                                <i class="fas fa-tag mp" (click)="getlabel(crhu.huno)" *ngIf="crhu.hutype == 'XE'"></i>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mg-0 ln ">
+                                            <div class="col-md-4"> <span class="text-dark fnb">HU.Type</span> </div>
+                                            <div class="col-md-8"> <span class="text-danger fnb ">{{crhu.hutype }}</span></div>
+                                        </div>
+                                        <div class="row mg-0 ln ">
+                                            <div class="col-md-4"> <span class="text-dark fnb">TH.code</span> </div>
+                                            <div class="col-md-8"> <span class="text-danger fnb ">{{crhu.thcode }}</span></div>
+                                        </div>
+                                        <div class="row mg-0 ln ">
+                                            <div class="col-md-4"> <span class="text-dark fnb">TH.name</span> </div>
+                                            <div class="col-md-8 text-truncate"> <span class="text-danger fnb ">{{crhu.thname }}</span></div>
+                                        </div>
+                                        <div class="row mg-0 ln ">
+                                            <div class="col-md-4"> <span class="text-dark fnb">Route</span> </div>
+                                            <div class="col-md-8 text-truncate"> <span class="text-danger fnb ">{{crhu.routeno }}</span></div>
+                                        </div>
+                                        <div class="row mg-0 ln ">
+                                            <div class="col-md-4"> <span class="text-dark fnb">Promotion</span> </div>
+                                            <div class="col-md-8 text-truncate"> <span class="text-danger fnb ">{{crhu.promo }}</span></div>
+                                        </div>
+                                    </div>
+                                    <div class="head">
+                                        <div class="row mg-0 ln">
+                                            <div class="col-md-4 tx-overflow">&nbsp; </div>
+                                            <div class="col-md-3 tx-center bd-right-1">Current</div>
+                                            <div class="col-md-3 tx-center">Maximum</div>
+                                            <div class="col-md-2 tx-left">&nbsp;</div>
+                                        </div>
+                                    </div>
+                                    <div class="line bgsub-head fn fn-07e fnb ">
+                                        <div class="row mg-0 ln ">
+                                            <div class="col-md-4 tx-overflow"> <span class="text-dark fnb">SKU</span> </div>
+                                            <div class="col-md-3 tx-center bd-right-1"> <span class="text-danger fnb ">{{crhu.crsku |number }}</span></div>
+                                            <div class="col-md-3 tx-center"> <span class="text-danger fnb ">{{crhu.mxsku |number }}</span></div>
+                                            <div class="col-md-2 tx-left"> <span class="text-dark ">SKU</span></div>
+                                        </div>
+                                        <div class="row mg-0 ln ">
+                                            <div class="col-md-4 tx-overflow"> <span class="text-dark fnb">Weight</span> </div>
+                                            <div class="col-md-3 tx-center bd-right-1"> <span class="text-danger fnb ">{{crhu.crweight |number }} </span></div>
+                                            <div class="col-md-3 tx-center"> <span class="text-danger fnb ">{{crhu.mxweight |number }}</span></div>
+                                            <div class="col-md-2 tx-left"> <span class="text-dark ">Kgs</span></div>
+                                        </div>
+                                        <div class="row mg-0 ln ">
+                                            <div class="col-md-4 tx-overflow"> <span class="text-dark fnb">Volume</span> </div>
+                                            <div class="col-md-3 tx-center bd-right-1"> <span class="text-danger fnb ">{{crhu.crvolume |number }}</span></div>
+                                            <div class="col-md-3 tx-center"> <span class="text-danger fnb ">{{crhu.mxvolume |number }}</span></div>
+                                            <div class="col-md-2 tx-left"> <span class="text-dark ">cm3</span></div>
+                                        </div>
+
+                                        <dic class="row mg-0">
+                                            <div class="lsset pd-0 bd-0" style="border:0px">
+                                                <div class="head bd-0">
+                                                    <div class="row mg-0 pd-5">
+                                                        <div class="col-md-9">Product</div>
+                                                        <div class="col-md-3 tx-center">Quantity</div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="line fn fn-06e dglines">
+                                                    <ng-scrollbar>
+                                                        <div class="row mg-0 ln" *ngFor="let ln of lsitem">
+                                                            <div class="col-md-9 ln-07e text-truncate"><span class="text-primary">{{ln.article}}</span><br>{{ln.descalt}}</div>
+                                                            <div class="col-md-3 ln-07e tx-center text-danger"><span class="text-primary">{{ln.qtypu}}</span><br>{{ngDecUnitstock(ln.unitprep)}}</div>
+                                                        </div>
+                                                    </ng-scrollbar>
+                                                </div>
+                                            </div>
+                                        </dic>
+
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                    </ng-template>
+                </li>
+
+                <li [ngbNavItem]="2">
+                    <a ngbNavLink class="w150 fn fn-07e">HU.Generate </a>
+                    <ng-template ngbNavContent>
+                        <div class="col-md-4">
+                            <div class="lsset propset fn-07e m">
+                                <div class="head">
+                                    <div class="row mg-0 ln">
+                                        <div class="col-md-12 text-center">Generate Handerling unit</div>
+                                    </div>
+                                </div>
+                                <div class="line bgsub-head fn fn-07e fnb ">
+                                    <div class="row mg-0 ln ">
+                                        <div class="col-md-4 text-dark pdt-5">HU area</div>
+                                        <div class="col-md-8">
+                                            <ng-select class="custom" [items]="lstype" bindLabel="desc" bindvalue="desc" [clearable]="false" [(ngModel)]="slctype">
+                                                <ng-template ng-label-tmp let-item="item"><span class="text-danger fnb">{{item.desc }} </span> </ng-template>
+                                                <ng-template ng-option-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                                            </ng-select>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mg-0 ln ">
+                                        <div class="col-md-4 text-dark pdt-5">HU Type</div>
+                                        <div class="col-md-8">
+                                            <ng-select class="custom" [items]="lshandling" bindLabel="huno" bindvalue="huno" [clearable]="false" [(ngModel)]="slcgentype" (change)="seltype()">
+                                                <ng-template ng-label-tmp let-item="item"><span class="text-danger fnb">{{item.huno}}</span> </ng-template>
+                                                <ng-template ng-option-tmp let-item="item"><span class="text-danger fnb">{{item.huno}}</span> </ng-template>
+                                            </ng-select>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mg-0 ln">
+                                        <div class="col-md-4 text-dark pdt-5">All Store</div>
+                                        <div class="col-md-8">
+                                            <ui-switch checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" [(ngModel)]="crgen.isallstore"></ui-switch>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mg-0 ln ">
+                                        <div class="col-md-4 text-dark pdt-5">Promo.</div>
+                                        <div class="col-md-8">
+                                            <input type="text" class="form-control form-control-sm" placeholder="Promotion code" [(ngModel)]="crgen.promo">
+                                        </div>
+                                    </div>
+                                    <div class="row mg-0 ln ">
+                                        <div class="col-md-4 text-dark pdt-5">Third party.</div>
+                                        <div class="col-md-8">
+                                            <input type="text" class="form-control form-control-sm" placeholder="Supplier code or Customer code" [(ngModel)]="crgen.thcode">
+                                        </div>
+                                    </div>
+                                    <div class="row mg-0 ln ">
+                                        <div class="col-md-2"> <span class="text-dark fnb">Max.SKU</span> </div>
+                                        <div class="col-md-3"> <span class="text-danger fnb ">{{crgen?.huno | number }}</span></div>
+                                    </div>
+
+                                    <div class="row mg-0 ln ">
+                                        <div class="col-md-2"> <span class="text-dark fnb">Max.weight</span> </div>
+                                        <div class="col-md-3"> <span class="text-danger fnb ">{{crgen?.mxweight | number }}</span></div>
+                                    </div>
+
+                                    <div class="row mg-0 ln ">
+                                        <div class="col-md-4 text-dark pdt-5">Quantity.</div>
+                                        <div class="col-md-8">
+                                            <input type="text" class="form-control form-control-sm" placeholder="Quantity" [(ngModel)]="crgen.quantity" appOnlynumber>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="row mg-0 ln ">
+                                        <div class="col-md-4"> </div>
+                                        <div class="col-md-8 fnb">
+                                            <button type="button" class="btn snaps-primary btn-xs btn-block mp" (click)="confirm()">
+                              <i class="fas fa-check-circle "></i>
+                              &nbsp;
+                              Generate
+                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2"></div>
+                    </ng-template>
+                </li>
+
+            </ul>
+            <div [ngbNavOutlet]="nav" class="mt-2"></div>
+
+        </div>
+    </div>
+</div>

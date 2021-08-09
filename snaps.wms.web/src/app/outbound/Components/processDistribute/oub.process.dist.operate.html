@@ -1,0 +1,156 @@
+<div class="row">
+    <div class="col-md-10 fnb fn pdt-5">
+        <span class="fn-palette-1">Process</span>&nbsp;<i class="fas fa-chevron-right fa-xs"></i>&nbsp;<span class="fn-palette-5"> Distribution</span>&nbsp;<i class="fas fa-chevron-right fa-xs"></i>&nbsp;<span class="text-muted"> Operate</span>
+    </div>
+    <div class="col-md-2 text-right">
+        <div class="d-grid gap-2">    
+            <button type="button" class="btn btn-secondary snaps-warning fn-07e" placement="bottom"(click)="preprocessorder()">
+                <i class="fas fa-check-circle fa-lg"></i>&nbsp;&nbsp;                
+                Generate Plan
+            </button>
+
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 pdt-10">
+        <div class="lsset fn-07e "> 
+
+            <div class="head">
+                <div class="row mg-0 ln ">
+                    <div class="col-md-1 ">Inbound</div>
+                    <div class="col-md-2 ">Supplier </div>  
+                    <div class="col-md-1 ">Product</div>                                    
+                    <div class="col-md-3 ">Description</div>                                     
+                    <div class="col-md-1 ">HU.No</div>
+                    <div class="col-md-1 tx-center">Location</div>
+                    <div class="col-md-1 tx-center">Stock</div>                          
+                    <div class="col-md-2 tx-center  ">Select </div>
+                </div>
+            </div>
+
+            <div class="line bgsub-head dgorder ">
+                <ng-scrollbar>
+                <div class="row mg-0 ln  fnb" *ngFor="let ln of lsorder  | slice: (page-1) * pageSize : page * pageSize | orderBy: lssort : lsreverse " (click)="getinfo(ln)">                                    
+                    <div class="col-md-1 text-primary text-truncate">{{ln.ouorder}} &nbsp;
+                        <span class="fas fa-star text-warning w20 fa-sm" *ngIf="ln.inpriority > 0"></span> </div>
+                    <div class="col-md-2 text-truncate">{{ln.thcode}} : {{ln.thname}}</div>   
+                    <div class="col-md-1 text-danger">{{ln.disproduct}}</div>                                 
+                    <div class="col-md-3 text-truncate">{{ln.disproductdesc}}</div>
+                    <div class="col-md-1 text-danger">{{ln.dishuno }}</div>                    
+                    <div class="col-md-1 tx-center text-danger">{{ ln.disloccode }}</div>
+                    <div class="col-md-1 tx-center text-primary">{{ln.disqtypnd | number}} &nbsp;{{ngDecUnitstock(ln.disunitops)}}</div>
+                    <div class="col-md-2 tx-center">
+                        <span class="fas fa-check-circle text-primary fa-lg"></span>
+                        &nbsp;&nbsp;{{ln.dateremarks}}
+                    </div>
+                </div>
+                </ng-scrollbar>
+            </div>
+
+            <div class="foot bgsub-head fnb pd-5">
+                <div class="row mg-0">
+                    <div class="col-md-2 pdt-5">
+                        Total &nbsp; &nbsp;<span class="text-danger">{{lsorder.length}}</span> &nbsp; &nbsp; Orders
+                    </div>
+                    
+                    <div class="col-md-1 text-right lh-08e">
+                        <div class="fn-06e fnb text-danger">Row Limit</div>
+                        <div class="fn-06e">Per Page</div>
+                    </div>
+                    <div class="col-md-1">
+
+                        <ng-select class=" text-danger"  class="custom custom-sm" bindLabel="value" bindvalue="value" 
+                                    [clearable]="false"  [(ngModel)]="slrowlmt" [items]="lsrowlmt" (change)="changerowlmt()" >
+                            <ng-template ng-label-tmp let-item="item"><span class="text-danger b">{{item.value}}</span> </ng-template>
+                            <ng-template ng-option-tmp let-item="item"><span class="text-danger b">{{item.value}}</span> </ng-template>
+                        </ng-select>
+                    
+                    </div>
+                    <div class="col-md-5"></div>
+                    <div class="col-md-3">
+                        <ngb-pagination [(page)]="page" [pageSize]="pageSize" [collectionSize]="lsorder.length" class="d-flex justify-content-end" ></ngb-pagination>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+</div>
+
+<div class="row ">
+    <div class="col-md-12 pdt-10 fn-07e">
+        <div class="propset lsset pd-0 fnb "> 
+            <div class="head" >
+                <div class="row mg-0 ln ">
+                    <div class="col-md-12 ">Order Detail  </div>
+                </div>
+            </div>                         
+            <div class="line bgsub-head " >
+                <div class="row mg-0 ln " >
+                    <div class="col-md-1">Inb.Order</div>
+                    <div class="col-md-1 text-danger text-truncate">{{slcinorder}} </div> 
+                    <div class="col-md-1">Product </div>                        
+                    <div class="col-md-1 text-danger">{{slcproduct }}</div>    
+                    <div class="col-md-4">{{slcprodesc}}</div> 
+                    
+                    <div class="col-md-1 tx-right">HU.no</div>
+                    <div class="col-md-1 text-primary">{{ slchuno }}</div> 
+                    <div class="col-md-1 tx-overflow">Unit Distribution</div>
+                    <div class="col-md-1 tx-center text-danger">{{slcunitprep }}</div>                                      
+                </div>
+
+                <div class="row mg-0 ln " >
+                    <div class="col-md-1">Third party </div>
+                    <div class="col-md-1 text-danger">{{slcthcode}}</div>     
+                    <div class="col-md-8">{{slcthname}}</div> 
+                    <div class="col-md-1">Stock {{slcunitprep }}  </div>
+                    <div class="col-md-1 tx-center text-danger">{{ disqtypnd | number }}</div>                  
+                </div>
+
+                <div class="row mg-0 ln pd-0" >
+                    <div class="lsset  pd-0 " style="border: 0px !important;"> 
+                        <div class="head">
+                            <div class="row mg-0 ln ">
+                                <div class="col-md-1 ">Customer</div>
+                                <div class="col-md-1 ">Order No</div>
+                                <div class="col-md-1 ">Order Ref</div>  
+                                <div class="col-md-4 ">Customer name</div>
+                                <div class="col-md-1 ">Batch no</div>  
+                                <div class="col-md-1 ">M.F.G Date</div>   
+                                <div class="col-md-1 ">E.X.P Date</div>     
+                                <div class="col-md-1 tx-center">Unit</div>   
+                                <div class="col-md-1 tx-center">Quantity</div>
+                            </div>
+                        </div>
+            
+                        <div class="line bgsub-head  " style="height: 437px;" >
+                            <div class="row mg-0 ln  fnb" *ngFor="let ds of slclines">
+                                <div class="col-md-1 text-danger">{{ds.disthcode}}</div> 
+                                <div class="col-md-1 text-danger">{{ds.ouorder}}</div>
+                                <div class="col-md-1 text-danger">{{ds.ourefno}}</div> 
+                                <div class="col-md-4 text-truncate">{{ds.disthname}}</div>
+                                <div class="col-md-1 text-truncate">{{ds.batchno}}</div>
+                                <div class="col-md-1 text-truncate">{{ds.datemfg}}</div>
+                                <div class="col-md-1 text-truncate">{{ds.dateexp}}</div>
+                                <div class="col-md-1 tx-center">{{ngDecUnitstock(ds.unitops)}}</div>
+                                <div class="col-md-1 tx-center text-danger">{{ds.qtypu}}</div>
+                            </div>
+                        </div>
+
+                        <div class="head bd-0">
+                            <div class="row mg-0 ln ">
+                                <div class="col-md-10 text-right">Summary</div>
+                                <div class="col-md-2  text-right text-danger">1</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div> 

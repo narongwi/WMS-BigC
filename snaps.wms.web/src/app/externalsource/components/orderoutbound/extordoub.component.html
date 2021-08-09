@@ -1,0 +1,62 @@
+<div class="bgsub-info fnb fn-07e">
+    <div class="bgprime" style="height: 44px;background-color: #ffffff;border-bottom: 1px solid #e0e0e0;"> </div>
+    <div class="container">        
+        <div class="row " style="margin-top:-34px">
+            <ul ngbNav #nav="ngbNav" [(activeId)]="crtab" class="nav-tabs" [destroyOnHide]="false">
+                <li [ngbNavItem]="1">
+                  <a ngbNavLink class=" fn fn-07e">Outbound Header</a>
+                  <ng-template ngbNavContent> 
+                        <appext-ordoubsource #line
+                            [dateformat]="dateformat"
+                            [dateformatlong]="dateformatlong"
+                            [pageSize]="pageSizge"
+                        ></appext-ordoubsource>
+                    </ng-template>
+                </li>
+                <li [ngbNavItem]="2">
+                    <a ngbNavLink class=" fn fn-07e">Outbound Header Import</a>
+                    <ng-template ngbNavContent> 
+                        <div class="row">
+                            <div class="col-md-6 fn-09e pdt-5">
+                                <span class="fn-palette-1">External Source</span>&nbsp;<i class="fas fa-chevron-right fa-xs"></i>&nbsp; Outbound Order <span class="fn-palette-5">Header</span> Import
+                            </div>
+                        </div>
+                        <div class="row">
+                        <div class="uploadfilecontainer" (click)="fileInput.click()" appDragDrop (onFileDropped)="meUploadEvent($event)">
+                            <input type="file" #fileInput (change)="meUploadEvent($event.target.files)" style="display: none !important;">
+                        </div>
+                        <div class="text-center">Support Json, Csv, Excel file format</div>
+                        <div  class="files-list" *ngFor="let file of files;let i= index">
+                            <p> {{ file }} </p>
+                            <button class="delete-file" (click)="deleteAttachment(i)">
+                            <img src="../../assets/Recycle_Bin_Full.png" sizes="80">
+                            </button>
+                        </div>
+                        </div>
+                    </ng-template>
+                  </li>
+
+                <li [ngbNavItem]="3">
+                    <a ngbNavLink class=" fn fn-07e">Outbound Line </a>
+                    <ng-template ngbNavContent> 
+                        <appext-ordoulsource
+                            [dateformat]="dateformat"
+                            [dateformatlong]="dateformatlong"
+                            [pageSize]="pageSizge"
+                        ></appext-ordoulsource>
+                    </ng-template>
+                </li>
+               
+                <li [ngbNavItem]="4">
+                    <a ngbNavLink class=" fn fn-07e">Outbound Line Import</a>
+                    <ng-template ngbNavContent> 
+                        <appext-ordoulcomponent ></appext-ordoulcomponent>
+                    </ng-template>
+                </li>
+              </ul>
+              
+              <div [ngbNavOutlet]="nav" class="mt-2"></div>
+
+        </div>
+    </div>
+</div>

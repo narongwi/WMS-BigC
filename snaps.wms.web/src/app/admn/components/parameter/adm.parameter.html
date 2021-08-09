@@ -1,0 +1,137 @@
+
+
+<div class="bgsub-info">
+    <div class="bgprime" style="height: 44px;background-color: #ffffff;border-bottom: 1px solid #e0e0e0;"> </div>
+    <div class="container">
+        
+        <div class="row fn fn-07e" style="margin-top:-34px">
+            <ul ngbNav #nav="ngbNav" [(activeId)]="crtab" class="nav-tabs" [destroyOnHide]="false">
+                <li [ngbNavItem]="1">
+                  <a ngbNavLink class="w150 ">Data master</a>
+                    <ng-template ngbNavContent> 
+                        <app-admpammaster></app-admpammaster>
+                    </ng-template>
+                </li>
+                <li [ngbNavItem]="2">
+                  <a ngbNavLink class="w150 ">Inbound</a>
+                  <ng-template ngbNavContent> 
+                      <app-admpaminbound></app-admpaminbound>
+                    </ng-template>
+                </li>
+
+                <li [ngbNavItem]="3">
+                    <a ngbNavLink class="w150 ">Taskmovement</a>
+                    <ng-template ngbNavContent> 
+                        <app-admpamtaskmove></app-admpamtaskmove>
+                    </ng-template>
+                </li>
+
+                <li [ngbNavItem]="4">
+                    <a ngbNavLink class="w150 ">Inventory</a>
+                    <ng-template ngbNavContent> 
+                        <app-admpaminventory></app-admpaminventory>
+                    </ng-template>
+                </li>
+
+                <li [ngbNavItem]="5">
+                    <a ngbNavLink class="w150 ">Preparation</a>
+                    <ng-template ngbNavContent> 
+                        <app-admpampreparation></app-admpampreparation> 
+                        
+                    </ng-template>
+                </li>
+
+                <li [ngbNavItem]="6">
+                    <a ngbNavLink class="w150 ">Outbound</a>
+                    <ng-template ngbNavContent> 
+                        <app-admpamoutbound></app-admpamoutbound>
+                    </ng-template>
+                </li>
+
+              </ul>
+              
+              <div [ngbNavOutlet]="nav" class="mt-2"></div>
+
+        </div>
+    </div>
+</div>
+
+
+<!-- <div class="bgsub-head">
+    <div class="container">
+
+        <div class="row bgsub-head bd-bottom-1 pdt-25">
+            <div class="col-md-9">
+                <ul class="nav nav-tabs h6" id="myTab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link" id="datamaster-tab" data-toggle="tab" href="#datamaster" role="tab" aria-controls="datamaster" aria-selected="true">Data master</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" id="inbound-tab" data-toggle="tab" href="#inbound" role="tab" aria-controls="inbound" aria-selected="true">Inbound</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" id="taskmove-tab" data-toggle="tab" href="#taskmove" role="tab" aria-controls="taskmove" aria-selected="true">Taskmovement</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="inventory-tab" data-toggle="tab" href="#inventory" role="tab" aria-controls="inventory" aria-selected="true">Inventory</a>
+                    </li> 
+                    <li class="nav-item">
+                        <a class="nav-link" id="preparation-tab" data-toggle="tab" href="#preparation" role="tab" aria-controls="preparation" aria-selected="true">Preparation</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="outbound-tab" data-toggle="tab" href="#outbound" role="tab" aria-controls="outbound" aria-selected="true">Outbound</a>
+                    </li>
+                   
+                   
+                </ul>
+            </div>
+
+            <div class="col-md-3 lh-1e2 text-right">
+                <span class="fn-3e fnb">
+                    Parameter
+                </span><br/>
+                <span class="fn-1e text-dark fnb">
+                    Configuration parameter 
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="bgsub-info">
+    <div class="container">
+        <div class="row bgsub-info">
+            <div class="tab-content" id="myTabContent">
+
+                <div class="tab-pane fade" id="datamaster" role="tabpanel" aria-labelledby="datamaster-tab">
+                    <app-admpammaster></app-admpammaster>
+                </div>
+
+                <div class="tab-pane fade" id="inbound" role="tabpanel" aria-labelledby="inbound-tab">
+                    <app-admpaminbound></app-admpaminbound>
+                </div>
+
+                <div class="tab-pane fade" id="taskmove" role="tabpanel" aria-labelledby="taskmove-tab">
+                    <app-admpamtaskmove></app-admpamtaskmove>
+                </div>
+
+                <div class="tab-pane fade" id="inventory" role="tabpanel" aria-labelledby="inventoy-tab">
+                    <app-admpaminventory></app-admpaminventory>
+                </div>
+
+                <div class="tab-pane fade" id="outbound" role="tabpanel" aria-labelledby="outbound-tab">
+                    <app-admpamoutbound></app-admpamoutbound>
+                </div>
+
+                <div class="tab-pane fade" id="preparation" role="tabpanel" aria-labelledby="preparation-tab">
+                    <app-admpampreparation></app-admpampreparation> 
+                </div>
+
+            </div>
+
+            
+            
+        </div>
+    </div>
+</div> -->

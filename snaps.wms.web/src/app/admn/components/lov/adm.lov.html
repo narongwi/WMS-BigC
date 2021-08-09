@@ -1,0 +1,144 @@
+<div class="bgsub-info">
+    <div class="bgprime" style="height: 44px;background-color: #ffffff;border-bottom: 1px solid #e0e0e0;"> </div>
+    <div class="container">        
+        <div class="row " style="margin-top:-34px">
+            <ul ngbNav #nav="ngbNav" [(activeId)]="crtab" class="nav-tabs" [destroyOnHide]="false">
+                <li [ngbNavItem]="1">
+                  <a ngbNavLink class="fn fn-07e">List of Value</a>
+                  <ng-template ngbNavContent>
+                    
+                    <div class="row mg-0 fnb fn-07e">
+                        <div class="col-md-7">
+                            <div class="lsset ">
+                                <div class="head">
+                                    <div class="row mg-0 ln ">
+                                        <div class="col-md-8 ">List of value</div>
+                                        <div class="col-md-4 "> </div>
+                                    </div>
+                                </div>                            
+                                <div class="line bgsub-head fnb dgline ">
+                                    <ng-scrollbar>
+                                        <div class="row mg-0 ln " *ngFor="let ln of lstdesc" (click)="ngGetline(ln)">
+                                            <div class="col-md-2">{{ln.bncode}}</div>
+                                            <div class="col-md-3 fn fn-palette-6">{{ln.bnvalue}}</div>
+                                            <div class="col-md-5 tx-right">{{ln.bndesc}} </div>
+                                            <div class="col-md-2 tx-right"><span class="fa {{getIcon(ln.bnstate)}}"></span>&nbsp;{{getDesc(ln.bnstate)}} </div>
+                    
+                                        </div>
+                                    </ng-scrollbar>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-5">
+                            <div class="lsset ">
+                                <div class="head">
+                                    <div class="row mg-0 ln ">
+                                        <div class="col-md-8 ">LOV Configuration</div>
+                                        <div class="col-md-4 "> </div>
+                                    </div>
+                                </div>                            
+                                <div class="line bgsub-head fnb ">
+
+                                    <div class="lsset ">
+                                        <div class="head">
+                                            <div class="row mg-0 ln ">
+                                                <div class="col-md-2 ">Code</div>
+                                                <div class="col-md-7 ">Description</div>
+                                                <div class="col-md-3 ">Status</div>
+                                            </div>
+                                        </div>                            
+                                        <div class="line bgsub-head fnb dgvalue ">
+                                            <ng-scrollbar>
+                                                <div class="row mg-0 ln " *ngFor="let ln of lines" (click)="ngSelc(ln)">
+                                                    <div class="col-md-2 text-danger">{{ln.bnvalue}}</div>
+                                                    <div class="col-md-7 ">{{ln.bndesc}}</div>
+                                                    <div class="col-md-3 "><span class="fa {{getIcon(ln.bnstate)}}"></span>&nbsp;{{getDesc(ln.bnstate)}} </div>                            
+                                                </div>
+                                            </ng-scrollbar>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="lsset mgt-10 ">
+                                <div class="head">
+                                    <div class="row mg-0 ln ">
+                                        <div class="col-md-8 ">LOV Configuration</div>
+                                        <div class="col-md-4 "><div class="mp" (click)="ngNew()"><i class="fas fa-plus-circle"></i>&nbsp;New Config</div></div>
+                                    </div>
+                                </div>                            
+                                <div class="line bgsub-head fnb ">
+
+                                    <div class="lsset ">
+                                        <div class="line bgsub-head fnb  ">
+                                            <div class="row mg-0 ln">
+                                                <div class="col-md-3">Config Type</div>
+                                                <div class="col-md-7">{{cr.bntype}}</div>
+                                            </div>
+                                            <div class="row mg-0 ln">
+                                                <div class="col-md-3">Config Code</div>
+                                                <div class="col-md-7">{{cr.bncode}}</div>
+                                            </div>
+                                            <div class="row mg-0 ln">
+                                                <div class="col-md-3">Config value</div>
+                                                <div class="col-md-3">
+                                                    <span  *ngIf="cr.bnstate != 'NW'">{{cr.bnvalue}}</span>
+                                                    <input *ngIf="cr.bnstate == 'NW'" class="form-control form-control-sm fnb text-danger " type="text" placeholder="value" [(ngModel)]="cr.bnvalue">
+                                                </div>
+                                            </div>
+                                            <div class="row mg-0 ln">
+                                                <div class="col-md-3 lh-09e">Config<br>Desc</div>
+                                                <div class="col-md-6"><input class="form-control form-control-sm fnb text-danger " type="text" placeholder="value" [(ngModel)]="cr.bndesc"></div>
+                                            </div>
+                                            <div class="row mg-0 ln">
+                                                <div class="col-md-3 lh-09e">Config<br>Desc.alt</div>
+                                                <div class="col-md-6"><input class="form-control form-control-sm fnb text-danger " type="text" placeholder="value" [(ngModel)]="cr.bndescalt"></div>
+                                            </div>
+                                            <div class="row mg-0 ln">
+                                                <div class="col-md-3 lh-09e">Config<br>Flex 1</div>
+                                                <div class="col-md-6"><input class="form-control form-control-sm fnb text-danger " type="text" placeholder="value" [(ngModel)]="cr.bnflex1"></div>
+                                            </div>
+                                            <div class="row mg-0 ln">
+                                                <div class="col-md-3 lh-09e">Config<br>Flex 2</div>
+                                                <div class="col-md-6"><input class="form-control form-control-sm fnb text-danger " type="text" placeholder="value" [(ngModel)]="cr.bnflex2"></div>
+                                            </div>
+                                            <div class="row mg-0 ln">
+                                                <div class="col-md-3 lh-09e">Config<br>Flex 3</div>
+                                                <div class="col-md-6"><input class="form-control form-control-sm fnb text-danger " type="text" placeholder="value" [(ngModel)]="cr.bnflex3"></div>
+                                            </div>
+                                            <div class="row mg-0 ln">
+                                                <div class="col-md-3 lh-09e">Config<br>Flex 4</div>
+                                                <div class="col-md-6"><input class="form-control form-control-sm fnb text-danger " type="text" placeholder="value" [(ngModel)]="cr.bnflex4"></div>
+                                            </div>
+                                            <div class="row mg-0 ln">
+                                                <div class="col-md-3 lh-09e">Config<br>Icon</div>
+                                                <div class="col-md-6"><input class="form-control form-control-sm fnb text-danger " type="text" placeholder="value" [(ngModel)]="cr.bnicon"></div>
+                                            </div>
+                                            <div class="row mg-0 ln">
+                                                <div class="col-md-3 lh-09e">Config<br>Status</div>
+                                                <div class="col-md-3 "><ui-switch checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" [(ngModel)]="crstate" ></ui-switch> </div>
+                                                <div class="col-md-6">
+                                                    <button type="button" class="btn snaps-primary btn-block mp" (click)="ngUpsert()">
+                                                        <i class="fas fa-check-circle"></i>
+                                                        &nbsp;
+                                                        Save Configuratuin
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                  </ng-template>
+                </li>
+              </ul>
+              
+              <div [ngbNavOutlet]="nav" class="mt-2"></div>
+
+        </div>
+    </div>
+</div>

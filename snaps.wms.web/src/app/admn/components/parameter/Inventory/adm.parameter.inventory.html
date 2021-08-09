@@ -1,0 +1,380 @@
+<div class="row pdt-10">
+
+    <div class="col-md-12 fn fn-palette-1 ">
+        <div class="lsset fnb ">
+            <div class="head">
+                <div class="row mg-0 ln ">
+                    <div class="col-md-10">Correction Stock</div>
+                    <div class="col-md-2 ">Last modify</div>
+                </div>
+            </div>
+        
+            <div class="line bgsub-head ">
+
+
+                <div class="row mg-0 ln pd-8" *ngIf="csallowblankremarks">
+                    <div class="col-md-9 col-xs-10 lh-1e">
+                        <span class="">{{csallowblankremarks.pmdesc}}</span><br />
+                        <span class="text-muted">{{csallowblankremarks.pmdescalt}}</span>
+                    </div>
+                    <div class="col-md-1 col-xs-2 pdt-3">
+                        <ui-switch  checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" 
+                                    [(ngModel)]="csallowblankremarks.pmvalue" (change)="save(csallowblankremarks)"
+                        ></ui-switch>
+                    </div>
+                    <div class="col-md-2 lh-1e">
+                        <span class="text-danger fnb">{{csallowblankremarks.datemodify | date : dateformatlong }}</span><br>
+                        <span class="text-muted">{{csallowblankremarks.accnmodify}}</span>
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln pd-8" *ngIf="csallowchangeunit">
+                    <div class="col-md-9 col-xs-10 lh-1e">
+                        <span class="">{{csallowchangeunit.pmdesc}}</span><br />
+                        <span class="text-muted">{{csallowchangeunit.pmdescalt}}</span>
+                    </div>
+                    <div class="col-md-1 col-xs-2 pdt-3">
+                        <ui-switch  checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" 
+                                    [(ngModel)]="csallowchangeunit.pmvalue" (change)="save(csallowchangeunit)"
+                        ></ui-switch>
+                    </div>
+                    <div class="col-md-2 lh-1e">
+                        <span class="text-danger fnb">{{csallowchangeunit.datemodify | date : dateformatlong }}</span><br>
+                        <span class="text-muted">{{csallowchangeunit.accnmodify}}</span>
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln pd-8" *ngIf="csallowblankrefereceno">
+                    <div class="col-md-9 col-xs-10 lh-1e">
+                        <span class="">{{csallowblankrefereceno.pmdesc}}</span><br />
+                        <span class="text-muted">{{csallowblankrefereceno.pmdescalt}}</span>
+                    </div>
+                    <div class="col-md-1 col-xs-2 pdt-3">
+                        <ui-switch  checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" 
+                                    [(ngModel)]="csallowblankrefereceno.pmvalue" (change)="save(csallowblankrefereceno)"
+                        ></ui-switch>
+                    </div>
+                    <div class="col-md-2 lh-1e">
+                        <span class="text-danger fnb">{{csallowblankrefereceno.datemodify | date : dateformatlong }}</span><br>
+                        <span class="text-muted">{{csallowblankrefereceno.accnmodify}}</span>
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln pd-8" *ngIf="csallowprintlabelonreserve">
+                    <div class="col-md-9 col-xs-10 lh-1e">
+                        <span class="">{{csallowprintlabelonreserve.pmdesc}}</span><br />
+                        <span class="text-muted">{{csallowprintlabelonreserve.pmdescalt}}</span>
+                    </div>
+                    <div class="col-md-1 col-xs-2 pdt-3">
+                        <ui-switch  checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" 
+                                    [(ngModel)]="csallowprintlabelonreserve.pmvalue" (change)="save(csallowprintlabelonreserve)"
+                        ></ui-switch>
+                    </div>
+                    <div class="col-md-2 lh-1e">
+                        <span class="text-danger fnb">{{csallowprintlabelonreserve.datemodify | date : dateformatlong }}</span><br>
+                        <span class="text-muted">{{csallowprintlabelonreserve.accnmodify}}</span>
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln pd-8" *ngIf="csallowgentaskfornewhu">
+                    <div class="col-md-9 col-xs-10 lh-1e">
+                        <span class="">{{csallowgentaskfornewhu.pmdesc}}</span><br />
+                        <span class="text-muted">{{csallowgentaskfornewhu.pmdescalt}}</span>
+                    </div>
+                    <div class="col-md-1 col-xs-2 pdt-3">
+                        <ui-switch  checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" 
+                                    [(ngModel)]="csallowgentaskfornewhu.pmvalue" (change)="save(csallowgentaskfornewhu)"
+                        ></ui-switch>
+                    </div>
+                    <div class="col-md-2 lh-1e">
+                        <span class="text-danger fnb">{{csallowgentaskfornewhu.datemodify | date : dateformatlong }}</span><br>
+                        <span class="text-muted">{{csallowgentaskfornewhu.accnmodify}}</span>
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln pd-8" *ngIf="csallowincludehubelongingtask">
+                    <div class="col-md-9 col-xs-10 lh-1e">
+                        <span class="">{{csallowincludehubelongingtask.pmdesc}}</span><br />
+                        <span class="text-muted">{{csallowincludehubelongingtask.pmdescalt}}</span>
+                    </div>
+                    <div class="col-md-1 col-xs-2 pdt-3">
+                        <ui-switch  checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" 
+                                    [(ngModel)]="csallowincludehubelongingtask.pmvalue" (change)="save(csallowincludehubelongingtask)"
+                        ></ui-switch>
+                    </div>
+                    <div class="col-md-2 lh-1e">
+                        <span class="text-danger fnb">{{csallowincludehubelongingtask.datemodify | date : dateformatlong }}</span><br>
+                        <span class="text-muted">{{csallowincludehubelongingtask.accnmodify}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="lsset fnb mgt-10 " style="z-index: 0;">
+            <div class="head">
+                <div class="row mg-0 ln ">
+                    <div class="col-md-8">Transfer Stock</div>
+                    <div class="col-md-2 ">Unit</div>
+                    <div class="col-md-2 ">Last modify</div>
+                </div>
+            </div>
+        
+            <div class="line bgsub-head ">
+
+                 <div class="row mg-0 ln pd-8" *ngIf="tfallowchangeunit">
+                    <div class="col-md-7 col-xs-10 lh-1e">
+                        <span class="">{{tfallowchangeunit.pmdesc}}</span><br />
+                        <span class="text-muted">{{tfallowchangeunit.pmdescalt}}</span>
+                    </div>
+                    <div class="col-md-1 col-xs-2 pdt-3">
+                        <ui-switch  checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" 
+                                    [(ngModel)]="tfallowchangeunit.pmvalue" (change)="save(tfallowchangeunit)"
+                        ></ui-switch>
+                    </div>
+                    <div class="col-md-2 lh-1e3">&nbsp;</div>
+                    <div class="col-md-2 lh-1e">
+                        <span class="text-danger fnb">{{tfallowchangeunit.datemodify | date : dateformatlong }}</span><br>
+                        <span class="text-muted">{{tfallowchangeunit.accnmodify}}</span>
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln pd-8" *ngIf="tfallowgenreservetoreserve">
+                    <div class="col-md-7 col-xs-10 lh-1e">
+                        <span class="">{{tfallowgenreservetoreserve.pmdesc}}</span><br />
+                        <span class="text-muted">{{tfallowgenreservetoreserve.pmdescalt}}</span>
+                    </div>
+                    <div class="col-md-1 col-xs-2 pdt-3">
+                        <ui-switch  checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" 
+                                    [(ngModel)]="tfallowgenreservetoreserve.pmvalue" (change)="save(tfallowgenreservetoreserve)"
+                        ></ui-switch>
+                    </div>
+                    <div class="col-md-2">
+                        <ng-select  class="custom" bindLabel="desc" bindvalue="value" 
+                            [clearable]="false"  
+                            [(ngModel)]="slallowgenreservetoreserve"
+                            (change)="changeunit(tfallowgenreservetoreserve,slallowgenreservetoreserve)"
+                            [items]="lsunit" >
+                            <ng-template ng-label-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                            <ng-template ng-option-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                        </ng-select>
+                    </div>
+                    <div class="col-md-2 lh-1e">
+                        <span class="text-danger fnb">{{tfallowgenreservetoreserve.datemodify | date : dateformatlong }}</span><br>
+                        <span class="text-muted">{{tfallowgenreservetoreserve.accnmodify}}</span>
+                    </div>
+                </div> 
+
+                <div class="row mg-0 ln pd-8" *ngIf="tfallowgenreservetopicking">
+                    <div class="col-md-7 col-xs-10 lh-1e">
+                        <span class="">{{tfallowgenreservetopicking.pmdesc}}</span><br />
+                        <span class="text-muted">{{tfallowgenreservetopicking.pmdescalt}}</span>
+                    </div>
+                    <div class="col-md-1 col-xs-2 pdt-3">
+                        <ui-switch  checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" 
+                                    [(ngModel)]="tfallowgenreservetopicking.pmvalue" (change)="save(tfallowgenreservetopicking)"
+                        ></ui-switch>
+                    </div>
+                    <div class="col-md-2">
+                        <ng-select  class="custom" bindLabel="desc" bindvalue="value" 
+                            [clearable]="false"  
+                            [(ngModel)]="slallowgenreservetopicking"
+                            (change)="changeunit(tfallowgenreservetopicking,slallowgenreservetopicking)"
+                            [items]="lsunit" >
+                            <ng-template ng-label-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                            <ng-template ng-option-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                        </ng-select>
+                    </div>
+                    <div class="col-md-2 lh-1e">
+                        <span class="text-danger fnb">{{tfallowgenreservetopicking.datemodify | date : dateformatlong }}</span><br>
+                        <span class="text-muted">{{tfallowgenreservetopicking.accnmodify}}</span>
+                    </div>
+                </div> 
+
+                <div class="row mg-0 ln pd-8" *ngIf="tfallowgenreservetobulk">
+                    <div class="col-md-7 col-xs-10 lh-1e">
+                        <span class="">{{tfallowgenreservetobulk.pmdesc}}</span><br />
+                        <span class="text-muted">{{tfallowgenreservetobulk.pmdescalt}}</span>
+                    </div>
+                    <div class="col-md-1 col-xs-2 pdt-3">
+                        <ui-switch  checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" 
+                                    [(ngModel)]="tfallowgenreservetobulk.pmvalue" (change)="save(tfallowgenreservetobulk)"
+                        ></ui-switch>
+                    </div>
+                    <div class="col-md-2">
+                        <ng-select  class="custom" bindLabel="desc" bindvalue="value" 
+                            [clearable]="false"  
+                            [(ngModel)]="slallowgenreservetobulk"
+                            (change)="changeunit(tfallowgenreservetobulk,slallowgenreservetobulk)"
+                            [items]="lsunit" >
+                            <ng-template ng-label-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                            <ng-template ng-option-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                        </ng-select>
+                    </div>
+                    <div class="col-md-2 lh-1e">
+                        <span class="text-danger fnb">{{tfallowgenreservetobulk.datemodify | date : dateformatlong }}</span><br>
+                        <span class="text-muted">{{tfallowgenreservetobulk.accnmodify}}</span>
+                    </div>
+                </div> 
+
+                <div class="row mg-0 ln pd-8" *ngIf="tfallowgenbulktoreserve">
+                    <div class="col-md-7 col-xs-10 lh-1e">
+                        <span class="">{{tfallowgenbulktoreserve.pmdesc}}</span><br />
+                        <span class="text-muted">{{tfallowgenbulktoreserve.pmdescalt}}</span>
+                    </div>
+                    <div class="col-md-1 col-xs-2 pdt-3">
+                        <ui-switch  checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" 
+                                    [(ngModel)]="tfallowgenbulktoreserve.pmvalue" (change)="save(tfallowgenbulktoreserve)"
+                        ></ui-switch>
+                    </div>
+                    <div class="col-md-2">
+                        <ng-select  class="custom" bindLabel="desc" bindvalue="value" 
+                            [clearable]="false"  
+                            [(ngModel)]="slallowgenbulktoreserve"
+                            (change)="changeunit(tfallowgenbulktoreserve,slallowgenbulktoreserve)"
+                            [items]="lsunit" >
+                            <ng-template ng-label-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                            <ng-template ng-option-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                        </ng-select>
+                    </div>
+                    <div class="col-md-2 lh-1e">
+                        <span class="text-danger fnb">{{tfallowgenbulktoreserve.datemodify | date : dateformatlong }}</span><br>
+                        <span class="text-muted">{{tfallowgenbulktoreserve.accnmodify}}</span>
+                    </div>
+                </div> 
+
+                <div class="row mg-0 ln pd-8" *ngIf="tfallowgenbulktopicking">
+                    <div class="col-md-7 col-xs-10 lh-1e">
+                        <span class="">{{tfallowgenbulktopicking.pmdesc}}</span><br />
+                        <span class="text-muted">{{tfallowgenbulktopicking.pmdescalt}}</span>
+                    </div>
+                    <div class="col-md-1 col-xs-2 pdt-3">
+                        <ui-switch  checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" 
+                                    [(ngModel)]="tfallowgenbulktopicking.pmvalue" (change)="save(tfallowgenbulktopicking)"
+                        ></ui-switch>
+                    </div>
+                    <div class="col-md-2">
+                        <ng-select  class="custom" bindLabel="desc" bindvalue="value" 
+                            [clearable]="false"  
+                            [(ngModel)]="slallowgenbulktopicking"
+                            (change)="changeunit(tfallowgenbulktopicking,slallowgenbulktopicking)"
+                            [items]="lsunit" >
+                            <ng-template ng-label-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                            <ng-template ng-option-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                        </ng-select>
+                    </div>
+                    <div class="col-md-2 lh-1e">
+                        <span class="text-danger fnb">{{tfallowgenbulktopicking.datemodify | date : dateformatlong }}</span><br>
+                        <span class="text-muted">{{tfallowgenbulktopicking.accnmodify}}</span>
+                    </div>
+                </div> 
+
+                <div class="row mg-0 ln pd-8" *ngIf="tfallowgenbulktobulk">
+                    <div class="col-md-7 col-xs-10 lh-1e">
+                        <span class="">{{tfallowgenbulktobulk.pmdesc}}</span><br />
+                        <span class="text-muted">{{tfallowgenbulktobulk.pmdescalt}}</span>
+                    </div>
+                    <div class="col-md-1 col-xs-2 pdt-3">
+                        <ui-switch  checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" 
+                                    [(ngModel)]="tfallowgenbulktobulk.pmvalue" (change)="save(tfallowgenbulktobulk)"
+                        ></ui-switch>
+                    </div>
+                    <div class="col-md-2">
+                        <ng-select  class="custom" bindLabel="desc" bindvalue="value" 
+                            [clearable]="false"  
+                            [(ngModel)]="slallowgenbulktobulk"
+                            (change)="changeunit(tfallowgenbulktobulk,slallowgenbulktobulk)"
+                            [items]="lsunit" >
+                            <ng-template ng-label-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                            <ng-template ng-option-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                        </ng-select>
+                    </div>
+                    <div class="col-md-2 lh-1e">
+                        <span class="text-danger fnb">{{tfallowgenbulktobulk.datemodify | date : dateformatlong }}</span><br>
+                        <span class="text-muted">{{tfallowgenbulktobulk.accnmodify}}</span>
+                    </div>
+                </div> 
+
+                <div class="row mg-0 ln pd-8" *ngIf="tfallowgenpickingtoreserve">
+                    <div class="col-md-7 col-xs-10 lh-1e">
+                        <span class="">{{tfallowgenpickingtoreserve.pmdesc}}</span><br />
+                        <span class="text-muted">{{tfallowgenpickingtoreserve.pmdescalt}}</span>
+                    </div>
+                    <div class="col-md-1 col-xs-2 pdt-3">
+                        <ui-switch  checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" 
+                                    [(ngModel)]="tfallowgenpickingtoreserve.pmvalue" (change)="save(tfallowgenpickingtoreserve)"
+                        ></ui-switch>
+                    </div>
+                    <div class="col-md-2">
+                        <ng-select  class="custom" bindLabel="desc" bindvalue="value" 
+                            [clearable]="false"  
+                            [(ngModel)]="slallowgenpickingtoreserve"
+                            (change)="changeunit(tfallowgenpickingtoreserve,slallowgenpickingtoreserve)"
+                            [items]="lsunit" >
+                            <ng-template ng-label-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                            <ng-template ng-option-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                        </ng-select>
+                    </div>
+                    <div class="col-md-2 lh-1e">
+                        <span class="text-danger fnb">{{tfallowgenpickingtoreserve.datemodify | date : dateformatlong }}</span><br>
+                        <span class="text-muted">{{tfallowgenpickingtoreserve.accnmodify}}</span>
+                    </div>
+                </div> 
+
+                <div class="row mg-0 ln pd-8" *ngIf="tfallowgenpickingtopicking">
+                    <div class="col-md-7 col-xs-10 lh-1e">
+                        <span class="">{{tfallowgenpickingtopicking.pmdesc}}</span><br />
+                        <span class="text-muted">{{tfallowgenpickingtopicking.pmdescalt}}</span>
+                    </div>
+                    <div class="col-md-1 col-xs-2 pdt-3">
+                        <ui-switch  checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" 
+                                    [(ngModel)]="tfallowgenpickingtopicking.pmvalue" (change)="save(tfallowgenpickingtopicking)"
+                        ></ui-switch>
+                    </div>
+                    <div class="col-md-2">
+                        <ng-select  class="custom" bindLabel="desc" bindvalue="value" 
+                            [clearable]="false"  
+                            [(ngModel)]="slallowgenpickingtopicking"
+                            (change)="changeunit(tfallowgenpickingtopicking,slallowgenpickingtopicking)"
+                            [items]="lsunit" >
+                            <ng-template ng-label-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                            <ng-template ng-option-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                        </ng-select>
+                    </div>
+                    <div class="col-md-2 lh-1e">
+                        <span class="text-danger fnb">{{tfallowgenpickingtopicking.datemodify | date : dateformatlong }}</span><br>
+                        <span class="text-muted">{{tfallowgenpickingtopicking.accnmodify}}</span>
+                    </div>
+                </div> 
+
+                <div class="row mg-0 ln pd-8" *ngIf="tfallowgenpickingtobulk">
+                    <div class="col-md-7 col-xs-10 lh-1e">
+                        <span class="">{{tfallowgenpickingtobulk.pmdesc}}</span><br />
+                        <span class="text-muted">{{tfallowgenpickingtobulk.pmdescalt}}</span>
+                    </div>
+                    <div class="col-md-1 col-xs-2 pdt-3">
+                        <ui-switch  checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" 
+                                    [(ngModel)]="tfallowgenpickingtobulk.pmvalue" (change)="save(tfallowgenpickingtobulk)"
+                        ></ui-switch>
+                    </div>
+                    <div class="col-md-2">
+                        <ng-select  class="custom" bindLabel="desc" bindvalue="value" 
+                            [clearable]="false"  
+                            [(ngModel)]="slallowgenpickingtobulk"
+                            (change)="changeunit(tfallowgenpickingtobulk,slallowgenpickingtobulk)"
+                            [items]="lsunit" >
+                            <ng-template ng-label-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                            <ng-template ng-option-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                        </ng-select>
+                    </div>
+                    <div class="col-md-2 lh-1e">
+                        <span class="text-danger fnb">{{tfallowgenpickingtobulk.datemodify | date : dateformatlong }}</span><br>
+                        <span class="text-muted">{{tfallowgenpickingtobulk.accnmodify}}</span>
+                    </div>
+                </div> 
+
+                
+            </div>
+        </div>
+    </div>
+    
+</div>

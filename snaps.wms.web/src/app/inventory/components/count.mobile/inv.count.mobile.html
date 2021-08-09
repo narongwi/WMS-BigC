@@ -1,0 +1,164 @@
+<head>
+	<title>Snaps WMS</title>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+</head>
+
+<body style="font-family: 'Sarabun','Montserrat', sans-serif;" class="bggrey">
+
+        <!-- WRAPPER -->
+        <div id="wrapper">
+            <!-- NAVBAR -->
+            <nav class="navbar navbar-default navbar-fixed-top">
+                <div class="container-fluid">
+                    <div class="navbar-btn">
+                        <button type="button" class="btn-toggle-offcanvas "><i class="lnr lnr-menu"></i></button>
+                    </div>
+                    <!-- logo -->
+                    <div class="navbar-brand ">					
+                        <div class="floatl">
+                            <a href="index.html"><img src="assets/images/logobgc_small.jpg" class="img-responsive logo img-rounded"></a>
+                        </div>
+                        
+                    </div>
+                    <div class="navbar-left pd-10">
+                        <div style="line-height: 1.2rem;">
+                            <span class="fn-1e2 fnb text-dark">Warehouse Management</span><br>
+                            <span class="fn-1e2 fnd text-muted">Snaps Solution Co,Ltd</span>
+                        </div>
+                    </div>
+                    <!-- end logo -->
+                    <!-- <div class="navbar-right">
+                        <select class="selectpicker pd-5 ">
+                            <option data-icon="fas fa-warehouse">91918</option>
+                        </select>
+                    </div> -->
+                </div>
+            </nav>
+        </div>
+        
+
+    <div class="propset fn-1e1 pdt-50 "> 
+        <div class="head">
+            <div class="row mg-0 ln ">
+                <div class="col-xs-8 fn-1e15">Count stock </div>
+
+            </div>
+        </div>
+
+        <div class="line bgsub-head " style="height: 580px;" >
+            <div class="row mg-0 ln " >
+                <div class="col-xs-3 lh-1e1 ">
+                    <span class="text-dark fnb fn-1e15">No</span><br />
+                    <span class="text-mute fn-08e">Task No</span>
+                </div>
+                <div class="col-xs-7">
+                    <span class="text-danger fnb fn-1e5">20-0003-001</span>
+                </div>
+
+            </div>
+
+            <div class="row mg-0 ln " >
+                <div class="col-xs-3">
+                    <span class="text-dark fnb">Start Date </span>
+                </div>
+                <div class="col-xs-7">
+                    <span class="text-danger fnb">2020.10.13 16:05:48</span>
+                </div>               
+            </div>
+
+            <div class="row mg-0 ln " >
+                <div class="col-xs-3">
+                    <span class="text-dark fnb">Next location </span>
+                </div>
+                <div class="col-xs-3">
+                    <span class="text-danger fnb ">01-01-1-2-1</span>
+                </div>
+            </div>
+
+            <div class="row mg-0 ln">
+                <div class="col-xs-3 fnb">Scan Location</div>
+                <div class="col-xs-4">
+                    <div class="form-group form-control-sm mg-0">
+                        <input class="form-control fn-1e1 text-danger fnb" type="text" placeholder="" (keyup.enter)="scanlocation()">
+                    </div> 
+                </div>
+            </div>
+
+            <div class="row mg-0 ln">
+                <div class="col-xs-3 fnb">HU no or Barbode</div>
+                <div class="col-xs-8">
+                    <div class="form-group form-control-sm mg-0">
+                        <input class="form-control fn-1e1 text-danger fnb" type="text" placeholder="" (keyup.enter)="scanlocation()">
+                    </div> 
+                </div>
+            </div>
+
+            <div class="row mg-0 ln">
+                <div class="col-xs-3 fnb">Quantity</div>
+                <div class="col-xs-3">
+                    <div class="form-group form-control-sm mg-0">
+                        <input class="form-control fn-1e1 text-danger fnb" type="text" placeholder="" (keyup.enter)="scanlocation()">
+                    </div> 
+                </div>
+            </div>
+
+
+            <div class="row mg-0 ln " >
+                <div class="lsset fn-1e1 pd-0 " style="border: 0px !important;"> 
+                    <div class="head">
+                        <div class="row mg-0 ln fn-1e15">
+                            <div class="col-xs-3 ">Location</div>
+                            <div class="col-xs-7 ">Product</div>                                                                    
+                            <div class="col-xs-2 text-right">Count</div> 
+                        </div>
+                    </div>
+        
+                    <div class="line bgsub-head fn-1e1 " style="height: 344px;">
+                        <div class="row mg-0 ln  fnb" >
+                            <div class="col-xs-3 ">01-01-1-1-1</div> 
+                            <div class="col-xs-8 ">102767547 &nbsp; H_ซผ2ถัง10 KG. </div>
+                            <div class="col-xs-1 text-right text-danger">1</div>
+                        </div>
+                        <div class="row mg-0 ln  fnb" >
+                            <div class="col-xs-3 ">01-01-1-2-1</div> 
+                            <div class="col-xs-8 "></div>
+                            <div class="col-xs-1 "></div>
+                        </div>
+                        <div class="row mg-0 ln  fnb" >
+                            <div class="col-xs-3 ">01-01-1-3-1</div> 
+                            <div class="col-xs-8 "></div>
+                            <div class="col-xs-1 "></div>
+                        </div>
+                        <div class="row mg-0 ln  fnb" >
+                            <div class="col-xs-3 ">01-01-2-1-1</div>
+                            <div class="col-xs-8 "></div>
+                            <div class="col-xs-1 "></div>
+                        </div>
+                        <div class="row mg-0 ln  fnb" >
+                            <div class="col-xs-3 ">01-01-2-2-1</div> 
+                            <div class="col-xs-8 "></div>
+                            <div class="col-xs-1 "></div>
+                        </div>
+                        <div class="row mg-0 ln  fnb" >
+                            <div class="col-xs-3 ">01-01-3-1-1</div> 
+                            <div class="col-xs-8 "></div>
+                            <div class="col-xs-1 "></div>
+                        </div>
+                    </div>
+
+
+                </div>             
+            </div>
+
+
+
+        </div>
+
+
+
+    </div>
+
+
+</body>

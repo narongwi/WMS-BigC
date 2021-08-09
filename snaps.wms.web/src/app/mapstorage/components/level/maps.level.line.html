@@ -1,0 +1,229 @@
+<div class="row fnb">
+    <div class="col-md-8">
+        <div class="lsset fn-07e ">
+            <div class="head">
+                <div class="row mg-0 ln ">
+
+                    <div class="col-md-1 ">Zone</div>
+                    <div class="col-md-1 ">Aisle</div>
+                    <div class="col-md-1 ">Bay</div>
+                    <div class="col-md-1 ">Level</div>
+                    <div class="col-md-2 ">Name</div>
+                    <div class="col-md-3 ">Description</div>
+                    <div class="col-md-1 tx-center">Seq</div>
+                    <div class="col-md-1 ">State</div>
+                </div>
+            </div>
+
+            <div class="line bgsub-head dglevel ">
+                <ng-scrollbar>
+                    <div class="row mg-0 ln mpswitch " *ngFor="let ln of lslevel | slice: (page-1) * pageSize : page * pageSize | orderBy: lssort : lsreverse ">
+                        <div class="col-md-1 ">{{ln.lszone}}</div>
+                        <div class="col-md-1 ">{{ln.lsaisle}}</div>
+                        <div class="col-md-1 ">{{ln.lsbay}}</div>
+                        <div class="col-md-1 text-danger ">{{ln.lscode}}</div>
+                        <div class="col-md-2 text-primary ">{{ln.lscodealt}}</div>
+                        <div class="col-md-3 ">{{ln.lsdesc}}</div>
+                        <div class="col-md-1 tx-center">{{ln.lsseq}}</div>
+                        <div class="col-md-2 tx-oveflow " (click)="sellevel(ln)">
+                            <span class="{{ngDecIcon(ln.tflow)}} w20 dp"></span>
+                            <span class="fas fa-wrench text-warning w20 hd"></span> &nbsp;&nbsp;{{ngDecState(ln.tflow)}}
+                        </div>
+                    </div>
+                </ng-scrollbar>
+            </div>
+
+            <div class="foot bgsub-head fnb pd-5">
+                <div class="row mg-0">
+                    <div class="col-md-2 pdt-5">
+                        Total &nbsp; &nbsp;<span class="text-danger">{{lslevel.length | number }}</span> &nbsp; &nbsp; Bays
+                    </div>
+
+                    <div class="col-md-1 tx-right lh-07e">
+                        <div class="fn-06e fnb text-danger">Rows</div>
+                        <div class="fn-06e">Per Page</div>
+                    </div>
+                    <div class="col-md-2">
+
+                        <ng-select class=" text-danger" class="custom custom-sm" bindLabel="value" bindvalue="value" [clearable]="false" [(ngModel)]="slrowlmt" [items]="lsrowlmt" (change)="ngChangeRowlmt()">
+                            <ng-template ng-label-tmp let-item="item"><span class="text-danger b">{{item.value}}</span> </ng-template>
+                            <ng-template ng-option-tmp let-item="item"><span class="text-danger b">{{item.value}}</span> </ng-template>
+                        </ng-select>
+
+                    </div>
+                    <div class="col-md-7 tx-right">
+                        <ngb-pagination [(page)]="page" [pageSize]="pageSize" [collectionSize]="lslevel.length" class="d-flex justify-content-end"></ngb-pagination>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="lsset fn-07e ">
+            <div class="head">
+                <div class="row mg-0 ln ">
+                    <div class="col-md-8 fn-07e">Configuration</div>
+                    <div class="col-md-4 ">
+                        <span class="fn-07e mp" (click)="newlevel()">
+                            <i class="fas fa-plus-square text-primary"></i>&nbsp;
+                            New Level
+                        </span>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="line bgsub-head dglevel">
+                <div class="row mg-0 ln ">
+                    <div class="col-md-7 lh-07e">
+                        <span class="text-dark fnb fn-07e">Site </span><br />
+                        <span class="text-mute">site code of warehouse</span>
+                    </div>
+                    <div class="col-md-5">
+                        <span class="text-danger fnb fn-07e5">{{crlevel.site}}</span>
+                    </div>
+                </div>
+                <div class="row mg-0 ln ">
+                    <div class="col-md-7 lh-07e">
+                        <span class="text-dark fnb fn-07e">Depot</span><br />
+                        <span class="text-mute">depot code of warehouse</span>
+                    </div>
+                    <div class="col-md-5">
+                        <span class="text-danger fnb fn-07e5">{{crlevel.depot}}</span>
+                    </div>
+                </div>
+                <div class="row mg-0 ln ">
+                    <div class="col-md-7 lh-07e">
+                        <span class="text-dark fnb fn-07e">Category</span><br />
+                        <span class="text-mute">Category of zone</span>
+                    </div>
+                    <div class="col-md-5">
+                        <span class="text-danger fnb fn-07e5 ">{{crlevel.spcarea}}</span>
+                    </div>
+                </div>
+                <div class="row mg-0 ln ">
+                    <div class="col-md-7 lh-07e pdt-5">
+                        <span class="text-dark fnb fn-07e">Zone</span><br />
+                        <span class="text-mute">Zone code on warehouse</span>
+                    </div>
+                    <div class="col-md-5">
+                        <ng-select [items]="lszone" class="custom custom-sm" bindLabel="desc" bindvalue="desc" [clearable]="false" [(ngModel)]="slczone" (change)="ngselczone()">
+                            <ng-template ng-label-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                            <ng-template ng-option-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                        </ng-select>
+                    </div>
+                </div>
+                <div class="row mg-0 ln ">
+                    <div class="col-md-7 lh-07e pdt-5">
+                        <span class="text-dark fnb fn-07e">Aisle</span><br />
+                        <span class="text-mute">Aisle code on warehouse</span>
+                    </div>
+                    <div class="col-md-5">
+                        <ng-select [items]="lsaisle" class="custom custom-sm" bindLabel="desc" bindvalue="desc" [clearable]="false" [(ngModel)]="slcaisle" (change)="ngselcaisle()">
+                            <ng-template ng-label-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                            <ng-template ng-option-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                        </ng-select>
+                    </div>
+                </div>
+                <div class="row mg-0 ln ">
+                    <div class="col-md-7 lh-07e pdt-5">
+                        <span class="text-dark fnb fn-07e">Bay</span><br />
+                        <span class="text-mute">Bay code on warehouse</span>
+                    </div>
+                    <div class="col-md-5">
+                        <ng-select [items]="lsbay" class="custom custom-sm" bindLabel="desc" bindvalue="desc" [clearable]="false" [(ngModel)]="slcbay">
+                            <ng-template ng-label-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                            <ng-template ng-option-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
+                        </ng-select>
+                    </div>
+                </div>
+                <div class="row mg-0 ln ">
+                    <div class="col-md-7 lh-07e pdt-5">
+                        <span class="text-dark fnb fn-07e">Level</span><br />
+                        <span class="text-mute">Code of level</span>
+                    </div>
+                    <div class="col-md-5">
+                        <span class="text-danger fnb fn-08e" *ngIf="crlevel.tflow != 'NW'">{{crlevel.lscode}}</span>
+                        <input class="form-control form-control-sm  text-danger fnb " type="text" placeholder="Level code" [(ngModel)]="crlevel.lscode" *ngIf="crlevel.tflow == 'NW'">
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln ">
+                    <div class="col-md-7 lh-07e pdt-5">
+                        <span class="text-dark fnb fn-07e">Name</span><br />
+                        <span class="text-mute">name of level</span>
+                    </div>
+                    <div class="col-md-5">
+                        <input class="form-control form-control-sm fnb text-danger " type="text" placeholder="name of level" [(ngModel)]="crlevel.lscodealt">
+                    </div>
+                </div>
+                <div class="row mg-0 ln ">
+                    <div class="col-md-7 lh-07e pdt-5">
+                        <span class="text-dark fnb fn-07e">Sequence</span><br />
+                        <span class="text-mute">Sequence no for align priority </span>
+                    </div>
+                    <div class="col-md-5">
+                        <input class="form-control form-control-sm fnb text-danger " type="text" placeholder="Sequence" [(ngModel)]="crlevel.lsseq">
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln">
+                    <div class="col-md-4">
+                        Description<br />
+                        <span class="tx-mute fnnb">of lavel</span>
+                    </div>
+                    <div class="col-md-8">
+                        <input class="form-control form-control-xs  text-danger fnb" type="text" placeholder="" [(ngModel)]="crlevel.lsdesc">
+                    </div>
+                </div>
+
+
+
+                <div class="row mg-0 ln">
+                    <div class="col-md-7 lh-07e ">
+                        <span class="text-dark fnb fn-07e">State</span><br />
+                        <span class="text-mute">Status of level</span>
+                    </div>
+                    <div class="col-md-5 text-center">
+                        <ui-switch checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" [(ngModel)]="crstate"></ui-switch>
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln">
+                    <div class="col-md-7 lh-07e pdt-5">
+                        <span class="text-danger fnb ">{{crlevel.orgcode}}-{{crlevel.site}}-{{crlevel.depot}}-{{crlevel.lszone}}-{{crlevel.lscode}}</span><br />
+                        <span class="text-dark">Full name of level</span>
+                    </div>
+                    <div class="col-md-5">
+                        <button type="button" class="btn snaps-primary btn-xs btn-block mp" (click)="validate()">
+                            <i class="fas fa-check-circle"></i>
+                            Save
+                        </button>
+                    </div>
+                </div>
+
+                <div class="row mg-0 ln">
+                    <div class="col-md-7 lh-07e">
+                    </div>
+                    <div class="col-md-5">
+                        <button type="button" class="btn snaps-danger btn-xs btn-block mp" (click)="drop()" *ngIf="crstate == false && crlevel.tflow != 'NW'">
+                            <i class="fas fa-trash-alt"></i>
+                            Delete 
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="foot bgsub-head fnb pd-5 h38">
+                <div class="row mg-0 pdt-5">
+                    <div class="col-md-3"> Modify date </div>
+                    <div class="col-md-8"> {{crlevel.datemodify | date : formatdatelong}} by <span class="text-danger">{{crlevel.accnmodify}}</span> </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
