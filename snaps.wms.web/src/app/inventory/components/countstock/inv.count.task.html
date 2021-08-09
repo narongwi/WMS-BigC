@@ -8,12 +8,9 @@
 
             <div class="col-md-4 ">
                 <div class="input-group fnb">
-                    <input class="form-control fn-07e fnb text-danger "
-                     placeholder="Task code" name="dp"                                           
-                     [(ngModel)]="pm.countname"
-                    >
+                    <input class="form-control fn-07e fnb text-danger " placeholder="Task code" name="dp" [(ngModel)]="pm.countname">
                     <div class="input-group-append">
-                    <button type="button" class="btn snaps-btngroup btn-prime "  (click)="ngFind()">
+                        <button type="button" class="btn snaps-btngroup btn-prime " (click)="ngFind()">
                         <i class="fas fa-search"></i>
                     </button>
                     </div>
@@ -22,14 +19,14 @@
 
         </div>
         <div class="row pdt-5">
-            <div class="lsset fn-07e pd-0"> 
+            <div class="lsset fn-07e pd-0">
                 <div class="head">
                     <div class="row mg-0 ln ">
                         <div class="col-md-2 ">Task </div>
                         <div class="col-md-1 ">Code </div>
                         <div class="col-md-3 ">Plan name</div>
-                        <div class="col-md-2 ">Start Date</div> 
-                        <div class="col-md-2 ">Finish Date</div>                       
+                        <div class="col-md-2 ">Start Date</div>
+                        <div class="col-md-2 ">Finish Date</div>
                         <div class="col-md-2 ">State</div>
                     </div>
                 </div>
@@ -39,13 +36,13 @@
                     <ng-scrollbar>
                         <div class="row mg-0 ln  fnb" *ngFor="let ln of lstask;let i=index" [class.row-active]="i== rowselected" (click)="ngSelc(ln,i)">
                             <div class="col-md-2 fnb">{{destask(ln.counttype)}} </div>
-                            <div class="col-md-1 fnb text-danger"> <span class="text-danger">{{ln.countcode}}</span>  </div>
-                            <div class="col-md-3 fnb"> <span class="">{{ln.countname}}</span>  </div>
-                            <div class="col-md-2 fnb tx-overflow text-primary"> <span class="">{{ln.datestart | date : dateformat}}</span>  </div>
-                            <div class="col-md-2 fnb tx-overflow text-danger"> <span class="">{{ln.dateend | date : dateformat}}</span>  </div>
+                            <div class="col-md-1 fnb text-danger"> <span class="text-danger">{{ln.countcode}}</span> </div>
+                            <div class="col-md-3 fnb"> <span class="">{{ln.countname}}</span> </div>
+                            <div class="col-md-2 fnb tx-overflow text-primary"> <span class="">{{ln.datestart | date : dateformat}}</span> </div>
+                            <div class="col-md-2 fnb tx-overflow text-danger"> <span class="">{{ln.dateend | date : dateformat}}</span> </div>
                             <div class="col-md-2 fnb text-right"> <span class="text-dark">{{desstate(ln.tflow)}}</span> </div>
                         </div>
-                    </ng-scrollbar>    
+                    </ng-scrollbar>
 
                 </div>
 
@@ -54,16 +51,16 @@
                         <div class="col-md-4 pdt-5 tx-overflow">
                             {{lstask.length}} &nbsp; &nbsp; Task
                         </div>
-                         <div class="col-md-3">                    
+                        <div class="col-md-3">
                             <!-- <ng-select class=" text-danger"  class="custom custom-sm" bindLabel="value" bindvalue="value" 
                                         [clearable]="false"  [(ngModel)]="slrowlmt" [items]="lsrowlmt" (change)="ngChangeRowLimit()" >
                                 <ng-template ng-label-tmp let-item="item"><span class="text-danger b">{{item.value}}</span> </ng-template>
                                 <ng-template ng-option-tmp let-item="item"><span class="text-danger b">{{item.value}}</span> </ng-template>
                             </ng-select> -->
-                        
-                        </div> 
+
+                        </div>
                         <div class="col-md-5">
-                            <ngb-pagination [(page)]="page" [pageSize]="pageSize" [collectionSize]="lstask.length" class="d-flex justify-content-end" ></ngb-pagination>
+                            <ngb-pagination [(page)]="page" [pageSize]="pageSize" [collectionSize]="lstask.length" class="d-flex justify-content-end"></ngb-pagination>
                         </div>
                     </div>
                 </div>
@@ -81,27 +78,27 @@
                         <i class="fas fa-check-circle"></i>
                         &nbsp;
                         New Task
-                    </button>    
+                    </button>
                 </div>
             </div>
         </div>
-        <div class="lsset propset fn-07e "> 
-            <div class="head" >
+        <div class="lsset propset fn-07e ">
+            <div class="head">
                 <div class="row mg-0 ln ">
                     <div class="col-md-12 ">Count task selection</div>
                 </div>
-            </div>                         
-            <div class="line bgsub-head "  *ngIf="crtask.tflow != 'NW' ">
-                <div class="row mg-0 ln " >
+            </div>
+            <div class="line bgsub-head " *ngIf="crtask.tflow != 'NW' ">
+                <div class="row mg-0 ln ">
                     <div class="col-md-3 ">
                         <span class="text-dark fnb">Task Type</span>
                     </div>
-                    <div class="col-md-9" >
+                    <div class="col-md-9">
                         <span class="text-danger fnb">{{destask(crtask.counttype)}}</span>
-                    </div>                      
+                    </div>
                 </div>
 
-                <div class="row mg-0 ln " >
+                <div class="row mg-0 ln ">
                     <div class="col-md-3">
                         <span class="text-dark fnb tx-overflow">Task code </span>
                     </div>
@@ -110,34 +107,34 @@
                     </div>
                 </div>
 
-                <div class="row mg-0 ln " >
+                <div class="row mg-0 ln ">
                     <div class="col-md-3">
                         <span class="text-dark fnb tx-overflow">Task Name </span>
                     </div>
-                    <div class="col-md-9" >
+                    <div class="col-md-9">
                         <span class="text-danger fnb">{{crtask.countname}}</span>
                     </div>
                 </div>
 
-                <div class="row mg-0 ln " >
+                <div class="row mg-0 ln ">
                     <div class="col-md-3">
                         <span class="text-dark fnb tx-overflow">Start Date </span>
                     </div>
-                    <div class="col-md-9" >
+                    <div class="col-md-9">
                         <span class="text-danger fnb text-primary">{{crtask.datestart | date : dateformat }}</span>
                     </div>
                 </div>
-                <div class="row mg-0 ln " >
+                <div class="row mg-0 ln ">
                     <div class="col-md-3">
                         <span class="text-dark fnb tx-overflow">Finish Task </span>
                     </div>
-                    <div class="col-md-9" >
+                    <div class="col-md-9">
                         <span class="text-danger fnb">{{crtask.dateend | date : dateformat }}</span>
                     </div>
 
                 </div>
 
-                <div class="row mg-0 ln " >
+                <div class="row mg-0 ln ">
 
                     <div class="col-md-6">&nbsp;</div>
                     <div class="col-md-6">
@@ -147,7 +144,7 @@
                             Close Task
                         </button>
 
-                    </div> 
+                    </div>
                 </div>
 
 
@@ -155,24 +152,22 @@
 
 
             <div class="linebx bgsub-head fnb" *ngIf="crtask.tflow == 'NW'">
-                <div class="row mg-0 ln " >
+                <div class="row mg-0 ln ">
                     <div class="col-md-3 ">
                         <span class="text-dark fnb">Task Type</span>
                     </div>
                     <div class="col-md-9">
-                        <ng-select class="fn-1e5 "  class="custom" bindLabel="desc" bindvalue="value" 
-                                    [clearable]="false"  [(ngModel)]="slctasktype" [items]="lstasktype" >
+                        <ng-select class="fn-1e5 " class="custom" bindLabel="desc" bindvalue="value" [clearable]="false" [(ngModel)]="slctasktype" [items]="lstasktype">
                             <ng-template ng-label-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
                             <ng-template ng-option-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
-                        </ng-select>      
-                    </div>                   
+                        </ng-select>
+                    </div>
                 </div>
 
                 <div class="row mg-0 ln">
                     <div class="col-md-3 ">Task name</div>
                     <div class="col-md-9">
-                        <input class="form-control form-control-sm  text-danger fnb" type="text" placeholder="Task code or name" 
-                               [(ngModel)]="crtask.countname">
+                        <input class="form-control form-control-sm  text-danger fnb" type="text" placeholder="Task code or name" [(ngModel)]="crtask.countname">
                     </div>
                 </div>
 
@@ -180,39 +175,37 @@
                     <div class="col-md-3">Start Date</div>
                     <div class="col-md-6">
                         <div class="input-group">
-                            <input class="form-control text-danger fnb" placeholder="{{dateformat}}"
-                                name="dp" [(ngModel)]="crtask.datestart" ngbDatepicker #datestart="ngbDatepicker">
+                            <input class="form-control text-danger fnb" placeholder="{{dateformat}}" name="dp" [(ngModel)]="crtask.datestart" ngbDatepicker #datestart="ngbDatepicker">
                             <div class="input-group-append">
-                            <button type="button" class=" btn snaps-btngroup btn-prime" (click)="datestart.toggle()" >
+                                <button type="button" class=" btn snaps-btngroup btn-prime" (click)="datestart.toggle()">
                                 <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-calendar-date" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd" d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"></path>
                                 <path d="M6.445 11.688V6.354h-.633A12.6 12.6 0 0 0 4.5 7.16v.695c.375-.257.969-.62 1.258-.777h.012v4.61h.675zm1.188-1.305c.047.64.594 1.406 1.703 1.406 1.258 0 2-1.066 2-2.871 0-1.934-.781-2.668-1.953-2.668-.926 0-1.797.672-1.797 1.809 0 1.16.824 1.77 1.676 1.77.746 0 1.23-.376 1.383-.79h.027c-.004 1.316-.461 2.164-1.305 2.164-.664 0-1.008-.45-1.05-.82h-.684zm2.953-2.317c0 .696-.559 1.18-1.184 1.18-.601 0-1.144-.383-1.144-1.2 0-.823.582-1.21 1.168-1.21.633 0 1.16.398 1.16 1.23z"></path>
                                 </svg>
                             </button>
                             </div>
-                          </div>
+                        </div>
                     </div>
                 </div>
 
                 <div class="row mg-0 ln">
-                    <div class="col-md-3">End Date</div>
+                    <div class="col-md-3">Finish Date</div>
                     <div class="col-md-6">
                         <div class="input-group">
-                            <input class="form-control text-danger fnb" placeholder="{{dateformat}}"
-                                name="dp" [(ngModel)]="crtask.dateend" ngbDatepicker #dateend="ngbDatepicker">
+                            <input class="form-control text-danger fnb" placeholder="{{dateformat}}" name="dp" [(ngModel)]="crtask.dateend" ngbDatepicker #dateend="ngbDatepicker">
                             <div class="input-group-append">
-                            <button type="button" class=" btn snaps-btngroup btn-prime" (click)="dateend.toggle()" >
+                                <button type="button" class=" btn snaps-btngroup btn-prime" (click)="dateend.toggle()">
                                 <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-calendar-date" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd" d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"></path>
                                 <path d="M6.445 11.688V6.354h-.633A12.6 12.6 0 0 0 4.5 7.16v.695c.375-.257.969-.62 1.258-.777h.012v4.61h.675zm1.188-1.305c.047.64.594 1.406 1.703 1.406 1.258 0 2-1.066 2-2.871 0-1.934-.781-2.668-1.953-2.668-.926 0-1.797.672-1.797 1.809 0 1.16.824 1.77 1.676 1.77.746 0 1.23-.376 1.383-.79h.027c-.004 1.316-.461 2.164-1.305 2.164-.664 0-1.008-.45-1.05-.82h-.684zm2.953-2.317c0 .696-.559 1.18-1.184 1.18-.601 0-1.144-.383-1.144-1.2 0-.823.582-1.21 1.168-1.21.633 0 1.16.398 1.16 1.23z"></path>
                                 </svg>
                             </button>
                             </div>
-                          </div>
+                        </div>
                     </div>
                 </div>
 
-                <div class="row mg-0 ln " >
+                <div class="row mg-0 ln ">
                     <div class="col-md-6">&nbsp;</div>
                     <div class="col-md-6">
                         <button type="button" *ngIf="crtask.tflow=='NW' && crtask.countcode==null" class="btn snaps-primary btn-block mp" (click)="ngUpsert()">
@@ -221,11 +214,11 @@
                             Create Task
                         </button>
 
-                    </div> 
+                    </div>
                 </div>
             </div>
 
-        </div> 
+        </div>
     </div>
 
 
