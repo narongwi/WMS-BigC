@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\snaps.wms.notify20\snaps.wms.notify.csproj" />
+    <ProjectReference Include="..\snaps.wms.notify\snaps.wms.notify.csproj" />
   </ItemGroup>
 	<ItemGroup>
     <None Update="snaps.configuration.json">
