@@ -17,7 +17,9 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "allowedCommonJsDependencies": ["chart.js"],
+            "allowedCommonJsDependencies": [
+              "chart.js"
+            ],
             "outputPath": "dist/snaps-wms-web",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -28,7 +30,7 @@
               "src/favicon.ico",
               "src/assets"
             ],
-            "styles": [ 
+            "styles": [
               "src/assets/bootstrap5/bootstrap.min.css",
               "node_modules/ngx-bootstrap/datepicker/bs-datepicker.css",
               "node_modules/@fortawesome/fontawesome-free/css/fontawesome.css",
@@ -133,7 +135,6 @@
                 }
               ]
             }
-            
           }
         },
         "serve": {
@@ -208,6 +209,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "snaps-wms-web"
+    }
+  },
+  "defaultProject": "snaps-wms-web",
+  "cli": {
+    "analytics": "558ff580-01bc-4c9d-ba4c-2bd174de2d0b"
+  }
 }
