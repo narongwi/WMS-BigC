@@ -33,7 +33,7 @@ export class inborderlineComponent implements OnInit {
   public lsorder: inbound_ls[] = new Array();
 
   public slcstaging: lov = new lov();
-
+  public slcmsdstaging: lov = new lov();
   public msdstate: lov[] = new Array();
   public msdstaging: lov[] = new Array();
   public crstate: Boolean = false;
@@ -95,7 +95,7 @@ export class inborderlineComponent implements OnInit {
     this.pm.orgcode = this.av.crProfile.orgcode;
     this.pm.site = this.av.crRole.site;
     this.pm.depot = this.av.crRole.depot;
-    this.pm.dateplanfrom = new Date();
+    // this.pm.dateplanfrom = new Date();
     this.crorder.lines = new Array();
     this.lsrowlmt = this.mv.getRowlimit();
   }
@@ -104,7 +104,9 @@ export class inborderlineComponent implements OnInit {
   ngAfterViewInit() { this.getmaster(); this.fndorder(); }
 
   ngselccmpare(item, selected) { return item.value === selected.value } //compare selected object with ng-select
-  ngselcoutput() { this.selln.emit(this.crorder); }
+  ngselcoutput() { 
+    this.selln.emit(this.crorder); 
+  }
   SortOrder(value: string) { if (this.lssort === value) { this.lsreverse = !this.lsreverse; } this.lssort = value; }
 
   // selectrow = function(selindex) {this.numrowselect = selindex};
@@ -162,6 +164,7 @@ export class inborderlineComponent implements OnInit {
   changerowlmt() { this.pageSize = parseInt(this.slrowlmt.value); } /* Row limit */
 
   fndorder() {
+    console.log(this.pm.dateplanfrom);
     this.pm.tflow = (this.slcstate != null) ? this.slcstate.value : "";
     this.pm.ordertype = (this.slcordertype != null) ? this.slcordertype.value : "";
     this.pm.ismeasure = (this.slrqmsm != null) ? this.slrqmsm.value : "";
@@ -199,7 +202,7 @@ export class inborderlineComponent implements OnInit {
         }
         // default staging in dropdow
         if (this.crorder.dockrec != null) {
-          this.slcstaging = this.lsstaging.find(x => x.value == this.crorder.dockrec);
+          this.slcmsdstaging = this.lsstaging.find(x => x.value == this.crorder.dockrec);
         }
       },
       (err) => { this.toastr.error("<span class='fn-07e'>" + ((err.error == undefined) ? err.message : err.error.message) + "</span>", null, { enableHtml: true }); },
@@ -252,7 +255,8 @@ export class inborderlineComponent implements OnInit {
             this.sv.setpriority(this.crorder.inorder, this.crorder.inpriority).subscribe(
               (res) => {
                 this.lsorder.find(x => x.inorder == this.crorder.inorder).inpriority = this.crorder.inpriority;
-                this.toastr.success("<span class='fn-07e'>Setup priority success </span>", null, { enableHtml: true }); this.crorder.dockrec = this.slcstaging.value;
+                this.toastr.success("<span class='fn-07e'>Setup priority success </span>", null, { enableHtml: true }); 
+                this.crorder.dockrec = this.slcmsdstaging.value;
               },
               (err) => {
                 this.crorder.inpriority = (this.crorder.inpriority == 0) ? 30 : 0;
@@ -268,10 +272,12 @@ export class inborderlineComponent implements OnInit {
     this.ngPopups.confirm('Do you confirm setup staging for receipt ?')
       .subscribe(res => {
         if (res) {
-          this.sv.setstaging(this.crorder.inorder, this.slcstaging.value).subscribe(
+
+          this.sv.setstaging(this.crorder.inorder, this.slcmsdstaging.value).subscribe(
             (res) => {
               if (this.crorder.tflow == "IO") { this.crorder.tflow = "SA"; }
-              this.toastr.success("<span class='fn-07e'>Setup Staging success </span>", null, { enableHtml: true }); this.crorder.dockrec = this.slcstaging.value;
+              this.toastr.success("<span class='fn-07e'>Setup Staging success </span>", null, { enableHtml: true }); 
+              this.crorder.dockrec = this.slcmsdstaging.value;
             },
             (err) => { this.toastr.error("<span class='fn-07e'>" + ((err.error == undefined) ? err.message : err.error.message) + "</span>", null, { enableHtml: true }); },
             () => { }

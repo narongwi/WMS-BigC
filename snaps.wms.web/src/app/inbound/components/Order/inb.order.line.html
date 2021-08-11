@@ -507,7 +507,7 @@
                     </div>
                     <div class="col-md-6">
                         <ng-select  class="fn-1e5 "  class="custom custom-sm" bindLabel="desc" bindvalue="value" *ngIf="['SA','IO'].includes(crorder.tflow)" 
-                                    [clearable]="false"  [(ngModel)]="slcstaging" [items]="msdstaging" >
+                                    [clearable]="false"  [(ngModel)]="slcmsdstaging" [items]="msdstaging" >
                             <ng-template ng-label-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
                             <ng-template ng-option-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
                         </ng-select>
