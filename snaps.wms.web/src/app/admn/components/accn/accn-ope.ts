@@ -70,12 +70,12 @@ export class opraccount implements OnInit,OnDestroy {
         if (res) {
           this.isOn = true;
 
-
           if(this.mdaccn.tflow != `NW`) { 
             this.mdaccn.tflow = this.slcstate.value; 
           }
 
-          this.mdaccn.accsrole = this.slcrole.value;
+          // move to next tab
+          // this.mdaccn.accsrole = this.slcrole.value;
 
           if (this.mdaccn.tflow != "NW") {
             this.mdaccn.tflow  = this.slcstate.value; 
