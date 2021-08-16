@@ -834,7 +834,7 @@ namespace Snaps.WMS.preparation {
         " routeno = s.routeno " + 
         "  from wm_prepsln t left join ( select p.orgcode, p.site, p.depot, p.spcarea,p.setno,p.routeno, l.ouorder,l.ouln, l.article, l.pv, l.lv, " +
         "       sum(qtyskuorder) qtyskuorder, sum(qtypuorder) qtypuorder, sum(qtyweightorder) qtyweightorder, sum(qtyvolumeorder) qtyvolumeorder " +
-        "      from wm_prep p, wm_prln l where p.orgcode = l.orgcode and p.site = l.site and p.depot = l.depot and p.prepno = l.prepno and p.spcarea= 'ST' " +
+        "      from wm_prep p, wm_prln l where p.orgcode = l.orgcode and p.site = l.site and p.depot = l.depot and p.prepno = l.prepno and p.spcarea= 'ST'" +
         "       and p.orgcode = @orgcode and p.site = @site and p.depot = @depot and p.setno = @setno " +
         "     group by p.orgcode, p.site, p.depot, p.spcarea,p.setno,p.routeno, l.ouorder,l.ouln, l.article, l.pv, l.lv ) s" +
         "     on t.orgcode = s.orgcode and t.site = s.site and t.depot = s.depot and t.setno = s.setno and t.ouorder = s.ouorder and t.ouln = s.ouln " +

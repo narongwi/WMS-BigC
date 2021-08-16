@@ -383,12 +383,12 @@ namespace Snaps.WMS {
                     // Auto Generate Plan for Distribution 
                     using(var command = new SqlCommand("",cn)) {
                         command.CommandType = System.Data.CommandType.StoredProcedure;
-                        command.CommandText = "[dbo].[snaps_share_operate]";
-                        command.Parameters.AddWithValue("@inorgcode",vld.orgcode);
-                        command.Parameters.AddWithValue("@insite",vld.site);
-                        command.Parameters.AddWithValue("@indepot",vld.depot);
-                        command.Parameters.AddWithValue("@ininorder",vld.inorder);
-                        command.Parameters.AddWithValue("@picker",accncode);
+                        command.CommandText = "[dbo].[snaps_distribute_gnplan]";
+                        command.Parameters.AddWithValue("@orgcode",vld.orgcode);
+                        command.Parameters.AddWithValue("@site",vld.site);
+                        command.Parameters.AddWithValue("@depot",vld.depot);
+                        command.Parameters.AddWithValue("@inorder",vld.inorder);
+                        command.Parameters.AddWithValue("@accncode",accncode);
                         await command.snapsExecuteAsync();
                     }// end using
                 }else {
