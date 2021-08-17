@@ -348,7 +348,7 @@ namespace Snaps.WMS {
             join wm_product a on l.orgcode = a.orgcode and l.site = a.site and l.depot = a.depot  and l.cnarticle = a.article and l.cnpv = a.pv and l.cnlv = a.lv
         where t.orgcode = @orgcode and t.site = @site and t.depot =@depot and t.countcode = @countcode 
         and t.tflow = 'IO' and t.counttype = 'CT' and p.tflow ='ED' and l.tflow ='ED' and l.corqty <> 0
-        group by t.orgcode,t.site,t.depot,t.counttype,t.countcode,t.countname,l.cnbarcode,l.cnarticle,l.cnpv,cnlv,isnull(l.unitcount,a.unitmanage) unitcount,
+        group by t.orgcode,t.site,t.depot,t.counttype,t.countcode,t.countname,l.cnbarcode,l.cnarticle,l.cnpv,cnlv,isnull(l.unitcount,a.unitmanage),
         a.descalt,a.rtoipckofpck,a.skugrossweight,a.skuvolume, a.unitmanage , a.unitprep,t.tflow HAVING sum(l.corqty) <> 0";
 
         private string sqlcount_confirmline = @" select  t.orgcode ,t.site,t.depot,t.spcarea,t.datestart,t.dateend,t.counttype,t.countcode,t.countname,p.plancode,p.planname,p.pctvld,l.locseq,l.loccode,l.sthuno,
