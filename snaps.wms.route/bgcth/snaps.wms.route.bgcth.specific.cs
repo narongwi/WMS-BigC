@@ -216,7 +216,12 @@ namespace Snaps.WMS {
                     ndock = cm.snapsScalarStrAsync().Result;
 
                     // gen route format
-                    cm.CommandText =  "select cast(datepart(dw, @plandate) as varchar(1)) + t.thcode+ cast(RIGHT('00'+CAST(count(r.routeno)+1 AS VARCHAR(3)),2) as varchar(4))  " +
+                    //cm.CommandText =  "select cast(datepart(dw, @plandate) as varchar(1)) + t.thcode+ cast(RIGHT('00'+CAST(count(r.routeno)+1 AS VARCHAR(3)),2) as varchar(4))  " +
+                    //"   from wm_thparty t left join wm_route r  on t.orgcode = r.orgcode and t.site = r.site and t.depot = r.depot and t.thcode = r.thcode  " +
+                    //"   and cast(plandate as date) = cast(@plandate as date) where t.tflow = 'IO' and t.orgcode = @orgcode and t.site = @site and t.depot = @depot " +
+                    //"   and t.thcode = @thcode  group by t.thcode ";
+                    cm.CommandText = "select (case when t.thtype = 'CS' then cast(datepart(dw, getdate()) as varchar(1)) + t.thcode+ cast(RIGHT('00'+CAST(count(r.routeno)+1 AS VARCHAR(3)),2) as varchar(4)) " +
+                    "          else cast(datepart(dw, getdate()) as varchar(1)) + t.thcode + format(sysdatetimeoffset(), 'MMdd') + cast(RIGHT('00' + CAST(count(r.routeno) + 1 AS VARCHAR(3)), 2) as varchar(4))  end) " +
                     "   from wm_thparty t left join wm_route r  on t.orgcode = r.orgcode and t.site = r.site and t.depot = r.depot and t.thcode = r.thcode  " +
                     "   and cast(plandate as date) = cast(@plandate as date) where t.tflow = 'IO' and t.orgcode = @orgcode and t.site = @site and t.depot = @depot " +
                     "   and t.thcode = @thcode  group by t.thcode ";
