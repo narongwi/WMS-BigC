@@ -294,7 +294,7 @@ namespace snaps.wms.api.document.Models
 	                format(r.dateshipment, 'dd/MM/yyyy hh:mm:ss' ) as datedelivery,r.transportor, t.thname transportername,r.outrno 
                 FROM wm_outboulx x
 	                JOIN wm_outbound o ON  x.orgcode = o.orgcode and x.site = o.site and x.depot = o.depot and x.ouorder = o.ouorder
-	                JOIN wm_product p ON x.orgcode = p.orgcode and x.site = p.site and x.depot = p.depot and x.article = p.article and x.pv=p.pv and x.lv=p.pv 
+	                JOIN wm_product p ON x.orgcode = p.orgcode and x.site = p.site and x.depot = p.depot and x.article = p.article and x.pv=p.pv and x.lv=p.lv 
 	                JOIN wm_route r on x.orgcode = r.orgcode and x.site = r.site and x.depot = r.depot and x.routenodel = r.routeno and x.outrno = r.outrno
 	                LEFT JOIN wm_thparty t on r.orgcode = t.orgcode and r.site = t.site and r.depot= t.depot and (r.transportor = t.thcode or r.transportor = t.thnameint) and t.thtype = 'TP'
 	                LEFT JOIN wm_thparty s on r.orgcode = s.orgcode and r.site = s.site and r.depot= s.depot and r.thcode = s.thcode and s.thtype = 'CS'

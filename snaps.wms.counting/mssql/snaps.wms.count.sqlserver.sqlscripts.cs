@@ -342,13 +342,13 @@ namespace Snaps.WMS {
         private string sqlcount_isvalidateplan = "select count(1) from wm_coupn where orgcode = @orgcode and site = @site and depot = @depot and countcode = @countcode and tflow not in('ED','XX','WQ')";
         private string sqlcount_correctionline = @"select  t.orgcode ,t.site,t.depot,t.counttype,t.countcode,t.countname,l.cnbarcode,l.cnarticle,l.cnpv,cnlv,a.descalt,
 		        case when sum(l.corqty) > 0 then '+' when sum(l.corqty) < 0 then '-' else '' end as corcode,sum(l.corqty) * a.rtoipckofpck as corsku,
-		        sum(l.corqty) corqty,l.unitcount,a.rtoipckofpck,a.skugrossweight,a.skuvolume, a.unitmanage , a.unitprep,t.tflow
+		        sum(l.corqty) corqty,isnull(l.unitcount,a.unitmanage) unitcount,a.rtoipckofpck,a.skugrossweight,a.skuvolume, a.unitmanage , a.unitprep,t.tflow
         from wm_count t join wm_coupn p on t.orgcode = p.orgcode and t.site = p.site and t.depot = p.depot and t.countcode = p.countcode 
             join wm_couln l on p.orgcode = l.orgcode and p.site = l.site and p.depot = l.depot and p.countcode = l.countcode and p.plancode = l.plancode 
             join wm_product a on l.orgcode = a.orgcode and l.site = a.site and l.depot = a.depot  and l.cnarticle = a.article and l.cnpv = a.pv and l.cnlv = a.lv
         where t.orgcode = @orgcode and t.site = @site and t.depot =@depot and t.countcode = @countcode 
         and t.tflow = 'IO' and t.counttype = 'CT' and p.tflow ='ED' and l.tflow ='ED' and l.corqty <> 0
-        group by t.orgcode,t.site,t.depot,t.counttype,t.countcode,t.countname,l.cnbarcode,l.cnarticle,l.cnpv,cnlv,l.unitcount,
+        group by t.orgcode,t.site,t.depot,t.counttype,t.countcode,t.countname,l.cnbarcode,l.cnarticle,l.cnpv,cnlv,isnull(l.unitcount,a.unitmanage) unitcount,
         a.descalt,a.rtoipckofpck,a.skugrossweight,a.skuvolume, a.unitmanage , a.unitprep,t.tflow HAVING sum(l.corqty) <> 0";
 
         private string sqlcount_confirmline = @" select  t.orgcode ,t.site,t.depot,t.spcarea,t.datestart,t.dateend,t.counttype,t.countcode,t.countname,p.plancode,p.planname,p.pctvld,l.locseq,l.loccode,l.sthuno,
