@@ -94,7 +94,7 @@ namespace Snaps.WMS {
         private String sqlgetline = @"select i.orgcode,i.site,i.depot,i.spcarea,i.inorder,i.inln,i.inrefno,i.inrefln,i.inagrn,i.barcode,i.article,i.pv,i.lv,i.unitops,i.qtysku
         ,i.qtypu
         ,i.qtyweight,i.lotno,i.expdate,i.serialno
-        ,i.qtypnd/dbo.get_ratiopu_receive(i.orgcode,i.site,i.depot,i.article,i.pv,i.lv) qtypnd
+        ,i.qtypnd
         ,i.qtyskurec,i.qtypurec,i.qtyweightrec,i.qtynaturalloss,i.tflow,i.datecreate,i.accncreate,i.datemodify,i.accnmodify,i.procmodify,i.batchno
         ,i.qtyhurec,i.orbitsource,i.inseq ,p.descalt,b.bndescalt unitopsdesc,p.isdlc,          " +
         " p.isunique,p.ismixingprep,p.isbatchno, Ceiling((p.dlcall*dlcfactory)/100) dlcfactory,       " +
