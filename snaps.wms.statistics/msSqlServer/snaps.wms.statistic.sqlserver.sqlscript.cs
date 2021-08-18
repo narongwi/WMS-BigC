@@ -20,7 +20,7 @@ namespace Snaps.WMS {
 
         //Statistic of Inbound order line 
         String sqlinboundline = " update wm_inbouln set	"+ 
-        " qtypnd =  qtysku - (select sum(qtyskurec) from wm_inboulx x where wm_inbouln.orgcode = x.orgcode and wm_inbouln.site = x.site and wm_inbouln.depot = x.depot " + 
+        " qtypnd =  qtypu - (select sum(qtypurec) from wm_inboulx x where wm_inbouln.orgcode = x.orgcode and wm_inbouln.site = x.site and wm_inbouln.depot = x.depot " + 
         "           and wm_inbouln.spcarea = x.spcarea and wm_inbouln.inorder = x.inorder and wm_inbouln.inln = x.inln and wm_inbouln.article = x.article and wm_inbouln.lv = x.lv and wm_inbouln.pv = x.pv), " + 
         " qtyskurec = (select sum(qtyskurec) from wm_inboulx x where wm_inbouln.orgcode = x.orgcode and wm_inbouln.site = x.site and wm_inbouln.depot = x.depot " + 
         "           and wm_inbouln.spcarea = x.spcarea and wm_inbouln.inorder = x.inorder and wm_inbouln.inln = x.inln and wm_inbouln.article = x.article and wm_inbouln.lv = x.lv and wm_inbouln.pv = x.pv), " +
