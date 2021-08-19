@@ -225,22 +225,24 @@ class _SheetTab extends State<SheetTab> with SingleTickerProviderStateMixin {
                 ),
                 Container(
                   width: 80,
-                  child: ListTile(
-                    contentPadding: EdgeInsets.only(left: 5),
-                    title: Text(
-                      "${SheetTab.countSheet[index].cnqtypu}",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 13,
-                        color: colorPoppy,
-                      ),
-                    ),
-                    subtitle: Text(
-                      "Qty",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 11, color: colorBlue),
-                    ),
-                  ),
+                  child: SheetTab.countSheet[index].cnflow.isNotEmpty
+                      ? ListTile(
+                          contentPadding: EdgeInsets.only(left: 5),
+                          title: Text(
+                            "${SheetTab.countSheet[index].cnqtypu}",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 13,
+                              color: colorPoppy,
+                            ),
+                          ),
+                          subtitle: Text(
+                            "Qty",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(fontSize: 11, color: colorBlue),
+                          ),
+                        )
+                      : Text(''),
                 ),
               ],
             );

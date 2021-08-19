@@ -300,7 +300,7 @@ namespace Snaps.WMS {
         " isnull(crsinbin,0) + isnull(crdamage,0) + isnull(crblock,0) + isnull(crexchange,0)  + isnull(crtaskap,0) )) < 0 then 0 else  " +
         "                   isnull(cronhand,0) - ( isnull(crbulknrtn,0) + isnull(crprep,0) + isnull(crstaging,0) + isnull(crrtv,0) + " +
         " isnull(crsinbin,0) + isnull(crdamage,0) + isnull(crblock,0) + isnull(crexchange,0)  + isnull(crtaskap,0) ) end cravailable,    " +
-        " 		crbulknrtn,croverflow, crprep + isnull(crtaskap,0) crprep, crstaging,crrtv, crsinbin, crdamage, crblock, crincoming, crplanship, crexchange, crtask                     " +
+        " 		crbulknrtn,croverflow, crprep + isnull(crtaskap,0) crprep, crstaging,crrtv, crsinbin, crdamage, crblock, crincoming, crplanship, crexchange, crtask  " +
         " from ( select s.orgcode,s.site,s.depot,s.article,s.pv,s.lv,'' barcode,                                                                            " +
         "               isnull(sum(qtysku),0) cronhand, '' cravailable,                                                                                     " +
         "               isnull(sum(case when l.spcarea in ('BL') then qtysku else 0 end),0) crbulknrtn,                                                     " +

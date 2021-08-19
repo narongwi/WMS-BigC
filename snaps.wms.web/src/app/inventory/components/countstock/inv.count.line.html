@@ -504,8 +504,7 @@
                       [class.active]="ln.cnarticle != ln.starticle||ln.cnlv!=ln.stlv"
                       name="cnarticle-{{i}}"
                       (click)="ngEditLine(ln,ix)"
-                      >{{ln.cnarticle==''?'+':ln.cnarticle}}
-                      {{ln.cnarticle==''?'':ln.cnlv}}</a
+                      >{{ln.cnarticle==''?'+':ln.cnarticle}} {{ln.cnarticle==''?'':'-'}} {{ln.cnarticle==''?'':ln.cnlv}}</a
                     >
                   </div>
                   <!-- <div class="px-100"><input class="form-control form-control-xs text-danger fnb tx-center" name="cnarticle-{{i}}" type="text" [(ngModel)]="ln.cnarticle" placeholder="{{ln.starticle}}"></div> -->

@@ -84,10 +84,25 @@ namespace Snaps.WMS {
         //      and not exists (select 1 from wm_couln c where c.orgcode = l.orgcode and c.site = l.site and c.depot = l.depot and c.loccode =  l.lscode and tflow = 'IO')
         //    group by l.orgcode,l.site,	l.depot,l.spcarea,l.lscode ,isnull(z.spcunit,s.unitops),l.lsaisle,l.lsbay,l.lslevel,s.article ,s.lv,s.pv,s.qtysku,s.qtypu,
         //        s.batchno,s.datemfg,s.dateexp,s.serialno,s.huno,l.spcpicking";
+
+        // comment 18/07/2021 for change count unit
+        //private string sqlplan_select_step1_1 =
+        //  @"select distinct l.orgcode, l.site, l.depot, l.spcarea, @countcode countcode, @plancode plancode,
+        //    l.lscode loccode,  isnull(z.spcunit,s.unitops) unitcount, 'IO' tflow, sysdatetimeoffset() datecreate,
+        //    @accnmodify accncreate, sysdatetimeoffset() datemodify, @accnmodify accnmodify, 'generate' procmodify,
+        //    max(s.batchno) batchno,max(cast(datemfg as date)) datemfg,max(cast(dateexp as date)) dateexp,
+        //    max(serialno) serialno,max(huno) huno, l.lsaisle,l.lsbay, l.lslevel,dbo.get_barcode(l.orgcode,l.site,l.depot,s.article,s.pv,s.lv) as barcode,
+        //    s.article ,s.lv ,s.pv,sum(s.qtysku) qtysku,sum(s.qtypu) qtypu,(case when(l.lsbay % 2) = 0  then 2  else 1 end) oddeven,(case when isnull(l.spcpicking,0) = 0 then 'R' else 'P' end) locctype         
+        //from wm_locdw l  left join wm_loczp z on l.orgcode = z.orgcode and l.site = z.site and l.depot = z.depot and l.lscode = z.lscode and l.tflow = 'IO' 
+        //   left join wm_stock s on l.orgcode = s.orgcode and l.site = s.site and l.depot = s.depot and l.lscode = s.loccode and case when @isblock = 1 then 'IO' else s.tflow end = 'IO'
+        // where l.orgcode = @orgcode and l.site = @site  and l.depot = @depot  and l.lszone = @szone and l.lsaisle between @saisle and @eaisle and l.lsbay between @sbay and @ebay 
+        //  and l.lslevel between @slevel and @elevel and not exists (select 1 from wm_couln c where c.orgcode = l.orgcode and c.site = l.site and c.depot = l.depot and c.loccode =  l.lscode and tflow = 'IO')
+        //group by l.orgcode,l.site,	l.depot,l.spcarea,l.lscode ,isnull(z.spcunit,s.unitops),l.lsaisle,l.lsbay,l.lslevel,s.article ,s.lv,s.pv,l.spcpicking";
+
         private string sqlplan_select_step1_1 =
-          @"select distinct l.orgcode, l.site, l.depot, l.spcarea, @countcode countcode, @plancode plancode,
-            l.lscode loccode,  isnull(z.spcunit,s.unitops) unitcount, 'IO' tflow, sysdatetimeoffset() datecreate,
-            @accnmodify accncreate, sysdatetimeoffset() datemodify, @accnmodify accnmodify, 'generate' procmodify,
+        @"select distinct l.orgcode, l.site, l.depot, l.spcarea, @countcode countcode, @plancode plancode,l.lscode loccode, 
+            iif(isnull(l.spcpicking,0)= 0,dbo.get_unitops(l.orgcode,l.site,l.depot,s.article,s.lv),isnull(z.spcunit,s.unitops)) unitcount,
+            'IO' tflow, sysdatetimeoffset() datecreate,@accnmodify accncreate, sysdatetimeoffset() datemodify, @accnmodify accnmodify, 'generate' procmodify,
             max(s.batchno) batchno,max(cast(datemfg as date)) datemfg,max(cast(dateexp as date)) dateexp,
             max(serialno) serialno,max(huno) huno, l.lsaisle,l.lsbay, l.lslevel,dbo.get_barcode(l.orgcode,l.site,l.depot,s.article,s.pv,s.lv) as barcode,
             s.article ,s.lv ,s.pv,sum(s.qtysku) qtysku,sum(s.qtypu) qtypu,(case when(l.lsbay % 2) = 0  then 2  else 1 end) oddeven,(case when isnull(l.spcpicking,0) = 0 then 'R' else 'P' end) locctype         
@@ -97,47 +112,22 @@ namespace Snaps.WMS {
           and l.lslevel between @slevel and @elevel and not exists (select 1 from wm_couln c where c.orgcode = l.orgcode and c.site = l.site and c.depot = l.depot and c.loccode =  l.lscode and tflow = 'IO')
         group by l.orgcode,l.site,	l.depot,l.spcarea,l.lscode ,isnull(z.spcunit,s.unitops),l.lsaisle,l.lsbay,l.lslevel,s.article ,s.lv,s.pv,l.spcpicking";
 
+        // comment 18/07/2021 for change count unit
+
         private string sqlplan_select_step1_2 =
-            @"select l.orgcode, l.site, l.depot, l.spcarea, @countcode countcode, @plancode plancode,l.lscode loccode,isnull(p.unitmanage,1) unitcount, 'IO' tflow, sysdatetimeoffset() datecreate,
-                @accnmodify accncreate, sysdatetimeoffset() datemodify, @accnmodify accnmodify, 'generate' procmodify,s.batchno,cast(datemfg as date) datemfg,cast(dateexp as date) dateexp,
-                s.serialno,huno huno, l.lsaisle,l.lsbay, l.lslevel,dbo.get_barcode(l.orgcode,l.site,l.depot,s.article,s.pv,s.lv) as barcode,s.article ,s.lv ,s.pv,s.qtysku,s.qtypu,0 oddeven,l.spcarea locctype        
-            from wm_locdw l 
-                left join wm_stock s on l.orgcode = s.orgcode and l.site = s.site and l.depot = s.depot and l.lscode = s.loccode and case when @isblock = 1 then 'IO' else s.tflow end = 'IO'
-                left join wm_product p on s.orgcode = p.orgcode and s.site = p.site and s.depot = p.depot and s.article = p.article and s.pv = p.pv and s.lv=p.pv and p.tflow= 'IO'
+            @"select l.orgcode, l.site, l.depot, l.spcarea, @countcode countcode, @plancode plancode,l.lscode loccode,iif(l.spcarea='OV',p.unitmanage,1) unitcount,
+                'IO' tflow, sysdatetimeoffset() datecreate,@accnmodify accncreate, sysdatetimeoffset() datemodify, @accnmodify accnmodify, 'generate' procmodify,
+                s.batchno,cast(datemfg as date) datemfg,cast(dateexp as date) dateexp,s.serialno,huno huno, l.lsaisle,l.lsbay, l.lslevel,
+                dbo.get_barcode(l.orgcode,l.site,l.depot,s.article,s.pv,s.lv) as barcode,s.article ,s.lv ,s.pv,s.qtysku,s.qtypu,0 oddeven,l.spcarea locctype        
+            from wm_locdw l left join wm_stock s on l.orgcode = s.orgcode and l.site = s.site and l.depot = s.depot and l.lscode = s.loccode and case when @isblock = 1 then 'IO' else s.tflow end = 'IO'
+                left join wm_product p on s.orgcode = p.orgcode and s.site = p.site and s.depot = p.depot and s.article = p.article and s.pv = p.pv and s.lv=p.lv and p.tflow= 'IO'
             WHERE not exists (select 1 from wm_couln c where c.orgcode = l.orgcode and c.site = l.site and c.depot = l.depot and c.loccode =  l.lscode AND c.sthuno = s.huno and c.tflow = 'IO')
             AND l.orgcode = @orgcode and l.site = @site and l.depot = @depot  AND l.fltype = 'BL' and l.spcarea = @szone  AND l.tflow='IO'
             order BY ( case WHEN isnull(p.isdlc,0) = 1 THEN s.dateexp ELSE s.daterec end) ASC,s.huno asc";
 
-        //private string sqlplan_select_step1_2 =
-        //  @"select l.orgcode, l.site, l.depot, l.spcarea, @countcode countcode, @plancode plancode,l.lscode loccode,isnull(p.unitmanage,1) unitcount, 'IO' tflow, sysdatetimeoffset() datecreate,
-        //    @accnmodify accncreate, sysdatetimeoffset() datemodify, @accnmodify accnmodify, 'generate' procmodify,s.batchno,cast(datemfg as date) datemfg,cast(dateexp as date) dateexp,
-        //    s.serialno,huno huno, l.lsaisle,l.lsbay, l.lslevel,dbo.get_barcode(l.orgcode,l.site,l.depot,s.article,s.pv,s.lv) as barcode,s.article ,s.lv ,s.pv,s.qtysku,s.qtypu,0 oddeven,l.spcarea locctype        
-        //from wm_locdw l 
-        //  left join wm_stock s on l.orgcode = s.orgcode and l.site = s.site and l.depot = s.depot and l.lscode = s.loccode and case when @isblock = 1 then 'IO' else s.tflow end = 'IO'
-        //  left join wm_product p on s.orgcode = p.orgcode and s.site = p.site and s.depot = p.depot and s.article = p.article and s.pv = p.pv and s.lv=p.pv and p.tflow= 'IO'
-        // WHERE not exists (select 1 from wm_couln c where c.orgcode = l.orgcode and c.site = l.site and c.depot = l.depot and c.loccode =  l.lscode AND c.sthuno = s.huno and c.tflow = 'IO')
-        //  AND l.orgcode = @orgcode and l.site = @site and l.depot = @depot  AND l.lscode = @szone  AND l.tflow='IO'
-        // order BY ( case WHEN isnull(p.isdlc,0) = 1 THEN s.dateexp ELSE s.daterec end) ASC,s.huno asc";
-
         private string sqlplan_insert_step2_1 = @"insert into wm_couln (orgcode,site,depot,spcarea,countcode,plancode,loccode,unitcount,tflow,datecreate,accncreate,datemodify,accnmodify,procmodify, 
         stbarcode, starticle, stpv, stlv, stqtysku, stqtypu,stlotmfg, stdatemfg, stdateexp, stserialno,sthuno ,locseq,locctype) values(@orgcode,@site,@depot,@spcarea,@countcode,@plancode,@loccode,@unitcount,@tflow,
         getdate(),@accncreate,getdate(),@accnmodify,@procmodify,@stbarcode, @starticle,@stpv,@stlv,@stqtysku,@stqtypu,@stlotmfg,@stdatemfg,@stdateexp,@stserialno,@sthuno,@locseq,@locctype)";
-
-
-        //  select a.*,row_number() over(order by a.lsaisle,a.lsbay,a.lslevel) locseq from (
-        //   select distinct l.orgcode,l.site,l.depot,l.spcarea,'2' countcode,'1' plancode,l.lscode loccode,
-        //          isnull(z.spcunit,s.unitops) unitcount,'IO' tflow,sysdatetimeoffset() datecreate,'me' accncreate,sysdatetimeoffset() datemodify,'me' accnmodify,'me' procmodify,
-        //          case when 1 = 1 then batchno else null end stlotmfg,
-        //          case when 1 = 1 then cast(datemfg as date) else null end stdatemfg,
-        //          case when 1 = 1 then cast(dateexp as date) else null end stdateexp,
-        //          case when 1 = 1 then serialno else null end stserialno,
-        //          case when 0 = 1 then huno else null end sthuno,
-        //          l.lsaisle,l.lsbay,l.lslevel
-        //  from wm_locdw l left join wm_loczp z on l.orgcode = z.orgcode and l.site = z.site and l.depot = z.depot and l.lscode = z.tflow and l.tflow = 'IO' 
-        //   left join wm_stock s on l.orgcode = s.orgcode and l.site = s.site and l.depot = s.depot and l.lscode = s.loccode and case when 0 = 1 then 'IO' else s.tflow end = 'IO'
-        //  where l.orgcode = 'bgc' and l.site = '91917' and l.depot = '1' and l.lszone = 'A' and l.lsaisle between 'AJ' and 'AJ' and l.lsbay between '001' and '020' and l.lslevel between '01' and '04' 
-        //  --and not exists (select 1 from wm_couln c where c.orgcode = l.orgcode and c.site = l.site and c.depot = l.depot and c.loccode =  l.lscode and tflow = 'IO') 
-        //  ) a 
 
         private string sqlplan_validate_step1 = ""+ 
         @"update t set tflow = case when isnull(isskip,0) = 1 and stbarcode is null then 'ED'              
@@ -228,9 +218,10 @@ namespace Snaps.WMS {
 
         private string sqlplan_recount_line =
        @"insert into wm_couln(orgcode, site, depot, spcarea, countcode, plancode, loccode, locseq, unitcount, stbarcode, starticle, stpv, stlv, stqtysku, 
-        stqtypu, stlotmfg, stdatemfg, stdateexp, stserialno, sthuno,tflow, datecreate, accncreate, datemodify, accnmodify, procmodify,locctype)
+        stqtypu, stlotmfg, stdatemfg, stdateexp, stserialno, sthuno,tflow, datecreate, accncreate, datemodify, accnmodify, procmodify,locctype,planorigin)
         select orgcode, site, depot, spcarea, countcode, @newplan plancode, loccode, locseq, unitcount, stbarcode, starticle, stpv, stlv, stqtysku, stqtypu, stlotmfg, stdatemfg, stdateexp, 
-        stserialno, sthuno,'IO' tflow, sysdatetimeoffset() datecreate, @accnmodify accncreate,sysdatetimeoffset() datemodify,@accnmodify accnmodify,'' procmodify,locctype
+        stserialno, sthuno,'IO' tflow, sysdatetimeoffset() datecreate, @accnmodify accncreate,sysdatetimeoffset() datemodify,@accnmodify accnmodify,'' procmodify,locctype,
+        iif(isnull(planorigin,0)=0,plancode,planorigin) planorigin
         from wm_couln where orgcode = @orgcode and site = @site and depot = @depot and countcode = @countcode and plancode = @plancode and tflow = 'WQ'";
      
         private string sqlplan_recount_reline =
