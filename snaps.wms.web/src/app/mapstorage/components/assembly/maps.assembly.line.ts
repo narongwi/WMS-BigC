@@ -111,9 +111,9 @@ export class mapsassemblylineComponent implements OnInit {
         this.lnassembly.lsdmlength = 0;
         this.lnassembly.lsdmwidth = 0;
         this.lnassembly.lsdmheight = 0;
-        this.lnassembly.lsmixage = 0;
-        this.lnassembly.lsmixarticle = 0;
-        this.lnassembly.lsmixlotno = 0;
+        this.lnassembly.lsmixage = 1;
+        this.lnassembly.lsmixarticle = 1;
+        this.lnassembly.lsmixlotno = 1;
         this.lnassembly.lsmnsafety = 0;
         this.lnassembly.lsmxheight = 0;
         this.lnassembly.lsmxhuno = 9999999; 

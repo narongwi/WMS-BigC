@@ -111,9 +111,9 @@ export class mapsbulklineComponent implements OnInit,OnDestroy {
         this.lnbulk.lsdmlength = 0;
         this.lnbulk.lsdmwidth = 0;
         this.lnbulk.lsdmheight = 0;
-        this.lnbulk.lsmixage = 0;
-        this.lnbulk.lsmixarticle = 0;
-        this.lnbulk.lsmixlotno = 0;
+        this.lnbulk.lsmixage = 1;
+        this.lnbulk.lsmixarticle = 1;
+        this.lnbulk.lsmixlotno = 1;
         this.lnbulk.lsmnsafety = 0;
         this.lnbulk.lsmxheight = 0;
         this.lnbulk.lsmxhuno = 9999999; 

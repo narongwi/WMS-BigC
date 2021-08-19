@@ -110,9 +110,9 @@ export class mapssinbinlineComponent implements OnInit {
         this.lnsinbin.lsdmlength = 0;
         this.lnsinbin.lsdmwidth = 0;
         this.lnsinbin.lsdmheight = 0;
-        this.lnsinbin.lsmixage = 0;
-        this.lnsinbin.lsmixarticle = 0;
-        this.lnsinbin.lsmixlotno = 0;
+        this.lnsinbin.lsmixage = 1;
+        this.lnsinbin.lsmixarticle = 1;
+        this.lnsinbin.lsmixlotno = 1;
         this.lnsinbin.lsmnsafety = 0;
         this.lnsinbin.lsmxheight = 0;
         this.lnsinbin.lsmxhuno = 9999999; 

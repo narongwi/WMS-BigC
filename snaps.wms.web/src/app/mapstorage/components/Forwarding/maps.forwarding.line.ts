@@ -111,9 +111,9 @@ export class mapsforwardlineComponent implements OnInit, OnDestroy {
         this.lnforward.lsdmlength = 0;
         this.lnforward.lsdmwidth = 0;
         this.lnforward.lsdmheight = 0;
-        this.lnforward.lsmixage = 0;
-        this.lnforward.lsmixarticle = 0;
-        this.lnforward.lsmixlotno = 0;
+        this.lnforward.lsmixage = 1;
+        this.lnforward.lsmixarticle = 1;
+        this.lnforward.lsmixlotno = 1;
         this.lnforward.lsmnsafety = 0;
         this.lnforward.lsmxheight = 0;
         this.lnforward.lsmxhuno = 9999999; 

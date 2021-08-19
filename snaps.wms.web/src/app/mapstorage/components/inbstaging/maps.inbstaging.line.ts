@@ -112,9 +112,9 @@ export class mapsinbstaginglineComponent implements OnInit, OnDestroy {
         this.lninbstaging.lsdmlength = 0;
         this.lninbstaging.lsdmwidth = 0;
         this.lninbstaging.lsdmheight = 0;
-        this.lninbstaging.lsmixage = 0;
-        this.lninbstaging.lsmixarticle = 0;
-        this.lninbstaging.lsmixlotno = 0;
+        this.lninbstaging.lsmixage = 1;
+        this.lninbstaging.lsmixarticle = 1;
+        this.lninbstaging.lsmixlotno = 1;
         this.lninbstaging.lsmnsafety = 0;
         this.lninbstaging.lsmxheight = 0;
         this.lninbstaging.lsmxhuno = 9999999; 

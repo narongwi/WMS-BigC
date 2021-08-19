@@ -111,9 +111,9 @@ export class mapsdamagelineComponent implements OnInit, OnDestroy {
         this.lndamage.lsdmlength = 0;
         this.lndamage.lsdmwidth = 0;
         this.lndamage.lsdmheight = 0;
-        this.lndamage.lsmixage = 0;
-        this.lndamage.lsmixarticle = 0;
-        this.lndamage.lsmixlotno = 0;
+        this.lndamage.lsmixage = 1;
+        this.lndamage.lsmixarticle = 1;
+        this.lndamage.lsmixlotno = 1;
         this.lndamage.lsmnsafety = 0;
         this.lndamage.lsmxheight = 0;
         this.lndamage.lsmxhuno = 9999999; 

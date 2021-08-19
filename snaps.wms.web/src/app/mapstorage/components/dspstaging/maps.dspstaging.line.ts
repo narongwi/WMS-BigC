@@ -111,9 +111,9 @@ export class mapsdspstaginglineComponent implements OnInit, OnDestroy {
         this.lndspstaging.lsdmlength = 0;
         this.lndspstaging.lsdmwidth = 0;
         this.lndspstaging.lsdmheight = 0;
-        this.lndspstaging.lsmixage = 0;
-        this.lndspstaging.lsmixarticle = 0;
-        this.lndspstaging.lsmixlotno = 0;
+        this.lndspstaging.lsmixage = 1;
+        this.lndspstaging.lsmixarticle = 1;
+        this.lndspstaging.lsmixlotno = 1;
         this.lndspstaging.lsmnsafety = 0;
         this.lndspstaging.lsmxheight = 0;
         this.lndspstaging.lsmxhuno = 9999999; 

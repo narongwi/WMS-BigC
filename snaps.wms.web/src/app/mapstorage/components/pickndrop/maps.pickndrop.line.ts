@@ -111,9 +111,9 @@ export class mapspickndroplineComponent implements OnInit, OnDestroy {
         this.lnpickndrop.lsdmlength = 0;
         this.lnpickndrop.lsdmwidth = 0;
         this.lnpickndrop.lsdmheight = 0;
-        this.lnpickndrop.lsmixage = 0;
-        this.lnpickndrop.lsmixarticle = 0;
-        this.lnpickndrop.lsmixlotno = 0;
+        this.lnpickndrop.lsmixage = 1;
+        this.lnpickndrop.lsmixarticle = 1;
+        this.lnpickndrop.lsmixlotno = 1;
         this.lnpickndrop.lsmnsafety = 0;
         this.lnpickndrop.lsmxheight = 0;
         this.lnpickndrop.lsmxhuno = 9999999; 
