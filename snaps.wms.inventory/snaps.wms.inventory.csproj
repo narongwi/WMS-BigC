@@ -51,8 +51,4 @@
     </Reference>
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="msSqlServer\Mergehu\" />
-  </ItemGroup>
-
 </Project>

@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Snaps.WMS.Inventory.models {
-    public class merge_gn {
+namespace Snaps.WMS {
+    public class merge_set {
         public string orgcode { get; set; }
         public string site { get; set; }
         public string depot { get; set; }
@@ -11,35 +11,26 @@ namespace Snaps.WMS.Inventory.models {
         public int mergeno { get; set; }
         public string hutype { get; set; }
         public string huno { get; set; }
+        public string loccode { get; set; }
+        public string accncode { get; set; }
     }
-    public class merge_md {
+
+    public class merge_item {
         public string orgcode { get; set; }
         public string site { get; set; }
         public string depot { get; set; }
         public string spcarea { get; set; }
-        public int mergeno { get; set; }
-        public string hutype { get; set; }
-        public string husource { get; set; }
-        public string inrefno { get; set; }
-        public int inrefln { get; set; }
-        public string loccode { get; set; }
+        public string barcode { get; set; }
         public string article { get; set; }
-        public int pv { get; set; }
-        public int lv { get; set; }
-        public int qtysku { get; set; }
-        public decimal qtypu { get; set; }
-        public decimal qtyweight { get; set; }
-        public decimal qtyvolume { get; set; }
-        public string qtyunit { get; set; }
-        public DateTimeOffset daterec { get; set; }
-        public string batchno { get; set; }
-        public string lotno { get; set; }
-        public DateTimeOffset datemfg { get; set; }
-        public DateTimeOffset dateexp { get; set; }
-        public string serialno { get; set; }
-        public string remarks { get; set; }
-        public string tflow { get; set; }
+        public string pv { get; set; }
+        public string lv { get; set; }
+        public string description { get; set; }
     }
+
+    public class merge_md : mergehu_md {
+        public List<mergehu_ln> lines { get; set; }
+    }
+
     public class mergehu_md {
         public string orgcode { get; set; }
         public string site { get; set; }

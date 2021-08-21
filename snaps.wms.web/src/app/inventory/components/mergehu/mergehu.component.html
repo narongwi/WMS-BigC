@@ -1,0 +1,190 @@
+<div class="bgsub-info">
+    <div class="bgprime" style="height: 44px;background-color: #ffffff;border-bottom: 1px solid #e0e0e0;"> </div>
+    <div class="container">        
+        <div class="row " style="margin-top:-34px">
+            <ul ngbNav #nav="ngbNav" [(activeId)]="crtab" class="nav-tabs" [destroyOnHide]="false">
+                <li [ngbNavItem]="1">
+                  <a ngbNavLink class="w150 fn fn-07e">Merge Handling Unit</a>
+                  <ng-template ngbNavContent>
+                    <div class="container">
+                        <div class="row">                    
+                            <div class="col-md-12">                    
+                                <div class="row">
+                                    <div class="col-md-6 fnb fn ">
+                                        <span class="fn-palette-1">Inventory</span>&nbsp;<i class="fas fa-chevron-right fa-xs"></i>&nbsp;<span class="fn-palette-5">Merge Handling Unit</span>
+                                    </div>  
+                                    <div class="col-md-3 text-right lh-07e fnb fn">
+                                       Target <span class="text-primary">Location</span><br>
+                                       <span class="fn-07e">for generate new huno</span>
+                                    </div>  
+                                    <div class="col-md-2 fn fn-07e fnb">
+                                        <ng-select class="text-danger"  class="custom custom-xs" bindLabel="value" bindvalue="value" 
+                                        [clearable]="false"  >
+                                        <!-- <ng-template ng-label-tmp let-item="item"><span class="text-danger b">{{item.value}}</span> </ng-template>
+                                        <ng-template ng-option-tmp let-item="item"><span class="text-danger b">{{item.value}}</span> </ng-template> -->
+                                        </ng-select>        
+                                    </div>                                    
+                                    <div class="col-md-1 ">
+                                        <button type="button" class="btn snaps-warning btn-block mp " >
+                                            Generate
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row pdt-10 bgsub-info">
+                            <div class="col-md-6 pd-5">
+                                <div class="lsset fn-07e fnb pd-0" > 
+                                    <div class="head" >
+                                        <div class="row mg-0 pd-1 ln ">
+                                            <div  class="col-md-12 pdt-5">Source information</div>
+                                        </div>
+                                    </div>
+                                    <div class="line bgsub-head fnb fn fn-07e fnb dgforms" >
+                                        <div class="row mg-0 pd-5 ln">
+                                            <div  class="col-md-2 pdt-5">Location </div>
+                                            <div  class="col-md-5 pdb-5 ">
+                                                <ng-select class="text-danger"  class="custom custom-xs" bindLabel="value" bindvalue="value" 
+                                                [clearable]="false"  >
+                                                <!-- <ng-template ng-label-tmp let-item="item"><span class="text-danger b">{{item.value}}</span> </ng-template>
+                                                <ng-template ng-option-tmp let-item="item"><span class="text-danger b">{{item.value}}</span> </ng-template> -->
+                                                </ng-select>        
+                                            </div>
+                                            <div class="col-md-7">
+                                            
+                                            </div>
+                                        </div>
+                                        <div class="row mg-0 pd-5 ln ">
+                                            <div  class="col-md-2 pdt-10">HU No</div>
+                                            <div  class="col-md-10 pdt-5 pdb-5">
+                                                <input class="form-control fn-07e fnb text-danger "
+                                                placeholder="HU No" >
+                                            </div>
+                                        </div>
+                                        <div class="row mg-0 pd-5  ">
+                                            <div  class="col-md-2 pdt-5"></div>
+                                            <div  class="col-md-3 ">
+                                                <button type="button" class="btn snaps-success mp " >
+                                                    <i class="fas fa-search fa-sm"></i> Search 
+                                                </button>
+                                            </div>
+                                            <div  class="col-md-8"></div>
+                                        </div>
+                                    </div>  
+                                        <div class="head" >
+                                            <div class="row mg-0 ln ">
+                                                <div  class="col-md-3 mp">HU No</div>
+                                                <div  class="col-md-6 mp">Product</div>
+                                                <div  class="col-md-1 mp">Quantity</div>
+                                                <div  class="col-md-1 mp">Unit</div>
+                                                <div  class="col-md-1 mp">Select</div>
+                                            </div>
+                                        </div> 
+                                        <div class="line bgsub-head dgstock " >
+                                            <ng-scrollbar>
+                                                <div class="row mg-0 ln" >
+                                                    <div class="col-md-11">No Data</div>
+                                                    <div class="col-md-1 tx-center">
+                                                        <i class="fas fa-arrow-circle-right fa-lg fn-palette-1 mp" ></i>
+                                                    </div>
+                                                </div>
+                                            </ng-scrollbar>
+                                        </div>
+                                        <div class="foot bgsub-head fnb pd-10">
+                                            <div class="row mg-0 ">
+                                                <div class="col-md-12">
+                                                    Total &nbsp; &nbsp;<span class="text-danger">0</span> &nbsp; &nbsp; Product
+                                                </div>
+                                            </div>
+                                        </div>  
+                                       
+                                </div>
+                            </div>
+                            <div class="col-md-6 pd-5">
+                                <div class="lsset fn-07e fnb pd-0" > 
+                                    <div class="head" >
+                                        <div class="row mg-0 pd-1 ln ">
+                                            <div  class="col-md-12 pdt-5">Target information</div>
+                                        </div>
+                                    </div> 
+                                    <div class="line bgsub-head fnb fn fn-07e fnb dgforms" >
+                                        <div class="row mg-0 pd-5 ln ">
+                                            <div  class="col-md-2 pdt-5">Location</div>
+                                            <div  class="col-md-2 pdt-5 fn-palette-5">OV001</div>
+                                            <div  class="col-md-2 pdt-5">HU No</div>
+                                            <div  class="col-md-4 pdt-5 fn-palette-5">919170008515</div>
+                                            <div  class="col-md-2 text-right pdl-0 ">
+                                                <div style="display: none;">merge id</div>
+                                                <button type="button" class="btn snaps-default btn-xs" >
+                                                    Print Label
+                                                </button>
+                                            </div>
+                                           
+                                        </div>
+                                        <div class="row mg-0 pd-5 ln ">
+                                            <div  class="col-md-2 tx-overflow pdt-10">Remark</div>
+                                            <div  class="col-md-10 pdt-5 pdb-5">
+                                                <input type="text" class="form-control form-control-sm fnb" placeholder="limit message 0 to 100 character">
+                                            </div>
+                                        </div>
+
+                                        <div class="row mg-0 pd-5  ">
+                                            <div  class="col-md-1 tx-overflow pdt-10">Merge Information</div>
+                                            <div  class="col-md-6 pdt-5 pdb-10">
+                                                
+                                            </div>
+                                            <div  class="col-md-2 pdt-5 ">
+                                                <button type="button" class="btn snaps-danger btn-block mp " >
+                                                    Cancel
+                                                </button>  
+                                            </div>
+                                            <div  class="col-md-3 pdt-5 ">
+                                                <button type="button" class="btn snaps-success btn-block mp " >
+                                                    Confirm 
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div> 
+
+                                    <div class="head" >
+                                        <div class="row mg-0 ln ">
+                                            <div  class="col-md-1 mp">UnSelect</div>
+                                            <div  class="col-md-3 mp">HU No</div>
+                                            <div  class="col-md-6 mp">Product</div>
+                                            <div  class="col-md-1 mp">Quantity</div>
+                                            <div  class="col-md-1 mp">Unit</div>
+                                        </div>
+                                    </div> 
+                                    
+                                    <div class="line bgsub-head dgstock" >
+                                        <ng-scrollbar>
+                                            <div class="row mg-0 ln" >
+                                                <div class="col-md-1 tx-center">
+                                                    <i class="fas fa-arrow-circle-left fa-lg fn-palette-1 mp" ></i>
+                                                </div>
+                                                <div class="col-md-11">No Data</div>
+                                            </div>
+                                        </ng-scrollbar>
+                                    </div>
+
+                                    <div class="foot bgsub-head fnb pd-10">
+                                        <div class="row mg-0 ">
+                                            <div class="col-md-12 ">
+                                                Total &nbsp; &nbsp;<span class="text-danger">0</span> &nbsp; &nbsp; Product
+                                            </div>
+                                        </div>
+                                    </div>    
+
+                                </div>
+                            </div>
+                        </div>
+                
+                    </div>
+                  </ng-template>
+                </li>
+              </ul>              
+              <div [ngbNavOutlet]="nav" class="mt-2"></div>
+        </div>
+    </div>
+</div>
+

@@ -869,6 +869,7 @@ $fa-font-path: "~@fortawesome/fontawesome-free/webfonts";
   border-bottom-left-radius: 0px;
 }
 .btn.snaps-btnblank { 
+  @extend .fn-07e;
   background-color: #fff;
   border: 1px solid #ced4da;
   font-weight: bold;

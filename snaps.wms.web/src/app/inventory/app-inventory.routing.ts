@@ -4,6 +4,7 @@ import { invstockComponent } from './components/stockonhand/inv.stock';
 import { invcorrectionComponent } from './components/correction/inv.correction'
 import { invcountComponent } from './components/countstock/inv.count.landing';
 import { invtransferComponent } from './components/transferstock/inv.transfer';
+import { MergehuComponent } from './components/mergehu/mergehu.component';
 const  routes:  Routes  = [
         {
             path:  'stockonhand',
@@ -20,6 +21,11 @@ const  routes:  Routes  = [
         { 
             path: 'transfer',
             component: invtransferComponent
+        }
+        ,
+        { 
+            path: 'mergehu',
+            component: MergehuComponent
         }
 ];
 @NgModule({
