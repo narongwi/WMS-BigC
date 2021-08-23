@@ -592,7 +592,7 @@ namespace Snaps.WMS {
                         using(SqlCommand cm = new SqlCommand()) {
                             cm.Connection = cn;
                             cm.CommandType = CommandType.StoredProcedure;
-                            cm.CommandText = "snaps_correctionstocktake";
+                            cm.CommandText = "snaps_stocktake_confirm";
                             cm.snapsPar(o.orgcode,"orgcode");
                             cm.snapsPar(o.site,"site");
                             cm.snapsPar(o.depot,"depot");

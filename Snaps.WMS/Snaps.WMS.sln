@@ -79,7 +79,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "snaps.wms.reportmodel", "sn
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "snaps.wms.notifyapp", "snaps.wms.notifyapp\snaps.wms.notifyapp.csproj", "{1F22CC9F-6B3C-4BF7-A6B6-9085760A3EDF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "snaps.wms.notify", "snaps.wms.notify\snaps.wms.notify.csproj", "{4D1F1731-4809-4365-8F2C-7F4AFB236A98}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "snaps.wms.notify", "snaps.wms.notify\snaps.wms.notify.csproj", "{4D1F1731-4809-4365-8F2C-7F4AFB236A98}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "snaps.wms.labels", "snaps.wms.labels\snaps.wms.labels.csproj", "{F4954ADF-74EC-4E36-8CE9-836F7DCF5C1D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -243,6 +245,10 @@ Global
 		{4D1F1731-4809-4365-8F2C-7F4AFB236A98}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4D1F1731-4809-4365-8F2C-7F4AFB236A98}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4D1F1731-4809-4365-8F2C-7F4AFB236A98}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F4954ADF-74EC-4E36-8CE9-836F7DCF5C1D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F4954ADF-74EC-4E36-8CE9-836F7DCF5C1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F4954ADF-74EC-4E36-8CE9-836F7DCF5C1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F4954ADF-74EC-4E36-8CE9-836F7DCF5C1D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

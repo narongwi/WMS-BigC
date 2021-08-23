@@ -17,6 +17,7 @@ import { OrderModule } from 'ngx-order-pipe';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { invcountComponent } from './components/countstock/inv.count.landing';
 import { NgxMaskModule } from 'ngx-mask';
+import { MergehuComponent } from './components/mergehu/mergehu.component';
 
 @NgModule({
   declarations: [ 
@@ -28,6 +29,7 @@ import { NgxMaskModule } from 'ngx-mask';
     invcountlineComponent,
     invcountComponent,
     InvcountConfirmComponent,
+    MergehuComponent,
   ],
   imports: [
     NgSelectModule,

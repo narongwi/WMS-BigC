@@ -29,6 +29,8 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 ## generate component cli
 ng g c --flat --skipTests=true ./components/countstock/invcountConfirm --module=app-inventory.module.ts
 
+PS D:\Repository\Deftsoft\WMS-BigC\snaps.wms.web\src\app\inventory> ng generate component --skipTests=true ./components/mergehu --module=app-inventory.module.ts
+
 ## Minimalist Angular Cli generate example
 ng g c hero-component --flat -it -is --skipTests
 
