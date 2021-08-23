@@ -8,9 +8,9 @@
                     <div class="col-md-3 ">To </div>
                 </div>
             </div>
-        
+
             <div class="line bgsub-head ">
-                <div class="row mg-0 ln " >
+                <div class="row mg-0 ln ">
                     <div class="col-md-6 lh-09e">
                         <span class="text-dark fnb ">Site </span><br />
                         <span class="text-mute">site code of warehouse</span>
@@ -19,7 +19,7 @@
                         <span class="text-danger fnb ">{{ops.site}}</span>
                     </div>
                 </div>
-                <div class="row mg-0 ln " >
+                <div class="row mg-0 ln ">
                     <div class="col-md-6 lh-09e">
                         <span class="text-dark fnb ">Depot</span><br />
                         <span class="text-mute">depot code of warehouse</span>
@@ -29,39 +29,37 @@
                     </div>
                 </div>
 
-                <div class="row mg-0 ln " >
+                <div class="row mg-0 ln ">
                     <div class="col-md-6 lh-09e">
                         <span class="text-dark fnb ">Zone</span><br />
                         <span class="text-mute">Zone code on warehouse</span>
                     </div>
                     <div class="col-md-6">
-                        <ng-select  class=" " class="custom custom-sm" bindLabel="item.desc" bindvalue="item.value" 
-                                    [items]="lszone"  [clearable]="false" [searchable]="false" 
-                                    [(ngModel)]="slczone" (change)="getaisle()">
+                        <ng-select class=" " class="custom custom-sm" bindLabel="item.desc" bindvalue="item.value" [items]="lszone" [clearable]="false" [searchable]="false" [(ngModel)]="slczone" (change)="getaisle()">
                             <ng-template ng-label-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
                             <ng-template ng-option-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
                         </ng-select>
                     </div>
                 </div>
-                <div class="row mg-0 ln " >
+                <div class="row mg-0 ln ">
                     <div class="col-md-6 lh-09e">
                         <span class="text-dark fnb ">Aisle</span><br />
                         <span class="text-mute">Aisle code on warehouse</span>
                     </div>
                     <div class="col-md-3">
-                        <ng-select class=" " class="custom custom-sm" [items]="lsaisle" bindLabel="desc" bindvalue="value" [clearable]="false"  [(ngModel)]="slcaislefr" [searchable]="false">
+                        <ng-select class=" " class="custom custom-sm" [items]="lsaisle" bindLabel="desc" bindvalue="value" [clearable]="false" [(ngModel)]="slcaislefr" [searchable]="false">
                             <ng-template ng-label-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
                             <ng-template ng-option-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
                         </ng-select>
                     </div>
                     <div class="col-md-3">
-                        <ng-select class=" " class="custom custom-sm" [items]="lsaisle" bindLabel="desc" bindvalue="value" [clearable]="false"  [(ngModel)]="slcaisleto" [searchable]="false">
+                        <ng-select class=" " class="custom custom-sm" [items]="lsaisle" bindLabel="desc" bindvalue="value" [clearable]="false" [(ngModel)]="slcaisleto" [searchable]="false">
                             <ng-template ng-label-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
                             <ng-template ng-option-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
                         </ng-select>
                     </div>
                 </div>
-                <div class="row mg-0 ln " >
+                <div class="row mg-0 ln ">
                     <div class="col-md-6 lh-09e">
                         <span class="text-dark fnb ">Bay</span><br />
                         <span class="text-mute">Bay code on warehouse</span>
@@ -73,7 +71,7 @@
                         <input class="form-control form-control-sm fnb text-danger " type="text" [(ngModel)]="ops.bayto">
                     </div>
                 </div>
-                <div class="row mg-0 ln " >
+                <div class="row mg-0 ln ">
                     <div class="col-md-6 lh-09e">
                         <span class="text-dark fnb ">Level</span><br />
                         <span class="text-mute">Level storage to specific location</span>
@@ -85,24 +83,23 @@
                         <input class="form-control form-control-sm fnb text-danger " type="text" [(ngModel)]="ops.levelto">
                     </div>
                 </div>
-                <div class="row mg-0 ln " >
+                <div class="row mg-0 ln ">
                     <div class="col-md-6 lh-09e">
                         <span class="text-dark fnb ">location per level</span><br />
                         <span class="text-mute">Quantity of location per level storage</span>
                     </div>
                     <div class="col-md-3">
-                        <input class="form-control form-control-sm fnb text-danger " type="text" [(ngModel)]="ops.location" (keyup)="recal()" 
-                        appOnlynumber min="1" max="26" maxlength="2" required>
+                        <input class="form-control form-control-sm fnb text-danger " type="text" [(ngModel)]="ops.location" (keyup)="recal()" appOnlynumber min="1" max="26" maxlength="2" required>
                     </div>
                     <div class="col-md-3">
-                        <ng-select class=" " class="custom custom-sm" [items]="lsstack" bindLabel="desc" bindvalue="value" [clearable]="false"  [(ngModel)]="slcstack" >
+                        <ng-select class=" " class="custom custom-sm" [items]="lsstack" bindLabel="desc" bindvalue="value" [clearable]="false" [(ngModel)]="slcstack">
                             <ng-template ng-label-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
                             <ng-template ng-option-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
                         </ng-select>
                     </div>
                 </div>
-                
-                <div class="row mg-0 ln " >
+
+                <div class="row mg-0 ln ">
                     <div class="col-md-6 lh-09e">
                         <span class="text-dark fnb ">Sequence</span><br />
                         <span class="text-mute">Sequence no for align priority </span>
@@ -112,41 +109,41 @@
                     </div>
                     <div class="col-md-3"></div>
                 </div>
-                <div class="row mg-0 ln " >
+                <div class="row mg-0 ln ">
                     <div class="col-md-6 lh-09e">
                         <span class="text-dark fnb ">Status</span><br />
                         <span class="text-mute">Status of location</span>
                     </div>
                     <div class="col-md-3">
                         <div class="form-group form-control-sm mg-0">
-                            <ui-switch checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" [(ngModel)]="swflow" ></ui-switch>
-                        </div> 
-                    </div>                    
+                            <ui-switch checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" [(ngModel)]="swflow"></ui-switch>
+                        </div>
+                    </div>
                 </div>
-              
-                <div class="row mg-0 ln " >
+
+                <div class="row mg-0 ln ">
                     <div class="col-md-6 lh-09e">
                         <span class="text-dark fnb ">Location format</span><br />
                         <span class="text-mute">Formatting of location</span>
                     </div>
                     <div class="col-md-6">
                         <input class="form-control form-control-sm fnb text-danger " type="text" [(ngModel)]="ops.lsformat">
-                    </div>                    
+                    </div>
                 </div>
-                <div class="row mg-0 ln " >
+                <div class="row mg-0 ln ">
                     <div class="col-md-9"></div>
                     <div class="col-md-3">
-                        <button type="button" class="btn snaps-primary btn-xs btn-block mp"  (click)="generate()">
+                        <button type="button" class="btn snaps-primary btn-xs btn-block mp" (click)="generate()">
                             <i class="fas fa-check-circle"></i>
                             Generate
                         </button>
                     </div>
                 </div>
-            </div>        
+            </div>
         </div>
     </div>
     <div class="col-md-7">
-        
+
         <div class="lsset ">
             <div class="head">
                 <div class="row mg-0 ln ">
@@ -155,7 +152,7 @@
             </div>
 
             <div class="line bgsub-head ">
-                <div class="row mg-0 ln " >
+                <div class="row mg-0 ln ">
                     <div class="col-md-6 lh-09e">
                         <span class="text-dark fnb ">Dimemnsion of Level</span> ( CM. unit )<br />
                         <span class="text-mute">No of Length x Width x Height of physical dimension </span>
@@ -171,7 +168,7 @@
                     </div>
                 </div>
 
-                <div class="row mg-0 ln " >
+                <div class="row mg-0 ln ">
                     <div class="col-md-6 lh-09e">
                         <span class="text-dark fnb ">Gap storage</span> ( CM. unit )<br />
                         <span class="text-mute">Gap area in location</span>
@@ -187,7 +184,7 @@
                     </div>
                 </div>
 
-                <div class="row mg-0 ln " >
+                <div class="row mg-0 ln ">
                     <div class="col-md-6 lh-09e">
                         <span class="text-dark fnb ">Dimemnsion of location storage </span> ( CM. unit )<br />
                         <span class="text-mute">No of Length x Width x Height of storage area</span>
@@ -203,7 +200,7 @@
                     </div>
                 </div>
 
-                <div class="row mg-0 ln " >
+                <div class="row mg-0 ln ">
                     <div class="col-md-6 lh-09e">
                         <span class="text-dark fnb ">Maximum weight </span> ( Kg. unit )<br />
                         <span class="text-mute">No of maximum weight that can storage in location </span>
@@ -213,7 +210,7 @@
                     </div>
                     <div class="col-md-3"></div>
                 </div>
-                <div class="row mg-0 ln " >
+                <div class="row mg-0 ln ">
                     <div class="col-md-6 lh-09e">
                         <span class="text-dark fnb ">Maximum volume</span> ( cm3. unit )<br />
                         <span class="text-mute">No of maximum volume that can storage in location</span>
@@ -224,7 +221,7 @@
                     <div class="col-md-3"></div>
                 </div>
 
-                <div class="row mg-0 ln " >
+                <div class="row mg-0 ln ">
                     <div class="col-md-6 lh-09e">
                         <span class="text-dark fnb ">Maximum Handling</span><br />
                         <span class="tx-muted">No of maximum HU that can storage in location</span>
@@ -234,7 +231,7 @@
                     </div>
                     <div class="col-md-3"></div>
                 </div>
-                <div class="row mg-0 ln " >
+                <div class="row mg-0 ln ">
                     <div class="col-md-6 lh-09e">
                         <span class="text-dark fnb ">Minimum stock on location</span><br />
                         <span class="text-mute">No of minimum stock that can storage in location</span>
@@ -244,15 +241,15 @@
                     </div>
                     <div class="col-md-3"></div>
                 </div>
-                <div class="row mg-0 ln " >
+                <div class="row mg-0 ln ">
                     <div class="col-md-6 lh-09e">
                         <span class="text-dark fnb ">Stackable</span><br />
                         <span class="text-mute">Allow to stack product on location</span>
                     </div>
                     <div class="col-md-2">
                         <div class="form-group form-control-sm mg-0">
-                            <ui-switch checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" [(ngModel)]="swstackable" ></ui-switch>
-                        </div> 
+                            <ui-switch checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" [(ngModel)]="swstackable"></ui-switch>
+                        </div>
                     </div>
                     <div class="col-md-2 lh-09e">
                         <span class="text-dark fnb ">Stack Limit</span><br />
@@ -274,46 +271,46 @@
 
             <div class="line bgsub-head ">
 
-                <div class="row mg-0 ln " >
+                <div class="row mg-0 ln ">
                     <div class="col-md-6 lh-09e">
                         <span class="text-dark fnb ">Mixing product</span><br />
                         <span class="text-mute">Allow to mixing product in location</span>
                     </div>
                     <div class="col-md-3">
                         <div class="form-group form-control-sm mg-0">
-                            <ui-switch checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" [(ngModel)]="swmixproduct" ></ui-switch>
-                        </div> 
+                            <ui-switch checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" [(ngModel)]="swmixproduct"></ui-switch>
+                        </div>
                     </div>
                     <div class="col-md-3"></div>
                 </div>
 
-                <div class="row mg-0 ln " >
+                <div class="row mg-0 ln ">
                     <div class="col-md-6 lh-09e">
                         <span class="text-dark fnb ">Mixing Aging</span><br />
                         <span class="text-mute">Allow to mixing agingproduct in location</span>
                     </div>
                     <div class="col-md-3">
                         <div class="form-group form-control-sm mg-0">
-                            <ui-switch checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" [(ngModel)]="swmixaging" ></ui-switch>
-                        </div> 
+                            <ui-switch checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" [(ngModel)]="swmixaging"></ui-switch>
+                        </div>
                     </div>
                     <div class="col-md-3"></div>
                 </div>
 
-                <div class="row mg-0 ln " >
+                <div class="row mg-0 ln ">
                     <div class="col-md-6 lh-09e">
                         <span class="text-dark fnb ">Mixing Lot MFG</span><br />
                         <span class="text-mute">Allow to mixing mfg lot no in location</span>
                     </div>
                     <div class="col-md-3">
                         <div class="form-group form-control-sm mg-0">
-                            <ui-switch checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" [(ngModel)]="swmixmfglot" ></ui-switch>
-                        </div> 
+                            <ui-switch checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" [(ngModel)]="swmixmfglot"></ui-switch>
+                        </div>
                     </div>
                     <div class="col-md-3"></div>
                 </div>
 
-                <div class="row mg-0 ln " >
+                <!--div class="row mg-0 ln " >
                     <div class="col-md-6 lh-09e ">
                         <span class="text-dark fnb  pdt-3">Aging</span><br />
                         <span class="text-mute">Specification aging in location</span>
@@ -326,30 +323,30 @@
                     </div>
                     <div class="col-md-2">
                     </div>
-                </div>
+                </div-->
 
-                
-                <div class="row mg-0 ln " >
+
+                <div class="row mg-0 ln ">
                     <div class="col-md-6 lh-09e ">
                         <span class="text-dark fnb  pdt-3">Pick-face</span><br />
                         <span class="text-mute">Specification that the location is picking</span>
                     </div>
                     <div class="col-md-2">
                         <div class="form-group form-control-sm mg-0">
-                            <ui-switch checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" [(ngModel)]="swpicking" ></ui-switch>
-                        </div> 
+                            <ui-switch checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" [(ngModel)]="swpicking"></ui-switch>
+                        </div>
                     </div>
                     <div class="col-md-2">
-                        <input class="form-control form-control-sm fnb text-danger" placeholder="Min. Ratio" type="text" >
+                        <input class="form-control form-control-sm fnb text-danger" placeholder="Min. Ratio" type="text" [(ngModel)]="ops.spcmnaging">
                     </div>
                     <div class="col-md-2">
-                        <input class="form-control form-control-sm fnb text-danger"  placeholder="Mix. Ratio" type="text" >
+                        <input class="form-control form-control-sm fnb text-danger" placeholder="Mix. Ratio" type="text" [(ngModel)]="ops.spcmxaging">
                     </div>
-                </div> 
-                
+                </div>
 
-           
-            <!-- <div class="row mg-0 ln " >
+
+
+                <!-- <div class="row mg-0 ln " >
                 <div class="col-md-6 lh-09e ">
                     <span class="text-dark fnb  pdt-3">Replenishment class</span><br />
                     <span class="text-mute">Specification replenishment class in location</span>
@@ -361,33 +358,33 @@
                 </div>
             </div>
              -->
-            <div class="row mg-0 ln " >
-                <div class="col-md-6 lh-09e ">
-                    <span class="text-dark fnb  pdt-3">Product</span><br />
-                    <span class="text-mute">Specification product in location</span>
+                <div class="row mg-0 ln ">
+                    <div class="col-md-6 lh-09e ">
+                        <span class="text-dark fnb  pdt-3">Product</span><br />
+                        <span class="text-mute">Specification product in location</span>
+                    </div>
+                    <div class="col-md-2">
+                        <input class="form-control form-control-sm fnb text-danger " type="text" [(ngModel)]="ops.spcarticle">
+                    </div>
+                    <div class="col-md-4">
+                    </div>
                 </div>
-                <div class="col-md-2">
-                    <input class="form-control form-control-sm fnb text-danger " type="text" [(ngModel)]="ops.spcarticle">
+
+                <div class="row mg-0 ln ">
+                    <div class="col-md-6 lh-09e ">
+                        <span class="text-dark fnb  pdt-3">Third party</span><br />
+                        <span class="text-mute">Specification third party in location</span>
+                    </div>
+                    <div class="col-md-2">
+                        <input class="form-control form-control-sm fnb text-danger " type="text" [(ngModel)]="ops.spcthcode">
+                    </div>
+                    <div class="col-md-4">
+                    </div>
                 </div>
-                <div class="col-md-4">
-                </div>
-            </div>
-            
-            <div class="row mg-0 ln " >
-                <div class="col-md-6 lh-09e ">
-                    <span class="text-dark fnb  pdt-3">Third party</span><br />
-                    <span class="text-mute">Specification third party in location</span>
-                </div>
-                <div class="col-md-2">
-                    <input class="form-control form-control-sm fnb text-danger " type="text" [(ngModel)]="ops.spcthcode">
-                </div>
-                <div class="col-md-4">
-                </div>
-            </div>
 
             </div>
-           
+
         </div>
 
     </div>
-  </div>
+</div>
