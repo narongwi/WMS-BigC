@@ -58,5 +58,15 @@ export class ouhanderlingunitService {
     return this.http.post(environment.urlapiDocument +'/print/huempty',search.toString(),{responseType:'blob'});
     // return this.http.get(environment.urlapiDocument +'/get/huempty?orgcode='+orgcode+'&site='+site+'&depot='+depot+'&huno='+huno ,  { responseType: 'blob' });
   }
+
+  getlabel(orgcode:string,site:string,depot:string,huno:string){
+    let search = new URLSearchParams();
+    search.set('orgcode', orgcode); 
+    search.set('site', site); 
+    search.set('depot', depot); 
+    search.set('huno', huno);
+    search.set('hutype', 'N');
+    return this.http.post(environment.urlapiDocument +'/print/labelhu',search.toString(),{responseType:'blob'});
+}
   
 }

@@ -8,13 +8,14 @@ import { FormsModule } from '@angular/forms';
 import { OrderModule } from 'ngx-order-pipe';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { OnlynumberDirective } from './helpers/numericonly.directive';
+import { admTableFilter } from './admn/components/tempreport/admTableFilter';
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
   }
     
   @NgModule({
-    declarations: [ OnlynumberDirective ],
+    declarations: [ OnlynumberDirective,admTableFilter ],
     imports: [
       CommonModule,
       TranslateModule.forChild({
@@ -27,13 +28,15 @@ export function HttpLoaderFactory(http: HttpClient) {
       }),
       UiSwitchModule,
       OrderModule, // sort data on table
-      NgbModule 
+      NgbModule,
+      
     ],
     exports: [
       TranslateModule,
       UiSwitchModule, 
       OnlynumberDirective,
-      NgbModule 
+      NgbModule,
+      admTableFilter,
     ],
   })
   export class SharedModule { }

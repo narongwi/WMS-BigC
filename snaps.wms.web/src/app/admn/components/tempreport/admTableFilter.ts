@@ -1,7 +1,8 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-    name: 'admTableFilter'
+    name: 'admTableFilter',
+    pure: false
 })
 export class admTableFilter implements PipeTransform {
     // input model name = searchText

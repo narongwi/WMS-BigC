@@ -33,11 +33,11 @@ namespace snaps.wms.api.inventory
         public void ConfigureServices(IServiceCollection services) {
             services.Configure<AppSettings>(Configuration.GetSection(nameof(AppSettings)));
             services.AddSingleton<AppSettings>(sp => sp.GetRequiredService<IOptions<AppSettings>>().Value);
- 
             services.AddSingleton<stockService>();
             services.AddSingleton<correctionService>();
             services.AddSingleton<transferService>();
             services.AddSingleton<countService>();
+            services.AddSingleton<mergeService>();
 
 
             services.AddControllers().AddNewtonsoftJson(options =>
@@ -85,9 +85,8 @@ namespace snaps.wms.api.inventory
             services.AddScoped<IstockService, stockService>();
             services.AddScoped<IcorrectionService, correctionService>();
             services.AddScoped<ItransferService, transferService>();
-             services.AddScoped<IcountService, countService>();
-
-
+            services.AddScoped<IcountService, countService>();
+            services.AddScoped<ImergeService,mergeService>();
             services.AddControllers();
         }
 

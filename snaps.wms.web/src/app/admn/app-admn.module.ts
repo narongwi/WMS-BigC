@@ -42,7 +42,7 @@ import { admpampreparationComponent } from './components/parameter/Preparation/a
 import { OrderModule } from 'ngx-order-pipe';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { tempreportComponent } from './components/tempreport/admtempreport';
-import { admTableFilter } from "./components/tempreport/admTableFilter";
+// import { admTableFilter } from "./components/tempreport/admTableFilter";
 import { admdepotComponent } from './components/depot/adm.depot';
 import { PrinterComponent } from './components/printer/printer.component';
 import { OptionComponent } from "./components/printer/option/option.component";
@@ -62,7 +62,7 @@ import { OptionComponent } from "./components/printer/option/option.component";
     admpamoutboundComponent, admpampreparationComponent,
 
     tempreportComponent,
-    admTableFilter,
+    // admTableFilter,
     PrinterComponent,
     OptionComponent
   ],

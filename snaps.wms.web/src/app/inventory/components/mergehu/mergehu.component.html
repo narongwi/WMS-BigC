@@ -1,190 +1,346 @@
 <div class="bgsub-info">
-    <div class="bgprime" style="height: 44px;background-color: #ffffff;border-bottom: 1px solid #e0e0e0;"> </div>
-    <div class="container">        
-        <div class="row " style="margin-top:-34px">
-            <ul ngbNav #nav="ngbNav" [(activeId)]="crtab" class="nav-tabs" [destroyOnHide]="false">
-                <li [ngbNavItem]="1">
-                  <a ngbNavLink class="w150 fn fn-07e">Merge Handling Unit</a>
-                  <ng-template ngbNavContent>
-                    <div class="container">
-                        <div class="row">                    
-                            <div class="col-md-12">                    
-                                <div class="row">
-                                    <div class="col-md-6 fnb fn ">
-                                        <span class="fn-palette-1">Inventory</span>&nbsp;<i class="fas fa-chevron-right fa-xs"></i>&nbsp;<span class="fn-palette-5">Merge Handling Unit</span>
-                                    </div>  
-                                    <div class="col-md-3 text-right lh-07e fnb fn">
-                                       Target <span class="text-primary">Location</span><br>
-                                       <span class="fn-07e">for generate new huno</span>
-                                    </div>  
-                                    <div class="col-md-2 fn fn-07e fnb">
-                                        <ng-select class="text-danger"  class="custom custom-xs" bindLabel="value" bindvalue="value" 
-                                        [clearable]="false"  >
-                                        <!-- <ng-template ng-label-tmp let-item="item"><span class="text-danger b">{{item.value}}</span> </ng-template>
-                                        <ng-template ng-option-tmp let-item="item"><span class="text-danger b">{{item.value}}</span> </ng-template> -->
-                                        </ng-select>        
-                                    </div>                                    
-                                    <div class="col-md-1 ">
-                                        <button type="button" class="btn snaps-warning btn-block mp " >
-                                            Generate
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row pdt-10 bgsub-info">
-                            <div class="col-md-6 pd-5">
-                                <div class="lsset fn-07e fnb pd-0" > 
-                                    <div class="head" >
-                                        <div class="row mg-0 pd-1 ln ">
-                                            <div  class="col-md-12 pdt-5">Source information</div>
-                                        </div>
-                                    </div>
-                                    <div class="line bgsub-head fnb fn fn-07e fnb dgforms" >
-                                        <div class="row mg-0 pd-5 ln">
-                                            <div  class="col-md-2 pdt-5">Location </div>
-                                            <div  class="col-md-5 pdb-5 ">
-                                                <ng-select class="text-danger"  class="custom custom-xs" bindLabel="value" bindvalue="value" 
-                                                [clearable]="false"  >
-                                                <!-- <ng-template ng-label-tmp let-item="item"><span class="text-danger b">{{item.value}}</span> </ng-template>
-                                                <ng-template ng-option-tmp let-item="item"><span class="text-danger b">{{item.value}}</span> </ng-template> -->
-                                                </ng-select>        
-                                            </div>
-                                            <div class="col-md-7">
-                                            
-                                            </div>
-                                        </div>
-                                        <div class="row mg-0 pd-5 ln ">
-                                            <div  class="col-md-2 pdt-10">HU No</div>
-                                            <div  class="col-md-10 pdt-5 pdb-5">
-                                                <input class="form-control fn-07e fnb text-danger "
-                                                placeholder="HU No" >
-                                            </div>
-                                        </div>
-                                        <div class="row mg-0 pd-5  ">
-                                            <div  class="col-md-2 pdt-5"></div>
-                                            <div  class="col-md-3 ">
-                                                <button type="button" class="btn snaps-success mp " >
-                                                    <i class="fas fa-search fa-sm"></i> Search 
-                                                </button>
-                                            </div>
-                                            <div  class="col-md-8"></div>
-                                        </div>
-                                    </div>  
-                                        <div class="head" >
-                                            <div class="row mg-0 ln ">
-                                                <div  class="col-md-3 mp">HU No</div>
-                                                <div  class="col-md-6 mp">Product</div>
-                                                <div  class="col-md-1 mp">Quantity</div>
-                                                <div  class="col-md-1 mp">Unit</div>
-                                                <div  class="col-md-1 mp">Select</div>
-                                            </div>
-                                        </div> 
-                                        <div class="line bgsub-head dgstock " >
-                                            <ng-scrollbar>
-                                                <div class="row mg-0 ln" >
-                                                    <div class="col-md-11">No Data</div>
-                                                    <div class="col-md-1 tx-center">
-                                                        <i class="fas fa-arrow-circle-right fa-lg fn-palette-1 mp" ></i>
-                                                    </div>
-                                                </div>
-                                            </ng-scrollbar>
-                                        </div>
-                                        <div class="foot bgsub-head fnb pd-10">
-                                            <div class="row mg-0 ">
-                                                <div class="col-md-12">
-                                                    Total &nbsp; &nbsp;<span class="text-danger">0</span> &nbsp; &nbsp; Product
-                                                </div>
-                                            </div>
-                                        </div>  
-                                       
-                                </div>
-                            </div>
-                            <div class="col-md-6 pd-5">
-                                <div class="lsset fn-07e fnb pd-0" > 
-                                    <div class="head" >
-                                        <div class="row mg-0 pd-1 ln ">
-                                            <div  class="col-md-12 pdt-5">Target information</div>
-                                        </div>
-                                    </div> 
-                                    <div class="line bgsub-head fnb fn fn-07e fnb dgforms" >
-                                        <div class="row mg-0 pd-5 ln ">
-                                            <div  class="col-md-2 pdt-5">Location</div>
-                                            <div  class="col-md-2 pdt-5 fn-palette-5">OV001</div>
-                                            <div  class="col-md-2 pdt-5">HU No</div>
-                                            <div  class="col-md-4 pdt-5 fn-palette-5">919170008515</div>
-                                            <div  class="col-md-2 text-right pdl-0 ">
-                                                <div style="display: none;">merge id</div>
-                                                <button type="button" class="btn snaps-default btn-xs" >
-                                                    Print Label
-                                                </button>
-                                            </div>
-                                           
-                                        </div>
-                                        <div class="row mg-0 pd-5 ln ">
-                                            <div  class="col-md-2 tx-overflow pdt-10">Remark</div>
-                                            <div  class="col-md-10 pdt-5 pdb-5">
-                                                <input type="text" class="form-control form-control-sm fnb" placeholder="limit message 0 to 100 character">
-                                            </div>
-                                        </div>
-
-                                        <div class="row mg-0 pd-5  ">
-                                            <div  class="col-md-1 tx-overflow pdt-10">Merge Information</div>
-                                            <div  class="col-md-6 pdt-5 pdb-10">
-                                                
-                                            </div>
-                                            <div  class="col-md-2 pdt-5 ">
-                                                <button type="button" class="btn snaps-danger btn-block mp " >
-                                                    Cancel
-                                                </button>  
-                                            </div>
-                                            <div  class="col-md-3 pdt-5 ">
-                                                <button type="button" class="btn snaps-success btn-block mp " >
-                                                    Confirm 
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div> 
-
-                                    <div class="head" >
-                                        <div class="row mg-0 ln ">
-                                            <div  class="col-md-1 mp">UnSelect</div>
-                                            <div  class="col-md-3 mp">HU No</div>
-                                            <div  class="col-md-6 mp">Product</div>
-                                            <div  class="col-md-1 mp">Quantity</div>
-                                            <div  class="col-md-1 mp">Unit</div>
-                                        </div>
-                                    </div> 
-                                    
-                                    <div class="line bgsub-head dgstock" >
-                                        <ng-scrollbar>
-                                            <div class="row mg-0 ln" >
-                                                <div class="col-md-1 tx-center">
-                                                    <i class="fas fa-arrow-circle-left fa-lg fn-palette-1 mp" ></i>
-                                                </div>
-                                                <div class="col-md-11">No Data</div>
-                                            </div>
-                                        </ng-scrollbar>
-                                    </div>
-
-                                    <div class="foot bgsub-head fnb pd-10">
-                                        <div class="row mg-0 ">
-                                            <div class="col-md-12 ">
-                                                Total &nbsp; &nbsp;<span class="text-danger">0</span> &nbsp; &nbsp; Product
-                                            </div>
-                                        </div>
-                                    </div>    
-
-                                </div>
-                            </div>
-                        </div>
-                
+  <div class="bgprime" style="height: 44px;background-color: #ffffff;border-bottom: 1px solid #e0e0e0;"> </div>
+  <div class="container">
+    <div class="row " style="margin-top:-34px">
+      <ul ngbNav #nav="ngbNav" [(activeId)]="ctab" class="nav-tabs" [destroyOnHide]="false">
+        <li [ngbNavItem]="1">
+          <a ngbNavLink class="fn fn-07e">Merge History</a>
+          <ng-template ngbNavContent>
+            <div class="container pd-0">
+              <div id="Head" class="row pdt-5 text-muted">
+                <div class="col-md-12">
+                  <div class="row">
+                    <div class="col-md-4 fnb fn ">
+                      <span class="fn-palette-1">Inventory</span>&nbsp;<i
+                        class="fas fa-chevron-right fa-xs"></i>&nbsp;<span class="fn-palette-5">Merge History</span>
                     </div>
-                  </ng-template>
-                </li>
-              </ul>              
-              <div [ngbNavOutlet]="nav" class="mt-2"></div>
-        </div>
-    </div>
-</div>
+                    <div class="col-md-2 fn fn-07e fnb">
+                      <input type="text" class="form-control form-control-sm fnb" [(ngModel)]="lsfn.loccode"
+                        placeholder="Target Location">
+                    </div>
+                    <div class="col-md-2 fn fn-07e fnb">
+                      <input type="text" class="form-control form-control-sm fnb" [(ngModel)]="lsfn.huno"
+                        placeholder="Target HU">
+                    </div>
+                    <div class="col-md-2 fn fn-07e fnb">
+                      <div class="input-group fnb">
+                        <input class="form-control fn-07e fnb text-danger " placeholder="{{dateformat}}"
+                          name="datecreate" ngbDatepicker #datefrom="ngbDatepicker" [(ngModel)]="lsfn.datecreate"
+                          (dateSelect)="list()">
+                        <div class="input-group-append">
+                          <button type="button" class="btn snaps-btngroup btn-prime " (click)="datefrom.toggle();">
+                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-calendar-date"
+                              fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                              <path fill-rule="evenodd"
+                                d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z">
+                              </path>
+                              <path
+                                d="M6.445 11.688V6.354h-.633A12.6 12.6 0 0 0 4.5 7.16v.695c.375-.257.969-.62 1.258-.777h.012v4.61h.675zm1.188-1.305c.047.64.594 1.406 1.703 1.406 1.258 0 2-1.066 2-2.871 0-1.934-.781-2.668-1.953-2.668-.926 0-1.797.672-1.797 1.809 0 1.16.824 1.77 1.676 1.77.746 0 1.23-.376 1.383-.79h.027c-.004 1.316-.461 2.164-1.305 2.164-.664 0-1.008-.45-1.05-.82h-.684zm2.953-2.317c0 .696-.559 1.18-1.184 1.18-.601 0-1.144-.383-1.144-1.2 0-.823.582-1.21 1.168-1.21.633 0 1.16.398 1.16 1.23z">
+                              </path>
+                            </svg>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-2 ">
+                      <button type="button" class="btn snaps-primary btn-block mp" (click)="list()">
+                        <i class="fas fa-search fa-sm"></i> Search
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div id="List" class="row pdt-10 bgsub-info">
+                <div class="col-md-12 pd-5">
+                  <div class="lsset fn-07e fnb pd-0">
+                    <div class="head">
+                      <div class="row mg-0 ln ">
+                        <div class="col-md-2 mp">Target Location</div>
+                        <div class="col-md-3 mp">Target HU</div>
+                        <div class="col-md-2 mp">Modify Date</div>
+                        <div class="col-md-2 mp">Modify User</div>
+                        <div class="col-md-1 mp">Status</div>
+                        <div class="col-md-1 mp text-center">Edit</div>
+                        <div class="col-md-1 mp text-center">Label</div>
+                      </div>
+                    </div>
+                    <div class="line bgsub-head dglist ">
+                      <ng-scrollbar>
+                        <div class="row mg-0 ln" *ngIf="lsmd.length == 0">
+                          <div class="col-md-12 text-center">No Data</div>
+                        </div>
+                        <div class="row mg-0 ln" *ngFor="let ls of lsmd;let i=index;" [class.row-active]="i==lssel">
+                          <div class="col-md-2 mp text-primary fnb" (click)="line(ls,i)">{{ls.loccode}}</div>
+                          <div class="col-md-3 mp text-danger fnb" (click)="line(ls,i)">{{ls.hutarget}}</div>
+                          <div class="col-md-2 mp" (click)="line(ls,i)">{{ls.datemodify|date:dateformat}}</div>
+                          <div class="col-md-2 mp" (click)="line(ls,i)">{{ls.accnmodify}}</div>
+                          <div class="col-md-1 mp" (click)="line(ls,i)">{{ls.tflowdes}}</div>
+                          <div class="col-md-1 mp text-center">
+                            <i class="fas fa-wrench fa-lg" (click)="edithu(i)"
+                              [ngClass]="{'text-primary': ls.tflow=='IO','text-danger':ls.tflow !='IO'}"></i>
+                          </div>
+                          <div class="col-md-1 mp text-center">
+                            <i class="fas fa-print fa-lg" (click)="linklabel(i)"
+                              [ngClass]="{'text-primary': ls.tflow=='ED','text-danger':ls.tflow !='ED'}"></i>
+                          </div>
+                        </div>
+                      </ng-scrollbar>
+                    </div>
+                    <div class="foot bgsub-head fnb pd-10">
+                      <div class="row mg-0 ">
+                        <div class="col-md-12">
+                          Total &nbsp; &nbsp;<span class="text-danger">{{lsmd.length}}</span> &nbsp; &nbsp; Product
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div id="Line" class="row pdt-10 bgsub-info">
+                <div class="col-md-12 pd-5">
+                  <div class="lsset fn-07e fnb pd-0">
+                    <div class="head">
+                      <div class="row mg-0 ln ">
+                        <div class="col-md-2 mp">Source Loc</div>
+                        <div class="col-md-2 mp">Source HUNo</div>
+                        <div class="col-md-5 mp">Product</div>
+                        <div class="col-md-1 mp">PU Qty</div>
+                        <div class="col-md-1 mp">SKU Qty</div>
+                        <div class="col-md-1 mp">Unit</div>
+                      </div>
+                    </div>
 
+                    <div class="line bgsub-head dgline">
+                      <ng-scrollbar>
+                        <div class="row mg-0 ln" *ngIf="lnmd.length == 0">
+                          <div class="col-md-12 text-center">No Data</div>
+                        </div>
+                        <div class="row mg-0 ln" *ngFor="let ln of lnmd;let i=index;" (click)="linesl(i)"
+                          [class.row-active]="i==lnsel">
+                          <div class="col-md-2 mp">{{ln.loccode}}</div>
+                          <div class="col-md-2 mp">{{ln.huno}}</div>
+                          <div class="col-md-5 mp">{{ln.article}}-{{ln.lv}} {{ln.descalt}}</div>
+                          <div class="col-md-1 mp">{{ln.puops}}</div>
+                          <div class="col-md-1 mp">{{ln.skuops}}</div>
+                          <div class="col-md-1 mp">{{ln.unitopsdes}}</div>
+                        </div>
+                      </ng-scrollbar>
+                    </div>
+
+                    <div class="foot bgsub-head fnb pd-10">
+                      <div class="row mg-0 ">
+                        <div class="col-md-12 ">
+                          Total &nbsp; &nbsp;<span class="text-danger">{{lnmd.length}}</span> &nbsp; &nbsp; Product
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-template>
+        </li>
+        <li [ngbNavItem]="2">
+          <a ngbNavLink class="w150 fn fn-07e">Merge Handling Unit</a>
+          <ng-template ngbNavContent>
+            <div class="container pd-0">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="row">
+                    <div class="col-md-4 fnb fn ">
+                      <span class="fn-palette-1">Inventory</span>&nbsp;<i
+                        class="fas fa-chevron-right fa-xs"></i>&nbsp;<span class="fn-palette-5">Merge Handling
+                        Unit</span>
+                    </div>
+                    <div class="col-md-3 text-right lh-07e fnb fn">
+                      Target <span class="text-primary">Location</span><br>
+                      <span class="fn-07e">for generate new huno</span>
+                    </div>
+                    <div class="col-md-3 fn fn-07e fnb">
+                      <input type="text" class="form-control form-control-sm fnb" [(ngModel)]="mdst.loccode"
+                        placeholder="Enter Location no">
+                    </div>
+                    <div class="col-md-2 ">
+                      <button type="button" class="btn snaps-warning btn-block mp " (click)="setup()">
+                        <i class="fas fa-plus fa-sm"></i> Generate
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row pdt-10 bgsub-info">
+                <div class="col-md-6 pd-5">
+                  <div class="lsset fn-07e fnb pd-0">
+                    <div class="head">
+                      <div class="row mg-0 pd-1 ln ">
+                        <div class="col-md-12 pdt-5">Source information</div>
+                      </div>
+                    </div>
+                    <div class="line bgsub-head fnb fn fn-07e fnb dgforms">
+                      <div class="row mg-0 pd-5 ln">
+                        <div class="col-md-2 pdt-5">Location </div>
+                        <div class="col-md-5 pdb-5 ">
+                          <input type="text" class="form-control form-control-sm fnb" [(ngModel)]="mdfn.loccode"
+                            placeholder="Enter Location no">
+                        </div>
+                        <div class="col-md-7">
+
+                        </div>
+                      </div>
+                      <div class="row mg-0 pd-5 ln ">
+                        <div class="col-md-2 pdt-10">HU No</div>
+                        <div class="col-md-10 pdt-5 pdb-5">
+                          <input class="form-control fn-07e fnb text-danger " placeholder="HU No"
+                            [(ngModel)]="mdfn.huno">
+                        </div>
+                      </div>
+                      <div class="row mg-0 pd-5  ">
+                        <div class="col-md-2 pdt-5"></div>
+                        <div class="col-md-3 ">
+                          <button type="button" class="btn snaps-success mp " (click)="find()">
+                            <i class="fas fa-search fa-sm"></i> Search
+                          </button>
+                        </div>
+                        <div class="col-md-8"></div>
+                      </div>
+                    </div>
+                    <div class="head">
+                      <div class="row mg-0 ln ">
+                        <div class="col-md-2 mp">HU No</div>
+                        <div class="col-md-7 mp">Product</div>
+                        <div class="col-md-1 mp">Quantity</div>
+                        <div class="col-md-1 mp">Unit</div>
+                        <div class="col-md-1 mp text-center text-info">
+                          <i class="fas fa-arrow-circle-right fa-lg mp" (click)="selectAll()"></i>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="line bgsub-head dgstock ">
+                      <ng-scrollbar>
+                        <div class="row mg-0 ln" *ngIf="mdsr.length == 0">
+                          <div class="col-md-12 text-center">No Data</div>
+                        </div>
+                        <div class="row mg-0 ln" *ngFor="let sr of mdsr;let i=index;" (click)="srcsel(i)"
+                          [class.row-active]="i==srsel">
+                          <div class="col-md-2 mp">{{sr.huno}}</div>
+                          <div class="col-md-7 mp  tx-overflow">{{sr.article}}-{{sr.lv}} {{sr.descalt}}</div>
+                          <div class="col-md-1 mp">{{sr.qtypu}}</div>
+                          <div class="col-md-1 mp">{{sr.qtyunitdes}}</div>
+                          <div class="col-md-1 tx-center">
+                            <i class="fas fa-arrow-circle-right fa-lg fn-palette-1 mp" (click)="select(i)"></i>
+                          </div>
+                        </div>
+                      </ng-scrollbar>
+                    </div>
+                    <div class="foot bgsub-head fnb pd-10">
+                      <div class="row mg-0 ">
+                        <div class="col-md-12">
+                          Total &nbsp; &nbsp;<span class="text-danger">{{mdsr.length}}</span> &nbsp; &nbsp; Product
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+                <div class="col-md-6 pd-5">
+                  <div class="lsset fn-07e fnb pd-0">
+                    <div class="head">
+                      <div class="row mg-0 pd-1 ln ">
+                        <div class="col-md-12 pdt-5">Target information</div>
+                      </div>
+                    </div>
+                    <div class="line bgsub-head fnb fn fn-07e fnb dgforms">
+                      <div class="row mg-0 pd-5 ln ">
+                        <div class="col-md-2 pdt-5">Location</div>
+                        <div class="col-md-2 pdt-5 fn-palette-5">{{mdtr.loccode}}</div>
+                        <div class="col-md-2 pdt-5">HU No</div>
+                        <div class="col-md-4 pdt-5 fn-palette-5">{{mdtr.hutarget}}</div>
+                        <div class="col-md-2 text-right pdl-0 ">
+                          <button type="button" class="btn snaps-default btn-xs" (click)="label()"
+                            [disabled]="mdtr.hutarget == null">
+                            <i class="fas fa-print fa-sm"></i> Label
+                          </button>
+                        </div>
+                      </div>
+                      <div class="row mg-0 pd-5 ln ">
+                        <div class="col-md-2 tx-overflow pdt-10">Remark</div>
+                        <div class="col-md-10 pdt-5 pdb-5">
+                          <input type="text" class="form-control form-control-sm fnb" [(ngModel)]="mdtr.remarks"
+                            placeholder="limit message 0 to 100 character">
+                        </div>
+                      </div>
+
+                      <div class="row mg-0 pd-5  ">
+                        <div class="col-md-2 tx-overflow pdt-10">Filter</div>
+                        <div class="col-md-4 pdt-5 pdb-10">
+                          <input type="text" class="form-control form-control-sm fnb" [(ngModel)]="txft" name="txft"
+                            placeholder="Enter huno or article">
+                        </div>
+                        <div class="col-md-3 pdt-5 ">
+                          <button type="button" class="btn snaps-danger btn-block mp "
+                            [disabled]="mdtr.hutarget == null" (click)="cancel()">
+                            <i class="fas fa-trash-alt fa-sm"></i> Cancel
+                          </button>
+                        </div>
+                        <div class="col-md-3 pdt-5 ">
+                          <button type="button" class="btn snaps-success btn-block mp "
+                            [disabled]="mdtr.hutarget == null" (click)="confirm()">
+                            <i class="fas fa-save fa-sm"></i> Confirm
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="head">
+                      <div class="row mg-0 ln ">
+                        <div class="col-md-1 mp text-center">
+                          <i class="fas fa-times-circle fa-lg text-warning mp" (click)="removeAll()"></i>
+                        </div>
+                        <div class="col-md-2 mp">HU No</div>
+                        <div class="col-md-7 mp">Product</div>
+                        <div class="col-md-1 mp">Quantity</div>
+                        <div class="col-md-1 mp">Unit</div>
+                      </div>
+                    </div>
+
+                    <div class="line bgsub-head dgstock">
+                      <ng-scrollbar>
+                        <div class="row mg-0 ln" *ngIf="mdtr.lines.length == 0">
+                          <div class="col-md-12 text-center">No Data</div>
+                        </div>
+                        <div class="row mg-0 ln"
+                          *ngFor="let tr of mdtr.lines|admTableFilter :{huno:txft,article:txft};let i=index;"
+                          (click)="tarsel(i)" [class.row-active]="i==trsel">
+                          <div class="col-md-1 tx-center text-danger">
+                            <i class="fas fa-times fa-lg  mp" (click)="remove(i)"></i>
+                          </div>
+                          <div class="col-md-2 mp">{{tr.huno}}</div>
+                          <div class="col-md-7 mp">{{tr.article}}-{{tr.lv}} {{tr.descalt}}</div>
+                          <div class="col-md-1 mp">{{tr.qtypu}}</div>
+                          <div class="col-md-1 mp">{{tr.qtyunitdes}}</div>
+                        </div>
+                      </ng-scrollbar>
+                    </div>
+
+                    <div class="foot bgsub-head fnb pd-10">
+                      <div class="row mg-0 ">
+                        <div class="col-md-12 ">
+                          Total &nbsp; &nbsp;<span class="text-danger">{{mdtr.lines.length}}</span> &nbsp; &nbsp;
+                          Product
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </ng-template>
+        </li>
+      </ul>
+      <div [ngbNavOutlet]="nav" class="mt-2"></div>
+    </div>
+  </div>
+</div>
