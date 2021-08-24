@@ -171,3 +171,21 @@ export class confirmline_md {
     skuvolume: number;
     taskstate: string;
 }
+
+export interface createhu_md {
+    orgcode?: string;
+    site?: string;
+    depot?: string;
+    loccode?: string;
+    article?: string;
+    pv?: string;
+    lv?: string;
+    qtypu?: number;
+    qtyunit?: string;
+    countcode?: string;
+    plancode?: string;
+    accncode?: string;
+    remarks?: string;
+    mergeno?: string;
+    huno?: string;
+}

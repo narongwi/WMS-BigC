@@ -476,5 +476,27 @@ namespace Snaps.WMS.Controllers
                 if (_log.IsEnabled(LogLevel.Debug)) { p.snap(); _log.LogDebug(p.toJson()); p.Dispose(); }
             }
         }
+
+        [Authorize]
+        [HttpPost("createhu/{id}")]
+        public async Task<IActionResult> createHU(String id,[FromBody] createhu_md o,
+                  [FromHeader(Name = "site")] String osite,
+                  [FromHeader(Name = "depot")] String odepot,
+                  [FromHeader(Name = "accncode")] String oaccn,
+                  [FromHeader(Name = "orgcode")] String oorg,
+                  [FromHeader(Name = "lang")] String lng
+                  ) {
+            Process ps; SnapsLogDbg p = null;
+            try {
+                o.orgcode = oorg; 
+                o.site = osite;
+                o.depot = odepot; 
+                o.accncode = oaccn;
+                return Ok(await _sv.CreateHUAsync(o));
+            } catch(Exception exr) {
+                _log.LogError(exr.SnapsLogExc(Request.getIP(),oaccn,app,"upsertLine",rqid: id,ob: o));
+                return BadRequest(exr.SnapsBadRequest());
+            } 
+        }
     }
 }

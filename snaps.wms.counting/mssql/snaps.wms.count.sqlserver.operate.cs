@@ -330,6 +330,40 @@ namespace Snaps.WMS {
                 await cm.DisposeAsync();
             }
         }
+
+        public async Task<createhu_md> CreateHUAsync(createhu_md o) {
+            try {
+                using(SqlCommand cm = new SqlCommand("[dbo].[snaps_stocktake_createhu]",cn)) {
+                    cm.snapsPar(o.orgcode,"orgcode");
+                    cm.snapsPar(o.site,"site");
+                    cm.snapsPar(o.depot,"depot");
+                    cm.snapsPar(o.loccode,"loccode");
+                    cm.snapsPar(o.article,"article");
+                    cm.snapsPar(o.pv,"pv");
+                    cm.snapsPar(o.lv,"lv");
+                    cm.snapsPar(o.qtypu,"qtypu");
+                    cm.snapsPar(o.qtyunit,"qtyunit");
+                    cm.snapsPar(o.countcode,"countno");
+                    cm.snapsPar(o.plancode,"planno");
+                    cm.snapsPar(o.accncode,"accncode");
+                    cm.snapsPar(o.remarks,"@remarks");
+                    cm.Parameters.Add(new SqlParameter("@mergeno",SqlDbType.VarChar,30));
+                    cm.Parameters.Add(new SqlParameter("@hucode",SqlDbType.VarChar,30));
+                    cm.Parameters["@mergeno"].Direction = ParameterDirection.Output;
+                    cm.Parameters["@hucode"].Direction = ParameterDirection.Output;
+                    await cm.snapsExecuteAsync();
+
+                    o.mergeno = cm.Parameters["@mergeno"].Value.ToString();
+                    o.huno = cm.Parameters["@hucode"].Value.ToString();
+                    return o;
+                }
+            } catch(Exception ex) {
+                logger.Error(o.orgcode,o.site,o.accncode,ex,ex.Message);
+                throw ex;
+            } 
+        }
+
+
         void fillcommand(ref SqlCommand c,countplan_md o) {
             c.snapsPar(o.orgcode,"orgcode");
             c.snapsPar(o.site,"site");

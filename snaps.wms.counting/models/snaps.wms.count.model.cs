@@ -213,4 +213,23 @@ namespace Snaps.WMS {
         public string cnmsg { get; set; }
         public string locctype { get; set; }
     }
+
+    public class createhu_md {
+        public string orgcode { get; set; }
+        public string site { get; set; }
+        public string depot { get; set; }
+        public string loccode { get; set; }
+        public string article { get; set; }
+        public string pv { get; set; }
+        public string lv { get; set; }
+        public decimal qtypu { get; set; }
+        public string qtyunit { get; set; }
+        public string countcode { get; set; }
+        public string plancode { get; set; }
+        public string accncode { get; set; }
+        public string remarks { get; set; }
+        public string mergeno { get; set; }
+        public string huno { get; set; }
+    }
+
 }

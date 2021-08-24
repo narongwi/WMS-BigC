@@ -118,5 +118,9 @@ namespace Snaps.WMS.Services {
             catch (Exception ex) { throw ex; }
             finally { ops.Dispose(); }
         }
+        public async Task<createhu_md> CreateHUAsync(createhu_md o) {
+            counting_ops ops = new counting_ops(cnx);
+            try { return await ops.CreateHUAsync(o); } catch(Exception ex) { throw ex; } finally { ops.Dispose(); }
+        }
     }
 }
