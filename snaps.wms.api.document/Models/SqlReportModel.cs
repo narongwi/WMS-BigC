@@ -46,6 +46,50 @@ namespace snaps.wms.api.document.Models
             "    and t.orgcode = s.orgcode and t.site = s.site and t.depot = s.depot and t.stockid = s.stockid " +
             "    and t.orgcode = b.orgcode and t.site = b.site and t.depot = b.depot and t.article = b.article and t.pv = b.pv and t.lv = b.lv " +
             "    and t.orgcode = '{0}' and t.site = '{1}' and t.depot = '{2}' and t.taskno = '{3}'  and b.isprimary = '1' ";
+
+        public static string MergeHuLabel =
+            @"select article,lv,pv,location,description,daterecipt,inorder,
+	            sum(quantitysku) quantitysku ,sum(quantitypu) quantitypu,sum(weight) weight,dateexp,datemfg,
+	            tihi,skuofpallet,skuofipck,skuofpck,ipckofpck,pckofpallet,huno,barcode,tasktype
+            from (
+            select iif(count(l.article) = 1,l.article + '-' + cast(l.lv as varchar(5)),null) article, 
+                iif(count(l.article) = 1,l.lv,null) lv, 
+                iif(count(l.article) = 1,l.pv,null) pv,
+                h.loccode location,
+                iif(count(l.article) = 1,p.description,null) description,
+                iif(count(l.article) = 1, convert(varchar,min(l.daterec), 103),null) daterecipt,
+                iif(count(l.article) = 1,max(l.inrefno),null) inorder,
+                sum(l.skuops) quantitysku, 
+                sum(l.puops) quantitypu, 
+                sum(l.weightops) weight, 
+                iif(count(l.article) = 1,convert(varchar,min(l.dateexp), 103),null) dateexp,
+                iif(count(l.article) = 1,convert(varchar,min(l.datemfg), 103),null) datemfg, 
+                iif(count(l.article) = 1,cast(p.rtopckoflayer as varchar(10)) + ' x ' + cast(p.rtolayerofhu as varchar(20)),null) tihi,
+                iif(count(l.article) = 1,p.rtoskuofhu,null) skuofpallet, 
+                iif(count(l.article) = 1,p.rtoskuofipck,null) skuofipck, 
+                iif(count(l.article) = 1,p.rtoskuofpck,null) skuofpck,
+                iif(count(l.article) = 1,p.rtoipckofpck,null) ipckofpck,
+                iif(count(l.article) = 1,(p.rtopckoflayer * p.rtolayerofhu),null) pckofpallet, 
+                h.hutarget huno, 
+                iif(count(l.article) = 1,dbo.get_barcode(l.orgcode,l.site,l.depot,l.article,l.pv,l.lv),'Multiple Product') barcode, 
+                '' tasktype 
+             from wm_mergehu h left join wm_mergeln l on h.mergeno = l.mergeno left join wm_product p on l.orgcode = p.orgcode and l.site = p.site 
+                    and l.depot = p.depot and l.article = p.article  and l.pv = p.pv and l.lv = p.lv
+              where h.orgcode = @orgcode and h.site = @site and h.depot = @depot and h.hutarget = @huno
+             group by l.orgcode,l.site,l.depot,l.article ,l.lv, l.pv, h.loccode,p.description,p.rtopckoflayer,p.rtolayerofhu, 
+ 	            p.rtoskuofhu, p.rtoskuofipck, p.rtoskuofpck,p.rtoipckofpck, h.hutarget
+            ) l group by article,lv,pv,location,description,daterecipt,inorder,dateexp,datemfg,tihi,skuofpallet,skuofipck,skuofpck,ipckofpck,pckofpallet,huno,barcode,tasktype";
+
+        public static string StockHuLabel =
+            @"select s.article + '-' + cast(s.lv as varchar(5)) article, s.lv, s.pv,s.loccode location, p.description,
+	        convert(varchar,s.daterec, 103)  daterecipt, s.inrefno inorder, s.qtysku quantitysku, s.qtypu quantitypu, 
+            s.qtyweight weight, convert(varchar, s.dateexp, 103) dateexp,convert(varchar, s.datemfg, 103)  datemfg, 
+            cast(p.rtopckoflayer as varchar(10)) + ' x ' + cast(p.rtolayerofhu as varchar(20)) tihi, 
+            p.rtoskuofhu skuofpallet, p.rtoskuofipck skuofipck, p.rtoskuofpck skuofpck,p.rtoipckofpck ipckofpck, 
+            p.rtopckoflayer * p.rtolayerofhu pckofpallet, s.huno, dbo.get_barcode(s.orgcode,s.site,s.depot,s.article,s.pv,s.lv) barcode,'' tasktype 
+            from wm_stock s join wm_product p on s.orgcode = p.orgcode and s.site = p.site and s.depot = p.depot and s.article = p.article and s.pv = p.pv and s.lv = p.lv 
+            where s.orgcode = @orgcode and s.site = @site and s.depot = @depot and s.huno = @huno";
+
         public static string HUSql =
             @"select s.article, s.lv, s.pv, s.loccode location, p.description,convert(varchar, s.datecreate, 103)  daterecipt, inrefno inorder, qtysku quantitysku, 
              s.qtyweight weight, convert(varchar, s.dateexp, 103) dateexp,convert(varchar, s.datemfg, 103)  datemfg, cast(rtopckoflayer as varchar(10)) + ' x ' + cast(rtolayerofhu as varchar(20)) tihi,

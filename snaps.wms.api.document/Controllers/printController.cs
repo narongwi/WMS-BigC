@@ -6,6 +6,7 @@ using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.IO;
+using System.Net;
 using System.Web.Http.Cors;
 using System.Web.Mvc;
 using Zen.Barcode;
@@ -66,6 +67,66 @@ namespace snaps.wms.api.document.Controllers {
                     Response.AddHeader("content-disposition","inline; filename=Putaway_Label.pdf");
                     Response.BinaryWrite(bytes); // create the file
                     Response.Flush(); // send it to the client to download
+                }
+
+                return Content("");
+            } catch(Exception ex) { throw ex; } finally {
+                rv.Dispose();
+                tb.Dispose();
+            }
+        }
+
+        [HttpPost]
+        public ActionResult labelhu(string orgcode,string site,string depot,string huno,string hutype) {
+            //
+            ReportViewer rv = new ReportViewer();
+            DataTable tb = new DataTable();
+            string sqlcm, printerName;
+
+            try {
+                // form params
+                sqlcm = hutype == "N" ? SqlReportModel.StockHuLabel : SqlReportModel.MergeHuLabel;
+                using(var cn = new SqlConnection(cnx))
+                using(var dataAdapter = new SqlDataAdapter(sqlcm,cn)) {
+                    dataAdapter.SelectCommand.Parameters.AddWithValue("@orgcode",orgcode);
+                    dataAdapter.SelectCommand.Parameters.AddWithValue("@site",site);
+                    dataAdapter.SelectCommand.Parameters.AddWithValue("@depot",depot);
+                    dataAdapter.SelectCommand.Parameters.AddWithValue("@huno",huno);
+                    dataAdapter.Fill(tb);
+                }
+
+                if(tb.Rows.Count > 0) {
+                    // create barcode
+                    tb.Columns.Add("imgbarhuno",typeof(byte[]));
+                    tb.Rows[0]["imgbarhuno"] = _GBar(tb.Rows[0]["huno"].ToString());
+
+                    // data source
+                    rv.ProcessingMode = ProcessingMode.Local;
+                    rv.LocalReport.ReportPath = Server.MapPath("~") + "/reprdlc/L011_Inbound_Putaway.rdlc";
+                    rv.LocalReport.DataSources.Add(new ReportDataSource("DataSet1",tb));
+
+
+                    // printer setting parameter
+                    //if(tb.Rows[0]["tasktype"].ToString().ToUpper() == "P") {
+                    //    // putaway printer
+                    //    printerName = getPrinterName(orgcode,site,depot,"PUTAWAY");
+                    //    rv.LocalReport.Print(printerName);
+                    //} else {
+                    //    // defult printer
+                    //    printerName = getPrinterName(orgcode,site,depot);
+                    //    rv.LocalReport.Print(printerName);
+                    //}
+
+                    // export pdf
+                    byte[] bytes = rv.LocalReport.Render("PDF",null,out mimeType,out encoding,out extension,out streamIds,out warnings);
+                    Response.Buffer = true;
+                    Response.Clear();
+                    Response.ContentType = "application/pdf";
+                    Response.AddHeader("content-disposition","inline; filename=Putaway_Label.pdf");
+                    Response.BinaryWrite(bytes); // create the file
+                    Response.Flush(); // send it to the client to download
+                } else {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest,"Data Not Found");
                 }
 
                 return Content("");
