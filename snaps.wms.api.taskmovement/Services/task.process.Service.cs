@@ -63,5 +63,8 @@ namespace Snaps.WMS.Services {
             finally { }
         }
 
+        public async Task UrgenReplenishment(replen_md o) {
+            try { await op.UrgenReplenishment(o); } catch(Exception ex) { throw ex; } finally { }
+        }
     }
 }

@@ -142,4 +142,19 @@ namespace Snaps.WMS {
         public string skipdigit { get; set; }
 
     }
+
+    public class replen_md {
+        public string orgcode { get; set; }
+        public string site { get; set; }
+        public string depot { get; set; }
+        public string spcarea { get; set; }
+        public string zone { get; set; }
+        public string aisle { get; set; }
+        public string level { get; set; }
+        public string location { get; set; }
+        public string article { get; set; }
+        public string pv { get; set; }
+        public string lv { get; set; }
+        public string accncode { get; set; }
+    }
 }

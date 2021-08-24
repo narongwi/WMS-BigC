@@ -1,3 +1,4 @@
+import { replen_md } from './../Models/task.movement.model';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { map } from 'rxjs/operators';
@@ -67,7 +68,10 @@ export class taskService {
     gettasklist(o:task_pm) { 
         return this.http.post("http://localhost/bgcwmsdocument/get/statement?order="+o,JSON.stringify(o),{ responseType : 'blob' });
     }
-
+    urgenReplenishment(o:replen_md){
+      return  this.http.post<resultRequest>(environment.urlapiTask + "/task/replenishment/"+this.gencode(), JSON.stringify(o))
+              .pipe(map(res=><resultRequest>res));
+    }
     public ExpHeader(params) {
         let headers = new HttpHeaders()
           .set("Content-Type", "application/json")

@@ -16,5 +16,6 @@ namespace Snaps.WMS.Interfaces {
         Task cancelAsync(task_md o); // cancel task
         Task collectAsync(task_md o); // collect task
         Task confirmAsync(task_md o); // confirm on web only
-     }
+        Task UrgenReplenishment(replen_md o); // Urgen Replenishment process
+    }
 }

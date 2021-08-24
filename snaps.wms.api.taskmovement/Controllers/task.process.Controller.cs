@@ -215,7 +215,7 @@ namespace Snaps.WMS.Controllers {
             }
         }
 
-    //confirmAsync(task_md o);
+        //confirmAsync(task_md o);
         [Authorize] [HttpPost("confirm/{id}")]
         public async Task<IActionResult> confirm(String id, [FromBody] task_md o, 
                     [FromHeader(Name="site")] String valsite,
@@ -243,6 +243,31 @@ namespace Snaps.WMS.Controllers {
                 if (_log.IsEnabled(LogLevel.Debug)){ p.snap(); _log.LogDebug(p.toJson()); p.Dispose(); }
             }
         }
-
+        //confirmAsync(task_md o);
+        [Authorize]
+        [HttpPost("replenishment/{id}")]
+        public async Task<IActionResult> UrgenReplenishment(String id,[FromBody] replen_md o,
+                    [FromHeader(Name = "site")] String valsite,
+                    [FromHeader(Name = "depot")] String valdepot,
+                    [FromHeader(Name = "accncode")] String valaccn,
+                    [FromHeader(Name = "orgcode")] String valorg = "bgc",
+                    [FromHeader(Name = "lang")] String lng = "EN"
+                    ) {
+            Process ps; SnapsLogDbg p = null;
+            try {
+                if(_log.IsEnabled(LogLevel.Debug)) { ps = Process.GetCurrentProcess(); p = new SnapsLogDbg(ps,"confirmAsync",id,Request.getIP(),app,valaccn); }
+                o.orgcode = valorg;
+                o.site = valsite;
+                o.depot = valdepot;
+                o.accncode = valaccn;
+                await _sv.UrgenReplenishment(o);
+                return Ok();
+            } catch(Exception exr) {
+                _log.LogError(exr.SnapsLogExc(Request.getIP(),valaccn,app,"confirmAsync",rqid: id,ob: o));
+                return BadRequest(exr.SnapsBadRequest());
+            } finally {
+                if(_log.IsEnabled(LogLevel.Debug)) { p.snap(); _log.LogDebug(p.toJson()); p.Dispose(); }
+            }
+        }
     }
 }

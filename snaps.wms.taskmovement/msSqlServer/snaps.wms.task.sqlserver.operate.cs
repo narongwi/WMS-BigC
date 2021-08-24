@@ -129,6 +129,7 @@ namespace Snaps.WMS {
                 throw ex;
             } finally { cm.ForEach(x => x.Dispose()); }
         }
+
         public async Task upsert(task_md rs) {
             List<task_md> ro = new List<task_md>();
             try {
@@ -772,6 +773,27 @@ namespace Snaps.WMS {
             } finally { cm.Dispose(); }
         }
 
+        public async Task UrgenReplenishment(replen_md o) {
+            try {
+                using(var cm = new SqlCommand("[dbo].[snaps_urgent_replen]",cn)) {
+                    cm.CommandType = System.Data.CommandType.StoredProcedure;
+                    cm.snapsPar(o.orgcode,"orgcode");
+                    cm.snapsPar(o.site,"site");
+                    cm.snapsPar(o.depot,"depot");
+                    cm.snapsPar(o.zone,"zone");
+                    cm.snapsPar(o.aisle,"aisle");
+                    cm.snapsPar(o.level,"level");
+                    cm.snapsPar(o.location,"loccode");
+                    cm.snapsPar(o.article,"article");
+                    cm.snapsPar(o.lv,"lv");
+                    cm.snapsPar(o.accncode,"accncode");
+                    await cm.snapsExecuteAsync();
+                }
+            } catch(Exception ex) {
+                logger.Error(o.orgcode,o.site,o.accncode,ex,ex.Message);
+                throw ex;
+            }
+        }
         private bool disposedValue = false;
         protected virtual void Dispose(bool Disposing) {
             if(!disposedValue) {

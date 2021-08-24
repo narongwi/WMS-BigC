@@ -233,9 +233,8 @@ export class taskprocessComponent implements OnInit, OnDestroy {
   
       this.sv.getlabelputaway(this.crtask.orgcode, this.crtask.site, this.crtask.depot,this.crtask.taskno).subscribe(response => {
         let blob:any = new Blob([response], { type: 'text/json; charset=utf-8' });
-        const url = window.URL.createObjectURL(blob);
         let downloadLink = document.createElement('a');
-        downloadLink.href = url;
+        downloadLink.href = window.URL.createObjectURL(blob);
         downloadLink.setAttribute('download', "bgcwms_putaway_" + this.crtask.taskno + ".pdf");
         document.body.appendChild(downloadLink);
         downloadLink.click();

@@ -1,3 +1,4 @@
+import { replen_md } from './../../Models/task.movement.model';
 import { Component, OnInit,OnDestroy, ViewChild, AfterViewInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { NgbDateAdapter, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
@@ -9,12 +10,14 @@ import { lov } from '../../../helpers/lov';
 import { task_ls, task_md, task_pm } from '../../Models/task.movement.model';
 import { taskService } from '../../Services/task.movement.service';
 import { taskprocessComponent } from './task.process';
+import { NgPopupsService } from 'ng-popups';
 
 declare var $: any;
 @Component({
   selector: 'apptask-movement',
   templateUrl: 'task.movement.html',
   styles: ['.dgmovement { height:calc(100vh - 510px) !important; }',
+        '.dgreplen { height: auto }',
         '.px-50{width:50px;margin-left:5px;margin-right:5px;}',
         '.px-60{width:60px;margin-left:5px;margin-right:5px;}',
         '.px-70{width:70px;margin-left:5px;margin-right:5px;}',
@@ -25,7 +28,7 @@ declare var $: any;
         '.px-120{width:120px;margin-left:5px;margin-right:5px;}',
         '.px-130{width:130px;margin-left:5px;margin-right:5px;}',
         '.px-140{width:140px;margin-left:5px;margin-right:5px;}',
-        '.row-p-0{display:flex;flex-wrap: wrap;padding-right:10px;padding-left:2px;margin:0;line-height: 2.2}'] ,
+        '.row-p-0{display:flex;flex-wrap: wrap;padding-right:10px;padding-left:2px;margin:0;line-height: 2.2}',] ,
   providers: [
     {provide: NgbDateAdapter,         useClass: CustomAdapter},
     {provide: NgbDateParserFormatter, useClass: CustomDateParserFormatter}]      
@@ -64,11 +67,16 @@ export class taskmovementComponent implements OnInit, OnDestroy , AfterViewInit 
     slcstate:lov;
     slctasktype:lov;
     public taskrowselect:number;
+
+    // replenishment model
+    public replen:replen_md = {};
+
     constructor(private sv: taskService,
                 private av: authService, 
                 private mv: shareService,
                 private router: RouterModule,
-                private toastr: ToastrService) { 
+                private toastr: ToastrService,
+                private ngPopups: NgPopupsService) { 
         this.av.retriveAccess(); 
         this.dateformat = this.av.crProfile.formatdate;
         this.dateformatlong = this.av.crProfile.formatdatelong;
@@ -163,6 +171,21 @@ export class taskmovementComponent implements OnInit, OnDestroy , AfterViewInit 
     }
     cancletask(o){ 
         try {this.lstask.find(e=>e.taskno == o).tflow  = "CL"; }catch(exc){}        
+    }
+
+    // Replenishment
+
+    public ResetForm(){
+        this.replen = {};
+    }
+    public ProcessReplen(){
+        this.ngPopups.confirm('Do you Process Replenishment ?').subscribe(res => {
+            if (res) {
+                this.sv.urgenReplenishment(this.replen).subscribe(res=>{
+                    this.toastr.success("<span class='fn-07e'>Successful Processing</span>", null, { enableHtml: true });
+                });
+            }
+        });
     }
 
     ngOnDestroy():void {  

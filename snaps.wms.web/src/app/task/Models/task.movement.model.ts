@@ -143,3 +143,18 @@ export class taln_md extends taln_ls  {
     descalt:string;
     batchno:string;
 }
+
+export interface replen_md {
+    orgcode?: string;
+    site?: string;
+    depot?: string;
+    spcarea?: string;
+    zone?: string;
+    aisle?: string;
+    level?: string;
+    location?: string;
+    article?: string;
+    pv?: string;
+    lv?: string;
+    accncode?: string;
+}
