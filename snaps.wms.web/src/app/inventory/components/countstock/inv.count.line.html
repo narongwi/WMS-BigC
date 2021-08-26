@@ -584,7 +584,7 @@
                     <a
                       class="btn snaps-default btn-xs fnb"
                       [class.active]="ln.cnbarcode != ln.stbarcode"
-                      name="cnbarcode-{{i}}"
+                      name="cnbarcode-{{ix}}"
                       (click)="ngEditLine(ln,ix)"
                       >{{ln.cnbarcode==''?'+':ln.cnbarcode}}</a
                     >
@@ -593,7 +593,7 @@
                     <a
                       class="btn snaps-default btn-xs fnb"
                       [class.active]="ln.cnarticle != ln.starticle||ln.cnlv!=ln.stlv"
-                      name="cnarticle-{{i}}"
+                      name="cnarticle-{{ix}}"
                       (click)="ngEditLine(ln,ix)"
                       >{{ln.cnarticle==''?'+':ln.cnarticle}} {{ln.cnarticle==''?'':'-'}} {{ln.cnarticle==''?'':ln.cnlv}}</a
                     >
@@ -605,7 +605,7 @@
                     <a
                       class="btn snaps-default btn-xs fnb"
                       [class.active]="ln.cnhuno != ln.sthuno"
-                      name="cnhuno-{{i}}"
+                      name="cnhuno-{{ix}}"
                       (click)="ngEditLine(ln,ix)"
                       >{{ln.cnhuno==''?'+':ln.cnhuno}}</a
                     >
@@ -615,10 +615,10 @@
                   <!-- <div class="col-md-2"><input class="form-control form-control-xs text-danger " type="date"  name="cndatemfg-{{i}}" [ngModel]="ln.cndatemfg|date:'yyyy-MM-dd'" (ngModelChange)="ln.cndatemfg = $event" [disabled]="crrtask.isdatemfg==0?false:true"> </div>  -->
                   <div class="px-100 text-center">
                     <a
-                      *ngIf="crplan.isdateexp==1"
+                      *ngIf="crplan.isdatexp==1"
                       class="btn snaps-default btn-xs fnb"
                       [class.active]="ln.cndateexp != ln.stdateexp"
-                      name="stdateexp-{{i}}"
+                      name="stdateexp-{{ix}}"
                       (click)="ngEditLine(ln,ix)"
                       >{{ln.cndateexp|date:'yyyy-MM-dd'}}</a
                     >
@@ -629,7 +629,7 @@
                       *ngIf="crplan.isbatchno==1"
                       class="btn snaps-default btn-xs fnb"
                       [class.active]="ln.cnlotmfg != ln.stlotmfg"
-                      name="cnlotmfg-{{i}}"
+                      name="cnlotmfg-{{ix}}"
                       (click)="ngEditLine(ln,ix)"
                       >{{ln.cnlotmfg}}</a
                     >
@@ -643,7 +643,7 @@
                         text-center
                       "
                       type="number"
-                      name="cnqtypu-{{i}}"
+                      name="cnqtypu-{{ix}}"
                       [(ngModel)]="ln.cnqtypu"
                       min="0"
                     />

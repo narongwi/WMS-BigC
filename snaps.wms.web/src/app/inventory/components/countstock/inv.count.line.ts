@@ -500,7 +500,7 @@ export class invcountlineComponent implements OnInit, OnDestroy, AfterViewInit {
       this.ngCancleEdit();
     }
   }
-  getdocstatement(o: string) {
+  getdocstatement() {
     this.toastRef = this.toastr.warning(" &#128336; <span class='fn-07e'>Downloading ..... , Claim down wait a sec</span>", null, {
       disableTimeOut: true,
       tapToDismiss: false,
@@ -514,7 +514,7 @@ export class invcountlineComponent implements OnInit, OnDestroy, AfterViewInit {
       const url = window.URL.createObjectURL(blob);
       let downloadLink = document.createElement('a');
       downloadLink.href = url;
-      downloadLink.setAttribute('download', "bgcwms_countsheet_" + o + ".pdf");
+      downloadLink.setAttribute('download', "bgcwms_countsheet_" + this.crplan.planname + ".pdf");
       document.body.appendChild(downloadLink);
       downloadLink.click();
       this.toastr.clear(this.toastRef.ToastId);
