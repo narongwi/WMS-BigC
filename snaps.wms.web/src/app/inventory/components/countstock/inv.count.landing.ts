@@ -67,17 +67,17 @@ export class invcountComponent implements OnInit, OnDestroy {
         this.obtask.ngFind();
         break;
       case 2:
-        if(this.crrtask.countcode){
+        if (this.crrtask.countcode) {
           this.obplan.ngSelc(this.crrtask);
         }
         break;
       case 3:
-        if(this.crrtask.countcode){
+        if (this.crrtask.countcode) {
           this.obline.ngSelc(this.crrtask);
         }
         break;
       case 4:
-        if(this.crrtask.countcode){
+        if (this.crrtask.countcode) {
           this.obconf.ngSelc(this.crrtask);
         }
         break;
@@ -105,7 +105,8 @@ export class invcountComponent implements OnInit, OnDestroy {
     this.obline.ngSelc(this.crrtask);
   }
 
-  ngRefTask(o: counttask_md) {
+  ngRefTask(o) {
+    // counttask_md
     // tab task count
     this.obtask.ngFind();
   }

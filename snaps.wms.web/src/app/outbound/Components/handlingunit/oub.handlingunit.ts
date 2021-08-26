@@ -19,12 +19,12 @@ declare var $: any;
 @Component({
   selector: 'appoub-handlingunit',
   templateUrl: 'oub.handlingunit.html',
-  styles: ['.dghus { height:calc(100vh - 235px) !important; }','.dglines { height:calc(100vh - 560px) !important;}'],
+  styles: ['.dghus { height:calc(100vh - 235px) !important; }', '.dglines { height:calc(100vh - 560px) !important;}'],
   providers: [NgbPaginationConfig,
-    {provide: NgbDateAdapter, useClass: CustomAdapter },
-    {provide: NgbDateParserFormatter, useClass: CustomDateParserFormatter }] 
+    { provide: NgbDateAdapter, useClass: CustomAdapter },
+    { provide: NgbDateParserFormatter, useClass: CustomDateParserFormatter }]
 })
-export class oubhandlingunitComponent implements OnInit, OnDestroy , AfterViewInit{
+export class oubhandlingunitComponent implements OnInit, OnDestroy, AfterViewInit {
   public lsstate: lov[] = new Array();
   public lstype: lov[] = new Array();
   //public lsmaster: lov[] = new Array();
@@ -36,33 +36,34 @@ export class oubhandlingunitComponent implements OnInit, OnDestroy , AfterViewIn
   public lshandling: handerlingunit[] = new Array();
   public lsitem: handerlingunit_item[] = new Array();
   public pm: handerlingunit = new handerlingunit();
-  public pmmaster : handerlingunit = new handerlingunit();
+  public pmmaster: handerlingunit = new handerlingunit();
 
   public crhu: handerlingunit = new handerlingunit();
   public crgen: handerlingunit_gen = new handerlingunit_gen();
   public slcgentype: handerlingunit = new handerlingunit();
   public slhandling: handerlingunit = new handerlingunit();
   public slctype: lov = new lov();
+  public slcstate: lov = new lov();
 
   //Date format
-  public dateformat:string;
-  public dateformatlong:string;
+  public dateformat: string;
+  public dateformatlong: string;
   public datereplan: Date | string | null;
 
   //Sorting 
-  public lssort:string = "spcarea";
+  public lssort: string = "spcarea";
   public lsreverse: boolean = false; // for sorting
 
   //PageNavigate
   page = 4;
   pageSize = 100;
-  slrowlmt:lov;
-  lsrowlmt:lov[] = new Array();
+  slrowlmt: lov;
+  lsrowlmt: lov[] = new Array();
 
   /* Tab */
-  crtab:Number = 1;
+  crtab: Number = 1;
 
-  toastRef:any;
+  toastRef: any;
 
   constructor(private sv: ouhanderlingunitService,
     private av: authService,
@@ -109,20 +110,20 @@ export class oubhandlingunitComponent implements OnInit, OnDestroy , AfterViewIn
       (err) => { this.toastr.error("<span class='fn-1e15'>" + ((err.error == undefined) ? err.message : err.error.message) + "</span>", null, { enableHtml: true }); },
       () => { }
     );
-    this.mv.getlov("DATAGRID","ROWLIMIT").pipe().subscribe(
-      (res) => { this.lsrowlmt = res.sort((a,b) => parseInt(a.value) - parseInt(b.value));  this.slrowlmt = this.lsrowlmt.find(x=>x.value == this.pageSize.toString()); },
-      (err) => { this.toastr.error("<span class='fn-07e'>"+((err.error == undefined) ? err.message : err.error.message)+"</span>",null,{ enableHtml : true });  },
+    this.mv.getlov("DATAGRID", "ROWLIMIT").pipe().subscribe(
+      (res) => { this.lsrowlmt = res.sort((a, b) => parseInt(a.value) - parseInt(b.value)); this.slrowlmt = this.lsrowlmt.find(x => x.value == this.pageSize.toString()); },
+      (err) => { this.toastr.error("<span class='fn-07e'>" + ((err.error == undefined) ? err.message : err.error.message) + "</span>", null, { enableHtml: true }); },
       () => { }
     );
   }
 
   fnd() {
-    
-    this.pm.hutype = this.slhandling == null?'': this.slhandling.huno;
+
+    this.pm.hutype = this.slhandling == null ? '' : this.slhandling.huno;
     this.sv.find(this.pm).subscribe(
       (res) => {
         this.lshu = res.filter(x => x.hutype != 'MS');
-        if (this.lshu.length > 0) { 
+        if (this.lshu.length > 0) {
           this.selhu(this.lshu[0]);
         }
       },
@@ -130,6 +131,10 @@ export class oubhandlingunitComponent implements OnInit, OnDestroy , AfterViewIn
       () => { }
     );
   }
+  changerowlmt() {
+    this.pageSize = parseInt(this.slrowlmt.value);
+  } /* Row limit */
+
   seltype() {
     this.crgen.mxsku = this.lshandling.find(x => x.huno == this.slcgentype.huno).mxsku;
     this.crgen.mxweight = this.lshandling.find(x => x.huno == this.slcgentype.huno).mxweight;
@@ -164,70 +169,70 @@ export class oubhandlingunitComponent implements OnInit, OnDestroy , AfterViewIn
           this.crgen.tflow = "";
           this.crgen.routeno = this.crgen.thcode;
           this.crgen.spcarea = this.slctype.valopnfirst;
-          this.sv.generate(this.crgen).subscribe(            
-             (res) => { 
+          this.sv.generate(this.crgen).subscribe(
+            (res) => {
               this.toastr.success("<span class='fn-1e15'>generate huno success</span>", null, { enableHtml: true });
               this.fnd();
-             },
-             (err) => { this.toastr.error("<span class='fn-1e15'>"+((err.error == undefined) ? err.message : err.error.message)+"</span>",null,{ enableHtml : true });  },
-             () => { } 
-           );                 
+            },
+            (err) => { this.toastr.error("<span class='fn-1e15'>" + ((err.error == undefined) ? err.message : err.error.message) + "</span>", null, { enableHtml: true }); },
+            () => { }
+          );
         }
       });
   }
 
   getlabel(o: string) {
-    this.toastRef = this.toastr.warning(" &#128336; <span class='fn-07e'>Downloading ..... , Claim down wait a sec</span>",null,{
+    this.toastRef = this.toastr.warning(" &#128336; <span class='fn-07e'>Downloading ..... , Claim down wait a sec</span>", null, {
       disableTimeOut: true,
       tapToDismiss: false,
       //toastClass: "toast border-red",
       closeButton: false,
-      positionClass:'toast-bottom-right',enableHtml : true
+      positionClass: 'toast-bottom-right', enableHtml: true
     });
 
-    this.sv.gethuempty_label(this.crhu.orgcode, this.crhu.site, this.crhu.depot,o).subscribe(response => {
-        let blob:any = new Blob([response], { type: 'text/json; charset=utf-8' });
-        const url = window.URL.createObjectURL(blob);
-        let downloadLink = document.createElement('a');
-        downloadLink.href = url;
-        downloadLink.setAttribute('download', "bgcwms_huempty_" + o + ".pdf");
-        document.body.appendChild(downloadLink);
-        downloadLink.click();
-        this.toastr.clear(this.toastRef.ToastId); 
-      }), 
-      error => { 
+    this.sv.gethuempty_label(this.crhu.orgcode, this.crhu.site, this.crhu.depot, o).subscribe(response => {
+      let blob: any = new Blob([response], { type: 'text/json; charset=utf-8' });
+      const url = window.URL.createObjectURL(blob);
+      let downloadLink = document.createElement('a');
+      downloadLink.href = url;
+      downloadLink.setAttribute('download', "bgcwms_huempty_" + o + ".pdf");
+      document.body.appendChild(downloadLink);
+      downloadLink.click();
+      this.toastr.clear(this.toastRef.ToastId);
+    }),
+      error => {
         this.toastr.clear(this.toastRef.ToastId);
       }
   }
 
-  ngDecColor(o:number) { return this.mv.ngDecColor(o); }
-  ngDecState(o:string) { if (o=="PE") { return "Prep.end"; } else { return this.mv.ngDecState(o); } }
-  ngDecUnitstock(o:string) { return this.mv.ngDecUnitstock(o); }
+  ngDecColor(o: number) { return this.mv.ngDecColor(o); }
+  ngDecState(o: string) { if (o == "PE") { return "Prep.end"; } else { return this.mv.ngDecState(o); } }
+  ngDecUnitstock(o: string) { return this.mv.ngDecUnitstock(o); }
   ngOnDestroy(): void {
-    this.lsstate        = null; delete this.lsstate;
-    this.lstype         = null; delete this.lstype;
-    this.instocksum     = null; delete this.instocksum;
-    this.rqedit         = null; delete this.rqedit;
-    this.crstate        = null; delete this.crstate;
-    this.lshu           = null; delete this.lshu;
-    this.lshandling       = null; delete this.lshandling;
-    this.lsitem         = null; delete this.lsitem;
-    this.pm             = null; delete this.pm;
-    this.pmmaster       = null; delete this.pmmaster;
-    this.crhu           = null; delete this.crhu;
-    this.crgen          = null; delete this.crgen;
-    this.slcgentype     = null; delete this.slcgentype;
-    this.slctype        = null; delete this.slctype;
-    this.dateformat     = null; delete this.dateformat;
+    this.lsstate = null; delete this.lsstate;
+    this.lstype = null; delete this.lstype;
+    this.instocksum = null; delete this.instocksum;
+    this.rqedit = null; delete this.rqedit;
+    this.crstate = null; delete this.crstate;
+    this.lshu = null; delete this.lshu;
+    this.lshandling = null; delete this.lshandling;
+    this.lsitem = null; delete this.lsitem;
+    this.pm = null; delete this.pm;
+    this.pmmaster = null; delete this.pmmaster;
+    this.crhu = null; delete this.crhu;
+    this.crgen = null; delete this.crgen;
+    this.slcgentype = null; delete this.slcgentype;
+    this.slctype = null; delete this.slctype;
+    this.dateformat = null; delete this.dateformat;
     this.dateformatlong = null; delete this.dateformatlong;
-    this.datereplan     = null; delete this.datereplan;
-    this.lssort         = null; delete this.lssort;
-    this.lsreverse      = null; delete this.lsreverse;
-    this.page           = null; delete this.page;
-    this.pageSize       = null; delete this.pageSize;
-    this.slrowlmt       = null; delete this.slrowlmt;
-    this.lsrowlmt       = null; delete this.lsrowlmt;
-    this.crtab			    = null; delete this.crtab	;			
-   }
+    this.datereplan = null; delete this.datereplan;
+    this.lssort = null; delete this.lssort;
+    this.lsreverse = null; delete this.lsreverse;
+    this.page = null; delete this.page;
+    this.pageSize = null; delete this.pageSize;
+    this.slrowlmt = null; delete this.slrowlmt;
+    this.lsrowlmt = null; delete this.lsrowlmt;
+    this.crtab = null; delete this.crtab;
+  }
 
 }

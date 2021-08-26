@@ -1,18 +1,27 @@
-.dgproduct { height:70px !important; }
-.dgforms { height:150px !important; }
-.dgstock { height:calc(100vh - 430px) !important; }
-.dglist { height:200px !important; }
-.dgline { height:calc(100vh - 550px) !important; }
-.ng-select.custom 
-.ng-select-container { 
-    background-color: #f8f8fa; 
-    color: #333; 
-    min-height: 25px !important; 
-    height: 25px !important; 
-    border-radius: 4px; 
-    box-shadow: 0 0 1px #eeeeee; 
+.dgproduct {
+  height: 70px !important;
+}
+.dgforms {
+  height: 150px !important;
+}
+.dgstock {
+  height: calc(100vh - 430px) !important;
+}
+.dglist {
+  height: 200px !important;
+}
+.dgline {
+  height: calc(100vh - 550px) !important;
+}
+.ng-select.custom .ng-select-container {
+  background-color: #f8f8fa;
+  color: #333;
+  min-height: 25px !important;
+  height: 25px !important;
+  border-radius: 4px;
+  box-shadow: 0 0 1px #eeeeee;
 }
 
-.text-right{
-    text-align: right;
+.text-right {
+  text-align: right;
 }

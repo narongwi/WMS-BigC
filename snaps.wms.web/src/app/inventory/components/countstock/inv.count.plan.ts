@@ -1,5 +1,5 @@
 import { ThrowStmt } from '@angular/compiler';
-import { Component, OnInit, OnDestroy, ViewChild, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, Output, EventEmitter, Input } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { NgPopupsService } from 'ng-popups';
 import { ToastrService } from 'ngx-toastr';
@@ -34,7 +34,7 @@ declare var $: any;
         '.px-130{width:130px;margin-left:5px;margin-right:5px;}',
         '.row-p-0{display:flex;flex-wrap: wrap;padding-right:10px;padding-left:2px;margin:0;line-height: 2.2}',
         '.btn-xs.active{background-color: #a7c95758;font-weight: bold;color: #386641;border: 1px solid #9ab754a1}',
-      ],
+    ],
     providers: [NgbPaginationConfig,
         { provide: NgbDateAdapter, useClass: CustomAdapter },
         { provide: NgbDateParserFormatter, useClass: CustomDateParserFormatter }]
@@ -52,9 +52,10 @@ export class invcounplanComponent implements OnInit, OnDestroy {
     public crplan: countplan_md = new countplan_md();
     public lsline: countline_md[] = new Array();
     public slczone: lov = new lov();
-    public dateformat: string;
-    public dateformatlong: string;
-
+    // public dateformat: string;
+    // public dateformatlong: string;
+    @Input() dateformat: string;
+    @Input() dateformatlong: string;
     public swroaming: boolean = false;
     public swblock: boolean = false;
     public swdatemfg: boolean = false;
@@ -64,11 +65,11 @@ export class invcounplanComponent implements OnInit, OnDestroy {
     public swallowscanhu: boolean = false;
     public swalloddeven: boolean = false;
     public rowselected: number;
-    public planprogress:number = 0;
-    public planTotal:number = 0;
-    public planvalidated:number = 0;
+    public planprogress: number = 0;
+    public planTotal: number = 0;
+    public planvalidated: number = 0;
 
-    public isbulkplan:boolean = false;
+    public isbulkplan: boolean = false;
     constructor(private sv: countService,
         private av: authService,
         private mv: adminService,
@@ -113,33 +114,33 @@ export class invcounplanComponent implements OnInit, OnDestroy {
     }
     ngFind() {
         this.sv.listPlan(this.crrtask).subscribe(
-            (res) => { this.lsplan = res; /* progress calulate */ this.planProgress();},
+            (res) => { this.lsplan = res; /* progress calulate */ this.planProgress(); },
             (err) => { this.toastr.error("<span class='fn-07e'> Get Count plan error , " + err + "</span>", null, { enableHtml: true }); }
         );
     }
-    zoneChange(){
-        if(!this.isEmpty(this.slczone.valopnsecond)){         
-            this.isbulkplan = this.slczone.valopnsecond == "BL"?true:false;
+    zoneChange() {
+        if (!this.isEmpty(this.slczone.valopnsecond)) {
+            this.isbulkplan = this.slczone.valopnsecond == "BL" ? true : false;
             console.log("Is Bulk Plan " + this.isbulkplan);
         }
     }
-    planProgress(){
-        if(this.lsplan){
-            let validated :number = 0;
-            let total : number = 0;
-            this.lsplan.forEach(e=>{
+    planProgress() {
+        if (this.lsplan) {
+            let validated: number = 0;
+            let total: number = 0;
+            this.lsplan.forEach(e => {
                 console.log(e.tflow);
-                if(e.tflow=="ED"){
+                if (e.tflow == "ED") {
                     validated++;
                 }
-                if(e.tflow !="XX"){
-                    total ++;
+                if (e.tflow != "XX") {
+                    total++;
                 }
             });
-            let progress =  Number(((validated*100)/total));
+            let progress = Number(((validated * 100) / total));
             this.planTotal = total;
             this.planvalidated = validated;
-            this.planprogress = progress > 100?100:progress;
+            this.planprogress = progress > 100 ? 100 : progress;
 
             // console.log("this.planTotal:" + this.planTotal);
             // console.log("this.planvalidated:" + this.planvalidated);
@@ -179,15 +180,15 @@ export class invcounplanComponent implements OnInit, OnDestroy {
                         }
                         this.crplan.tflow = (this.crplan.tflow != "NW") ? (this.crstate == true) ? "IO" : "XX" : "NW";
                         this.sv.upsertPlan(this.crplan).pipe().subscribe(res => {
-                                this.toastr.success("<span class='fn-07e'> Create new Plan success </span>", null, { enableHtml: true });
-                                // this.ngFind(); 
-                                // this.ngLine(); 
+                            this.toastr.success("<span class='fn-07e'> Create new Plan success </span>", null, { enableHtml: true });
+                            // this.ngFind(); 
+                            // this.ngLine(); 
 
-                                // re-select or refresh task
-                                this.selout.emit(this.crrtask);
-                            },(err:any)=>{
-                                this.toastr.error("<span class='fn-07e'> Generate Count plan error , " + err.message + "</span>", null, { enableHtml: true }); 
-                            }
+                            // re-select or refresh task
+                            this.selout.emit(this.crrtask);
+                        }, (err: any) => {
+                            this.toastr.error("<span class='fn-07e'> Generate Count plan error , " + err.message + "</span>", null, { enableHtml: true });
+                        }
                         );
                     }
                 });
@@ -268,7 +269,7 @@ export class invcounplanComponent implements OnInit, OnDestroy {
         this.rowselected = ix;
         this.crplan = o;
         this.ngLine();
-        
+
     }
     // list line 
     ngLine() {

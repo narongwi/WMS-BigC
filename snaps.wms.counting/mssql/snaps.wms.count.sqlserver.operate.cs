@@ -559,7 +559,6 @@ namespace Snaps.WMS {
                         //    cm.Add(getCommand(ln,sqlline_update));
                         //}
 
-
                         // update row
                         ln.cnflow = "IO";
                         ln.cnmsg = "saved";

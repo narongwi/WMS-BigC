@@ -54,7 +54,7 @@ export class invstockComponent implements OnInit, OnDestroy {
 
 
   //Sorting 
-  public lssort: string = "spcarea";
+  public lssort: string = "dateorder";
   public lsreverse: boolean = false; // for sorting
   //PageNavigate
   lsrowlmt: lov[] = new Array();
@@ -76,7 +76,7 @@ export class invstockComponent implements OnInit, OnDestroy {
   public artrowselect: number;
   public palrowselect: number;
 
-  public enableEditState:boolean = true;
+  public enableEditState: boolean = true;
   constructor(private sv: inventoryService,
     private av: authService,
     private mv: adminService,
@@ -93,6 +93,7 @@ export class invstockComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void { this.ss.ngSetup(); }
+  SortOrder(value: string) { if (this.lssort === value) { this.lsreverse = !this.lsreverse; } this.lssort = value; }
 
   ngAfterViewInit() { this.ngSetup(); this.setupJS(); /*setTimeout(this.toggle, 1000);*/ }
   setupJS() {
@@ -158,20 +159,20 @@ export class invstockComponent implements OnInit, OnDestroy {
     switch (typesel) {
       case 'crincoming': return false;//'Incoming'
       case 'crplanship': return false;//'Plan deliveiry'
-      case 'cronhand': return  false;//'on Hand'
-      case 'crprep': return  false;//'Preparation'
-      case 'crsinbin': return  false;//'Sinbin'
-      case 'cravailable': return  true;//'Available'
-      case 'crstaging': return  false;//'Staging'
-      case 'crdamage': return  false;//'Damage'
-      case 'crbulknrtn': return  false;//'Bulk'
-      case 'crtask': return  false;//'Task'
-      case 'crblock': return  true;//'Block'
-      case 'croverflow': return  true;//'Overflow'
-      case 'crrtv': return  false;//'Return'
-      case 'crexchange': return  false;//'Exchange'
-      case 'crpicking': return  false;//'Picking'
-      case 'crreserve': return  false;//'Reserve'
+      case 'cronhand': return false;//'on Hand'
+      case 'crprep': return false;//'Preparation'
+      case 'crsinbin': return false;//'Sinbin'
+      case 'cravailable': return true;//'Available'
+      case 'crstaging': return false;//'Staging'
+      case 'crdamage': return false;//'Damage'
+      case 'crbulknrtn': return false;//'Bulk'
+      case 'crtask': return false;//'Task'
+      case 'crblock': return true;//'Block'
+      case 'croverflow': return true;//'Overflow'
+      case 'crrtv': return false;//'Return'
+      case 'crexchange': return false;//'Exchange'
+      case 'crpicking': return false;//'Picking'
+      case 'crreserve': return false;//'Reserve'
       default: false;
     }
   }
