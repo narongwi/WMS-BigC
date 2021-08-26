@@ -360,7 +360,7 @@ namespace Snaps.WMS {
             } catch(Exception ex) {
                 logger.Error(o.orgcode,o.site,o.accncode,ex,ex.Message);
                 throw ex;
-            } 
+            }
         }
 
 
@@ -538,26 +538,32 @@ namespace Snaps.WMS {
                 } else {
                     foreach(countline_md ln in o) {
                         /* Change Article line */
-                        if(ln.cnflow == "NW") {
-                            ln.cnflow = "IO";
-                            ln.cnmsg = "saved";
+                        //if(ln.cnflow == "NW") {
+                        //    ln.cnflow = "IO";
+                        //    ln.cnmsg = "saved";
 
-                            /*set NEW line */
-                            var nw = getCommand(ln,sqlcount_newcheck);
+                        //    /*set NEW line */
+                        //    var nw = getCommand(ln,sqlcount_newcheck);
 
-                            // check exists insert
-                            if(nw.snapsScalarStrAsync().Result == "0") {
-                                nw.CommandText = sqlcount_newline;
-                                cm.Add(nw);
-                            } else {
-                                throw new Exception("New Count line is duplicate");
-                            }
-                        } else {
-                            // update row
-                            ln.cnflow = "IO";
-                            ln.cnmsg = "saved";
-                            cm.Add(getCommand(ln,sqlline_update));
-                        }
+                        //    // check exists insert
+                        //    if(nw.snapsScalarStrAsync().Result == "0") {
+                        //        nw.CommandText = sqlcount_newline;
+                        //        cm.Add(nw);
+                        //    } else {
+                        //        throw new Exception("New Count line is duplicate");
+                        //    }
+                        //} else {
+                        //    // update row
+                        //    ln.cnflow = "IO";
+                        //    ln.cnmsg = "saved";
+                        //    cm.Add(getCommand(ln,sqlline_update));
+                        //}
+
+
+                        // update row
+                        ln.cnflow = "IO";
+                        ln.cnmsg = "saved";
+                        cm.Add(getCommand(ln,sqlline_update));
                     }
                     await cm.snapsExecuteTransAsync(cn);
                 }
@@ -642,6 +648,274 @@ namespace Snaps.WMS {
                 return true;
             } catch(Exception ex) {
                 logger.Error(o.orgcode,o.site,o.accnmodify,ex,ex.Message);
+                throw ex;
+            }
+        }
+        public async Task<countline_md> GeneratehuAsync(product_vld o) {
+            try {
+                countline_md ln = new countline_md();
+                if(string.IsNullOrEmpty(o.loccode)) throw new Exception("loccode is Required");
+                if(string.IsNullOrEmpty(o.article)) throw new Exception("article is Required");
+                using(SqlCommand cm = new SqlCommand("[dbo].[snaps_stocktake_createhu]",cn)) {
+                    cm.CommandType = CommandType.StoredProcedure;
+                    cm.snapsPar(o.orgcode,"orgcode");
+                    cm.snapsPar(o.site,"site");
+                    cm.snapsPar(o.depot,"depot");
+                    cm.snapsPar(o.loccode,"loccode");
+                    cm.snapsPar(o.article,"article");
+                    cm.snapsPar(o.pv,"pv");
+                    cm.snapsPar(o.lv,"lv");
+                    cm.snapsPar(o.qtycount,"qtypu");
+                    cm.snapsPar(o.unitcount,"qtyunit");
+                    cm.snapsPar(o.countcode,"countno");
+                    cm.snapsPar(o.plancode,"planno");
+                    cm.snapsPar(o.accncode,"accncode");
+                    cm.snapsPar("new hu for stocktake","remarks");
+                    cm.Parameters.Add(new SqlParameter("@mergeno",SqlDbType.Int));
+                    cm.Parameters.Add(new SqlParameter("@hucode",SqlDbType.VarChar,30));
+                    cm.Parameters["@mergeno"].Direction = ParameterDirection.Output;
+                    cm.Parameters["@hucode"].Direction = ParameterDirection.Output;
+                    await cm.snapsExecuteAsync();
+                    o.huno = (string)cm.Parameters["@hucode"].Value.ValueOrNull();
+
+                    cm.Parameters.Clear();
+                    cm.CommandType = CommandType.Text;
+                    cm.CommandText = sqlline_fnd;
+                    cm.snapsPar(o.orgcode,"orgcode");
+                    cm.snapsPar(o.site,"site");
+                    cm.snapsPar(o.depot,"depot");
+                    cm.snapsPar(o.countcode,"countcode");
+                    cm.snapsPar(o.plancode,"plancode");
+                    cm.snapsCdn(o.loccode,"loccode"," and loccode = @loccode");
+                    cm.snapsCdn(o.linecode,"locseq"," and locseq = @locseq");
+
+                    SqlDataReader r = await cm.snapsReadAsync();
+                    if(!r.HasRows) {
+                        if(!r.IsClosed)
+                            r.Close();
+
+                        throw new Exception("Count line not found.");
+                    } else {
+                        while(await r.ReadAsync()) {
+                            ln = setCountline(ref r);
+                            ln.cnqtysku = 0;
+                            ln.cnqtypu = o.qtycount;
+                            ln.unitcount = o.unitcount;
+                            ln.cnbarcode = o.barcode;
+                            ln.cnarticle = o.article;
+                            ln.cnpv = o.pv;
+                            ln.cnlv = o.lv;
+                            ln.cnlotmfg = o.lotmfg;
+                            ln.cndateexp = o.dateexp;
+                            ln.cndatemfg = o.datemfg;
+                            ln.cnserialno = o.serialno;
+                            ln.cnhuno = o.huno;
+                            ln.unitcount = o.unitcount;
+                            ln.cnflow = "IO";
+                            ln.cnmsg = "HU Generate";
+                            ln.tflow = "IO";
+                            ln.accncreate = o.accncode;
+                            ln.accnmodify = o.accncode;
+
+                          
+                            // exit loop
+                            break;
+                        }
+
+
+                        if(!r.IsClosed)
+                            r.Close();
+
+                        // insert new line
+                        using(var nm = getCommand(ln,sqlcount_newline)) {
+                            nm.Connection = cn;
+                            await nm.snapsExecuteAsync();
+                        }
+                    }
+
+
+                    cm.Parameters.Clear();
+                    cm.CommandType = CommandType.Text;
+                    cm.CommandText = sqlline_fnd;
+                    cm.snapsPar(o.orgcode,"orgcode");
+                    cm.snapsPar(o.site,"site");
+                    cm.snapsPar(o.depot,"depot");
+                    cm.snapsPar(o.countcode,"countcode");
+                    cm.snapsPar(o.plancode,"plancode");
+                    cm.snapsCdn(o.loccode,"loccode"," and loccode = @loccode");
+                    cm.snapsCdn(o.huno,"cnhuno"," and cnhuno = @cnhuno");
+                    r = await cm.snapsReadAsync();
+
+                    countline_md ol = new countline_md();
+                    while(await r.ReadAsync()) {
+                        ol = setCountline(ref r); 
+                    }
+
+                    await r.CloseAsync();
+                    await cn.CloseAsync();
+
+                    return ol;
+                }
+
+            } catch(Exception ex) {
+                logger.Error(o.orgcode,o.site,o.accncode,ex,ex.Message);
+                throw ex;
+            }
+        }
+        public async Task<product_vld> findProductAsync(product_vld o) {
+            try {
+                product_vld product = new product_vld();
+                using(SqlCommand cm = new SqlCommand(sqlcount_findproduct,cn)) {
+                    cm.snapsPar(o.orgcode,"orgcode");
+                    cm.snapsPar(o.site,"site");
+                    cm.snapsPar(o.depot,"depot");
+                    cm.snapsPar(o.loccode,"loccode");
+                    cm.snapsPar(string.IsNullOrEmpty(o.barcode)?o.article: o.barcode,"product");
+                    cm.snapsCdn(o.lv,"lv");
+
+                    // get product
+                    using(SqlDataReader r = await cm.snapsReadAsync()) {
+                        if(!r.HasRows) {
+                            throw new Exception("Product not found");
+                        }else {
+                            while(r.Read()) {
+                                // read data into object
+                                product.orgcode = (string)r["orgcode"];
+                                product.site = (string)r["site"];
+                                product.depot = (string)r["depot"];
+                                product.barcode = (string)r["barcode"].ValueOrNull();
+                                product.article = (string)r["article"].ValueOrNull();
+                                product.pv = (int)r["pv"].ValueOrNull();
+                                product.lv = (int)r["lv"].ValueOrNull();
+                                product.descalt = (string)r["descalt"];
+                                product.skuweight = (decimal)r["skuweight"].ValueOrNull();
+                                product.skuvolume = (decimal)r["skuvolume"].ValueOrNull();
+                                product.unitmanage = (string)r["unitmanage"];
+                                product.loccode = (string)r["loccode"].ValueOrNull();
+                                product.locarea = (string)r["locarea"].ValueOrNull();
+                                product.loctype = (string)r["loctype"].ValueOrNull();
+                                product.locunit = (string)r["locunit"].ValueOrNull();
+                                product.huno = o.huno;
+                                product.unitcount = (string)r["unitcount"].ValueOrNull();
+                                product.unitdestr = (string)r["unitdestr"].ValueOrNull();
+                                product.skuofunit = Convert.ToInt32(r["skuofunit"].ValueOrNull());
+                                product.countcode = o.countcode;
+                                product.plancode = o.plancode;
+                                product.qtycount = o.qtycount;
+                                product.accncode = o.accncode;
+                                product.isnewhu = o.isnewhu;
+                                break;
+                            }
+                        }
+                
+                    }
+                    // get unit 
+                    return product;
+                }
+
+            } catch(Exception ex) {
+                logger.Error(o.orgcode,o.site,o.accncode,ex,ex.Message);
+                throw ex;
+            }
+        }
+
+        public async Task<countline_md> validateHuAsync(product_vld o) {
+            try {
+                countline_md ln = new countline_md();
+                SqlDataReader r = null; 
+                using(SqlCommand cm = new SqlCommand(sqlcount_huactive,cn)) {
+                    cm.snapsPar(o.orgcode,"orgcode");
+                    cm.snapsPar(o.site,"site");
+                    cm.snapsPar(o.depot,"depot");
+                    cm.snapsPar(o.loccode,"loccode");
+                    cm.snapsPar(o.huno,"huno");
+                    cm.snapsPar(o.article,"article");
+
+                    // check hu is active in table
+                    if(Convert.ToInt32(await cm.snapsScalarAsync()) == 0) {
+                        throw new Exception("huno not exists in system");
+                    } else {
+                        // check hu is using with other product
+                        cm.CommandText = sqlcount_huother_product;
+                        if(Convert.ToInt32(await cm.snapsScalarAsync()) > 0) {
+                            throw new Exception("huno is already used");
+                        } else if(o.isnewhu) {
+                            cm.Parameters.Clear();
+                            cm.CommandType = CommandType.Text;
+                            cm.CommandText = sqlline_fnd;
+                            cm.snapsPar(o.orgcode,"orgcode");
+                            cm.snapsPar(o.site,"site");
+                            cm.snapsPar(o.depot,"depot");
+                            cm.snapsPar(o.countcode,"countcode");
+                            cm.snapsPar(o.plancode,"plancode");
+                            cm.snapsCdn(o.loccode,"loccode"," and loccode = @loccode");
+                            cm.snapsCdn(o.linecode,"locseq"," and locseq = @locseq");
+                            r = await cm.snapsReadAsync();
+                            if(!r.HasRows) {
+                                throw new Exception("Count line not found.");
+                            } else {
+                                while(await r.ReadAsync()) {
+                                    ln = setCountline(ref r);
+                                    ln.cnqtysku = 0;
+                                    ln.cnqtypu = o.qtycount;
+                                    ln.unitcount = o.unitcount;
+                                    ln.cnbarcode = o.barcode;
+                                    ln.cnarticle = o.article;
+                                    ln.cnpv = o.pv;
+                                    ln.cnlv = o.lv;
+                                    ln.cnlotmfg = o.lotmfg;
+                                    ln.cndateexp = o.dateexp;
+                                    ln.cndatemfg = o.datemfg;
+                                    ln.cnserialno = o.serialno;
+                                    ln.cnhuno = o.huno;
+                                    ln.unitcount = o.unitcount;
+                                    ln.cnflow = "IO";
+                                    ln.cnmsg = "HU Generate";
+                                    ln.tflow = "IO";
+                                    ln.accncreate = o.accncode;
+                                    ln.accnmodify = o.accncode;
+
+
+                                    // exit loop
+                                    break;
+                                }
+
+                                if(!r.IsClosed)
+                                    r.Close();
+
+                                // insert new line
+                                using(var nm = getCommand(ln,sqlcount_newline)) {
+                                    nm.Connection = cn;
+                                    await nm.snapsExecuteAsync();
+                                }
+                            }
+                        } // isnewhu
+
+                        cm.Parameters.Clear();
+                        cm.CommandType = CommandType.Text;
+                        cm.CommandText = sqlline_fnd;
+                        cm.snapsPar(o.orgcode,"orgcode");
+                        cm.snapsPar(o.site,"site");
+                        cm.snapsPar(o.depot,"depot");
+                        cm.snapsPar(o.countcode,"countcode");
+                        cm.snapsPar(o.plancode,"plancode");
+                        cm.snapsCdn(o.loccode,"loccode"," and loccode = @loccode");
+                        cm.snapsCdn(o.huno,"cnhuno"," and cnhuno = @cnhuno");
+                        r = await cm.snapsReadAsync();
+
+                        countline_md ol = new countline_md();
+                        while(await r.ReadAsync()) {
+                            ol = setCountline(ref r);
+                        }
+
+                        await r.CloseAsync();
+                        await cn.CloseAsync();
+
+                        return ol;
+                    }
+                }
+            } catch(Exception ex) {
+                logger.Error(o.orgcode,o.site,o.accncode,ex,ex.Message);
                 throw ex;
             }
         }

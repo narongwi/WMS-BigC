@@ -27,6 +27,12 @@ namespace Snaps.WMS.Interfaces
         // confirm stock take
         Task<List<countcorrection_md>> getConfrimLineAsync(counttask_md o);
         Task countConfirmAsync(counttask_md o);
-        Task<createhu_md> CreateHUAsync(createhu_md o);
+        Task<createhu_md> createHUAsync(createhu_md o);
+        Task<countline_md> GeneratehuAsync(product_vld o);
+        Task<product_vld> findProductAsync(product_vld o);
+        Task<countline_md> validateHuAsync(product_vld o);
+
+        
+
     }
 }

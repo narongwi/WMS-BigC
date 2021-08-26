@@ -6,8 +6,8 @@ export const environment = {
   // urlapiAdmn: 'http://localhost:63738',
   urlapiInbnd: 'http://desktop-2dakhvc:4320',
   urlapiTask: 'http://desktop-2dakhvc:4420',
-  urlapiInvt: 'http://desktop-2dakhvc:4520',
-  urlapiOubnd: 'http://localhost:23120',
+  urlapiInvt: 'http://localhost:61645',
+  urlapiOubnd: 'http://desktop-2dakhvc:4620',
   urlapiReport: 'http://desktop-2dakhvc:4720',
   urlapiDocument: 'http://desktop-2dakhvc:4820',
   urlapiExssource: 'http://desktop-2dakhvc:4920'

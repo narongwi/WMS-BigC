@@ -268,7 +268,7 @@
                   style="
                     position: relative;
                     z-index: 99;
-                    width: 50%;
+                    width: 60%;
                     height: auto;
                     margin: 40px auto auto auto;
                   "
@@ -281,12 +281,12 @@
                     </div>
                     <div class="line bgsub-head">
                       <div class="row mg-0 ln">
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                           <span class="text-dark fnb tx-overflow"
                             >Plan code
                           </span>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-7">
                           <span class="text-danger fnb"
                             >{{editorLinemd.plancode}} :
                             {{crplan.planname}}</span
@@ -296,46 +296,93 @@
                           class="col-md-3 text-info"
                           style="text-align: right; font-size: 13px"
                         >
-                          <button
+                          <!-- <button
                             type="button"
                             class="btn snaps-default btn-xs"
                             (click)="ngResetEdit()"
                           >
                             <i class="fas fa-redo mr-1"></i> reset
-                          </button>
+                          </button> -->
                         </div>
                       </div>
 
                       <div class="row mg-0 ln">
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                           <span class="text-dark fnb tx-overflow"
                             >Location
                           </span>
                         </div>
-                        <div class="col-md-9">
+                        <div class="col-md-10">
                           <span class="text-danger fnb"
                             >{{editorLinemd.loccode}}</span
                           >
                         </div>
-                        <!-- <div class="col-md-3 text-info" style="text-align:right;font-size: 13px;" >
-                                                        <button type="button" class="btn snaps-default btn-xs" (click)="ngResetEdit()"><i class="fas fa-redo mr-1"></i> reset</button>
-                                                    </div> -->
                       </div>
 
                       <div class="row mg-0 ln">
-                        <div class="col-md-3">Barcode</div>
-                        <div class="col-md-9">
+                        <div class="col-md-2 fnb">Product</div>
+                        <div class="col-md-3">
                           <input
                             class="form-control form-control-sm text-danger fnb"
                             name="editBarcode"
                             type="text"
-                            placeholder="Count Barcode"
+                            placeholder="Barcode"
                             [(ngModel)]="editorLinemd.cnbarcode"
-                            (change)="checkNewLine()"
+                            [disabled]="radioGenhuno"
+                            (ngModelChange)="productChanged('barcode')"
+                          />
+                          <!-- (change)="checkNewLine()" -->
+
+                        </div>
+                        <div class="col-md-3">
+                          <input
+                            class="form-control form-control-sm text-danger fnb"
+                            name="editArticle"
+                            type="text"
+                            placeholder="Article"
+                            [(ngModel)]="editorLinemd.cnarticle"
+                            [disabled]="radioGenhuno"
+                            (ngModelChange)="productChanged('article')"
+                          />
+                        </div>
+                        <div class="col-md-2">
+                          <input
+                            class="form-control form-control-sm text-danger fnb"
+                            name="editPV"
+                            type="number"
+                            min="0"
+                            placeholder="PV"
+                            [(ngModel)]="editorLinemd.cnpv"
+                            [disabled]="radioGenhuno"
+                            disabled
+                          />
+                        </div>
+                        <div class="col-md-2">
+                          <input
+                            class="form-control form-control-sm text-danger fnb"
+                            name="editLV"
+                            type="number"
+                            min="0"
+                            placeholder="LV"
+                            [(ngModel)]="editorLinemd.cnlv"
+                            [disabled]="radioGenhuno"
+                            (ngModelChange)="productChanged('lv')"
                           />
                         </div>
                       </div>
                       <div class="row mg-0 ln">
+                        <div class="col-md-2">
+                          <span class="text-dark fnb tx-overflow"
+                            >Description
+                          </span>
+                        </div>
+                        <div class="col-md-10">
+                          <span class="text-danger fnb"
+                            >{{editorLinemd.productdesc}}</span
+                          >
+                        </div>
+                      </div>
+                      <!-- <div class="row mg-0 ln">
                         <div class="col-md-3">Article</div>
                         <div class="col-md-3">
                           <input
@@ -371,30 +418,15 @@
                             (change)="checkNewLine()"
                           />
                         </div>
-                      </div>
-                      <div
-                        class="row mg-0 ln"
-                        *ngIf="editorLinemd.locctype!='P'||!this.valid(this.editorLinemd.sthuno)"
-                      >
-                        <div class="col-md-3">HU No</div>
-                        <div class="col-md-9">
-                          <input
-                            class="form-control form-control-sm text-danger fnb"
-                            name="editHuno"
-                            type="text"
-                            placeholder="Count huno"
-                            [(ngModel)]="editorLinemd.cnhuno"
-                            (change)="checkNewLine()"
-                          />
-                        </div>
-                      </div>
+                      </div> -->
                       <div class="row mg-0 ln" *ngIf="crplan.isbatchno==1">
-                        <div class="col-md-3">Expire Date</div>
-                        <div class="col-md-9">
+                        <div class="col-md-2 fnb">Expire Date</div>
+                        <div class="col-md-5">
                           <input
                             class="form-control form-control-sm text-danger fnb"
                             name="editDateexp"
                             type="text"
+                            [disabled]="radioGenhuno"
                             placeholder="Count Expire Date"
                             [(ngModel)]="editDateexpMd"
                             mask="00/00/0000"
@@ -402,49 +434,119 @@
                         </div>
                       </div>
                       <div class="row mg-0 ln" *ngIf="crplan.isbatchno==1">
-                        <div class="col-md-3">Batch MFG</div>
-                        <div class="col-md-9">
+                        <div class="col-md-2 fnb">Batch MFG</div>
+                        <div class="col-md-5">
                           <input
                             class="form-control form-control-sm text-danger fnb"
                             name="editBatch"
                             type="text"
                             placeholder="Count Batch MFG"
+                            [disabled]="radioGenhuno"
                             [(ngModel)]="editorLinemd.cnlotmfg"
                           />
                         </div>
                       </div>
-                      <div class="row mg-0 ln">
-                        <div class="col-md-3">Count Qtypu</div>
-                        <div class="col-md-9">
+                      <div class="row mg-0 ln" >
+                        <div class="col-md-2 fnb">Count Qty</div>
+                        <div class="col-md-3">
                           <input
                             class="form-control form-control-sm text-danger fnb"
                             name="editQtypu"
                             type="number"
                             min="0"
+                            #editpuqty
                             placeholder="Count Qtypu"
                             [(ngModel)]="editorLinemd.cnqtypu"
+                            [disabled]="editorLinemd.productdesc==''||editorLinemd.productdesc==null||radioGenhuno"
                           />
                         </div>
+                        <div class="col-md-1 text-danger pdt-5 fnb">
+                          {{ngDecUnitstock(editorLinemd.unitcount)}}
+                        </div>
                       </div>
-                      <div class="row mg-0 ln">
-                        <div class="col-md-3">&nbsp;</div>
-                        <div class="col-md-7">
+
+                      <!-- *ngIf="editorLinemd.locctype!='P'||!this.valid(this.editorLinemd.sthuno)" -->
+                      
+                      <div
+                        class="row mg-0 ln"
+                      >
+                        <div class="col-md-2 fnb">HU No</div>
+                        <div class="col-md-3">
+                          <input
+                            class="form-control form-control-sm text-danger fnb"
+                            name="editHuno"
+                            type="text"
+                            placeholder="Count huno"
+                            [disabled]="radioGenhuno||editorLinemd.cnarticle==''"
+                            [(ngModel)]="editorLinemd.cnhuno"
+                          />
+                        </div>
+                        <div class="col-md-1 pdt-5">
+                          <ui-switch checkedLabel="Active" 
+                              uncheckedLabel="Inactive" 
+                              size="small" color="#bbce00" 
+                              [(ngModel)]="radioGenhuno" 
+                              (ngModelChange)="GenhuChange()">
+                          </ui-switch>
+                        </div>
+                        <div class="col-md-2 ">
+                            <span [ngClass]="{'text-success': radioGenhuno}" class="fnb">Create</span><br/>
+                            <span [ngClass]="{'text-danger': radioGenhuno}" class="fnb">New HU</span> 
+                        </div>
+                        <div class="col-md-2 pdt-5">
+                            <button
+                            class="btn snaps-primary btn-block btn-xs "
+                            [disabled]="!radioGenhuno"
+                            (click)="generate()"
+                            >
+                            Generate
+                          </button>
+                        </div>
+                        <div class="col-md-2 pdt-5">
                           <button
-                            class="btn snaps-default btn-xs"
+                          [disabled]="editorLinemd.cnhuno =='' || editorLinemd.cnhuno == null"
+                          class="btn snaps-warning btn-block btn-xs "
+                          (click)="label()"
+                          >
+                          Label
+                        </button>
+                      </div>
+                      </div>
+        
+                      <div class="row mg-0 ln">
+                        <div class="col-md-2"></div>
+                        <div class="col-md-2" style="text-align: right"
+                        *ngIf="editorLinemd.cnflow=='NW'" >
+                        <button
+                          class="btn snaps-danger btn-xs"
+                          [disabled]="radioGenhuno"
+                          (click)="ngRemvoeEdit()">
+                          Delete
+                        </button>
+                      </div>
+                        <div class="col-md-2">
+                            <button
+                            class="btn snaps-default btn-xs btn-block"
+                            [disabled]="radioGenhuno"
                             style="margin-right: 20px"
                             (click)="ngCancleEdit()"
                           >
                             Cancel
                           </button>
+                        </div>
+                        <div class="col-md-2">
                           <button
-                            class="btn btn-xs"
+                            class="btn btn-xs btn-block"
                             [ngClass]="newline?'snaps-warning':'snaps-success'"
+                            [disabled]="radioGenhuno"
                             (click)="ngSaveLine()"
                           >
-                            {{newline?'Create New':'Save Change'}}
+                            {{newline?'Create New':'Save'}}
                           </button>
                         </div>
-                        <!-- Enable with Create new line-->
+                      </div>
+                      <div class="row mg-0">
+                        <div class="col-md-3">&nbsp;</div>
                         <div
                           class="col-md-2"
                           style="text-align: right"
@@ -452,6 +554,7 @@
                         >
                           <button
                             class="btn snaps-danger btn-xs"
+                            [disabled]="radioGenhuno"
                             (click)="ngRemvoeEdit()"
                           >
                             Delete
@@ -459,30 +562,18 @@
                         </div>
                       </div>
                       <div class="row mg-0 ln">
-                        <div class="col-md-12 text-danger text-center">
+                        <div class="col-md-12 text-danger text-center fnb">
                           {{editLineMessage}}
                         </div>
                       </div>
                     </div>
                   </div>
-                  <!-- <div class="editor-button text-right">
-                                        <button class="btn snaps-default btn-xs" style="margin-right: 20px;" (click)="ngCloseLine()">Cancel</button>
-                                        <button class="btn snaps-success btn-xs" (click)="ngCloseLine()">Save Change</button>
-                                    </div> -->
                 </div>
               </div>
               <ng-scrollbar>
-                <div
-                  class="row-p-0 row-input mg-0 ln fnb"
-                  *ngFor="let ln of lsline;let ix=index"
-                  [class.row-active]="ix==editLineIndex"
-                >
+                <div class="row-p-0 row-input mg-0 ln fnb" *ngFor="let ln of lsline;let ix=index" [class.row-active]="ix==editLineIndex" >
                   <div class="px-100 text-center fnb">
-                    <span [ngClass]="ln.locctype=='R'?'text-info':'text-danger'"
-                      >{{ln.locctype}}</span
-                    >
-                    : {{ln.loccode}}
-                  </div>
+                    <span [ngClass]="ln.locctype=='R'?'text-info':'text-danger'">{{ln.locctype}}</span>: {{ln.loccode}}</div>
                   <!-- <div class="col-md-2 ">
                                         <h6 class="card-subtitle text-muted">{{ln.productdesc}}</h6>
                                         <p class="card-text">{{ln.stbarcode}} {{ln.starticle}}</p>

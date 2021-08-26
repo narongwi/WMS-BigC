@@ -231,5 +231,35 @@ namespace Snaps.WMS {
         public string mergeno { get; set; }
         public string huno { get; set; }
     }
-
+    public class product_vld {
+        public string orgcode { get; set; }
+        public string site { get; set; }
+        public string depot { get; set; }
+        public string barcode { get; set; }
+        public string article { get; set; }
+        public int pv { get; set; }
+        public int lv { get; set; }
+        public string descalt { get; set; }
+        public decimal skuweight { get; set; }
+        public decimal skuvolume { get; set; }
+        public string unitmanage { get; set; }
+        public string loccode { get; set; }
+        public string locarea { get; set; }
+        public string loctype { get; set; }
+        public string locunit { get; set; }
+        public string huno { get; set; }
+        public string unitcount { get; set; }
+        public string unitdestr { get; set; }
+        public int skuofunit { get; set; }
+        public string countcode { get; set; }
+        public string plancode { get; set; }
+        public string linecode { get; set; }
+        public int qtycount { get; set; }
+        public string accncode { get; set; }
+        public bool isnewhu { get; set; }
+        public string lotmfg { get; set; }
+        public DateTimeOffset? datemfg { get; set; }
+        public DateTimeOffset? dateexp { get; set; }
+        public string serialno { get; set; }
+    }
 }

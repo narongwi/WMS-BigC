@@ -189,3 +189,35 @@ export interface createhu_md {
     mergeno?: string;
     huno?: string;
 }
+
+export interface product_vld {
+    orgcode?: string;
+    site?: string;
+    depot?: string;
+    barcode?: string;
+    article?: string;
+    pv?: number;
+    lv?: number;
+    descalt?: string;
+    skuweight?: number;
+    skuvolume?: number;
+    unitmanage?: string;
+    loccode?: string;
+    locarea?: string;
+    loctype?: string;
+    locunit?: string;
+    huno?: string;
+    unitcount?: string;
+    unitdestr?: string;
+    skuofunit?: number;
+    countcode?: string;
+    plancode?: string;
+    linecode?:number;
+    qtycount?: number;
+    accncode?: string;
+    isnewhu?: boolean;
+    lotmfg?: string;
+    datemfg?: Date;
+    dateexp?: Date;
+    serialno?: string;
+}

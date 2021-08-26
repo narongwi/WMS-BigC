@@ -44,10 +44,10 @@ namespace Snaps.WMS {
         private string sqlplan_insert_step1 = "" + 
         " insert into wm_coupn (orgcode,site,depot,spcarea,countcode,plancode,planname,accnassign,accnwork,szone,ezone,    " + 
         " saisle,eaisle,sbay,ebay,slevel,elevel,isroaming,tflow,datecreate,accncreate,datemodify,accnmodify,procmodify," +
-        " isblock, isdatemfg, isdatexp, isbatchno, allowscanhu, isserailno ) values (     " + 
+        " isblock, isdatemfg, isdatexp, isbatchno, allowscanhu, isserailno,planorigin) values (     " + 
         " @orgcode,@site,@depot,@spcarea,@countcode,@plancode,@planname,@accnassign,@accnwork,@szone,@ezone,@saisle,@eaisle," +
         " @sbay,@ebay,@slevel,@elevel,@isroaming,@tflow,sysdatetimeoffset(),@accncreate,sysdatetimeoffset(),@accnmodify,@procmodify," +
-        " @isblock,@isdatemfg,@isdateexp,@isbatchno,@allowscanhu,@isserialno )    ";
+        " @isblock,@isdatemfg,@isdateexp,@isbatchno,@allowscanhu,@isserialno,@plancode)    ";
 
         //private string sqlplan_select_step1_1 = @"select distinct l.orgcode,l.site,l.depot,l.spcarea,@countcode countcode,@plancode plancode,l.lscode loccode, 
         //    isnull(z.spcunit,s.unitops) unitcount,'IO' tflow,sysdatetimeoffset() datecreate,@accnmodify accncreate,sysdatetimeoffset() datemodify,@accnmodify accnmodify,'generate' procmodify,
@@ -106,7 +106,8 @@ namespace Snaps.WMS {
             max(s.batchno) batchno,max(cast(datemfg as date)) datemfg,max(cast(dateexp as date)) dateexp,
             max(serialno) serialno,max(huno) huno, l.lsaisle,l.lsbay, l.lslevel,dbo.get_barcode(l.orgcode,l.site,l.depot,s.article,s.pv,s.lv) as barcode,
             s.article ,s.lv ,s.pv,sum(s.qtysku) qtysku,sum(s.qtypu) qtypu,(case when(l.lsbay % 2) = 0  then 2  else 1 end) oddeven,(case when isnull(l.spcpicking,0) = 0 then 'R' else 'P' end) locctype         
-        from wm_locdw l  left join wm_loczp z on l.orgcode = z.orgcode and l.site = z.site and l.depot = z.depot and l.lscode = z.lscode and l.tflow = 'IO' 
+        from wm_locdw l  
+           left join wm_loczp z on l.orgcode = z.orgcode and l.site = z.site and l.depot = z.depot and l.lscode = z.lscode and l.tflow = 'IO' 
            left join wm_stock s on l.orgcode = s.orgcode and l.site = s.site and l.depot = s.depot and l.lscode = s.loccode and case when @isblock = 1 then 'IO' else s.tflow end = 'IO'
          where l.orgcode = @orgcode and l.site = @site  and l.depot = @depot  and l.lszone = @szone and l.lsaisle between @saisle and @eaisle and l.lsbay between @sbay and @ebay 
           and l.lslevel between @slevel and @elevel and not exists (select 1 from wm_couln c where c.orgcode = l.orgcode and c.site = l.site and c.depot = l.depot and c.loccode =  l.lscode and tflow = 'IO')
@@ -210,18 +211,17 @@ namespace Snaps.WMS {
         private string sqlplan_valcount_close = "select count(1) from wm_coupn where orgcode = @orgcode and site = @site and depot = @depot and countcode = @countcode and plancode = @plancode  and tflow in('ED','CL','XX')";
         private string sqlplan_recount_head =
          @"insert into wm_coupn (orgcode, site, depot, spcarea, countcode, plancode, planname, szone, ezone, saisle,eaisle, sbay, ebay, slevel, elevel, 
-        isroaming, tflow, datecreate, accncreate, datemodify, accnmodify, procmodify, isblock, isdatemfg, isdatexp,isbatchno, allowscanhu, isserailno)
+        isroaming, tflow, datecreate, accncreate, datemodify, accnmodify, procmodify, isblock, isdatemfg, isdatexp,isbatchno, allowscanhu, isserailno,planorigin)
         select orgcode, site, depot, spcarea, countcode,@newplan plancode,@planname planname, szone, ezone, saisle,eaisle, sbay, ebay, slevel, 
 	        elevel, isroaming, 'IO' tflow, sysdatetimeoffset() datecreate,@accnmodify accncreate, sysdatetimeoffset() datemodify, @accnmodify accnmodify, 
-	        procmodify, isblock, isdatemfg, isdatexp,isbatchno, allowscanhu, isserailno 
+	        procmodify, isblock, isdatemfg, isdatexp,isbatchno, allowscanhu, isserailno,iif(isnull(planorigin,0)=0,plancode,planorigin) planorigin
         from wm_coupn where orgcode = @orgcode and site = @site and depot = @depot and countcode = @countcode and plancode = @plancode ";
 
         private string sqlplan_recount_line =
        @"insert into wm_couln(orgcode, site, depot, spcarea, countcode, plancode, loccode, locseq, unitcount, stbarcode, starticle, stpv, stlv, stqtysku, 
-        stqtypu, stlotmfg, stdatemfg, stdateexp, stserialno, sthuno,tflow, datecreate, accncreate, datemodify, accnmodify, procmodify,locctype,planorigin)
+        stqtypu, stlotmfg, stdatemfg, stdateexp, stserialno, sthuno,tflow, datecreate, accncreate, datemodify, accnmodify, procmodify,locctype)
         select orgcode, site, depot, spcarea, countcode, @newplan plancode, loccode, locseq, unitcount, stbarcode, starticle, stpv, stlv, stqtysku, stqtypu, stlotmfg, stdatemfg, stdateexp, 
-        stserialno, sthuno,'IO' tflow, sysdatetimeoffset() datecreate, @accnmodify accncreate,sysdatetimeoffset() datemodify,@accnmodify accnmodify,'' procmodify,locctype,
-        iif(isnull(planorigin,0)=0,plancode,planorigin) planorigin
+        stserialno, sthuno,'IO' tflow, sysdatetimeoffset() datecreate, @accnmodify accncreate,sysdatetimeoffset() datemodify,@accnmodify accnmodify,'' procmodify,locctype        
         from wm_couln where orgcode = @orgcode and site = @site and depot = @depot and countcode = @countcode and plancode = @plancode and tflow = 'WQ'";
      
         private string sqlplan_recount_reline =
@@ -351,23 +351,21 @@ namespace Snaps.WMS {
         where t.orgcode = @orgcode and t.site = @site and t.depot =@depot and t.countcode = @countcode and t.tflow = 'IO' and t.counttype = 'CT' and p.tflow ='ED' and l.tflow ='ED'
         and l.corqty <> 0 order by l.locseq asc";
 
+        //private string sqlcount_confirmtask = "" +
+        //       " update wm_count set datemodify = sysdatetimeoffset(),accnmodify = @accnmodify,procmodify = @procmodify,tflow = 'ED'" +
+        //       " where orgcode = @orgcode and site = @site and depot = @depot and countcode = @countcode";
+
+        //private string sqlcorrection_updateresult = "" +
+        //      @"UPDATE wm_couln set cnflow = @cnflow , cnmsg = @cnmsg ,datemodify = SYSDATETIMEOFFSET(),accnmodify = @accnmodify
+        //       where orgcode = @orgcode and countcode = @countcode and plancode = @plancode and locseq = @locseq";
+
+        //private string sqlcount_getproduct = @"select top 1 b.barcode,b.article,b.pv,b.lv,p.descalt,p.rtoskuofpu,p.unitprep
+        //    from wm_product p left join wm_barcode b on p.orgcode = b.orgcode and p.site = b.site and p.depot = b.depot and p.article =b.article and p.pv=b.pv and p.lv = b.lv  and b.isprimary = 1 
+        //    where p.orgcode = @orgcode  and p.site = @site and p.depot = @depot  and (p.article = @article or b.barcode = @barcode)";
 
 
-        private string sqlcount_confirmtask = "" +
-               " update wm_count set datemodify = sysdatetimeoffset(),accnmodify = @accnmodify,procmodify = @procmodify,tflow = 'ED'" +
-               " where orgcode = @orgcode and site = @site and depot = @depot and countcode = @countcode";
-
-        private string sqlcorrection_updateresult = "" +
-              @"UPDATE wm_couln set cnflow = @cnflow , cnmsg = @cnmsg ,datemodify = SYSDATETIMEOFFSET(),accnmodify = @accnmodify
-               where orgcode = @orgcode and countcode = @countcode and plancode = @plancode and locseq = @locseq";
-
-        private string sqlcount_getproduct = @"select top 1 b.barcode,b.article,b.pv,b.lv,p.descalt,p.rtoskuofpu,p.unitprep
-            from wm_product p left join wm_barcode b on p.orgcode = b.orgcode and p.site = b.site and p.depot = b.depot and p.article =b.article and p.pv=b.pv and p.lv = b.lv  and b.isprimary = 1 
-            where p.orgcode = @orgcode  and p.site = @site and p.depot = @depot  and (p.article = @article or b.barcode = @barcode)";
-
-
-        private string sqlcount_correctchk = "select top 1 stockid,inrefno,thcode,qtypu ,qtysku,unitops from wm_stock ws where orgcode = @orgcode and site = @site and depot = @depot " +
-            "and loccode = @loccode and huno = @huno and  article = @article and pv = @pv and lv = @lv";
+        //private string sqlcount_correctchk = "select top 1 stockid,inrefno,thcode,qtypu ,qtysku,unitops from wm_stock ws where orgcode = @orgcode and site = @site and depot = @depot " +
+        //    "and loccode = @loccode and huno = @huno and  article = @article and pv = @pv and lv = @lv";
 
         private string sqlcount_newcheck = "select count(1) existrow from wm_couln l where l.orgcode = @orgcode and l.site = @site and l.depot = @depot and l.countcode = @countcode " +
             "   and l.plancode = @plancode and l.loccode=@loccode and l.cnhuno=@cnhuno and l.cnarticle =@cnarticle and l.cnpv = @cnpv and l.cnlv=@cnlv";
@@ -377,11 +375,58 @@ namespace Snaps.WMS {
             cndatemfg, cndateexp, cnserialno, cnhuno, cnflow, cnmsg, isskip, isrgen, iswrgln, countdevice, countdate, corcode, corqty, coraccn, 
             cordevice, cordate, tflow, datecreate, accncreate, datemodify, accnmodify, procmodify, locctype)
             select top 1 orgcode, site, depot, spcarea, countcode, plancode, loccode,(select max(locseq) + 1 from wm_couln s where s.orgcode = @orgcode 
-            and s.site = @site and s.depot = @depot and s.countcode =  @countcode and s.plancode = @plancode ) locseq, unitcount, stbarcode, 
+            and s.site = @site and s.depot = @depot and s.countcode =  @countcode and s.plancode = @plancode ) locseq,@unitcount unitcount, stbarcode, 
             starticle, stpv, stlv, stqtysku, stqtypu, stlotmfg, stdatemfg, stdateexp, stserialno, sthuno, @cnbarcode cnbarcode,@cnarticle cnarticle,@cnpv cnpv,
             @cnlv cnlv,@cnqtysku cnqtysku,@cnqtypu cnqtypu,@cnlotmfg cnlotmfg, @cndatemfg cndatemfg,@cndateexp cndateexp,@cnserialno,@cnhuno cnhuno,@cnflow cnflow,
-            @cnmsg cnmsg , isskip, isrgen, iswrgln, countdevice, countdate, corcode, corqty, coraccn, cordevice, cordate,tflow,SYSDATETIMEOFFSET() datecreate,
-            accncreate, SYSDATETIMEOFFSET() datemodify, @accnmodify accnmodify, procmodify, locctype  from wm_couln wc where wc.orgcode=@orgcode 
+            @cnmsg cnmsg , isskip, isrgen, iswrgln, countdevice,SYSDATETIMEOFFSET() countdate, corcode, corqty, coraccn, cordevice, cordate,tflow,SYSDATETIMEOFFSET() datecreate,
+            @accncreate accncreate, SYSDATETIMEOFFSET() datemodify, @accnmodify accnmodify, procmodify, locctype  from wm_couln wc where wc.orgcode=@orgcode 
             and wc.site = @site and wc.depot = @depot and wc.countcode = @countcode and wc.plancode = @plancode and wc.locseq = @locseq and wc.tflow='IO'";
+
+        private string sqlcount_findproduct =
+            @"select top 1 p.orgcode,p.[site],p.depot,p.article,p.pv,p.lv,p.descalt,p.skuweight,p.skuvolume,p.unitmanage,
+                   [dbo].[get_barcode](p.orgcode,p.[site],p.depot,p.article,p.pv,p.lv) barcode,l.loccode,l.spcarea locarea,l.lsloctype loctype,spcpickunit locunit,
+                   [dbo].[get_stocktake_unit](l.spcarea,l.lsloctype,l.spcpicking,l.spcpickunit,p.unitmanage,p.unitprep) unitcount,
+                   [dbo].[get_unitdes](p.orgcode,p.[site],p.depot,[dbo].[get_stocktake_unit](l.spcarea,l.lsloctype,l.spcpickunit,l.spcpickunit,p.unitmanage,p.unitprep)) unitdestr,
+                   [dbo].[get_ratio](p.orgcode,p.[site],p.depot,p.article,p.pv,p.lv,[dbo].[get_stocktake_unit](l.spcarea,l.lsloctype,l.spcpickunit,l.spcpickunit,p.unitmanage,p.unitprep)) skuofunit
+            from [dbo].[wm_product] p  
+                cross join  (
+                    select top 1 l.lscode loccode,l.spcarea,l.lsloctype,l.spcpickunit,l.spcpicking
+                    from [dbo].[wm_locdw] l 
+                    where l.orgcode = @orgcode 
+                        and l.[site] = @site 
+                        and l.depot = @depot 
+                        and l.lscode = @loccode 
+                        and l.tflow='IO'
+                ) l
+            where p.orgcode = @orgcode 
+                and p.site = @site 
+                and p.depot = @depot 
+                and p.tflow = 'IO' 
+                and exists (
+                    select top 1 article 
+                    from [dbo].[wm_barcode] b 
+                    where p.orgcode = b.orgcode and p.site = b.site and p.depot = b.depot
+                    and p.article=b.article and p.pv = b.pv and p.lv = b.lv and b.tflow = 'IO'
+                    and (b.barcode = @product or b.article = @product)
+                ) ";
+
+        private string sqlcount_huactive =
+          @"select count(1) ishuno
+                from wm_handerlingunit s 
+                where s.orgcode = @orgcode
+                    and s.site = @site
+                    and s.loccode = @loccode
+                    and s.depot = @depot
+                    and s.huno = @huno
+                    and s.tflow = 'IO'";
+
+        private string sqlcount_huother_product=
+            @"select count(1) ishuno
+                from wm_stock s 
+                where s.orgcode = @orgcode
+                    and s.site = @site 
+                    and s.depot = @depot
+                    and s.huno = @huno
+                     and s.loccode <> @loccode";
     }
 }

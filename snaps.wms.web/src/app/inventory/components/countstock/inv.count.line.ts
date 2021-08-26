@@ -1,3 +1,4 @@
+import { product_vld } from './../../models/inv.count.model';
 import { ThrowStmt } from '@angular/compiler';
 import { Component, OnInit, OnDestroy, ViewChild, EventEmitter, Output, HostListener, ElementRef, AfterViewInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
@@ -52,6 +53,8 @@ export class invcountlineComponent implements OnInit, OnDestroy, AfterViewInit {
   public editorIsOpen: boolean = false;
   public editorLinemd: countline_md = new countline_md();
 
+  @ViewChild('editpuqty') editpuqty: ElementRef;
+
   @Output() selout = new EventEmitter<counttask_md>();
   public crrtask: counttask_md = new counttask_md();
   public crstate: boolean = false;
@@ -72,6 +75,7 @@ export class invcountlineComponent implements OnInit, OnDestroy, AfterViewInit {
   public rowselected: number;
   public newline: boolean;
   public lineprogress: number;
+  public radioGenhuno: boolean;
   // public planprogress: number;
   constructor(private sv: countService,
     private av: authService,
@@ -184,8 +188,8 @@ export class invcountlineComponent implements OnInit, OnDestroy, AfterViewInit {
         console.log("total:" + total);
 
         // update progress
-        total = total==0?1:total;
-        this.lineprogress = Number(((counted  * 100) / total).toFixed(2)) ;
+        total = total == 0 ? 1 : total;
+        this.lineprogress = Number(((counted * 100) / total).toFixed(2));
 
         console.log(this.lineprogress);
         // this.lssave = Object.assign([], res); 
@@ -240,11 +244,139 @@ export class invcountlineComponent implements OnInit, OnDestroy, AfterViewInit {
     this.editorLinemd = new countline_md();
     this.editorLinemd = Object.assign({}, ln);
     this.editLineIndex = ix;
+    // this.radioGenhuno = this.valid(this.editorLinemd.cnhuno)?false:true;
     this.editorWidth = (this.planLine.nativeElement as HTMLElement).offsetWidth;
     this.editDateexpMd = this.ngDformat(ln.cndateexp);
     this.editorIsOpen = true;
   }
 
+  productChanged(inputtype) {
+    if (!this.valid(this.editorLinemd.cnbarcode) && !this.valid(this.editorLinemd.cnarticle)) {
+      return;
+    } else {
+      let productval: product_vld = {};
+      productval.orgcode = this.editorLinemd.orgcode;
+      productval.site = this.editorLinemd.site;
+      productval.depot = this.editorLinemd.depot;
+      if (inputtype == "barcode") {
+        productval.barcode = this.editorLinemd.cnbarcode;
+        productval.article = "";
+      } else if (inputtype == "article") {
+        productval.barcode = "";
+        productval.article = this.editorLinemd.cnarticle;
+      } else {
+        productval.barcode = this.editorLinemd.cnbarcode;
+        productval.article = this.editorLinemd.cnarticle;
+
+      }
+      productval.pv = this.editorLinemd.cnpv;
+      productval.lv = this.editorLinemd.cnlv;
+      productval.loccode = this.editorLinemd.loccode;
+      productval.huno = this.editorLinemd.cnhuno;
+      productval.unitcount = this.editorLinemd.unitcount;
+      productval.countcode = this.editorLinemd.countcode;
+      productval.plancode = this.editorLinemd.plancode;
+      productval.linecode = this.editorLinemd.locseq;
+      // productval.qtycount = this.editorLinemd.cnqtypu;
+      // productval.isnewhu = this.radioGenhuno;
+
+      this.sv.findProduct(productval).subscribe((res: product_vld) => {
+        this.editorLinemd.cnbarcode = res.barcode;
+        this.editorLinemd.cnarticle = res.article;
+        this.editorLinemd.cnpv = Number(res.pv);
+        this.editorLinemd.cnlv = Number(res.lv);
+        this.editorLinemd.unitcount = res.unitcount;
+        this.editorLinemd.productdesc = res.descalt;
+        this.editpuqty.nativeElement.focus();
+      }, (err: any) => {
+        this.editLineMessage = err.message;
+        this.editorLinemd.cnbarcode = "";
+        this.editorLinemd.cnarticle = "";
+        this.editorLinemd.cnpv = 0;
+        this.editorLinemd.cnlv = 0;
+        this.editorLinemd.unitcount = "";
+        this.editorLinemd.productdesc = "";
+        this.editorLinemd.cnqtypu = 0;
+        this.toastr.error("<span class='fn-07e'>" + this.editLineMessage + "</span>", null, { enableHtml: true });
+      });
+    }
+  }
+  public generate() {
+    this.ngPopups.confirm('Do you Generate New HU ?').subscribe(res => {
+      if (res) {
+        let generateval: product_vld = {};
+        generateval.orgcode = this.editorLinemd.orgcode;
+        generateval.site = this.editorLinemd.site;
+        generateval.depot = this.editorLinemd.depot;
+        generateval.barcode = this.editorLinemd.cnbarcode;
+        generateval.article = this.editorLinemd.cnarticle;
+        generateval.pv = this.editorLinemd.cnpv;
+        generateval.lv = this.editorLinemd.cnlv;
+        generateval.lotmfg = this.editorLinemd.cnlotmfg;
+        generateval.dateexp = this.editorLinemd.cndateexp;
+        generateval.datemfg = this.editorLinemd.cndatemfg;
+        generateval.serialno = this.editorLinemd.cnserialno;
+        generateval.loccode = this.editorLinemd.loccode;
+        generateval.huno = this.editorLinemd.cnhuno;
+        generateval.unitcount = this.editorLinemd.unitcount;
+        generateval.countcode = this.editorLinemd.countcode;
+        generateval.plancode = this.editorLinemd.plancode;
+        generateval.linecode = this.editorLinemd.locseq;
+        generateval.qtycount = !this.valid(this.editorLinemd.cnqtypu) ? 0 : this.editorLinemd.cnqtypu;
+
+        this.sv.generatehu(generateval).subscribe((res: countline_md) => {
+          this.lsline[this.editLineIndex].cnqtypu = 0;
+          this.editorLinemd = res;
+          this.lsline.push(this.editorLinemd);
+          this.editLineIndex = this.lsline.length - 1;
+          this.radioGenhuno = false;
+
+          // reset current count = 0
+          this.toastr.success("<span class='fn-07e'>Generated Successful</span>", null, { enableHtml: true });
+        }, (err: any) => {
+          this.editLineMessage = err.message;
+          this.toastr.error("<span class='fn-07e'>" + this.editLineMessage + "</span>", null, { enableHtml: true });
+        });
+      }
+    });
+  }
+  public label() {
+    if (!this.valid(this.editorLinemd.cnhuno)) {
+      this.toastr.error(
+        "<span class='fn-07e'>Invalid HU No !</span>", null,
+        { enableHtml: true });
+    } else {
+      this.toastRef = this.toastr.warning(" &#128336; <span class='fn-07e'>Downloading ..... , Claim down wait a sec</span>", null, {
+        disableTimeOut: true,
+        tapToDismiss: false,
+        closeButton: false,
+        positionClass: 'toast-bottom-right', enableHtml: true
+      });
+
+      let sourclabel = "M";// from wm_merge hu data source
+      if (this.editorLinemd.cnhuno == this.editorLinemd.sthuno) {
+        sourclabel = "N";// from wm_stock data source
+      }
+
+      this.sv.label(this.editorLinemd.orgcode, this.editorLinemd.site, this.editorLinemd.depot, this.editorLinemd.cnhuno, sourclabel).subscribe(response => {
+        let blob: any = new Blob([response], { type: 'application/pdf' });
+        const url = window.URL.createObjectURL(blob);
+        let downloadLink = document.createElement('a');
+
+        downloadLink.href = url;
+        downloadLink.setAttribute('download', "bgcwms_labelhu_" + this.editorLinemd.cnhuno + ".pdf");
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+        document.body.removeChild(downloadLink);
+        this.toastr.clear(this.toastRef.ToastId);
+      }, () => {
+        this.toastr.clear(this.toastRef.ToastId);
+        this.toastr.warning(
+          "<span class='fn-07e'> Label Data Not Found </span>", null,
+          { enableHtml: true });
+      });
+    }
+  }
   ngSaveLine() {
     let errorCount: number = 0;
     this.editLineMessage = "";
@@ -254,7 +386,7 @@ export class invcountlineComponent implements OnInit, OnDestroy, AfterViewInit {
         this.editLineMessage = "Barcode or Article is required !";
         this.toastr.error("<span class='fn-07e'>" + this.editLineMessage + "</span>", null, { enableHtml: true });
       }
-      else if (!this.valid(this.editorLinemd.cnhuno)) {
+      else if (this.radioGenhuno == false && !this.valid(this.editorLinemd.cnhuno)) {
         errorCount++;
         this.editLineMessage = "HU No is required !";
         this.toastr.error("<span class='fn-07e'>" + this.editLineMessage + "</span>", null, { enableHtml: true });
@@ -281,91 +413,62 @@ export class invcountlineComponent implements OnInit, OnDestroy, AfterViewInit {
         this.toastr.error("<span class='fn-07e'>" + this.editLineMessage + "</span>", null, { enableHtml: true });
       }
       else {
-        // check pallet parameter
-        let hu = new handerlingunit();
-        hu.huno = this.editorLinemd.cnhuno;
+        this.ngPopups.confirm('Do you Save Change ?').subscribe(res => {
+          if (res) {
+            let hunoval: product_vld = {};
+            hunoval.orgcode = this.editorLinemd.orgcode;
+            hunoval.site = this.editorLinemd.site;
+            hunoval.depot = this.editorLinemd.depot;
+            hunoval.barcode = this.editorLinemd.cnbarcode;
+            hunoval.article = this.editorLinemd.cnarticle;
+            hunoval.pv = this.editorLinemd.cnpv;
+            hunoval.lv = this.editorLinemd.cnlv;
+            hunoval.lotmfg = this.editorLinemd.cnlotmfg;
+            hunoval.dateexp = this.editorLinemd.cndateexp;
+            hunoval.datemfg = this.editorLinemd.cndatemfg;
+            hunoval.serialno = this.editorLinemd.cnserialno;
+            hunoval.loccode = this.editorLinemd.loccode;
+            hunoval.huno = this.editorLinemd.cnhuno;
+            hunoval.unitcount = this.editorLinemd.unitcount;
+            hunoval.countcode = this.editorLinemd.countcode;
+            hunoval.plancode = this.editorLinemd.plancode;
+            hunoval.linecode = this.editorLinemd.locseq;
+            hunoval.qtycount = !this.valid(this.editorLinemd.cnqtypu) ? 0 : this.editorLinemd.cnqtypu;
 
-        // check product parameter
-        let fnproduct = new product_pm();
-        fnproduct.article = this.editorLinemd.cnarticle == ""
-          ? this.editorLinemd.cnbarcode : this.editorLinemd.cnarticle;
+            if(this.editorLinemd.cnhuno == this.lsline[this.editLineIndex].cnhuno &&
+              this.editorLinemd.cnarticle == this.lsline[this.editLineIndex].cnarticle &&
+              this.editorLinemd.cnlv == this.lsline[this.editLineIndex].cnlv){
+                hunoval.isnewhu = false;
+              }
+              else {
+                hunoval.isnewhu =true;
+              }
 
-        if (this.valid(this.editorLinemd.cnlv)) {
-          fnproduct.lv = this.editorLinemd.cnlv;
-        }
+            this.sv.validatehu(hunoval).subscribe((res: countline_md) => {
+              // add line ifany
+              if (hunoval.isnewhu) {
+                this.lsline[this.editLineIndex].cnqtypu = 0;
+                this.editorLinemd = res;
+                this.lsline.push(this.editorLinemd);
+                this.editLineIndex = this.lsline.length - 1;
+                this.ngCancleEdit();
+              }else{
+                this.lsline[this.editLineIndex] = this.editorLinemd;
+                this.ngCancleEdit();
+              }
 
-        // setp 1 check pallet
-        if (this.editorLinemd.cnhuno != this.editorLinemd.sthuno) {
-          let hu = new handerlingunit(); hu.huno = this.editorLinemd.cnhuno;
-          this.hv.find(hu).subscribe(res => {
-            if (res.length == 0) {
-              this.editLineMessage = "HU is not exists in system!";
-              this.toastr.error("<span class='fn-07e'>" + this.editLineMessage + "</span>", null, { enableHtml: true });
-            } else {
-              // step 1.1 check product
-              this.validateProduct(fnproduct);
-            }
-          }, (err: any) => {
-            this.editLineMessage = err.message;
-            this.toastr.error("<span class='fn-07e'>" + this.editLineMessage + "</span>", null, { enableHtml: true });
-          });
-        } else {
-          // step 2 check product
-          this.validateProduct(fnproduct);
-        }
+             
+            }, err => {
+              this.editLineMessage = err.message;
+              this.toastr.error(
+                "<span class='fn-07e'>" + this.editLineMessage + "</span>", null,
+                { enableHtml: true });
+            });
+          }
+        });
       }
     }
   }
-  checkNewLine() {
-    if (!this.valid(this.editorLinemd.starticle)) {
-      this.newline = false;
-    } else if (this.valid(this.editorLinemd.starticle) && this.editorLinemd.cnhuno == this.editorLinemd.sthuno) {
-      this.newline = false;
-    } else {
-      this.newline = true;
-    }
-  }
-  validateProduct(o: product_pm) {
-    if ((this.editorLinemd.cnarticle != this.editorLinemd.starticle) ||
-      (this.editorLinemd.cnlv != this.editorLinemd.cnlv)
-      || (this.editorLinemd.cnbarcode != this.editorLinemd.stbarcode)
-      || (this.editorLinemd.cnlv != this.editorLinemd.stlv)
-    ) {
-      this.pv.active(o).subscribe(res => {
-        if (!this.valid(res.article)) {
-          this.editLineMessage = "product not found";
-          this.toastr.error("<span class='fn-07e'>" + this.editLineMessage + "</span>", null, { enableHtml: true });
-        } else {
-          // new product
-          this.editorLinemd.cnarticle = res.article;
-          this.editorLinemd.cnpv = res.pv;
-          this.editorLinemd.cnlv = res.lv;
-          this.editorLinemd.cnbarcode = res.barcode;
-          if (this.newline) {
-            // reset to zero
-            this.lsline[this.editLineIndex].cnqtypu = 0;
-            // insert line
-            this.editorLinemd.cnflow = 'NW';
-            this.editorLinemd.unitcount = res.unitmanage;
-            this.lsline.push(this.editorLinemd);
-          } else {
-            // update line
-            this.lsline[this.editLineIndex] = this.editorLinemd;
-          }
-
-          // close form
-          this.ngCancleEdit();
-        }
-      }, (err: any) => {
-        this.editLineMessage = err.message;
-        this.toastr.error("<span class='fn-07e'>" + this.editLineMessage + "</span>", null, { enableHtml: true });
-      });
-    } else {
-      this.lsline[this.editLineIndex] = this.editorLinemd;
-      this.ngCancleEdit();
-    }
-  }
-
 
   stringToDate = (dateString) => {
     const [day, month, year] = dateString.split('/');
@@ -373,15 +476,19 @@ export class invcountlineComponent implements OnInit, OnDestroy, AfterViewInit {
   };
 
   ngResetEdit() {
-    this.editorLinemd.cnhuno = this.editorLinemd.sthuno;
-    this.editorLinemd.cnbarcode = this.editorLinemd.stbarcode;
-    this.editorLinemd.cnarticle = this.editorLinemd.starticle;
-    this.editorLinemd.cnlv = this.editorLinemd.stlv;
-    this.editorLinemd.cndateexp = this.editorLinemd.stdateexp;
-    this.editorLinemd.cnlotmfg = this.editorLinemd.stlotmfg;
-    this.editorLinemd.cnflow = this.editorLinemd.cnflow;
+    this.editorLinemd.cnhuno = this.lsline[this.editLineIndex].cnhuno;
+    this.editorLinemd.cnbarcode = this.lsline[this.editLineIndex].cnbarcode;
+    this.editorLinemd.cnarticle = this.lsline[this.editLineIndex].cnarticle;
+    this.editorLinemd.cnlv = this.lsline[this.editLineIndex].cnlv;
+    this.editorLinemd.cndateexp = this.lsline[this.editLineIndex].cndateexp;
+    this.editorLinemd.cnlotmfg = this.lsline[this.editLineIndex].cnlotmfg;
+    this.editorLinemd.cnflow = this.lsline[this.editLineIndex].cnflow;
+    this.editorLinemd.cnqtypu = this.lsline[this.editLineIndex].cnqtypu;
+    this.radioGenhuno = false;
+    this.editLineMessage = "";
   }
   ngCancleEdit() {
+    this.radioGenhuno = false;
     this.editorIsOpen = false;
     this.editLineIndex = -1;
     this.editorLinemd = new countline_md();
@@ -393,12 +500,6 @@ export class invcountlineComponent implements OnInit, OnDestroy, AfterViewInit {
       this.ngCancleEdit();
     }
   }
-
-  //   getdocstatement() { 
-  //     window.open("http://localhost/bgcwmsdocument/get/getCountsheet?planno=4-001" , "_blank");
-  //   }
-
-
   getdocstatement(o: string) {
     this.toastRef = this.toastr.warning(" &#128336; <span class='fn-07e'>Downloading ..... , Claim down wait a sec</span>", null, {
       disableTimeOut: true,
@@ -424,6 +525,12 @@ export class invcountlineComponent implements OnInit, OnDestroy, AfterViewInit {
 
   }
 
+  public GenhuChange() {
+    console.log("qtypu valid : " + this.valid(this.editorLinemd.cnqtypu));
+    if (!this.valid(this.editorLinemd.cnqtypu)) {
+      this.editorLinemd.cnqtypu = 0;
+    }
+  }
   public valid(model: any) {
     var isvalid: boolean = false;
     if (model === undefined) {

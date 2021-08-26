@@ -66,7 +66,6 @@ namespace Snaps.WMS.Services {
             catch   (Exception ex) { throw ex; } 
             finally { ops.Dispose(); } 
         }
-
         //Line
         public async Task<List<countline_md>> listLineAsync(countplan_md o)  { 
             counting_ops ops = new counting_ops(cnx);
@@ -118,9 +117,22 @@ namespace Snaps.WMS.Services {
             catch (Exception ex) { throw ex; }
             finally { ops.Dispose(); }
         }
-        public async Task<createhu_md> CreateHUAsync(createhu_md o) {
+        public async Task<createhu_md> createHUAsync(createhu_md o) {
             counting_ops ops = new counting_ops(cnx);
             try { return await ops.CreateHUAsync(o); } catch(Exception ex) { throw ex; } finally { ops.Dispose(); }
+        }
+        public async Task<product_vld> findProductAsync(product_vld o) {
+            counting_ops ops = new counting_ops(cnx);
+            try { return await ops.findProductAsync(o); } catch(Exception ex) { throw ex; } finally { ops.Dispose(); }
+        }
+        public async Task<countline_md> GeneratehuAsync(product_vld o) {
+            counting_ops ops = new counting_ops(cnx);
+            try { return await ops.GeneratehuAsync(o); } catch(Exception ex) { throw ex; } finally { ops.Dispose(); }
+        }
+
+        public async Task<countline_md> validateHuAsync(product_vld o) {
+            counting_ops ops = new counting_ops(cnx);
+            try { return await ops.validateHuAsync(o); } catch(Exception ex) { throw ex; } finally { ops.Dispose(); }
         }
     }
 }

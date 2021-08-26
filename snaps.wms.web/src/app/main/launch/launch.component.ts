@@ -17,20 +17,17 @@ export class LaunchComponent implements OnInit, AfterViewInit, OnDestroy {
   public isbackdrop: boolean = false;
   public crprofile: accn_profile = new accn_profile();
   constructor(private sv: authService, private router: Router) {
-
+    this.isbackdrop = false;
   }
 
   onStarted() {
-    this.isbackdrop = true;
+    // this.isbackdrop = true;
     console.log("loadding is started");
   }
 
   onCompleted() {
     console.log("loadding is Completed!");
-
-    setTimeout(() => {
-    this.isbackdrop = false;
-    }, 200);
+    // this.isbackdrop = false;
   }
   ngOnInit(): void {
     // Progress bar events (optional)
@@ -41,11 +38,7 @@ export class LaunchComponent implements OnInit, AfterViewInit, OnDestroy {
     this.isbackdrop = false;
   }
   ngAfterViewInit() {
-    this.isbackdrop = false;
-    
     //this.setMenu();
-
-
     setTimeout(() => {
       this.toggleSidebar();
     }, 800);

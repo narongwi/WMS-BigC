@@ -1,3 +1,4 @@
+import { product_vld } from './../models/inv.count.model';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
@@ -110,4 +111,26 @@ export class countService {
     countConfirm(o:counttask_md){
         return  this.http.post(environment.urlapiInvt + "/count/countconfirm/"+this.guid, JSON.stringify(o));
     }
+    generatehu(o:product_vld){
+        return  this.http.post<countline_md>(environment.urlapiInvt + "/count/generatehu/"+this.guid, JSON.stringify(o))
+        .pipe( map(res=><countline_md>res));
+    }
+    findProduct(o:product_vld){
+        return  this.http.post<product_vld>(environment.urlapiInvt + "/count/findproduct/"+this.guid, JSON.stringify(o))
+        .pipe( map(res=><product_vld>res));
+    }
+    validatehu(o:product_vld){
+        return  this.http.post<countline_md>(environment.urlapiInvt + "/count/validatehu/"+this.guid, JSON.stringify(o))
+        .pipe( map(res=><countline_md>res));
+    }
+    label(orgcode:string,site:string,depot:string,huno:string,hutype:string){
+        let search = new URLSearchParams();
+        search.set('orgcode', orgcode); 
+        search.set('site', site); 
+        search.set('depot', depot); 
+        search.set('huno', huno);
+        search.set('hutype', hutype);
+        return this.http.post(environment.urlapiDocument +'/print/labelhu',search.toString(),{responseType:'blob'});
+    }
+    
 }

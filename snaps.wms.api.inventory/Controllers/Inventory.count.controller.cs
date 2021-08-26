@@ -492,11 +492,94 @@ namespace Snaps.WMS.Controllers
                 o.site = osite;
                 o.depot = odepot; 
                 o.accncode = oaccn;
-                return Ok(await _sv.CreateHUAsync(o));
+                return Ok(await _sv.createHUAsync(o));
             } catch(Exception exr) {
                 _log.LogError(exr.SnapsLogExc(Request.getIP(),oaccn,app,"upsertLine",rqid: id,ob: o));
                 return BadRequest(exr.SnapsBadRequest());
             } 
         }
+        
+        [Authorize]
+        [HttpPost("generatehu/{id}")]
+        public async Task<IActionResult> GeneratehuAsync(String id,[FromBody] product_vld o,
+           [FromHeader(Name = "site")] String valsite,
+           [FromHeader(Name = "depot")] String valdepot,
+           [FromHeader(Name = "accncode")] String valaccn,
+           [FromHeader(Name = "orgcode")] String valorg = "bgc",
+           [FromHeader(Name = "lang")] String lng = "EN"
+           ) {
+            Process ps; SnapsLogDbg p = null;
+            try {
+                if(_log.IsEnabled(LogLevel.Debug)) {
+                    ps = Process.GetCurrentProcess();
+                    p = new SnapsLogDbg(ps,"validateProductAsync",id,Request.getIP(),app,valaccn);
+                }
+                o.orgcode = valorg;
+                o.site = valsite;
+                o.depot = valdepot;
+                o.accncode = valaccn;
+                return Ok(await _sv.GeneratehuAsync(o));
+            } catch(Exception exr) {
+                _log.LogError(exr.SnapsLogExc(Request.getIP(),valaccn,app,"ListAsync",rqid: id,ob: o));
+                return BadRequest(exr.SnapsBadRequest());
+            } finally {
+                if(_log.IsEnabled(LogLevel.Debug)) { p.snap(); _log.LogDebug(p.toJson()); p.Dispose(); }
+            }
+        }
+        [Authorize]
+        [HttpPost("findproduct/{id}")]
+        public async Task<IActionResult> findProduct(String id,[FromBody] product_vld o,
+           [FromHeader(Name = "site")] String valsite,
+           [FromHeader(Name = "depot")] String valdepot,
+           [FromHeader(Name = "accncode")] String valaccn,
+           [FromHeader(Name = "orgcode")] String valorg = "bgc",
+           [FromHeader(Name = "lang")] String lng = "EN"
+           ) {
+            Process ps; SnapsLogDbg p = null;
+            try {
+                if(_log.IsEnabled(LogLevel.Debug)) {
+                    ps = Process.GetCurrentProcess();
+                    p = new SnapsLogDbg(ps,"findProduct",id,Request.getIP(),app,valaccn);
+                }
+                o.orgcode = valorg;
+                o.site = valsite;
+                o.depot = valdepot;
+                o.accncode = valaccn;
+                return Ok(await _sv.findProductAsync(o));
+            } catch(Exception exr) {
+                _log.LogError(exr.SnapsLogExc(Request.getIP(),valaccn,app,"ListAsync",rqid: id,ob: o));
+                return BadRequest(exr.SnapsBadRequest());
+            } finally {
+                if(_log.IsEnabled(LogLevel.Debug)) { p.snap(); _log.LogDebug(p.toJson()); p.Dispose(); }
+            }
+        }
+        [Authorize]
+        [HttpPost("validatehu/{id}")]
+        public async Task<IActionResult> validatehu(String id,[FromBody] product_vld o,
+          [FromHeader(Name = "site")] String valsite,
+          [FromHeader(Name = "depot")] String valdepot,
+          [FromHeader(Name = "accncode")] String valaccn,
+          [FromHeader(Name = "orgcode")] String valorg = "bgc",
+          [FromHeader(Name = "lang")] String lng = "EN"
+          ) {
+            Process ps; SnapsLogDbg p = null;
+            try {
+                if(_log.IsEnabled(LogLevel.Debug)) {
+                    ps = Process.GetCurrentProcess();
+                    p = new SnapsLogDbg(ps,"validatehu",id,Request.getIP(),app,valaccn);
+                }
+                o.orgcode = valorg;
+                o.site = valsite;
+                o.depot = valdepot;
+                o.accncode = valaccn;
+                return Ok(await _sv.validateHuAsync(o));
+            } catch(Exception exr) {
+                _log.LogError(exr.SnapsLogExc(Request.getIP(),valaccn,app,"findhu",rqid: id,ob: o));
+                return BadRequest(exr.SnapsBadRequest());
+            } finally {
+                if(_log.IsEnabled(LogLevel.Debug)) { p.snap(); _log.LogDebug(p.toJson()); p.Dispose(); }
+            }
+        }
+
     }
 }
