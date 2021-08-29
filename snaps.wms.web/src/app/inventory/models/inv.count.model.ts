@@ -1,4 +1,4 @@
-export class counttask_md { 
+export class counttask_md {
     orgcode: string;
     site: string;
     depot: string;
@@ -18,7 +18,7 @@ export class counttask_md {
     procmodify: string;
 }
 
-export class countplan_md { 
+export class countplan_md {
     orgcode: string;
     site: string;
     depot: string;
@@ -36,18 +36,18 @@ export class countplan_md {
     ebay: string;
     slevel: string;
     elevel: string;
-    isroaming : number;
-    isblock : number; 
-    isdatemfg : number;
-    isdatexp : number;
-    isbatchno : number;
-    isserialno : number; 
-    allowscanhu : number;
+    isroaming: number;
+    isblock: number;
+    isdatemfg: number;
+    isdatexp: number;
+    isbatchno: number;
+    isserialno: number;
+    allowscanhu: number;
     tflow: string;
     cntpercentage: number;
     cnterror: number;
     cntlines: number;
-    cntactual:number;
+    cntactual: number;
     cnttime: string;
     datestart: Date | string | null;
     pctstart: number;
@@ -61,7 +61,8 @@ export class countplan_md {
     datemodify: Date | string | null;
     accnmodify: string;
     procmodify: string;
-    isoddeven:number;
+    isoddeven: number;
+    planorigin: string;
 }
 
 export class countline_md {
@@ -212,7 +213,7 @@ export interface product_vld {
     skuofunit?: number;
     countcode?: string;
     plancode?: string;
-    linecode?:number;
+    linecode?: number;
     qtycount?: number;
     accncode?: string;
     isnewhu?: boolean;

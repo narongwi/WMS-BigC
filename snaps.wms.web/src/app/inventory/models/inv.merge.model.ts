@@ -17,6 +17,7 @@ export interface merge_find {
     spcarea?: string;
     loccode?: string;
     huno?: string;
+    article?: string;
     accncode?: string;
     datecreate?: Date | string | null;
 }
@@ -30,7 +31,7 @@ export interface mergehu_md {
     hutarget?: string;
     loccode?: string;
     tflow?: string;
-    tflowdes?:string;
+    tflowdes?: string;
     datecreate?: string;
     accncreate?: string;
     datemodify?: string;

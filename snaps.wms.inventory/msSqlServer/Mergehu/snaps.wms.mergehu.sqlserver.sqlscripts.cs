@@ -77,7 +77,7 @@ namespace Snaps.WMS{
 			from wm_stock s 
 				join wm_locdw l on s.orgcode = l.orgcode and s.site = l.site and s.depot = l.depot and s.loccode = l.lscode 
 				join wm_product p on s.orgcode = p.orgcode and s.site = p.site and s.depot = p.depot and s.article = p.article and s.pv = p.pv and s.lv = p.lv
-			where s.qtysku > 0 and s.tflow = 'IO' and s.orgcode = @orgcode and s.site = @site and s.depot = @depot and s.loccode = @loccode and s.huno like '%' + @huno
+			where s.qtysku > 0 and s.tflow = 'IO' and s.orgcode = @orgcode and s.site = @site and s.depot = @depot and s.loccode = @loccode and s.huno like '%' + @huno and s.article like '%' + @article
 			and not EXISTS(select 1 from wm_stobc b where b.orgcode = s.orgcode and b.site = s.site and b.depot = s.depot and b.stockid = s.stockid and b.huno = s.huno and b.tflow='IO')
 			and not EXISTS(select 1 from wm_taln t where t.orgcode = s.orgcode and t.site = s.site and t.depot = s.depot and t.stockid = s.stockid and t.sourcehuno = s.huno and t.tflow='IO')
 			and not EXISTS(select 1 from wm_mergeln m where s.orgcode = m.orgcode and s.site = m.site and s.depot = m.depot and s.stockid = m.stockid and s.loccode = m.loccode and s.huno = m.huno)";

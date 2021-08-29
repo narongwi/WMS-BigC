@@ -75,7 +75,7 @@ namespace Snaps.WMS {
         public Int32 isserialno { get; set; }
         public Int32 allowscanhu { get; set; }
         public Int32 isoddeven { get; set; }
-
+        public string planorigin { get; set; }
     }
 
     public class countline_md {

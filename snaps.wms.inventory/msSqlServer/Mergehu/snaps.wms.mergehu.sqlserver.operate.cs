@@ -274,6 +274,8 @@ namespace Snaps.WMS {
                         //cm.Parameters.AddWithValue("@spcarea",of.spcarea);
                         cm.Parameters.AddWithValue("@loccode",of.loccode ?? "");
                         cm.Parameters.AddWithValue("@huno",of.huno ?? "");
+                        cm.Parameters.AddWithValue("@article",of.article ?? "");
+
                         using(SqlDataReader r = await cm.ExecuteReaderAsync()) {
                             while(r.Read()) {
                                 mergehu_ln rl = new mergehu_ln();
@@ -409,10 +411,22 @@ namespace Snaps.WMS {
                             cm.Parameters.AddWithValue("@depot",os.depot);
                             cm.Parameters.AddWithValue("@spcarea",os.spcarea);
                             cm.Parameters.AddWithValue("@mergeno",os.mergeno);
+                            cm.Parameters.AddWithValue("@accncode",os.accnmodify);
                             cm.Parameters.AddWithValue("@tflow","ED");
                             cm.Parameters.AddWithValue("@accnmodify",os.accnmodify);
                             cm.Parameters.AddWithValue("@remarks","Completed");
-                            int affectedrow = await cm.ExecuteNonQueryAsync();
+                            await cm.ExecuteNonQueryAsync();
+
+                            cm.Parameters.Clear();
+                            cm.CommandType = CommandType.StoredProcedure;
+                            cm.CommandText = "[dbo].[snaps_mergehu_instock]";
+                            cm.Parameters.AddWithValue("@orgcode",os.orgcode);
+                            cm.Parameters.AddWithValue("@site",os.site);
+                            cm.Parameters.AddWithValue("@depot",os.depot);
+                            cm.Parameters.AddWithValue("@mergeno",os.mergeno);
+                            cm.Parameters.AddWithValue("@accncode",os.accnmodify);
+                            await cm.ExecuteNonQueryAsync();
+
                             tr.Commit();
                             return true;
                         } catch(Exception ex) {
@@ -420,19 +434,6 @@ namespace Snaps.WMS {
                             throw ex;
                         }
                     }
-
-                    // stock in procedure 
-                    // merge stock
-                    using(var pc = new SqlCommand("[dbo].[snaps_mergehu_instock]",con)) {
-                        pc.CommandType = CommandType.StoredProcedure;
-                        pc.Parameters.AddWithValue("@orgcode",os.orgcode);
-                        pc.Parameters.AddWithValue("@site",os.site);
-                        pc.Parameters.AddWithValue("@depot",os.depot);
-                        pc.Parameters.AddWithValue("@mergeno",os.mergeno);
-                        pc.Parameters.AddWithValue("@accncode",os.accnmodify);
-                        await pc.ExecuteNonQueryAsync();
-                    } // end stock processing
-
                 }// end connection
             } catch(Exception ex) {
                 logger.Error(os.orgcode,os.site,os.accnmodify,ex,ex.Message);

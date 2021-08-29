@@ -5,8 +5,8 @@
                 <div class="row mg-0 ln 5">
                     <div class="col-md-1">No</div>
                     <div class="col-md-1">Plan</div>
-                    <div class="col-md-5">Plan Name</div>
-                    <div class="col-md-3">Start date</div>
+                    <div class="col-md-8">Plan Name</div>
+                    <!-- <div class="col-md-3">Start date</div> -->
                     <div class="col-md-2">Status</div>
                 </div>
             </div>
@@ -16,8 +16,8 @@
                     <div class="row mg-0 ln fnb" *ngFor="let ln of lsplan;let i=index" (click)="ngSelect(ln,i)" [class.row-active]="i== rowselected">
                         <div class="col-md-1">{{i+1}}</div>
                         <div class="col-md-1 text-primary tx-overflow">{{ln.plancode}}</div>
-                        <div class="col-md-5 text-truncate">{{ln.planname}}</div>
-                        <div class="col-md-3">{{ln.datestart | date : dateformat }}</div>
+                        <div class="col-md-8 text-truncate">{{ln.planname}}</div>
+                        <!-- <div class="col-md-3">{{ln.datestart | date : dateformat }}</div> -->
                         <div class="col-md-2 tx-overflow">
                             <span class="fas {{ngDecIcon(ln.tflow)}}"></span> &nbsp; {{ngDecStr(ln.tflow)}}
                         </div>

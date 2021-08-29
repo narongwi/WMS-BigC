@@ -175,7 +175,10 @@
                     <div class="col-md-3">Start Date</div>
                     <div class="col-md-6">
                         <div class="input-group">
-                            <input class="form-control text-danger fnb" placeholder="{{dateformat}}" name="dp" [(ngModel)]="crtask.datestart" ngbDatepicker #datestart="ngbDatepicker">
+                            <input class="form-control text-danger fnb" 
+                            placeholder="{{dateformat}}" name="dp" 
+                            [(ngModel)]="crtask.datestart" ngbDatepicker #datestart="ngbDatepicker"
+                            autocomplete="off">
                             <div class="input-group-append">
                                 <button type="button" class=" btn snaps-btngroup btn-prime" (click)="datestart.toggle()">
                                 <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-calendar-date" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -192,7 +195,8 @@
                     <div class="col-md-3">Finish Date</div>
                     <div class="col-md-6">
                         <div class="input-group">
-                            <input class="form-control text-danger fnb" placeholder="{{dateformat}}" name="dp" [(ngModel)]="crtask.dateend" ngbDatepicker #dateend="ngbDatepicker">
+                            <input class="form-control text-danger fnb" placeholder="{{dateformat}}" name="dp" [(ngModel)]="crtask.dateend" ngbDatepicker #dateend="ngbDatepicker"
+                            autocomplete="off" >
                             <div class="input-group-append">
                                 <button type="button" class=" btn snaps-btngroup btn-prime" (click)="dateend.toggle()">
                                 <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-calendar-date" fill="currentColor" xmlns="http://www.w3.org/2000/svg">

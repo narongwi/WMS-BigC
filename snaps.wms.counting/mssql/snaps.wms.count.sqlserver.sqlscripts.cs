@@ -99,28 +99,34 @@ namespace Snaps.WMS {
         //  and l.lslevel between @slevel and @elevel and not exists (select 1 from wm_couln c where c.orgcode = l.orgcode and c.site = l.site and c.depot = l.depot and c.loccode =  l.lscode and tflow = 'IO')
         //group by l.orgcode,l.site,	l.depot,l.spcarea,l.lscode ,isnull(z.spcunit,s.unitops),l.lsaisle,l.lsbay,l.lslevel,s.article ,s.lv,s.pv,l.spcpicking";
 
+
+        //iif(isnull(l.spcpicking,0) = 0, dbo.get_unitops(l.orgcode,l.site,l.depot,s.article,s.lv),isnull(z.spcunit,s.unitops)) unitcount,
+
         private string sqlplan_select_step1_1 =
         @"select distinct l.orgcode, l.site, l.depot, l.spcarea, @countcode countcode, @plancode plancode,l.lscode loccode, 
-            iif(isnull(l.spcpicking,0)= 0,dbo.get_unitops(l.orgcode,l.site,l.depot,s.article,s.lv),isnull(z.spcunit,s.unitops)) unitcount,
-            'IO' tflow, sysdatetimeoffset() datecreate,@accnmodify accncreate, sysdatetimeoffset() datemodify, @accnmodify accnmodify, 'generate' procmodify,
+            [dbo].[get_stocktake_unit](l.spcarea,l.lsloctype,l.spcpicking,l.spcpickunit,p.unitmanage,p.unitprep) unitcount,
+            'IO' tflow, sysdatetimeoffset() datecreate,@accnmodify accncreate, sysdatetimeoffset() datemodify, @accnmodify accnmodify, 'wms.stockcount' procmodify,
             max(s.batchno) batchno,max(cast(datemfg as date)) datemfg,max(cast(dateexp as date)) dateexp,
             max(serialno) serialno,max(huno) huno, l.lsaisle,l.lsbay, l.lslevel,dbo.get_barcode(l.orgcode,l.site,l.depot,s.article,s.pv,s.lv) as barcode,
             s.article ,s.lv ,s.pv,sum(s.qtysku) qtysku,sum(s.qtypu) qtypu,(case when(l.lsbay % 2) = 0  then 2  else 1 end) oddeven,(case when isnull(l.spcpicking,0) = 0 then 'R' else 'P' end) locctype         
         from wm_locdw l  
            left join wm_loczp z on l.orgcode = z.orgcode and l.site = z.site and l.depot = z.depot and l.lscode = z.lscode and l.tflow = 'IO' 
            left join wm_stock s on l.orgcode = s.orgcode and l.site = s.site and l.depot = s.depot and l.lscode = s.loccode and case when @isblock = 1 then 'IO' else s.tflow end = 'IO'
+           left join wm_product p on s.orgcode = p.orgcode and s.site = p.site and s.depot = p.depot and s.article = p.article and s.pv = p.pv and s.lv = p.lv and p.tflow = 'IO'
          where l.orgcode = @orgcode and l.site = @site  and l.depot = @depot  and l.lszone = @szone and l.lsaisle between @saisle and @eaisle and l.lsbay between @sbay and @ebay 
-          and l.lslevel between @slevel and @elevel and not exists (select 1 from wm_couln c where c.orgcode = l.orgcode and c.site = l.site and c.depot = l.depot and c.loccode =  l.lscode and tflow = 'IO')
-        group by l.orgcode,l.site,	l.depot,l.spcarea,l.lscode ,isnull(z.spcunit,s.unitops),l.lsaisle,l.lsbay,l.lslevel,s.article ,s.lv,s.pv,l.spcpicking";
+          and l.lslevel between @slevel and @elevel and not exists (select 1 from wm_couln c where c.orgcode = l.orgcode and c.site = l.site and c.depot = l.depot and c.loccode =  l.lscode and tflow = 'IO'),
+        group by l.orgcode,l.site,	l.depot,l.spcarea,l.lscode ,isnull(z.spcunit,s.unitops),l.lsaisle,l.lsbay,l.lslevel,s.article ,s.lv,s.pv,l.spcpicking,l.lsloctype,l.spcpickunit,p.unitmanage,p.unitprep";
 
         // comment 18/07/2021 for change count unit
 
         private string sqlplan_select_step1_2 =
-            @"select l.orgcode, l.site, l.depot, l.spcarea, @countcode countcode, @plancode plancode,l.lscode loccode,iif(l.spcarea='OV',p.unitmanage,1) unitcount,
-                'IO' tflow, sysdatetimeoffset() datecreate,@accnmodify accncreate, sysdatetimeoffset() datemodify, @accnmodify accnmodify, 'generate' procmodify,
+            @"select l.orgcode, l.site, l.depot, l.spcarea, @countcode countcode, @plancode plancode,l.lscode loccode,
+                [dbo].[get_stocktake_unit](l.spcarea,l.lsloctype,l.spcpicking,l.spcpickunit,p.unitmanage,p.unitprep) unitcount,
+                'IO' tflow, sysdatetimeoffset() datecreate,@accnmodify accncreate, sysdatetimeoffset() datemodify, @accnmodify accnmodify, 'wms.stockcount' procmodify,
                 s.batchno,cast(datemfg as date) datemfg,cast(dateexp as date) dateexp,s.serialno,huno huno, l.lsaisle,l.lsbay, l.lslevel,
-                dbo.get_barcode(l.orgcode,l.site,l.depot,s.article,s.pv,s.lv) as barcode,s.article ,s.lv ,s.pv,s.qtysku,s.qtypu,0 oddeven,l.spcarea locctype        
-            from wm_locdw l left join wm_stock s on l.orgcode = s.orgcode and l.site = s.site and l.depot = s.depot and l.lscode = s.loccode and case when @isblock = 1 then 'IO' else s.tflow end = 'IO'
+                dbo.get_barcode(l.orgcode,l.site,l.depot,s.article,s.pv,s.lv) as barcode,s.article ,s.lv ,s.pv,s.qtysku,s.qtypu,1 oddeven,l.spcarea locctype        
+            from wm_locdw l 
+                left join wm_stock s on l.orgcode = s.orgcode and l.site = s.site and l.depot = s.depot and l.lscode = s.loccode and case when @isblock = 1 then 'IO' else s.tflow end = 'IO'
                 left join wm_product p on s.orgcode = p.orgcode and s.site = p.site and s.depot = p.depot and s.article = p.article and s.pv = p.pv and s.lv=p.lv and p.tflow= 'IO'
             WHERE not exists (select 1 from wm_couln c where c.orgcode = l.orgcode and c.site = l.site and c.depot = l.depot and c.loccode =  l.lscode AND c.sthuno = s.huno and c.tflow = 'IO')
             AND l.orgcode = @orgcode and l.site = @site and l.depot = @depot  AND l.fltype = 'BL' and l.spcarea = @szone  AND l.tflow='IO'
@@ -130,35 +136,35 @@ namespace Snaps.WMS {
         stbarcode, starticle, stpv, stlv, stqtysku, stqtypu,stlotmfg, stdatemfg, stdateexp, stserialno,sthuno ,locseq,locctype) values(@orgcode,@site,@depot,@spcarea,@countcode,@plancode,@loccode,@unitcount,@tflow,
         getdate(),@accncreate,getdate(),@accnmodify,@procmodify,@stbarcode, @starticle,@stpv,@stlv,@stqtysku,@stqtypu,@stlotmfg,@stdatemfg,@stdateexp,@stserialno,@sthuno,@locseq,@locctype)";
 
-        private string sqlplan_validate_step1 = ""+ 
-        @"update t set tflow = case when isnull(isskip,0) = 1 and stbarcode is null then 'ED'              
-            when starticle = cnarticle and stpv = cnpv and stlv = cnlv and stqtypu = cnqtypu then 'ED'               
-            when starticle = cnarticle and stpv = cnpv and stlv = cnlv and stqtysku != cnqtysku then 'WQ'                                    
-            when isnull(cnbarcode,'') != '' and isnull(cnbarcode,'aa') != isnull(stbarcode,'xx') then 'WP'                                   
-            when isnull(isskip,0) = 0 and stbarcode is null then 'WC' end  from wm_couln t                                     
-        where t.orgcode = @orgcode and t.site = @site and t.depot = @depot and t.countcode = @countcode and t.plancode = @plancode and tflow = 'IO'";
+        //private string sqlplan_validate_step1 = ""+ 
+        //@"update t set tflow = case when isnull(isskip,0) = 1 and stbarcode is null then 'ED'              
+        //    when starticle = cnarticle and stpv = cnpv and stlv = cnlv and stqtypu = cnqtypu then 'ED'               
+        //    when starticle = cnarticle and stpv = cnpv and stlv = cnlv and stqtysku != cnqtysku then 'WQ'                                    
+        //    when isnull(cnbarcode,'') != '' and isnull(cnbarcode,'aa') != isnull(stbarcode,'xx') then 'WP'                                   
+        //    when isnull(isskip,0) = 0 and stbarcode is null then 'WC' end  from wm_couln t                                     
+        //where t.orgcode = @orgcode and t.site = @site and t.depot = @depot and t.countcode = @countcode and t.plancode = @plancode and tflow = 'IO'";
 
-        private string sqlplan_validate_step2 = ""+
-        " update t set cnttime = CAST(CONVERT(varchar(12), DATEADD(minute, DATEDIFF(minute, datestart, sysdatetimeoffset()), 0), 114) AS time(7))," +
-        "     datevld = sysdatetimeoffset(), pctvld  = '10',accnvld = @accnmodify,cntpercentage = l.cntpercentage,cnterror = l.cnterr,            " +
-        "     cntlines = l.cntlines,remarksvld = @remarksvld,datemodify = sysdatetimeoffset(),procmodify = 'count.plan.validate',                 " +
-        "     accnmodify = @accnmodify,tflow = 'ED' from wm_coupn t,                                                                              " +
-        " (select orgcode, site, depot ,countcode, plancode, count(1) cntlines,                                                                   " +
-        "         sum(case when tflow != 'ED' then 1 else 0 end) cnterr,                                                                          " +
-        "         (sum(case when countdate is not null then 1 else 0 end) / count(1)) * 100 cntpercentage                                        " +
-        " from wm_couln where orgcode = @orgcode and site = @site and depot = @depot and countcode = @countcode and plancode = @plancode          " +
-        "     group by orgcode, site, depot ,countcode, plancode) l                                                                               " +
-        "  where t.orgcode = l.orgcode and t.site = l.site and t.depot = l.depot and t.countcode = l.countcode and t.plancode = l.plancode        " +
-        "    and t.orgcode = @orgcode and t.site = @site and t.depot = @depot and t.countcode = @countcode and t.plancode = @plancode             " ;
+        //private string sqlplan_validate_step2 = ""+
+        //" update t set cnttime = CAST(CONVERT(varchar(12), DATEADD(minute, DATEDIFF(minute, datestart, sysdatetimeoffset()), 0), 114) AS time(7))," +
+        //"     datevld = sysdatetimeoffset(), pctvld  = '10',accnvld = @accnmodify,cntpercentage = l.cntpercentage,cnterror = l.cnterr,            " +
+        //"     cntlines = l.cntlines,remarksvld = @remarksvld,datemodify = sysdatetimeoffset(),procmodify = 'count.plan.validate',                 " +
+        //"     accnmodify = @accnmodify,tflow = 'ED' from wm_coupn t,                                                                              " +
+        //" (select orgcode, site, depot ,countcode, plancode, count(1) cntlines,                                                                   " +
+        //"         sum(case when tflow != 'ED' then 1 else 0 end) cnterr,                                                                          " +
+        //"         (sum(case when countdate is not null then 1 else 0 end) / count(1)) * 100 cntpercentage                                        " +
+        //" from wm_couln where orgcode = @orgcode and site = @site and depot = @depot and countcode = @countcode and plancode = @plancode          " +
+        //"     group by orgcode, site, depot ,countcode, plancode) l                                                                               " +
+        //"  where t.orgcode = l.orgcode and t.site = l.site and t.depot = l.depot and t.countcode = l.countcode and t.plancode = l.plancode        " +
+        //"    and t.orgcode = @orgcode and t.site = @site and t.depot = @depot and t.countcode = @countcode and t.plancode = @plancode             " ;
 
         private string sqlplan_update = "" + 
         " update wm_coupn set planname = @planname,accnassign = @accnassign, isroaming = @isroaming,tflow = @tflow,       " + 
         " remarksvld = @remarksvld,datemodify = sysdatetimeoffset(),accnmodify = @accnmodify,procmodify = @procmodify             " + 
         " where orgcode = @orgcode and site = @site and depot = @depot and countcode = @countcode and plancode = @plancode" ;
-        private string sqlplan_remove_step1 = "" +
-        " delete from wm_coupn where orgcode = @orgcode and site = @site and depot = @depot and countcode = @countcode and plancode = @plancode" ;
-        private string sqlplan_remove_step2 = "" +
-        " delete from wm_couln where orgcode = @orgcode and site = @site and depot = @depot and countcode = @countcode and plancode = @plancode" ;
+        //private string sqlplan_remove_step1 = "" +
+        //" delete from wm_coupn where orgcode = @orgcode and site = @site and depot = @depot and countcode = @countcode and plancode = @plancode" ;
+        //private string sqlplan_remove_step2 = "" +
+        //" delete from wm_couln where orgcode = @orgcode and site = @site and depot = @depot and countcode = @countcode and plancode = @plancode" ;
 
         private string sqlplan_cancel_step1 = " update wm_coupn set tflow = 'XX', datemodify = sysdatetimeoffset(), accnmodify = @accnmodify where orgcode = @orgcode and site = @site and depot = @depot and countcode = @countcode and plancode = @plancode ";
         private string sqlplan_cancel_step2 = "  update wm_couln set tflow = 'XX', datemodify = sysdatetimeoffset(), accnmodify = @accnmodify where orgcode = @orgcode and site = @site and depot = @depot and countcode = @countcode and plancode = @plancode ";
@@ -169,45 +175,45 @@ namespace Snaps.WMS {
 
 
         private string sqlplan_iscyclecount = "select count(1) from wm_count where orgcode = @orgcode and site = @site and depot = @depot and countcode = @countcode and counttype ='CC'";
-        private string sqlplan_valcount_line =
-        @"update wm_couln set 
-	        tflow = case when @pctvld = 0 then 'WQ'  
-	        	         when @pctvld = 100 then 'ED' when cnqtypu = isnull(stqtypu,0) then 'ED' 
-	        	         when abs(((isnull(cnqtypu,0) * 100) / iif(isnull(stqtypu,0) = 0 , 1 , stqtypu))-100) > @pctvld then 'WQ' 
-	        	         else 'ED' end,
-	        cnmsg = case when @pctvld = 0 then 'Recount'  when @pctvld = 100 then 'Validated'
-	        	         when cnqtypu = isnull(stqtypu,0) then 'Validated' 
-	        	         when abs(((isnull(cnqtypu,0) * 100) / iif(isnull(stqtypu,0) = 0 , 1 , stqtypu))-100) > @pctvld then 'Recount' 
-	        	         else 'Validated' end,
-	       isrgen = case when @pctvld = 0 then 1 when @pctvld = 100 then 0 
-	        	         when cnqtypu = isnull(stqtypu,0) then 0 
-	        	         when abs(((isnull(cnqtypu,0) * 100) / iif(isnull(stqtypu,0) = 0 , 1 , stqtypu))-100) > @pctvld then 1 
-	        	         else 0 end,
-	       iswrgln = case when isnull(stqtypu,0) <> isnull(cnqtypu,0) then  1 	else  0  end,
-	       corcode = case when isnull(stqtypu,0) >= isnull(cnqtypu,0) then '-' else '+' end,
-	       corqty  = case when isnull(stqtypu,0) >= isnull(cnqtypu,0) then isnull(cnqtypu,0)-isnull(stqtypu,0) 
-	        	         else isnull(cnqtypu,0)  - isnull(stqtypu,0) end,
-	       coraccn =  @accnmodify,cordate = sysdatetimeoffset()
-        where orgcode = @orgcode 
-        and site = @site 
-        and depot = @depot 
-        and countcode = @countcode
-        and plancode = @plancode";
+        //private string sqlplan_valcount_line =
+        //@"update wm_couln set 
+	       // tflow = case when @pctvld = 0 then 'WQ'  
+	       // 	         when @pctvld = 100 then 'ED' when cnqtypu = isnull(stqtypu,0) then 'ED' 
+	       // 	         when abs(((isnull(cnqtypu,0) * 100) / iif(isnull(stqtypu,0) = 0 , 1 , stqtypu))-100) > @pctvld then 'WQ' 
+	       // 	         else 'ED' end,
+	       // cnmsg = case when @pctvld = 0 then 'Recount'  when @pctvld = 100 then 'Validated'
+	       // 	         when cnqtypu = isnull(stqtypu,0) then 'Validated' 
+	       // 	         when abs(((isnull(cnqtypu,0) * 100) / iif(isnull(stqtypu,0) = 0 , 1 , stqtypu))-100) > @pctvld then 'Recount' 
+	       // 	         else 'Validated' end,
+	       //isrgen = case when @pctvld = 0 then 1 when @pctvld = 100 then 0 
+	       // 	         when cnqtypu = isnull(stqtypu,0) then 0 
+	       // 	         when abs(((isnull(cnqtypu,0) * 100) / iif(isnull(stqtypu,0) = 0 , 1 , stqtypu))-100) > @pctvld then 1 
+	       // 	         else 0 end,
+	       //iswrgln = case when isnull(stqtypu,0) <> isnull(cnqtypu,0) then  1 	else  0  end,
+	       //corcode = case when isnull(stqtypu,0) >= isnull(cnqtypu,0) then '-' else '+' end,
+	       //corqty  = case when isnull(stqtypu,0) >= isnull(cnqtypu,0) then isnull(cnqtypu,0)-isnull(stqtypu,0) 
+	       // 	         else isnull(cnqtypu,0)  - isnull(stqtypu,0) end,
+	       //coraccn =  @accnmodify,cordate = sysdatetimeoffset()
+        //where orgcode = @orgcode 
+        //and site = @site 
+        //and depot = @depot 
+        //and countcode = @countcode
+        //and plancode = @plancode";
 
-        private string sqlplan_valcount_head =
-           @"update wm_coupn 
-	            set tflow = 'ED',
-	            pctvld = @pctvld,
-	            accnvld = @accnmodify,
-	            remarksvld = @remarksvld,
-	            datevld  = sysdatetimeoffset()
-            where orgcode = @orgcode 
-            and site = @site 
-            and depot = @depot 
-            and countcode = @countcode 
-            and plancode = @plancode";
+        //private string sqlplan_valcount_head =
+        //   @"update wm_coupn 
+	       //     set tflow = 'ED',
+	       //     pctvld = @pctvld,
+	       //     accnvld = @accnmodify,
+	       //     remarksvld = @remarksvld,
+	       //     datevld  = sysdatetimeoffset()
+        //    where orgcode = @orgcode 
+        //    and site = @site 
+        //    and depot = @depot 
+        //    and countcode = @countcode 
+        //    and plancode = @plancode";
 
-        private string sqlplan_valcount_isre = "select count(1) from wm_couln where orgcode = @orgcode and site = @site and depot = @depot and countcode = @countcode and plancode = @plancode   and tflow = 'WQ'";
+        private string sqlplan_valcount_isre = "select count(1) from wm_couln where orgcode = @orgcode and site = @site and depot = @depot and countcode = @countcode and plancode = @plancode   and tflow in('OL','OH','WQ')";
         private string sqlplan_valcount_close = "select count(1) from wm_coupn where orgcode = @orgcode and site = @site and depot = @depot and countcode = @countcode and plancode = @plancode  and tflow in('ED','CL','XX')";
         private string sqlplan_recount_head =
          @"insert into wm_coupn (orgcode, site, depot, spcarea, countcode, plancode, planname, szone, ezone, saisle,eaisle, sbay, ebay, slevel, elevel, 
@@ -222,14 +228,14 @@ namespace Snaps.WMS {
         stqtypu, stlotmfg, stdatemfg, stdateexp, stserialno, sthuno,tflow, datecreate, accncreate, datemodify, accnmodify, procmodify,locctype)
         select orgcode, site, depot, spcarea, countcode, @newplan plancode, loccode, locseq, unitcount, stbarcode, starticle, stpv, stlv, stqtysku, stqtypu, stlotmfg, stdatemfg, stdateexp, 
         stserialno, sthuno,'IO' tflow, sysdatetimeoffset() datecreate, @accnmodify accncreate,sysdatetimeoffset() datemodify,@accnmodify accnmodify,'' procmodify,locctype        
-        from wm_couln where orgcode = @orgcode and site = @site and depot = @depot and countcode = @countcode and plancode = @plancode and tflow = 'WQ'";
+        from wm_couln where orgcode = @orgcode and site = @site and depot = @depot and countcode = @countcode and plancode = @plancode and tflow in('OL','OH','WQ')";
      
-        private string sqlplan_recount_reline =
-       @"insert into wm_couln(orgcode, site, depot, spcarea, countcode, plancode, loccode, locseq, unitcount, stbarcode, starticle, stpv, stlv, stqtysku, 
-        stqtypu, stlotmfg, stdatemfg, stdateexp, stserialno, sthuno,tflow, datecreate, accncreate, datemodify, accnmodify, procmodify,locctype)
-        select orgcode, site, depot, spcarea, countcode, @newplan plancode, loccode, locseq, unitcount, stbarcode, starticle, stpv, stlv, stqtysku, stqtypu, stlotmfg, stdatemfg, stdateexp, 
-        stserialno, sthuno,'IO' tflow, sysdatetimeoffset() datecreate, @accnmodify accncreate,sysdatetimeoffset() datemodify,@accnmodify accnmodify,'' procmodify,locctype
-        from wm_couln where orgcode = @orgcode and site = @site and depot = @depot and countcode = @countcode and plancode = @plancode";
+       // private string sqlplan_recount_reline =
+       //@"insert into wm_couln(orgcode, site, depot, spcarea, countcode, plancode, loccode, locseq, unitcount, stbarcode, starticle, stpv, stlv, stqtysku, 
+       // stqtypu, stlotmfg, stdatemfg, stdateexp, stserialno, sthuno,tflow, datecreate, accncreate, datemodify, accnmodify, procmodify,locctype)
+       // select orgcode, site, depot, spcarea, countcode, @newplan plancode, loccode, locseq, unitcount, stbarcode, starticle, stpv, stlv, stqtysku, stqtypu, stlotmfg, stdatemfg, stdateexp, 
+       // stserialno, sthuno,'IO' tflow, sysdatetimeoffset() datecreate, @accnmodify accncreate,sysdatetimeoffset() datemodify,@accnmodify accnmodify,'' procmodify,locctype
+       // from wm_couln where orgcode = @orgcode and site = @site and depot = @depot and countcode = @countcode and plancode = @plancode";
 
         //private string sqlline_fnd = "select * from wm_couln where orgcode = @orgcode and site = @site and depot = @depot and countcode = @countcode and plancode = @plancode  ";
         //private string sqlline_fnd = "	select *,p.description from wm_couln l left join wm_product p on l.orgcode = p.orgcode and l.site = p.site and l.depot = p.depot " +
@@ -305,32 +311,32 @@ namespace Snaps.WMS {
         private string sqlline_update = @" update wm_couln set cnhuno=@cnhuno, cnbarcode = @cnbarcode,cnarticle=@cnarticle,cnpv=@cnpv,cnlv=@cnlv,cnqtypu = @cnqtypu, cnlotmfg = @cnlotmfg, cndatemfg = @cndatemfg, cndateexp = @cndateexp, cnserialno = @cnserialno,countdate = sysdatetimeoffset(),datemodify = sysdatetimeoffset(), accnmodify = @accnmodify,cnflow=@cnflow,cnmsg=@cnmsg from wm_couln where orgcode = @orgcode and site = @site and depot = @depot and loccode = @loccode 
            and locseq = @locseq and countcode = @countcode and plancode = @plancode and tflow in ('IO')";
 
-        private string sqlline_update2 = @" update t set stqtysku = isnull(s.qtysku,0), stqtypu = isnull(s.qtypu,0), starticle = s.article , stpv = s.pv , stlv = s.lv, 
-                    cnbarcode = @cnbarcode, cnqtypu = @cnqtypu, cnlotmfg = @cnlotmfg, cndatemfg = @cndatemfg, cndateexp = @cndateexp, cnserialno = @cnserialno, 
-                    countdate = sysdatetimeoffset(),datemodify = sysdatetimeoffset(), accnmodify = @accnmodify, stbarcode = s.barcode,
-                    cnarticle = s.article, cnpv = s.pv , cnlv = s.lv
-        from wm_couln t left join wm_coupn p on t.orgcode = p.orgcode and t.site = p.site and t.depot = p.depot and t.countcode = p.countcode and t.plancode = p.plancode
-            left join 
-            (select s.orgcode, s.site, s.depot, s.loccode,dbo.get_barcode_active(s.orgcode,s.site, s.depot,s.article, s.pv,s.lv) barcode, s.article,s.pv,s.lv,sum(qtysku) qtysku, sum(qtypu) qtypu,
-                        case when p.isdatemfg = 1 then s.datemfg else null end datemfg, case when p.isdatexp = 1 then s.dateexp else null end dateexp,
-                        case when p.isbatchno = 1 then isnull(s.lotno,'')   else '' end lotno,   case when p.allowscanhu = 1 then isnull(s.huno,'')  else '' end huno
-                from  wm_stock s , 
-                    (select orgcode,site, depot, isdatemfg, isdatexp, isbatchno, allowscanhu from wm_coupn 
-                        where orgcode = @orgcode and site = @site and depot = @depot and countcode = @countcode and plancode = @plancode ) p
-                where s.orgcode = @orgcode and s.site = @site and s.depot = @depot and loccode = @loccode
-                and s.orgcode = p.orgcode and s.site = p.site and s.depot = p.depot
-                group by s.orgcode, s.site, s.depot, s.loccode, s.article, s.pv, s.lv,
-                        case when p.isdatemfg = 1 then s.datemfg else null end , case when p.isdatexp = 1  then s.dateexp else null end ,
-                        case when p.isbatchno = 1 then isnull(s.lotno,'')   else '' end , case when p.allowscanhu = 1 then isnull(s.huno,'') else '' end 
-                ) s 
-             on t.orgcode = s.orgcode and t.site = s.site and t.depot = s.depot and t.loccode = s.loccode and @cnbarcode = s.barcode
-            and case when p.isbatchno = 1 then isnull(s.lotno,'') else '' end = case when p.isbatchno = 1 then isnull(t.cnlotmfg,'') else '' end 
-            and case when p.allowscanhu = 1 then isnull(s.huno,'') else '' end = case when p.allowscanhu = 1 then isnull(t.cnhuno,'') else '' end
-            and case when p.isdatemfg = 1 then s.datemfg else isnull(null,'') end = case when p.isdatemfg = 1 then t.cndatemfg else isnull(null,'') end
-            and case when p.isdatexp = 1 then s.dateexp else isnull(null,'') end = case when p.isdatexp = 1 then t.cndateexp else isnull(null,'') end 
-         where t.orgcode = @orgcode and t.site = @site and t.depot = @depot and t.loccode = @loccode and t.locseq = @locseq and t.countcode = @countcode and t.plancode = @plancode and t.tflow in ('IO') ";
+        //private string sqlline_update2 = @" update t set stqtysku = isnull(s.qtysku,0), stqtypu = isnull(s.qtypu,0), starticle = s.article , stpv = s.pv , stlv = s.lv, 
+        //            cnbarcode = @cnbarcode, cnqtypu = @cnqtypu, cnlotmfg = @cnlotmfg, cndatemfg = @cndatemfg, cndateexp = @cndateexp, cnserialno = @cnserialno, 
+        //            countdate = sysdatetimeoffset(),datemodify = sysdatetimeoffset(), accnmodify = @accnmodify, stbarcode = s.barcode,
+        //            cnarticle = s.article, cnpv = s.pv , cnlv = s.lv
+        //from wm_couln t left join wm_coupn p on t.orgcode = p.orgcode and t.site = p.site and t.depot = p.depot and t.countcode = p.countcode and t.plancode = p.plancode
+        //    left join 
+        //    (select s.orgcode, s.site, s.depot, s.loccode,dbo.get_barcode_active(s.orgcode,s.site, s.depot,s.article, s.pv,s.lv) barcode, s.article,s.pv,s.lv,sum(qtysku) qtysku, sum(qtypu) qtypu,
+        //                case when p.isdatemfg = 1 then s.datemfg else null end datemfg, case when p.isdatexp = 1 then s.dateexp else null end dateexp,
+        //                case when p.isbatchno = 1 then isnull(s.lotno,'')   else '' end lotno,   case when p.allowscanhu = 1 then isnull(s.huno,'')  else '' end huno
+        //        from  wm_stock s , 
+        //            (select orgcode,site, depot, isdatemfg, isdatexp, isbatchno, allowscanhu from wm_coupn 
+        //                where orgcode = @orgcode and site = @site and depot = @depot and countcode = @countcode and plancode = @plancode ) p
+        //        where s.orgcode = @orgcode and s.site = @site and s.depot = @depot and loccode = @loccode
+        //        and s.orgcode = p.orgcode and s.site = p.site and s.depot = p.depot
+        //        group by s.orgcode, s.site, s.depot, s.loccode, s.article, s.pv, s.lv,
+        //                case when p.isdatemfg = 1 then s.datemfg else null end , case when p.isdatexp = 1  then s.dateexp else null end ,
+        //                case when p.isbatchno = 1 then isnull(s.lotno,'')   else '' end , case when p.allowscanhu = 1 then isnull(s.huno,'') else '' end 
+        //        ) s 
+        //     on t.orgcode = s.orgcode and t.site = s.site and t.depot = s.depot and t.loccode = s.loccode and @cnbarcode = s.barcode
+        //    and case when p.isbatchno = 1 then isnull(s.lotno,'') else '' end = case when p.isbatchno = 1 then isnull(t.cnlotmfg,'') else '' end 
+        //    and case when p.allowscanhu = 1 then isnull(s.huno,'') else '' end = case when p.allowscanhu = 1 then isnull(t.cnhuno,'') else '' end
+        //    and case when p.isdatemfg = 1 then s.datemfg else isnull(null,'') end = case when p.isdatemfg = 1 then t.cndatemfg else isnull(null,'') end
+        //    and case when p.isdatexp = 1 then s.dateexp else isnull(null,'') end = case when p.isdatexp = 1 then t.cndateexp else isnull(null,'') end 
+        // where t.orgcode = @orgcode and t.site = @site and t.depot = @depot and t.loccode = @loccode and t.locseq = @locseq and t.countcode = @countcode and t.plancode = @plancode and t.tflow in ('IO') ";
 
-        private string sqlcount_isvalidateplan = "select count(1) from wm_coupn where orgcode = @orgcode and site = @site and depot = @depot and countcode = @countcode and tflow not in('ED','XX','WQ')";
+        private string sqlcount_isvalidateplan = "select count(1) from wm_coupn where orgcode = @orgcode and site = @site and depot = @depot and countcode = @countcode and tflow not in('ED','XX','WQ','OL','OH')";
         private string sqlcount_correctionline = @"select  t.orgcode ,t.site,t.depot,t.counttype,t.countcode,t.countname,max(l.cnbarcode) cnbarcode,l.cnarticle,l.cnpv,cnlv,a.descalt,
 		        case when sum(l.corqty) > 0 then '+' when sum(l.corqty) < 0 then '-' else '' end as corcode,sum(l.corqty) * a.rtoipckofpck as corsku,
 		        sum(l.corqty) corqty,isnull(l.unitcount,a.unitmanage) unitcount,a.rtoipckofpck,a.skugrossweight,a.skuvolume, a.unitmanage , a.unitprep,t.tflow
@@ -342,14 +348,14 @@ namespace Snaps.WMS {
         group by t.orgcode,t.site,t.depot,t.counttype,t.countcode,t.countname,l.cnarticle,l.cnpv,cnlv,isnull(l.unitcount,a.unitmanage),
         a.descalt,a.rtoipckofpck,a.skugrossweight,a.skuvolume, a.unitmanage , a.unitprep,t.tflow HAVING sum(l.corqty) <> 0";
 
-        private string sqlcount_confirmline = @" select  t.orgcode ,t.site,t.depot,t.spcarea,t.datestart,t.dateend,t.counttype,t.countcode,t.countname,p.plancode,p.planname,p.pctvld,l.locseq,l.loccode,l.sthuno,
-        l.stbarcode,l.starticle,l.stpv,l.stlv,a.descalt,l.unitcount,l.stqtysku,l.stqtypu,l.cnqtypu,l.corcode,l.corqty,a.rtoipckofpck,a.skugrossweight,a.skuvolume, a.unitmanage , a.unitprep,t.tflow,
-            l.cndateexp,l.cndatemfg ,l.cnlotmfg,l.cnserialno,l.cnflow,l.cnmsg,p.isdatemfg , p.isdatexp , p.isbatchno, p.isserailno,l.locctype
-        from wm_count t join wm_coupn p on t.orgcode = p.orgcode and t.site = p.site and t.depot = p.depot and t.countcode = p.countcode 
-	        join wm_couln l on p.orgcode = l.orgcode and p.site = l.site and p.depot = l.depot and p.countcode = l.countcode and p.plancode = l.plancode 
-	        join wm_product a on l.orgcode = a.orgcode and l.site = a.site and l.depot = a.depot and l.starticle = a.article and l.stpv = a.pv and l.stlv = a.lv
-        where t.orgcode = @orgcode and t.site = @site and t.depot =@depot and t.countcode = @countcode and t.tflow = 'IO' and t.counttype = 'CT' and p.tflow ='ED' and l.tflow ='ED'
-        and l.corqty <> 0 order by l.locseq asc";
+        //private string sqlcount_confirmline = @" select  t.orgcode ,t.site,t.depot,t.spcarea,t.datestart,t.dateend,t.counttype,t.countcode,t.countname,p.plancode,p.planname,p.pctvld,l.locseq,l.loccode,l.sthuno,
+        //l.stbarcode,l.starticle,l.stpv,l.stlv,a.descalt,l.unitcount,l.stqtysku,l.stqtypu,l.cnqtypu,l.corcode,l.corqty,a.rtoipckofpck,a.skugrossweight,a.skuvolume, a.unitmanage , a.unitprep,t.tflow,
+        //    l.cndateexp,l.cndatemfg ,l.cnlotmfg,l.cnserialno,l.cnflow,l.cnmsg,p.isdatemfg , p.isdatexp , p.isbatchno, p.isserailno,l.locctype
+        //from wm_count t join wm_coupn p on t.orgcode = p.orgcode and t.site = p.site and t.depot = p.depot and t.countcode = p.countcode 
+	       // join wm_couln l on p.orgcode = l.orgcode and p.site = l.site and p.depot = l.depot and p.countcode = l.countcode and p.plancode = l.plancode 
+	       // join wm_product a on l.orgcode = a.orgcode and l.site = a.site and l.depot = a.depot and l.starticle = a.article and l.stpv = a.pv and l.stlv = a.lv
+        //where t.orgcode = @orgcode and t.site = @site and t.depot =@depot and t.countcode = @countcode and t.tflow = 'IO' and t.counttype = 'CT' and p.tflow ='ED' and l.tflow ='ED'
+        //and l.corqty <> 0 order by l.locseq asc";
 
         //private string sqlcount_confirmtask = "" +
         //       " update wm_count set datemodify = sysdatetimeoffset(),accnmodify = @accnmodify,procmodify = @procmodify,tflow = 'ED'" +
@@ -367,8 +373,8 @@ namespace Snaps.WMS {
         //private string sqlcount_correctchk = "select top 1 stockid,inrefno,thcode,qtypu ,qtysku,unitops from wm_stock ws where orgcode = @orgcode and site = @site and depot = @depot " +
         //    "and loccode = @loccode and huno = @huno and  article = @article and pv = @pv and lv = @lv";
 
-        private string sqlcount_newcheck = "select count(1) existrow from wm_couln l where l.orgcode = @orgcode and l.site = @site and l.depot = @depot and l.countcode = @countcode " +
-            "   and l.plancode = @plancode and l.loccode=@loccode and l.cnhuno=@cnhuno and l.cnarticle =@cnarticle and l.cnpv = @cnpv and l.cnlv=@cnlv";
+        //private string sqlcount_newcheck = "select count(1) existrow from wm_couln l where l.orgcode = @orgcode and l.site = @site and l.depot = @depot and l.countcode = @countcode " +
+        //    "   and l.plancode = @plancode and l.loccode=@loccode and l.cnhuno=@cnhuno and l.cnarticle =@cnarticle and l.cnpv = @cnpv and l.cnlv=@cnlv";
 
         private string sqlcount_newline = @"insert into wm_couln (orgcode, site, depot, spcarea, countcode, plancode, loccode, locseq, unitcount, stbarcode, starticle, stpv, stlv, 
             stqtysku, stqtypu, stlotmfg, stdatemfg, stdateexp, stserialno, sthuno, cnbarcode, cnarticle, cnpv, cnlv, cnqtysku, cnqtypu, cnlotmfg, 

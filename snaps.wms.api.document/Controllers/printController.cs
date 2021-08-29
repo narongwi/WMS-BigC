@@ -107,15 +107,15 @@ namespace snaps.wms.api.document.Controllers {
 
 
                     // printer setting parameter
-                    //if(tb.Rows[0]["tasktype"].ToString().ToUpper() == "P") {
-                    //    // putaway printer
-                    //    printerName = getPrinterName(orgcode,site,depot,"PUTAWAY");
-                    //    rv.LocalReport.Print(printerName);
-                    //} else {
-                    //    // defult printer
-                    //    printerName = getPrinterName(orgcode,site,depot);
-                    //    rv.LocalReport.Print(printerName);
-                    //}
+                    if(tb.Rows[0]["tasktype"].ToString().ToUpper() == "P") {
+                        // putaway printer
+                        printerName = getPrinterName(orgcode,site,depot,"PUTAWAY");
+                        rv.LocalReport.Print(printerName);
+                    } else {
+                        // defult printer
+                        printerName = getPrinterName(orgcode,site,depot);
+                        rv.LocalReport.Print(printerName);
+                    }
 
                     // export pdf
                     byte[] bytes = rv.LocalReport.Render("PDF",null,out mimeType,out encoding,out extension,out streamIds,out warnings);

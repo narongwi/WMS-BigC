@@ -193,6 +193,7 @@ namespace Snaps.WMS {
             rn.datemodify = (r.IsDBNull(32)) ? (DateTimeOffset?) null : r.GetDateTimeOffset(32);
             rn.accnmodify = r["accnmodify"].ToString();
             rn.procmodify = r["procmodify"].ToString();
+            rn.planorigin = r["planorigin"].ToString();
             return rn;
         }
         public countcorrection_md setCountcorrection(ref SqlDataReader r) {

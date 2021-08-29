@@ -22,6 +22,7 @@ namespace Snaps.WMS {
         public string spcarea { get; set; }
         public string loccode { get; set; }
         public string huno { get; set; }
+        public string article { get; set; }
         public string accncode { get; set; }
         public DateTimeOffset? datecreate { get; set; }
     }

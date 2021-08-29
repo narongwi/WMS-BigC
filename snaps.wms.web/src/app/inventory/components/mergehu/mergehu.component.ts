@@ -113,7 +113,25 @@ export class MergehuComponent implements OnInit, AfterViewInit, OnDestroy {
 	public edithu(ix: number) {
 		if (this.lsmd[ix].tflow == 'IO') {
 			this.mdtr = {};
-			this.mdtr = Object.assign([], this.lsmd[ix]);
+			// this.mdtr = Object.assign({}, this.lsmd[ix]);
+			this.mdtr.orgcode = this.lsmd[ix].orgcode;
+			this.mdtr.site = this.lsmd[ix].site;
+			this.mdtr.depot = this.lsmd[ix].depot;
+			this.mdtr.spcarea = this.lsmd[ix].spcarea;
+			this.mdtr.mergeno = this.lsmd[ix].mergeno;
+			this.mdtr.hutype = this.lsmd[ix].hutype;
+			this.mdtr.hutarget = this.lsmd[ix].hutarget;
+			this.mdtr.loccode = this.lsmd[ix].loccode;
+			this.mdtr.tflow = this.lsmd[ix].tflow;
+			this.mdtr.tflowdes = this.lsmd[ix].tflowdes;
+			this.mdtr.datecreate = this.lsmd[ix].datecreate;
+			this.mdtr.accncreate = this.lsmd[ix].accncreate;
+			this.mdtr.datemodify = this.lsmd[ix].datemodify;
+			this.mdtr.accnmodify = this.lsmd[ix].accnmodify;
+			this.mdtr.procmodify = this.lsmd[ix].procmodify;
+			this.mdtr.remarks = this.lsmd[ix].remarks;
+			this.mdtr.lines = [];
+
 			this.mdst.orgcode = this.mdtr.orgcode;
 			this.mdst.site = this.mdtr.site;
 			this.mdst.depot = this.mdtr.depot;
@@ -123,7 +141,6 @@ export class MergehuComponent implements OnInit, AfterViewInit, OnDestroy {
 			this.mdst.loccode = this.mdtr.loccode;
 			this.mdst.accncode = this.mdtr.accnmodify;
 			this.mdst.mergeno = this.mdtr.mergeno;
-			this.mdtr.lines = [];
 			this.ctab = 2;
 		} else {
 			this.toastr.warning(
@@ -290,8 +307,6 @@ export class MergehuComponent implements OnInit, AfterViewInit, OnDestroy {
 						},
 						(err) => {
 							this.mdtr = {};
-							this.mdtr.lines = [];
-
 							this.toastr.error(
 								"<span class='fn-07e'>" + err.message + '</span>',
 								null,
@@ -350,21 +365,14 @@ export class MergehuComponent implements OnInit, AfterViewInit, OnDestroy {
 		} else {
 			this.ngPopups.confirm('Do you confirm Merge HU ?').subscribe((res) => {
 				if (res) {
-					this.sv.merge(this.mdtr).subscribe(
-						(res: merge_md) => {
-							// print hu label
-							this.label();
-							this.mdtr = {};
-							this.mdst = {};
-							this.mdfn = {};
-							this.mdtr.lines = [];
-							this.list();
-							this.toastr.success(
-								"<span class='fn-07e'>Confirm Successfully!</span>",
-								null,
-								{ enableHtml: true }
-							);
-						},
+					this.sv.merge(this.mdtr).subscribe(res => {
+						this.mdtr = {};
+						this.mdst = {};
+						this.mdfn = {};
+						this.mdtr.lines = [];
+						this.list();
+						this.toastr.success("<span class='fn-07e'>Confirm Successfully!</span>", null, { enableHtml: true });
+					},
 						(err) => {
 							this.toastr.error(
 								"<span class='fn-07e'>" + err.message + '</span>',

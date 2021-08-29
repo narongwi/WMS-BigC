@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { authService } from 'src/app/auth/services/auth.service';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { accn_profile } from 'src/app/admn/models/account.model';
-import { NgProgress,NgProgressRef } from 'ngx-progressbar';
+import { NgProgress, NgProgressRef } from 'ngx-progressbar';
 declare var $: any;
 
 @Component({
@@ -21,13 +21,13 @@ export class LaunchComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   onStarted() {
-    // this.isbackdrop = true;
+    this.isbackdrop = true;
     console.log("loadding is started");
   }
 
   onCompleted() {
     console.log("loadding is Completed!");
-    // this.isbackdrop = false;
+    this.isbackdrop = false;
   }
   ngOnInit(): void {
     // Progress bar events (optional)

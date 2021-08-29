@@ -216,8 +216,13 @@ namespace Snaps.WMS {
                         if(o.isoddeven == 1) {
                             DataTable tableOne = new DataTable();
                             DataTable tableTow = new DataTable();
-                            tableOne = dt.Select("oddeven = 1").CopyToDataTable();
-                            tableTow = dt.Select("oddeven = 2").CopyToDataTable();
+                            if(dt.Select("oddeven = 1").Length > 0) {
+                                tableOne = dt.Select("oddeven = 1").CopyToDataTable();
+                            }
+
+                            if(dt.Select("oddeven = 2").Length > 0) {
+                                tableTow = dt.Select("oddeven = 2").CopyToDataTable();
+                            }
 
                             if(tableOne.Rows.Count > 0) {
                                 tableOne.DefaultView.Sort = "loccode asc";
@@ -363,7 +368,6 @@ namespace Snaps.WMS {
             }
         }
 
-
         void fillcommand(ref SqlCommand c,countplan_md o) {
             c.snapsPar(o.orgcode,"orgcode");
             c.snapsPar(o.site,"site");
@@ -404,14 +408,17 @@ namespace Snaps.WMS {
                     logger.Debug(o.orgcode,o.site,o.accnmodify,"Cycle Count Validated Successful");
                 } else {
                     // Replan Process
-                    lm.Clear();
-                    cmn.CommandText = sqlplan_valcount_line;
-                    lm.Add(cmn);
+                    // lm.Clear();
+                    // cmn.CommandText = sqlplan_valcount_line;
+                    // lm.Add(cmn);
 
-                    cml.CommandText = sqlplan_valcount_head;
-                    lm.Add(cml);
+                    //cml.CommandText = sqlplan_valcount_head;
+                    //lm.Add(cml);
+                    //await lm.snapsExecuteTransAsync(cn);
 
-                    await lm.snapsExecuteTransAsync(cn);
+                    cmn.CommandType = CommandType.StoredProcedure;
+                    cmn.CommandText = "[dbo].[snaps_stocktake_recount]";
+                    await cmn.snapsExecuteAsync();
                     logger.Debug(o.orgcode,o.site,o.accnmodify,"Stock Take Validated");
 
                     lm.Clear();
@@ -420,11 +427,12 @@ namespace Snaps.WMS {
                         cm.CommandText = "select next value for seq_ccp";
                         var newplan = cm.snapsScalarStrAsync().Result;
 
-                        cmn.snapsPar(newplan,"newplan");
+                        cmn.CommandType = CommandType.Text;
                         cmn.CommandText = sqlplan_recount_line;
+                        cmn.snapsPar(newplan,"newplan");
                         lm.Add(cmn);
 
-                        string sufix = "-Recount " + o.pctvld + "%";
+                        string sufix = "-Recount " + o.pctvld + "% - original " + o.planorigin;
                         var newname = o.planname.IndexOf("-Recount") == -1
                             ? o.planname
                             : o.planname.Substring(0,o.planname.IndexOf("-Recount"));
@@ -715,8 +723,6 @@ namespace Snaps.WMS {
                             ln.tflow = "IO";
                             ln.accncreate = o.accncode;
                             ln.accnmodify = o.accncode;
-
-                          
                             // exit loop
                             break;
                         }

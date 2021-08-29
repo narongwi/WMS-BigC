@@ -77,11 +77,11 @@
                           <div class="col-md-1 mp" (click)="line(ls,i)">{{ls.tflowdes}}</div>
                           <div class="col-md-1 mp text-center">
                             <i class="fas fa-wrench fa-lg" (click)="edithu(i)"
-                              [ngClass]="{'text-primary': ls.tflow=='IO','text-danger':ls.tflow !='IO'}"></i>
+                              [ngClass]="{'text-primary': ls.tflow=='IO','text-secondary':ls.tflow !='IO'}"></i>
                           </div>
                           <div class="col-md-1 mp text-center">
                             <i class="fas fa-print fa-lg" (click)="linklabel(i)"
-                              [ngClass]="{'text-primary': ls.tflow=='ED','text-danger':ls.tflow !='ED'}"></i>
+                              [ngClass]="{'text-primary': ls.tflow=='ED','text-secondary':ls.tflow !='ED'}"></i>
                           </div>
                         </div>
                       </ng-scrollbar>
@@ -184,15 +184,20 @@
                           <input type="text" class="form-control form-control-sm fnb" [(ngModel)]="mdfn.loccode"
                             placeholder="Enter Location no">
                         </div>
-                        <div class="col-md-7">
-
+                        <div class="col-md-5 pdt-10 text-danger">
+                            ***
                         </div>
                       </div>
                       <div class="row mg-0 pd-5 ln ">
                         <div class="col-md-2 pdt-10">HU No</div>
-                        <div class="col-md-10 pdt-5 pdb-5">
+                        <div class="col-md-5 pdt-5 pdb-5">
                           <input class="form-control fn-07e fnb text-danger " placeholder="HU No"
                             [(ngModel)]="mdfn.huno">
+                        </div>
+                        <div class="col-md-1 pdt-10">Article</div>
+                        <div class="col-md-4 pdt-5 pdb-5">
+                          <input class="form-control fn-07e fnb text-danger " placeholder="Article"
+                            [(ngModel)]="mdfn.article">
                         </div>
                       </div>
                       <div class="row mg-0 pd-5  ">

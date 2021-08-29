@@ -176,6 +176,7 @@ class _LoosePickScreen extends State<LoosePickScreen> {
             _prepln.first.article,
             _prepln.first.lv.toString(),
           );
+          
           // step 4 start if status is active
           if (_prepdetail.tflow == 'IO') {
             await service.setstart(_prepln.first);
