@@ -181,8 +181,7 @@ class _TranferStockScreen extends State<TranferStockScreen> {
       );
       final _selecthu = await service.lists(_filterloc);
       if (_selecthu.length == 0) {
-        alert(context, "warning", "Warning",
-            "invalid source location $sourceloc");
+        alert(context, "warning", "Warning", "invalid source location $sourceloc");
         confimefocusNode.requestFocus();
       } else {
         targetLoc = _selecthu[0].targetadv;
@@ -244,12 +243,7 @@ class _TranferStockScreen extends State<TranferStockScreen> {
       final _product = await service.getProduct(barcode);
       print(_product.toJson());
 
-      final _filterloc = TaskFilter(
-          tasktype: 'T',
-          sourceloc: scanLocController.text,
-          sourcehuno: scanhuController.text,
-          article: _product.article,
-          tflow: 'IO');
+      final _filterloc = TaskFilter(tasktype: 'T', sourceloc: scanLocController.text, sourcehuno: scanhuController.text, article: _product.article, tflow: 'IO');
       final _selecthu = await service.lists(_filterloc);
       print(_selecthu);
 
@@ -269,13 +263,11 @@ class _TranferStockScreen extends State<TranferStockScreen> {
     final _line = _task.lines.single;
     final _arts = await service.productInfo(_line.article, _line.lv.toString());
     if (_line.accnassign != profile.accncode && _task.tflow == 'IO') {
-      alert(context, "info", "Infomation",
-          "location ${_selecthu.sourceloc} is already working on user ${_line.accnassign}");
+      alert(context, "info", "Infomation", "location ${_selecthu.sourceloc} is already working on user ${_line.accnassign}");
       setState(() => isconfirm = false);
     } else if (_task.tflow != 'IO') {
       setState(() => isconfirm = false);
-      alert(context, "success", "Information",
-          "HU ${_selecthu.sourceloc} is Finished!");
+      alert(context, "success", "Information", "HU ${_selecthu.sourceloc} is Finished!");
     } else {
       setState(() => isconfirm = true);
     }
@@ -306,8 +298,7 @@ class _TranferStockScreen extends State<TranferStockScreen> {
       try {
         setState(() => isLoading = true);
         await service.confirm(taskmvt);
-        alert(context, "success", "Information",
-            " confirm replenishment success");
+        alert(context, "success", "Information", " confirm replenishment success");
 
         _resetScreen();
         // refresh
@@ -405,8 +396,11 @@ class _TranferStockScreen extends State<TranferStockScreen> {
         onPressed: () => Navigator.pop(context),
         icon: Icon(CupertinoIcons.home, size: 20),
       ),
-      centerTitle: true,
-      title: Text('Transfer Stock'),
+      // centerTitle: true,
+      title: Text(
+        'Transfer Stock',
+        style: TextStyle(fontWeight: FontWeight.bold),
+      ),
       actions: <Widget>[
         IconButton(
           icon: const Icon(CupertinoIcons.plus_circle, color: colorBlue),
@@ -604,8 +598,7 @@ class _TranferStockScreen extends State<TranferStockScreen> {
             "Loc.Fill ",
             style: TextStyle(fontSize: 12),
           ),
-          Text("${taskline.targetadv ?? ""}",
-              style: TextStyle(color: successColor))
+          Text("${taskline.targetadv ?? ""}", style: TextStyle(color: successColor))
         ],
       ),
     );
@@ -671,8 +664,7 @@ class _TranferStockScreen extends State<TranferStockScreen> {
                 } else {
                   var conf = DialogConfirm(
                     title: "Confirm Transfer Stock",
-                    content:
-                        "Location ${conflocController.text} Are you sure ?",
+                    content: "Location ${conflocController.text} Are you sure ?",
                     onYes: () async => await _confirm(),
                     onNo: () {},
                   );

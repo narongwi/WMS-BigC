@@ -148,9 +148,7 @@ class _SheetTab extends State<SheetTab> with SingleTickerProviderStateMixin {
           title: Padding(
             padding: const EdgeInsets.only(left: 5),
             child: Text(
-              (SheetTab.countPlan?.plancode ?? "").isEmpty
-                  ? "No Plan"
-                  : "${SheetTab.countPlan?.plancode ?? ""} ${SheetTab.countPlan?.planname ?? ""}",
+              (SheetTab.countPlan?.plancode ?? "").isEmpty ? "No Plan" : "${SheetTab.countPlan?.plancode ?? ""} ${SheetTab.countPlan?.planname ?? ""}",
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
                 color: primaryColor,
@@ -167,8 +165,7 @@ class _SheetTab extends State<SheetTab> with SingleTickerProviderStateMixin {
           ],
         ),
         body: ListView.separated(
-          separatorBuilder: (BuildContext context, int index) =>
-              const Divider(),
+          separatorBuilder: (BuildContext context, int index) => const Divider(),
           itemCount: SheetTab.countSheet.length,
           itemBuilder: (context, index) {
             return Row(
@@ -194,14 +191,11 @@ class _SheetTab extends State<SheetTab> with SingleTickerProviderStateMixin {
                       style: TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.bold,
-                        color: colorStem,
+                        color: primaryColor,
                       ),
                     ),
                     subtitle: Text(
-                      "${SheetTab.countSheet[index].locctype} : ${(SheetTab.countSheet[index].cnflow.isNotEmpty ? SheetTab.countSheet[index].cnarticle : SheetTab.countSheet[index].starticle)}" +
-                          (SheetTab.countSheet[index].starticle.isEmpty
-                              ? ""
-                              : "-${SheetTab.countSheet[index].stlv}"),
+                      "${SheetTab.countSheet[index].locctype} : ${(SheetTab.countSheet[index].cnflow.isNotEmpty ? SheetTab.countSheet[index].cnarticle : SheetTab.countSheet[index].starticle)}" + (SheetTab.countSheet[index].starticle.isEmpty ? "" : "-${SheetTab.countSheet[index].stlv}"),
                       textAlign: TextAlign.left,
                       style: TextStyle(fontSize: 11, color: colorBlue),
                     ),

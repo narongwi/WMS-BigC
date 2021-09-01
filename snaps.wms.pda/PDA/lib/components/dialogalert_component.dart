@@ -63,8 +63,7 @@ class DialogAlert extends StatelessWidget {
       title: new Text(
         this._title,
         textAlign: TextAlign.center,
-        style: TextStyle(
-            color: colorBlue, fontSize: 16, fontWeight: FontWeight.normal),
+        style: TextStyle(color: colorBlue, fontSize: 16, fontWeight: FontWeight.normal),
       ),
       content: Container(
         padding: EdgeInsets.all(10),

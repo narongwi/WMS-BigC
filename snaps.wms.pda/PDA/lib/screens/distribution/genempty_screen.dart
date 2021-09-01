@@ -64,23 +64,9 @@ class _GenEmptyScreen extends State<GenEmptyScreen> {
       } else {
         setState(() => isLoading = true);
 
-        EmptyGen empty = new EmptyGen(
-            crsku: 0,
-            crvolume: 0,
-            crweight: 0,
-            huno: hutypeSelect,
-            hutype: 'XE',
-            spcarea: "XD",
-            thcode: storeController.text,
-            loccode: storeController.text,
-            routeno: storeController.text,
-            priority: 0,
-            quantity: int.parse(qtyController.text),
-            mxsku: 9999,
-            mxweight: 999999999);
+        EmptyGen empty = new EmptyGen(crsku: 0, crvolume: 0, crweight: 0, huno: hutypeSelect, hutype: 'XE', spcarea: "XD", thcode: storeController.text, loccode: storeController.text, routeno: storeController.text, priority: 0, quantity: int.parse(qtyController.text), mxsku: 9999, mxweight: 999999999);
         await service.genEmpty(empty);
-        alert(context, "success", "Information",
-            "generate huno for store ${storeController.text} success");
+        alert(context, "success", "Information", "generate huno for store ${storeController.text} success");
       }
     } catch (e) {
       alert(context, "error", "Error", e.toString());
@@ -156,16 +142,19 @@ class _GenEmptyScreen extends State<GenEmptyScreen> {
           icon: Icon(CupertinoIcons.chevron_back),
           onPressed: () => Navigator.of(context).pop(),
         ),
-        title: Column(children: [Text('Handling unit')]),
+        title: Column(children: [
+          Text(
+            'Handling unit',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          )
+        ]),
         titleSpacing: 0,
       ),
       body: SingleChildScrollView(
         child: Container(
           child: Padding(
-            padding:
-                const EdgeInsets.only(left: 30, top: 10, right: 30, bottom: 10),
-            child:
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            padding: const EdgeInsets.only(left: 30, top: 10, right: 30, bottom: 10),
+            child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               // TextField(
               //   readOnly: true,
               //   controller: TextEditingController(text: "XD Empty"),

@@ -151,8 +151,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: GridView.count(
                   shrinkWrap: true,
                   primary: false,
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                  padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                   crossAxisSpacing: 10,
                   mainAxisSpacing: 10,
                   crossAxisCount: 3,
@@ -211,8 +210,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ButtonItem(
                       itemText: "${palletpickPermission.objname ?? 'waiting'}",
                       itemIcon: CupertinoIcons.cube_box,
-                      isEnable:
-                          palletpickPermission.isenable == 1 ? true : false,
+                      isEnable: palletpickPermission.isenable == 1 ? true : false,
                       onPress: () {
                         Navigator.pushNamed(
                           context,
@@ -224,8 +222,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ButtonItem(
                       itemText: "${loosepickPermission.objname ?? 'waiting'}",
                       itemIcon: CupertinoIcons.circle_grid_hex,
-                      isEnable:
-                          loosepickPermission.isenable == 1 ? true : false,
+                      isEnable: loosepickPermission.isenable == 1 ? true : false,
                       onPress: () {
                         Navigator.pushNamed(
                           context,
@@ -237,8 +234,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ButtonItem(
                       itemText: "${distributePermission.objname ?? 'waiting'}",
                       itemIcon: CupertinoIcons.globe,
-                      isEnable:
-                          distributePermission.isenable == 1 ? true : false,
+                      isEnable: distributePermission.isenable == 1 ? true : false,
                       onPress: () {
                         Navigator.pushNamed(
                           context,
@@ -252,8 +248,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       itemIcon: CupertinoIcons.dot_radiowaves_left_right,
                       isEnable: basecosePermission.isenable == 1 ? true : false,
                       onPress: () {
-                        Navigator.pushNamed(context, BaseClosedPage.routeName,
-                            arguments: profile);
+                        Navigator.pushNamed(context, BaseClosedPage.routeName, arguments: profile);
                       },
                     ),
                     ButtonItem(
@@ -271,20 +266,14 @@ class _HomeScreenState extends State<HomeScreen> {
                 padding: const EdgeInsets.all(10),
                 child: Text(
                   "Powered By Snaps Solutions",
-                  style: TextStyle(
-                      fontSize: 12,
-                      fontStyle: FontStyle.italic,
-                      color: defaultColor),
+                  style: TextStyle(fontSize: 12, fontStyle: FontStyle.italic, color: defaultColor),
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.only(bottom: 10),
                 child: Text(
                   "version ${_packageInfo.version}+${_packageInfo.buildNumber}",
-                  style: TextStyle(
-                      fontSize: 12,
-                      fontStyle: FontStyle.italic,
-                      color: defaultColor),
+                  style: TextStyle(fontSize: 12, fontStyle: FontStyle.italic, color: defaultColor),
                 ),
               )
             ],
@@ -351,14 +340,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   title: Text(
                     '${profile.accncode}',
                     textAlign: TextAlign.center,
-                    style: TextStyle(
-                        color: dangerColor,
-                        fontSize: 13,
-                        fontWeight: FontWeight.bold),
+                    style: TextStyle(color: dangerColor, fontSize: 13, fontWeight: FontWeight.bold),
                   ),
-                  subtitle: Text('${profile.cfgcode}',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 12)),
+                  subtitle: Text('${profile.cfgcode}', textAlign: TextAlign.center, style: TextStyle(fontSize: 12)),
                 ),
               ),
               Expanded(
@@ -367,14 +351,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   title: Text(
                     '${profile.site}',
                     textAlign: TextAlign.center,
-                    style: TextStyle(
-                        color: dangerColor,
-                        fontSize: 13,
-                        fontWeight: FontWeight.bold),
+                    style: TextStyle(color: dangerColor, fontSize: 13, fontWeight: FontWeight.bold),
                   ),
-                  subtitle: Text('Site',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 12)),
+                  subtitle: Text('Site', textAlign: TextAlign.center, style: TextStyle(fontSize: 12)),
                 ),
               ),
               Expanded(
@@ -383,14 +362,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   title: Text(
                     '${profile.depot}',
                     textAlign: TextAlign.center,
-                    style: TextStyle(
-                        color: dangerColor,
-                        fontSize: 13,
-                        fontWeight: FontWeight.bold),
+                    style: TextStyle(color: dangerColor, fontSize: 13, fontWeight: FontWeight.bold),
                   ),
-                  subtitle: Text('Depot',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 12)),
+                  subtitle: Text('Depot', textAlign: TextAlign.center, style: TextStyle(fontSize: 12)),
                 ),
               ),
             ],
@@ -427,7 +401,10 @@ class _HomeScreenState extends State<HomeScreen> {
       //   ),
       // ),
       // title: Text("Warehouse Management System"),
-      title: Text("Welcome"),
+      title: Text(
+        "Welcome",
+        style: TextStyle(fontWeight: FontWeight.bold),
+      ),
       // centerTitle: true,
       actions: [
         // IconButton(
@@ -442,8 +419,7 @@ class _HomeScreenState extends State<HomeScreen> {
           icon: Icon(CupertinoIcons.info_circle),
           onPressed: () async {
             Fluttertoast.showToast(
-              msg:
-                  "Warehouse Management System \nversion ${_packageInfo.version} build number ${_packageInfo.buildNumber}",
+              msg: "Warehouse Management System \nversion ${_packageInfo.version} build number ${_packageInfo.buildNumber}",
               backgroundColor: colorBlue,
             );
           },
@@ -454,8 +430,7 @@ class _HomeScreenState extends State<HomeScreen> {
           icon: Icon(CupertinoIcons.lock_circle),
           onPressed: () async {
             profileService.logout().then((value) {
-              Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(builder: (context) => LoginScreen()));
+              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => LoginScreen()));
             });
           },
         ),

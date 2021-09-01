@@ -114,7 +114,7 @@ namespace Snaps.WMS {
            left join wm_stock s on l.orgcode = s.orgcode and l.site = s.site and l.depot = s.depot and l.lscode = s.loccode and case when @isblock = 1 then 'IO' else s.tflow end = 'IO'
            left join wm_product p on s.orgcode = p.orgcode and s.site = p.site and s.depot = p.depot and s.article = p.article and s.pv = p.pv and s.lv = p.lv and p.tflow = 'IO'
          where l.orgcode = @orgcode and l.site = @site  and l.depot = @depot  and l.lszone = @szone and l.lsaisle between @saisle and @eaisle and l.lsbay between @sbay and @ebay 
-          and l.lslevel between @slevel and @elevel and not exists (select 1 from wm_couln c where c.orgcode = l.orgcode and c.site = l.site and c.depot = l.depot and c.loccode =  l.lscode and tflow = 'IO'),
+          and l.lslevel between @slevel and @elevel and not exists (select 1 from wm_couln c where c.orgcode = l.orgcode and c.site = l.site and c.depot = l.depot and c.loccode =  l.lscode and tflow = 'IO')
         group by l.orgcode,l.site,	l.depot,l.spcarea,l.lscode ,isnull(z.spcunit,s.unitops),l.lsaisle,l.lsbay,l.lslevel,s.article ,s.lv,s.pv,l.spcpicking,l.lsloctype,l.spcpickunit,p.unitmanage,p.unitprep";
 
         // comment 18/07/2021 for change count unit
@@ -386,14 +386,16 @@ namespace Snaps.WMS {
             @cnlv cnlv,@cnqtysku cnqtysku,@cnqtypu cnqtypu,@cnlotmfg cnlotmfg, @cndatemfg cndatemfg,@cndateexp cndateexp,@cnserialno,@cnhuno cnhuno,@cnflow cnflow,
             @cnmsg cnmsg , isskip, isrgen, iswrgln, countdevice,SYSDATETIMEOFFSET() countdate, corcode, corqty, coraccn, cordevice, cordate,tflow,SYSDATETIMEOFFSET() datecreate,
             @accncreate accncreate, SYSDATETIMEOFFSET() datemodify, @accnmodify accnmodify, procmodify, locctype  from wm_couln wc where wc.orgcode=@orgcode 
-            and wc.site = @site and wc.depot = @depot and wc.countcode = @countcode and wc.plancode = @plancode and wc.locseq = @locseq and wc.tflow='IO'";
+            and wc.site = @site and wc.depot = @depot and wc.countcode = @countcode and wc.plancode = @plancode and wc.locseq = @locseq and wc.tflow='IO';
+            select max(locseq) locseq from wm_couln s where s.orgcode = @orgcode and s.site = @site and s.depot = @depot and s.countcode =  @countcode and s.plancode = @plancode and s.loccode = @loccode and s.cnhuno = @cnhuno";
 
         private string sqlcount_findproduct =
             @"select top 1 p.orgcode,p.[site],p.depot,p.article,p.pv,p.lv,p.descalt,p.skuweight,p.skuvolume,p.unitmanage,
                    [dbo].[get_barcode](p.orgcode,p.[site],p.depot,p.article,p.pv,p.lv) barcode,l.loccode,l.spcarea locarea,l.lsloctype loctype,spcpickunit locunit,
                    [dbo].[get_stocktake_unit](l.spcarea,l.lsloctype,l.spcpicking,l.spcpickunit,p.unitmanage,p.unitprep) unitcount,
                    [dbo].[get_unitdes](p.orgcode,p.[site],p.depot,[dbo].[get_stocktake_unit](l.spcarea,l.lsloctype,l.spcpickunit,l.spcpickunit,p.unitmanage,p.unitprep)) unitdestr,
-                   [dbo].[get_ratio](p.orgcode,p.[site],p.depot,p.article,p.pv,p.lv,[dbo].[get_stocktake_unit](l.spcarea,l.lsloctype,l.spcpickunit,l.spcpickunit,p.unitmanage,p.unitprep)) skuofunit
+                   [dbo].[get_ratio](p.orgcode,p.[site],p.depot,p.article,p.pv,p.lv,[dbo].[get_stocktake_unit](l.spcarea,l.lsloctype,l.spcpickunit,l.spcpickunit,p.unitmanage,p.unitprep)) skuofunit,
+                   p.rtoskuofpu,p.rtopckoflayer,p.rtolayerofhu,(p.rtopckoflayer * p.rtolayerofhu) rtopckofpallet,p.rtoskuofipck,p.rtoskuofpck,p.rtoskuoflayer,p.rtoskuofhu
             from [dbo].[wm_product] p  
                 cross join  (
                     select top 1 l.lscode loccode,l.spcarea,l.lsloctype,l.spcpickunit,l.spcpicking
@@ -421,7 +423,6 @@ namespace Snaps.WMS {
                 from wm_handerlingunit s 
                 where s.orgcode = @orgcode
                     and s.site = @site
-                    and s.loccode = @loccode
                     and s.depot = @depot
                     and s.huno = @huno
                     and s.tflow = 'IO'";

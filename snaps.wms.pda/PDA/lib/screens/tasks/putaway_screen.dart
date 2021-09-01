@@ -174,12 +174,10 @@ class _PutawayScreen extends State<PutawayScreen> {
         setState(() => isLoading = true);
         final _task = await service.assignTask(_selecthu[0], profile.accncode);
         final _line = _task.lines.single;
-        final _arts =
-            await service.productInfo(_line.article, _line.lv.toString());
+        final _arts = await service.productInfo(_line.article, _line.lv.toString());
 
         if (_line.accnassign != profile.accncode && _task.tflow == 'IO') {
-          alert(context, "info", "Infomation",
-              "HU $huno is already working on user ${_line.accnassign}");
+          alert(context, "info", "Infomation", "HU $huno is already working on user ${_line.accnassign}");
           setState(() => isconfirm = false);
         } else if (_task.tflow != 'IO') {
           setState(() => isconfirm = false);
@@ -208,8 +206,7 @@ class _PutawayScreen extends State<PutawayScreen> {
       hufocusNode.requestFocus();
     } else if (locController.text.isEmpty) {
       alert(context, "warning", "Warning", "confirm location is required !");
-    } else if (tpallowchangetarget.pmvalue &&
-        taskmvt.lines[0].targetadv != locController.text) {
+    } else if (tpallowchangetarget.pmvalue && taskmvt.lines[0].targetadv != locController.text) {
       alert(
         context,
         "error",
@@ -224,8 +221,7 @@ class _PutawayScreen extends State<PutawayScreen> {
       try {
         setState(() => isLoading = true);
         await service.confirm(taskmvt);
-        alert(
-            context, "success", "Information", " confirm task putaway success");
+        alert(context, "success", "Information", " confirm task putaway success");
 
         _resetScreen();
         // refresh
@@ -377,7 +373,10 @@ class _PutawayScreen extends State<PutawayScreen> {
           onPressed: () => Navigator.pop(context),
           icon: Icon(CupertinoIcons.home, size: 20),
         ),
-        title: Text('Putaway'),
+        title: Text(
+          'Putaway',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
         actions: <Widget>[
           IconButton(
             icon: const Icon(CupertinoIcons.plus_circle, color: colorBlue),
@@ -414,10 +413,7 @@ class _PutawayScreen extends State<PutawayScreen> {
           product.descalt == null
               ? Text(
                   "Product Description",
-                  style: TextStyle(
-                      fontSize: 12,
-                      color: Colors.grey,
-                      fontStyle: FontStyle.italic),
+                  style: TextStyle(fontSize: 12, color: Colors.grey, fontStyle: FontStyle.italic),
                 )
               : Text(
                   "${product.descalt ?? ""}",
@@ -539,8 +535,7 @@ class _PutawayScreen extends State<PutawayScreen> {
             "Loc.Suggest ",
             style: TextStyle(fontSize: 12),
           ),
-          Text("${taskline.targetadv ?? ""}",
-              style: TextStyle(color: successColor))
+          Text("${taskline.targetadv ?? ""}", style: TextStyle(color: successColor))
         ],
       ),
     );

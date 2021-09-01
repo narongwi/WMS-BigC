@@ -132,7 +132,10 @@ class _BaseClosedPage extends State<BaseClosedPage> {
         onPressed: () => Navigator.pop(context),
         icon: Icon(CupertinoIcons.home, size: 20),
       ),
-      title: Text("Base Closing"),
+      title: Text(
+        "Base Closing",
+        style: TextStyle(fontWeight: FontWeight.bold),
+      ),
       actions: [
         IconButton(
           icon: const Icon(CupertinoIcons.plus_circle, color: colorBlue),
@@ -250,15 +253,7 @@ class _BaseClosedPage extends State<BaseClosedPage> {
         borderRadius: BorderRadius.circular(8),
       ),
       child: Column(
-        children: [
-          qtyText,
-          Divider(color: Colors.grey),
-          weightText,
-          Divider(color: Colors.grey),
-          volumeText,
-          Divider(color: Colors.grey),
-          statusText
-        ],
+        children: [qtyText, Divider(color: Colors.grey), weightText, Divider(color: Colors.grey), volumeText, Divider(color: Colors.grey), statusText],
       ),
     );
     return Scaffold(
@@ -272,33 +267,7 @@ class _BaseClosedPage extends State<BaseClosedPage> {
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(height: 20),
-              hunoTextFaild,
-              SizedBox(height: 10),
-              WHCard(
-                  label: "Store : ",
-                  value: storeCode ?? "",
-                  color: colorBlue,
-                  size: 14,
-                  textColor: primaryColor),
-              SizedBox(height: 10),
-              WHCard(
-                  label: "Name : ",
-                  value: storeName ?? "",
-                  color: colorStem,
-                  size: 14,
-                  textColor: primaryColor),
-              SizedBox(height: 10),
-              WHCard(
-                  label: "Route : ",
-                  value: routeno ?? "",
-                  color: colorPetal,
-                  size: 14,
-                  textColor: primaryColor),
-              SizedBox(height: 10),
-              productDetail
-            ],
+            children: [SizedBox(height: 20), hunoTextFaild, SizedBox(height: 10), WHCard(label: "Store : ", value: storeCode ?? "", color: colorBlue, size: 14, textColor: primaryColor), SizedBox(height: 10), WHCard(label: "Name : ", value: storeName ?? "", color: colorStem, size: 14, textColor: primaryColor), SizedBox(height: 10), WHCard(label: "Route : ", value: routeno ?? "", color: colorPetal, size: 14, textColor: primaryColor), SizedBox(height: 10), productDetail],
           ),
         ),
       ),

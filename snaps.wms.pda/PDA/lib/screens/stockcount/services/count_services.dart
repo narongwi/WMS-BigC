@@ -7,6 +7,7 @@ import 'package:wms/screens/stockcount/models/countline_model.dart';
 import 'package:wms/screens/stockcount/models/countplan_model.dart';
 import 'package:wms/screens/stockcount/models/counttask_model.dart';
 import 'package:wms/screens/stockcount/models/findcount_model.dart';
+import 'package:wms/screens/stockcount/models/productvld_model.dart';
 import '../../../constants.dart';
 
 class CountServices {
@@ -92,7 +93,6 @@ class CountServices {
       body: data,
       headers: await header(),
     );
-    print(response.body);
     print("findCountLine ==> ${response.statusCode}");
     if (response.statusCode == 200) {
       (jsonDecode(response.body) as List).forEach((v) {
@@ -104,37 +104,90 @@ class CountServices {
     }
   }
 
-  Future<bool> saveCount(List<Countline> countLine) async {
-    final baseUrl = "$countApiUrl/count/upsertLine/0";
-    final data = jsonEncode(countLine);
-    print(baseUrl);
-    print(data);
+  // Future<bool> saveCountline(List<Countline> countLine) async {
+  //   final baseUrl = "$countApiUrl/count/upsertLine/0";
+  //   final data = jsonEncode(countLine);
+  //   print(baseUrl);
+  //   print(data);
 
-    final response = await http.post(
-      baseUrl,
-      body: data,
-      headers: await header(),
-    );
-    print("saveCount ==> ${response.statusCode}");
-    if (response.statusCode == 200) {
-      return true;
+  //   final response = await http.post(
+  //     baseUrl,
+  //     body: data,
+  //     headers: await header(),
+  //   );
+  //   print("saveCount ==> ${response.statusCode}");
+  //   if (response.statusCode == 200) {
+  //     return true;
+  //   } else {
+  //     throw Exception(getMessage(response.body));
+  //   }
+  // }
+
+  // Future<Product> getProduct(String productCode) async {
+  //   final baseUrl = "$pdaApiUrl/api/product/info/$productCode";
+  //   print("======>$baseUrl");
+  //   final response = await http.get(
+  //     baseUrl,
+  //     headers: await header(),
+  //   );
+  //   print("Product Active ==> ${response.statusCode}");
+  //   if (response.statusCode == 200) {
+  //     return Product.fromJson(jsonDecode(response.body));
+  //   } else {
+  //     throw Exception("Data not Found");
+  //   }
+  // }
+
+  Future<Countline> generateHU(Productvld o) async {
+    final baseUrl = "$countApiUrl/count/generatehu/0";
+    final data = jsonEncode(o);
+    print(baseUrl);
+    final resp = await http.post(baseUrl, body: data, headers: await header());
+    print("genNewHuno ==> ${resp.statusCode}");
+    if (resp.statusCode == 200) {
+      return Countline.fromJson(jsonDecode(resp.body));
     } else {
-      throw Exception(getMessage(response.body));
+      throw Exception(getMessage(resp.body));
     }
   }
 
-  Future<Product> getProduct(String productCode) async {
-    final baseUrl = "$pdaApiUrl/api/product/info/$productCode";
-    print("======>$baseUrl");
-    final response = await http.get(
-      baseUrl,
-      headers: await header(),
-    );
-    print("Product Active ==> ${response.statusCode}");
-    if (response.statusCode == 200) {
-      return Product.fromJson(jsonDecode(response.body));
+  Future<Productvld> findProduct(Productvld o) async {
+    final baseUrl = "$countApiUrl/count/findproduct/0";
+    final data = jsonEncode(o.toJson());
+    print(baseUrl);
+    final resp = await http.post(baseUrl, body: data, headers: await header());
+    print("findProduct ==> ${resp.statusCode}");
+    if (resp.statusCode == 200) {
+      return Productvld.fromJson(jsonDecode(resp.body));
     } else {
-      throw Exception("Data not Found");
+      throw Exception(getMessage(resp.body));
+    }
+  }
+
+  Future<Countline> validateHu(Productvld o) async {
+    final baseUrl = "$countApiUrl/count/validatehu/0";
+    final data = jsonEncode(o);
+    print(baseUrl);
+    print(data);
+    final resp = await http.post(baseUrl, body: data, headers: await header());
+    print("genNewHuno ==> ${resp.statusCode}");
+    if (resp.statusCode == 200) {
+      return Countline.fromJson(jsonDecode(resp.body));
+    } else {
+      throw Exception(getMessage(resp.body));
+    }
+  }
+
+  Future<Countline> validateline(Productvld o) async {
+    final baseUrl = "$countApiUrl/count/validateline/0";
+    final data = jsonEncode(o);
+    print(baseUrl);
+    final resp = await http.post(baseUrl, body: data, headers: await header());
+    print("genNewHuno ==> ${resp.statusCode}");
+    if (resp.statusCode == 200) {
+      return Countline.fromJson(jsonDecode(resp.body));
+    } else {
+      throw Exception(getMessage(resp.body));
     }
   }
 
@@ -163,7 +216,7 @@ class CountServices {
     }
   }
 
-  Future<List<Empty>> findHU(String scanhuno) async {
+  Future<List<Empty>> getHuno(String scanhuno) async {
     final hufilter = EmptyFilter(huno: scanhuno);
     final baseUrl = "$prepApiUrl/ouhanderlingunit/list/0";
     final data = jsonEncode(hufilter.toJson());

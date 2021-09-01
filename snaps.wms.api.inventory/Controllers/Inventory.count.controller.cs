@@ -580,6 +580,34 @@ namespace Snaps.WMS.Controllers
                 if(_log.IsEnabled(LogLevel.Debug)) { p.snap(); _log.LogDebug(p.toJson()); p.Dispose(); }
             }
         }
+        [Authorize]
+        [HttpPost("validateline/{id}")]
+        public async Task<IActionResult> validateline(String id,[FromBody] product_vld o,
+         [FromHeader(Name = "site")] String valsite,
+         [FromHeader(Name = "depot")] String valdepot,
+         [FromHeader(Name = "accncode")] String valaccn,
+         [FromHeader(Name = "orgcode")] String valorg = "bgc",
+         [FromHeader(Name = "lang")] String lng = "EN"
+         ) {
+            Process ps; SnapsLogDbg p = null;
+            try {
+                o.orgcode = valorg;
+                o.site = valsite;
+                o.depot = valdepot;
+                o.accncode = valaccn;
+                var cnline = await _sv.validateHuAsync(o);
 
+                if(!o.isnewhu) {
+                    // update row
+                    var lsline = new List<countline_md>();
+                    lsline.Add(cnline);
+                    await _sv.upsertLineAsync(lsline);
+                }
+             
+                return Ok(cnline);
+            } catch(Exception exr) {
+                return BadRequest(exr.SnapsBadRequest());
+            } 
+        }
     }
 }

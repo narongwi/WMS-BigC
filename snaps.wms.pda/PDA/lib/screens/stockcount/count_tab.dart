@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:wms/components/datepick_theme.dart';
 import 'package:wms/components/dialogalert_component.dart';
@@ -10,9 +11,9 @@ import 'package:wms/components/progress_component.dart';
 import 'package:wms/constants.dart';
 import 'package:wms/models/lov_model.dart';
 import 'package:wms/screens/home/models/profiles.dart';
-import 'package:wms/screens/receive/models/product_active.dart';
 import 'package:wms/screens/stockcount/models/countline_model.dart';
 import 'package:wms/screens/stockcount/models/findcount_model.dart';
+import 'package:wms/screens/stockcount/models/productvld_model.dart';
 import 'package:wms/screens/stockcount/services/count_services.dart';
 import 'package:wms/screens/stockcount/sheet_tab.dart';
 import 'package:wms/services/lov_services.dart';
@@ -29,24 +30,28 @@ class CountTab extends StatefulWidget {
 }
 
 class _CountTab extends State<CountTab> with SingleTickerProviderStateMixin {
-  String unitcount = "";
+  String unitDesrt = "";
+  String locatioinType = "";
+  String lineBarcode = "";
   String nextLocation = "";
+
   int prevLocseq = -1;
   bool specialloc = false;
-  final CountServices sv = CountServices();
   bool isLoading = false;
-  // bool isScanHU = false;
-
+  bool isLineCounted = false;
+  bool isLineBarcode = false;
+  bool requireScanhu = false;
+  bool allowScanProduct = false;
+  bool requireScanProduct = false;
+  bool requireGeneratehu = false;
   Profiles profile = Profiles();
-  Product product = Product();
+  Productvld lineProduct = Productvld();
+  CountServices sv = CountServices();
+//   Countline countline = Countline();
   List<Countline> countSheet = <Countline>[];
-
-  Countline lineOps = Countline();
   List<Lov> lov = <Lov>[];
 
-  bool requireScanhu = false;
-
-  Future<void> countUnit() async {
+  Future<void> listUnitCount() async {
     try {
       LovService lovSerivce = new LovService();
       lov = await lovSerivce.getUnit();
@@ -56,565 +61,507 @@ class _CountTab extends State<CountTab> with SingleTickerProviderStateMixin {
     }
   }
 
-  // get line when scan hu
-  Future<void> scanloc(String _loccode) async {
-    try {
+  Future<void> scanLocaSubmit(String _loccode) async {
+    if (curPlan == null) {
+      alert(context, "warning", "Warning", "please select plan count");
+      setState(() => locfocusNode.requestFocus());
+    } else if (_loccode.isEmpty) {
+      alert(context, "warning", "Warning", "please enter location");
+      setState(() => locfocusNode.requestFocus());
+    } else {
+      // * initialize
       setState(() {
-        // isScanHU = false;
-        isLoading = true;
+        requireScanProduct = false;
         requireScanhu = false;
+        requireGeneratehu = false;
         specialloc = false;
+        unitDesrt = "";
+        isLoading = true;
       });
-      if (currentPlan == null) {
-        alert(context, "warning", "Warning", "please select plan count");
-        setState(() => locfocusNode.requestFocus());
-      } else if (_loccode.isEmpty) {
-        alert(context, "warning", "Warning", "please enter location");
+
+      // * get product master
+      final respline = await sv.findCountLine(
+        FindCountLine(countcode: curPlan.countcode, plancode: curPlan.plancode, loccode: _loccode, tflow: curPlan.tflow),
+      );
+
+      // * Location not found
+      if (respline.length == 0) {
+        alert(context, "error", "Error", "Location was not found");
         setState(() => locfocusNode.requestFocus());
       } else {
-        lineOps = Countline();
+        setState(() {
+          isLoading = false;
+          locatioinType = respline.first.locctype;
+          specialloc = (locatioinType == 'P' || locatioinType == 'R') ? false : true;
+        });
 
-        // Todo 1 Find Product
-        final _findloc = await sv.findCountLine(
-          FindCountLine(
-            orgcode: currentPlan.orgcode,
-            site: currentPlan.site,
-            depot: currentPlan.depot,
-            countcode: currentPlan.countcode,
-            plancode: currentPlan.plancode,
-            loccode: _loccode,
-            tflow: currentPlan.tflow,
-          ),
-        );
-        // Todo 2 Check is location
-        if (_findloc.length == 0) {
-          print("Todo 2");
-
-          alert(context, "error", "Error", "Location was not found");
-          setState(() => locfocusNode.requestFocus());
-          return;
+        // ? Single count line
+        if (respline.length == 1) {
+          Countline line = respline.first;
+          await bindingControls(line);
+          if (!isLineCounted) {
+            if (scanhuController.text.isEmpty) {
+              setState(() => hufocusNode.requestFocus());
+            } else {
+              if (allowScanProduct || requireScanProduct) {
+                setState(() => barfocusNode.requestFocus());
+              } else {
+                setState(() => qtyfocusNode.requestFocus());
+              }
+            }
+          } else {
+            setState(() => qtyfocusNode.requestFocus());
+          }
         }
-
-        // Todo 2.1 Empty location
-        final locOps1 = _findloc.first;
-
-        // ! setnext location
-
-        // check is picking or reserve
-        if (locOps1.locctype == 'P' || locOps1.locctype == 'R') {
-          specialloc = false;
-        } else {
-          // bulk , sinbin , rtv , etc ...
-          // fore scan all
-          currentPlan.allowscanhu = 1;
-          requireScanhu = true;
-          specialloc = true;
-
+        // ? Multiple count line
+        else {
+          Fluttertoast.showToast(msg: "Multiple Count line ", backgroundColor: colorStem);
+          // * variable
+          // * call method
+          // * controls
+          // * bind form control
           setState(() {
-            // lineOps = locOps1;
             isLoading = false;
-            currentPlan.allowscanhu = 1;
-            requireScanhu = true;
-            specialloc = true;
-            product = Product();
-
-            scanbarController.text = "";
+            lineProduct = Productvld();
             scanhuController.text = "";
+            scanbarController.text = "";
             batchController.text = "";
             expController.text = "";
             qtyController.text = "";
-            barfocusNode.requestFocus();
+            hufocusNode.requestFocus();
+            requireScanhu = true; // set scan
+            isLineCounted = false; // default
           });
-
-          return;
-        }
-
-        if ((locOps1.sthuno ?? "").isEmpty) {
-          print("Todo 2.1");
-          setState(() {
-            lineOps = locOps1;
-            isLoading = false;
-            requireScanhu = true;
-            product = Product();
-            defaultControl(locOps1);
-          });
-          qtyfocusNode.requestFocus();
-          // Todo Next Location
-          getNextLocation();
-          return;
-        }
-
-        // Todo 3 Empty location
-        if ((locOps1.cnflow ?? "").isEmpty && locOps1.sthuno.isEmpty) {
-          print("Todo 3");
-          setState(() {
-            lineOps = locOps1;
-            isLoading = false;
-            requireScanhu = true;
-            product = Product();
-            defaultControl(locOps1);
-          });
-          qtyfocusNode.requestFocus();
-          // Todo Next Location
-          getNextLocation();
-          return;
-        }
-
-        // Todo 4 new count without stock
-        if ((locOps1.cnflow ?? "").isEmpty && locOps1.starticle.isEmpty) {
-          print("Todo 4");
-
-          setState(() {
-            lineOps = locOps1;
-            isLoading = false;
-            product = Product();
-            requireScanhu = true;
-            defaultControl(locOps1);
-            // allow scan barcode
-            if (currentPlan?.allowscanhu == 0) {
-              barfocusNode.requestFocus();
-            } else {
-              qtyfocusNode.requestFocus();
-            }
-            // Todo Next Location
-            getNextLocation();
-            return;
-          });
-        }
-        // Todo 5 new count with stock
-        if ((locOps1.cnflow ?? "").isEmpty && locOps1.starticle.isNotEmpty) {
-          print("Todo 5");
-          setState(() => isLoading = true);
-          final _product = await sv.getProduct(locOps1.starticle);
-          if (_product == null) {
-            alert(context, "warning", "Warning", "Product not found");
-            setState(() => locfocusNode.requestFocus());
-            return;
-          }
-
-          setState(() {
-            isLoading = false;
-            lineOps = locOps1;
-            product = _product;
-            lineOps.cnbarcode = _product.barcode;
-            lineOps.cnarticle = _product.article;
-            lineOps.cnpv = _product.pv;
-            lineOps.cnlv = _product.lv;
-            defaultControl(locOps1);
-            // allow scan barcode
-            if (currentPlan?.allowscanhu == 0) {
-              barfocusNode.requestFocus();
-            } else {
-              scanbarController.text = _product.barcode;
-              qtyfocusNode.requestFocus();
-            }
-          });
-
-          // Todo Next Location
-          getNextLocation();
-          return;
-        }
-
-        // Todo 6 already without stock
-        if ((locOps1.cnflow ?? "").isEmpty && locOps1.cnarticle.isEmpty) {
-          print("Todo 6");
-
-          setState(() {
-            isLoading = false;
-            lineOps = locOps1;
-            requireScanhu = true;
-            defaultControl(locOps1);
-            // allow scan barcode
-            if (currentPlan?.allowscanhu == 0) {
-              barfocusNode.requestFocus();
-            } else {
-              qtyfocusNode.requestFocus();
-            }
-          });
-          // Todo Next Location
-          getNextLocation();
-          return;
-        }
-
-        // Todo 7 already count with stock
-        if ((locOps1.cnflow ?? "").isNotEmpty && locOps1.cnarticle.isNotEmpty) {
-          print("Todo 7");
-          setState(() => isLoading = true);
-          final _product = await sv.getProduct(locOps1.cnarticle);
-          if (_product == null) {
-            alert(context, "warning", "Warning", "Product not found");
-            setState(() => locfocusNode.requestFocus());
-          }
-
-          setState(() {
-            isLoading = false;
-            lineOps = locOps1;
-            product = _product;
-            lineOps.cnbarcode = _product.barcode;
-            lineOps.cnarticle = _product.article;
-            lineOps.cnpv = _product.pv;
-            lineOps.cnlv = _product.lv;
-            defaultControl(locOps1);
-            // allow scan barcode
-            if (currentPlan?.allowscanhu == 0) {
-              barfocusNode.requestFocus();
-            } else {
-              scanbarController.text = _product.barcode;
-              qtyfocusNode.requestFocus();
-            }
-          });
-
-          // Todo Next Location
-          getNextLocation();
-          return;
         }
       }
-    } catch (e) {
-      alert(context, "error", "Error", e.toString());
     }
   }
 
-  void getNextLocation() {
-    if (countSheet.length == 0) return;
-    if ((lineOps.loccode ?? "").isEmpty) return;
-    prevLocseq = lineOps.locseq;
-    final _sheet = countSheet;
-    int _startseq = lineOps.locseq;
-
-    int _nextIndex = _sheet.indexWhere(
-      (x) => x.locseq > _startseq && (x.cnflow ?? "") == "",
-    );
-    print("_nextIndex_one $_nextIndex");
-
-    // re check is no count
-    if (_nextIndex == -1) {
-      _nextIndex = _sheet.indexWhere(
-        (x) =>
-            x.locseq > 0 &&
-            x.locseq != lineOps.locseq &&
-            (x.cnflow ?? "") == "",
-      );
-      print("_reIndex_two $_nextIndex");
-    }
-
-    print("_nextIndex : $_nextIndex");
-    if (_nextIndex == -1 || _nextIndex > _sheet.length - 1) {
-      setState(() => nextLocation = "");
-      print("Finish Seq Location");
-    } else {
-      setState(() => nextLocation = countSheet[_nextIndex].loccode);
-      print("Next Location $nextLocation");
-    }
-  }
-
-  void displayControl(Countline m) {
-    setState(() {
-      scanbarController.text = m.cnbarcode;
-      scanhuController.text = m.cnhuno;
-      batchController.text = m.cnlotmfg;
-      expController.text = _formatDate(m.cndateexp);
-      mfgController.text = _formatDate(m.cndatemfg);
-      qtyController.text = m.cnqtypu.toString();
-      unitcount = decodeUnit(m.unitcount);
-    });
-  }
-
-  void defaultControl(Countline m) {
-    setState(() {
-      scanbarController.text = product.barcode;
-      scanhuController.text = (m.cnhuno ?? "").isEmpty ? m.sthuno : m.cnhuno;
-      lineOps.cnhuno = (m.cnhuno ?? "").isEmpty ? m.sthuno : m.cnhuno;
-
-      batchController.text =
-          (m.cnlotmfg ?? "").isEmpty ? m.stlotmfg : m.cnlotmfg;
-
-      lineOps.cnlotmfg = (m.cnlotmfg ?? "").isEmpty ? m.stlotmfg : m.cnlotmfg;
-
-      expController.text =
-          _formatDate(m.cndateexp == null ? m.stdateexp : m.cndateexp);
-      lineOps.cndateexp = m.cndateexp == null ? m.stdateexp : m.cndateexp;
-      mfgController.text =
-          _formatDate(m.cndatemfg == null ? m.stdatemfg : m.cndatemfg);
-      lineOps.cndateexp = m.cndatemfg == null ? m.stdateexp : m.cndateexp;
-      qtyController.text = (m.cnflow ?? "").isEmpty && m.locctype == "R"
-          ? m.stqtypu.toString()
-          : m.cnqtypu.toString();
-      lineOps.cnqtypu =
-          (m.cnflow ?? "").isEmpty && m.locctype == "R" ? m.stqtypu : m.cnqtypu;
-      unitcount = decodeUnit(m.unitcount);
-    });
-  }
-
-  String _formatDate(dynamic _date) {
-    if (_date == null || _date == '') {
-      return "";
-    } else {
-      return DateFormat('dd/MM/yyyy').format(_date);
-    }
-  }
-
-  Future<void> scanbar(String productCode) async {
+  Future<void> scanHunoSubmit(String _hunoval) async {
     try {
-      setState(() {
-        isLoading = true;
-        scanhuController.text = "";
-      });
-
-      if (currentPlan == null) {
-        alert(context, "warning", "Warning", "please select plan count");
-        setState(() => locfocusNode.requestFocus());
-      } else if (scanLocController.text.isEmpty) {
-        alert(context, "warning", "Warning", "please enter location");
-        setState(() => locfocusNode.requestFocus());
-      } else if (productCode.isEmpty) {
-        alert(context, "warning", "Warning", "please scan barcode");
-        setState(() => barfocusNode.requestFocus());
-      } else {
-        // get product radio master
-
-        Product _product = await sv.getProduct(productCode);
-        if (_product == null) {
-          alert(context, "warning", "Warning", "Product not found");
-          setState(() => barfocusNode.requestFocus());
-          return;
-        }
-        setState(() {
-          isLoading = false;
-          product = _product;
-          // scanbarController.text = product.barcode;
-          lineOps.cnbarcode = product.barcode;
-          lineOps.cnarticle = product.article;
-          lineOps.cnpv = product.pv ?? 0;
-          lineOps.cnlv = product.lv ?? 0;
-
-          if (specialloc == true) {
-            hufocusNode.requestFocus();
-          } else if (lineOps.starticle == product.article) {
-            qtyfocusNode.requestFocus();
-          } else {
-            hufocusNode.requestFocus();
-          }
-        });
-      }
-    } catch (e) {
-      alert(context, "error", "Error", e.toString());
-    }
-  }
-
-  Future<void> scanhu(String scanhuno) async {
-    try {
+      requireScanProduct = false;
       setState(() => isLoading = true);
-      if (currentPlan == null) {
+      if (curPlan == null) {
         alert(context, "warning", "Warning", "please select plan count");
         setState(() => locfocusNode.requestFocus());
       } else if (scanLocController.text.isEmpty) {
         alert(context, "warning", "Warning", "location is required !");
         setState(() => locfocusNode.requestFocus());
-      } else if ((product.article ?? "").isEmpty) {
-        alert(context, "warning", "Warning", "Proudct is required !");
-        setState(() => barfocusNode.requestFocus());
-      } else if (scanhuno.isEmpty) {
-        alert(context, "warning", "Warning", "HU No  is required !");
-        setState(() => hufocusNode.requestFocus());
       } else {
-        if (specialloc) {
-          // check exists in system
-          final _huno = await sv.findHU(scanhuno);
-          if (_huno.length == 0) {
-            alert(context, "error", "Error", "HU not exists in system");
-            setState(() => hufocusNode.requestFocus());
-            return;
-          }
-
-          // get line in plan
-          final _linOps = countSheet.firstWhere(
-            (x) =>
-                x.loccode == scanLocController.text &&
-                x.sthuno == scanhuController.text,
-            orElse: () => null,
-          );
-
-          if (_linOps == null) {
-            alert(context, "warning", "Warning",
-                "HU: $scanhuno \n not found in plan !");
-
-            // wrong pallet
-            final _firstline = countSheet.first;
-            final _newLine = Countline();
-            _newLine.orgcode = _firstline.orgcode;
-            _newLine.spcarea = _firstline.spcarea;
-            _newLine.site = _firstline.site;
-            _newLine.depot = _firstline.depot;
-            _newLine.countcode = _firstline.countcode;
-            _newLine.plancode = _firstline.plancode;
-            _newLine.locctype = _firstline.locctype;
-            _newLine.loccode = _firstline.loccode;
-            _newLine.locseq = 0;
-            _newLine.datecreate = _firstline.datecreate;
-            _newLine.procmodify = _firstline.procmodify;
-            _newLine.cnbarcode = product.barcode;
-            _newLine.cnarticle = product.article;
-            _newLine.cnpv = product.pv ?? 0;
-            _newLine.cnlv = product.lv ?? 0;
-            _newLine.unitcount = product.unitmanage ?? 1;
-            _newLine.cnhuno = scanhuno;
-            _newLine.tflow = "NW";
-
+        final _locOps = scanLocController.text;
+        // ? option 1 empty stock
+        // * check location empty row
+        if (_hunoval.trim().isEmpty) {
+          final _lines = countSheet.where((x) => x.loccode == _locOps && x.sthuno.isEmpty);
+          if (_lines.length > 0) {
+            await bindingControls(_lines.first);
             setState(() {
               isLoading = false;
-              lineOps = _newLine;
               qtyfocusNode.requestFocus();
             });
           } else {
+            alert(context, "warning", "Warning", "HU is required !");
+            setState(() => locfocusNode.requestFocus());
+          }
+        }
+        // ? option 2 have stock
+        else {
+          // * find hu in countsheet list
+          final _locOps = scanLocController.text;
+          final _linOps = countSheet.where((x) => x.loccode == _locOps && (x.cnflow == 'IO' ? x.cnhuno : x.sthuno) == _hunoval);
+          // ? check notfound
+          if (_linOps.length == 0) {
+            alert(context, "warning", "Warning", "HU: $_hunoval \n not found !");
+          }
+          // ? check duplicate whit other location
+          else if (countSheet.where((e) => e.cnhuno == _hunoval && e.loccode != _locOps).length > 0) {
+            alert(context, "warning", "Warning", "HU: $_hunoval \nis duplicate !");
+          }
+          // * single product
+          else if (_linOps.length == 1) {
+            await bindingControls(_linOps.first);
+            if (allowScanProduct || requireScanProduct) {
+              setState(() {
+                isLoading = false;
+                barfocusNode.requestFocus();
+              });
+            } else {
+              setState(() {
+                isLoading = false;
+                qtyfocusNode.requestFocus();
+              });
+            }
+          }
+          // * multiple product
+          else {
+            Fluttertoast.showToast(msg: "Multiple product process ", backgroundColor: colorStem);
+            // todo force scan barcode
+            setState(() => requireScanProduct = true);
+            // * set focus
+            await bindingControls(_linOps.first);
+
+            // * set focus
+            if (allowScanProduct || requireScanProduct) {
+              setState(() {
+                isLoading = false;
+                barfocusNode.requestFocus();
+              });
+            } else {
+              setState(() {
+                isLoading = false;
+                qtyfocusNode.requestFocus();
+              });
+            }
+          }
+        }
+      }
+    } catch (e) {
+      alert(context, "error", "Error", e.toString());
+    }
+  }
+
+  Future<void> scanBarcSubmit(String _barcode) async {
+    try {
+      final _locOps = scanLocController.text;
+      final _chuOps = scanhuController.text;
+
+      if (curPlan == null) {
+        alert(context, "warning", "Warning", "please seelct plan count");
+        setState(() => locfocusNode.requestFocus());
+      } else if (_locOps.isEmpty) {
+        alert(context, "warning", "Warning", "Location is required");
+        setState(() => locfocusNode.requestFocus());
+      } else if (_chuOps.isEmpty && !requireGeneratehu) {
+        alert(context, "warning", "Warning", "HU is required");
+        setState(() => hufocusNode.requestFocus());
+      } else {
+        // * get product master
+        setState(() => isLoading = true);
+        final _product = await sv.findProduct(Productvld(barcode: _barcode, pv: -1, lv: -1, qtycount: 0, isnewhu: false, loccode: _locOps));
+        if (_product == null) {
+          alert(context, "warning", "Warning", "Product not found");
+          setState(() {
+            scanbarController.text = "";
+            barfocusNode.requestFocus();
+          });
+        } else {
+          setState(() {
+            isLoading = false;
+            lineProduct = _product;
+            scanbarController.text = _product.barcode;
+          });
+
+          final _lineOps = countSheet.firstWhere(
+            (x) => x.loccode == _locOps && (x.cnflow == 'IO' ? x.cnhuno : x.sthuno) == _chuOps && (x.cnflow == 'IO' ? x.cnarticle : x.starticle) == _product.article && (x.cnflow == 'IO' ? x.cnlv : x.stlv) == _product.lv,
+            orElse: () => null,
+          );
+
+          if (_lineOps != null) {
             setState(() {
-              isLoading = false;
-              lineOps = _linOps;
+              expController.text = formatDate(_lineOps.cndateexp);
+              mfgController.text = formatDate(_lineOps.cndatemfg);
+              qtyController.text = _lineOps.locctype == "R" && _lineOps.cnflow == "" ? _lineOps.stqtypu.toString() : _lineOps.cnqtypu.toString();
+              unitDesrt = decodeUnit(_lineOps.unitcount);
+              qtyfocusNode.requestFocus();
+            });
+          } else {
+            Fluttertoast.showToast(msg: "New count line", backgroundColor: colorStem);
+            // Todo worng product
+            setState(() {
+              expController.text = "";
+              mfgController.text = "";
+              qtyController.text = "";
               qtyfocusNode.requestFocus();
             });
           }
-        } else {
-          // check huno
-          if (countSheet
-                  .where((e) =>
-                      (e.cnhuno == scanhuno || e.sthuno == scanhuno) &&
-                      e.loccode != lineOps.loccode)
-                  .length >
-              0) {
-            alert(context, "warning", "Warning",
-                "HU: $scanhuno \nis duplicate !");
-
-            return;
-          }
-
-          final _huno = await sv.findHU(scanhuno);
-          if (_huno.length == 0) {
-            alert(context, "error", "error", "HU not exists in system");
-            setState(() => hufocusNode.requestFocus());
-            return;
-          }
-
-          setState(() {
-            isLoading = false;
-            lineOps.cnhuno = scanhuno;
-            qtyfocusNode.requestFocus();
-          });
         }
-
-        // Todo Next Location
-        getNextLocation();
       }
     } catch (e) {
+      setState(() {
+        scanbarController.text = "";
+        barfocusNode.requestFocus();
+      });
       alert(context, "error", "Error", e.toString());
     }
   }
 
-  Future<void> saveCount() async {
-    try {
-      if (qtyController.text.isEmpty) {
-        qtyController.text = "0";
-        return;
-      }
+  Future<Productvld> fillCountline(Countline line, bool isUnitmanage) async {
+    final _format = DateFormat("dd/MM/yyyy");
+    Productvld _productVld = Productvld();
+    _productVld.orgcode = line.orgcode;
+    _productVld.site = line.site;
+    _productVld.depot = line.depot;
+    _productVld.barcode = lineProduct.barcode;
+    _productVld.article = lineProduct.article;
+    _productVld.pv = lineProduct.pv;
+    _productVld.lv = lineProduct.lv;
+    _productVld.unitcount = lineProduct.unitcount;
+    _productVld.lotmfg = batchController.text;
+    _productVld.dateexp = curPlan.isdateexp == 1 && expController.text.trim().isNotEmpty ? _format.parse(expController.text) : line.cndateexp;
+    _productVld.datemfg = curPlan.isdateexp == 1 && mfgController.text.trim().isNotEmpty ? _format.parse(mfgController.text) : line.cndatemfg;
+    _productVld.serialno = "";
+    _productVld.loccode = line.loccode;
+    _productVld.huno = scanhuController.text;
+    _productVld.countcode = line.countcode;
+    _productVld.plancode = line.plancode;
+    _productVld.linecode = line.locseq.toString();
+    _productVld.qtycount = qtyController.text.trim().isEmpty ? 0 : int.parse(qtyController.text.trim());
 
-      final _countqty = int.parse(qtyController.text);
-      if (currentPlan.countcode == null) {
-        alert(context, "warning", "Warning", "please select tasks");
-      } else if (currentPlan.plancode == null) {
-        alert(context, "warning", "Warning", "please select plan count");
-      } else if (scanLocController.text.isEmpty) {
-        alert(context, "warning", "Warning", "please scan location");
-      } else if (_countqty > 0 && (product.barcode ?? "").isEmpty) {
-        alert(context, "warning", "Warning", "please scan barcode");
-      } else if (scanbarController.text != lineOps.cnbarcode) {
-        alert(context, "warning", "Warning", "please scan barcode");
-        print("LineOps=>${lineOps.cnbarcode}");
-        print("scanbarController=>${scanbarController.text}");
-        setState(() {
-          lineOps.cnarticle = "";
-          scanbarController.text = "";
-          product = new Product();
-          barfocusNode.requestFocus();
-        });
-        // if chanage text and save
-      } else if (scanhuController.text != lineOps.cnhuno) {
-        alert(context, "warning", "Warning", "please scan Huno");
-
-        setState(() {
-          lineOps.cnhuno = "";
-          scanhuController.text = "";
-          hufocusNode.requestFocus();
-        });
-      } else {
-        if (_countqty > 0 && (lineOps.cnarticle ?? "").isEmpty) {
-          setState(() => barfocusNode.requestFocus());
-          alert(context, "warning", "Warning", "Product is required !");
-          return;
-        } else if ((product.article ?? "").isNotEmpty &&
-            (lineOps.cnhuno ?? "").isEmpty) {
-          setState(() => hufocusNode.requestFocus());
-          alert(context, "warning", "Warning", "Huno is required !");
-          return;
-        }
-
-        setState(() => isLoading = true);
-        var countLine = <Countline>[];
-        lineOps.cnlotmfg = batchController.text;
-        DateFormat _format = DateFormat("dd/MM/yyyy");
-
-        // DLC Control
-        if (currentPlan.isdateexp == 1) {
-          lineOps.cndateexp = expController.text.isNotEmpty
-              ? _format.parse(expController.text)
-              : null;
-        }
-
-        if (currentPlan.isdatemfg == 1) {
-          lineOps.cndatemfg = mfgController.text.isNotEmpty
-              ? _format.parse(mfgController.text)
-              : null;
-        }
-
-        lineOps.cnqtypu = int.parse(qtyController.text);
-
-        if (checkNewLine()) {
-          lineOps.cnflow = "NW";
-          lineOps.unitcount = product.unitmanage;
-          print("Set New Line");
-        }
-
-        countLine.add(lineOps);
-
-        // save count
-        await sv.saveCount(countLine);
-
-        alert(context, "success", "Save Result", "Save Line Count Success");
-        clearCount();
-
-        // refresh count sheet
-        await getCountSheet(currentPlan);
-      }
-    } catch (e) {
-      alert(context, "error", "Error", e.toString());
-    }
-  }
-
-  bool checkNewLine() {
-    if (lineOps.starticle.isEmpty) {
-      return false;
-    } else if (lineOps.starticle == lineOps.cnarticle &&
-        lineOps.sthuno == lineOps.cnhuno) {
-      return false;
+    if (line.cnflow == "IO" && scanhuController.text == line.cnhuno && lineProduct.article == line.cnarticle && lineProduct.lv == line.cnlv) {
+      _productVld.isnewhu = false;
+    } else if (line.cnflow.trim() == "" && scanhuController.text == line.sthuno && lineProduct.article == line.starticle && lineProduct.lv == line.stlv) {
+      _productVld.isnewhu = false;
     } else {
-      return true;
+      _productVld.isnewhu = true;
     }
+    return _productVld;
+  }
+
+  Future<void> saveLineSubmit() async {
+    try {
+      final _locOps = scanLocController.text;
+      final _hunOps = scanhuController.text;
+      if (curPlan.countcode == null) {
+        alert(context, "warning", "Warning", "Please selected count tasks");
+      } else if (curPlan.plancode == null) {
+        alert(context, "warning", "Warning", "Please selected plan count");
+      } else if (_locOps.isEmpty) {
+        alert(context, "warning", "Warning", "Location code is required");
+        setState(() => locfocusNode.requestFocus());
+      } else if (qtyController.text.isEmpty) {
+        alert(context, "warning", "Warning", "Count Quantity is required");
+        setState(() => qtyfocusNode.requestFocus());
+      } else if ((lineProduct.barcode ?? "") != scanbarController.text) {
+        alert(context, "warning", "Warning", "The Barcode value is Changed please try again");
+        setState(() => barfocusNode.requestFocus());
+      } else {
+        Productvld _productVld = Productvld();
+
+        // * Generate New HU
+        if (requireGeneratehu) {
+          // get location first row for copy data
+          final _copyCountLine = countSheet.firstWhere((x) => x.loccode == _locOps);
+
+          // fill objecct to model
+          _productVld = await fillCountline(_copyCountLine, false);
+
+          // Todo Calling Web api
+          final _countLine = await sv.generateHU(_productVld);
+          // show new hu result
+          alert(context, "success", "Generate Result", "HU No : ${_countLine.cnhuno} success");
+
+          // refresh count sheet
+          await getCountSheet(curPlan);
+
+          // Todo show next location
+          getNextLocation(prevLocseq);
+
+          clearCount();
+        } else {
+          bool _isCountline = false;
+
+          // * step 1 check counted line
+          if (!_isCountline) {
+            final _countedLine = countSheet.where(
+              (x) => x.cnflow == "IO" && x.loccode == _locOps && x.cnhuno == _hunOps && (x.cnarticle ?? "") == (lineProduct.article ?? "") && (x.cnlv ?? "") == (lineProduct.lv ?? ""),
+            );
+
+            if (_countedLine.length > 0) {
+              _productVld = await fillCountline(_countedLine.first, false);
+              _isCountline = true; // finish
+            }
+          }
+
+          // * step 2 check counting line
+          if (!_isCountline) {
+            final _countingLine = countSheet.where(
+              (x) => x.cnflow.isEmpty && x.loccode == _locOps && x.sthuno == _hunOps && (x.starticle ?? "") == (lineProduct.article ?? "") && (x.stlv ?? "") == (lineProduct.lv ?? ""),
+            );
+
+            if (_countingLine.length > 0) {
+              _productVld = await fillCountline(_countingLine.first, false);
+              _isCountline = true; // finish
+            }
+          }
+
+          // * step 3 check hu counted
+          if (!_isCountline) {
+            final _countingLine = countSheet.where((x) => x.cnflow == "IO" && x.loccode == _locOps && x.cnhuno == _hunOps);
+            if (_countingLine.length > 0) {
+              _productVld = await fillCountline(_countingLine.first, false);
+              _isCountline = true; // finish
+            }
+          }
+
+          // * step 4 check hu counting
+          if (!_isCountline) {
+            final _countingLine = countSheet.where((x) => x.cnflow.isEmpty && x.loccode == _locOps && x.sthuno == _hunOps);
+            if (_countingLine.length > 0) {
+              _productVld = await fillCountline(_countingLine.first, false);
+              _isCountline = true; // finish
+            }
+          }
+
+          // * step 5 check empty stock line
+          if (!_isCountline) {
+            final _emptyStockLine = countSheet.where((x) => x.loccode == _locOps && x.sthuno.isEmpty && x.starticle.isEmpty);
+            if (_emptyStockLine.length > 0) {
+              _productVld = await fillCountline(_emptyStockLine.first, true);
+              _isCountline = true; // finish
+            }
+          }
+
+          // * processing count line
+          final _confrimQty = int.parse(qtyController.text);
+          if (!_isCountline) {
+            alert(context, "error", "Warning", "invalid count line,please try again");
+          } else if (_confrimQty > 0 && scanhuController.text.isEmpty) {
+            alert(context, "warning", "Warning", "HU No is required");
+          } else if (_confrimQty > 0 && scanbarController.text.isEmpty) {
+            alert(context, "warning", "Warning", "Barcode is required");
+          } else {
+            // validate and save count line
+            final _countLine = await sv.validateline(_productVld);
+
+            alert(context, "success", "Save Result", "Save Linecount success");
+
+            // refresh count sheet
+            await getCountSheet(curPlan);
+
+            // Todo show next location
+            if (_productVld.isnewhu) {
+              getNextLocation(prevLocseq);
+            } else {
+              getNextLocation(_countLine.locseq);
+            }
+
+            clearCount();
+          }
+        }
+      }
+    } catch (e) {
+      alert(context, "error", "Error", e.toString());
+    }
+  }
+
+  Future<bool> clearCountSheet() async {
+    SheetTab.countPlan = null;
+    SheetTab.lov.clear();
+    SheetTab.countSheet.clear();
+    Navigator.pop(context);
+    return true;
+  }
+
+  // * local alert method
+  Future<void> alert(ctx, type, title, text) async {
+    setState(() => isLoading = false);
+    var alert = DialogAlert(
+      title: title,
+      content: text.replaceAll('Exception:', ''),
+      type: type,
+      onOk: () {},
+    );
+    await showDialog(
+      context: ctx,
+      builder: (BuildContext context) => alert,
+    );
+  }
+
+  void getNextLocation(int currentseq) {
+    prevLocseq = currentseq;
+    final _sheet = countSheet;
+    if (countSheet.length == 0) return;
+    if (scanLocController.text.isEmpty) return;
+    int _nextIndex = _sheet.indexWhere((x) => x.locseq > currentseq && (x.cnflow ?? "") == "");
+    // ! re check is no count
+    if (_nextIndex == -1) {
+      _nextIndex = _sheet.indexWhere((x) => x.locseq > 0 && x.locseq != currentseq && (x.cnflow ?? "") == "");
+    }
+    // * Display Next Location
+    setState(() {
+      if (_nextIndex == -1 || _nextIndex > _sheet.length - 1) {
+        nextLocation = ""; // * empty with Completed
+      } else {
+        nextLocation = countSheet[_nextIndex].loccode; // * Show Next Location
+      }
+    });
+  }
+
+  Future<void> bindingControls(Countline line) async {
+    // * declare vailable
+    print("allowScanProduct=> $requireScanProduct");
+    isLineCounted = line.cnflow.trim().isNotEmpty;
+    isLineBarcode = (line.cnbarcode.isNotEmpty || line.stbarcode.isNotEmpty) ? true : false;
+    lineBarcode = (line.cnbarcode.isEmpty ? line.stbarcode : line.cnbarcode);
+
+    Productvld _product = Productvld();
+    if ((!allowScanProduct || !requireScanProduct) && isLineBarcode) {
+      lineBarcode = line.cnbarcode.isEmpty ? line.stbarcode : line.cnbarcode;
+      _product = await sv.findProduct(Productvld(barcode: lineBarcode, pv: -1, lv: -1, qtycount: 0, isnewhu: false, loccode: line.loccode));
+    }
+    setState(() {
+      if (isLineCounted) {
+        Fluttertoast.showToast(msg: "Line is Counted", backgroundColor: colorStem);
+        scanhuController.text = line.cnhuno;
+        expController.text = formatDate(line.cndateexp);
+        mfgController.text = formatDate(line.cndatemfg);
+        if ((allowScanProduct || requireScanProduct)) {
+          isLineBarcode = false;
+          scanbarController.text = "";
+          lineBarcode = "";
+          lineProduct = Productvld();
+          qtyController.text = "";
+          expController.text = "";
+          mfgController.text = "";
+          unitDesrt = "";
+        } else {
+          lineProduct = _product;
+          scanbarController.text = line.cnbarcode;
+          qtyController.text = line.cnqtypu.toString();
+          expController.text = formatDate(line.cndateexp);
+          mfgController.text = formatDate(line.cndatemfg);
+          unitDesrt = decodeUnit(line.unitcount);
+        }
+      } else {
+        Fluttertoast.showToast(msg: "Start Couting", backgroundColor: colorStem);
+        scanhuController.text = line.sthuno;
+
+        if ((allowScanProduct || requireScanProduct)) {
+          isLineBarcode = false;
+          requireScanProduct = true;
+          scanbarController.text = "";
+          lineBarcode = "";
+          lineProduct = Productvld();
+          expController.text = "";
+          mfgController.text = "";
+          qtyController.text = "";
+          unitDesrt = "";
+        } else {
+          lineProduct = _product;
+          scanbarController.text = line.cnbarcode;
+          qtyController.text = line.stqtypu.toString();
+          expController.text = formatDate(line.stdateexp);
+          mfgController.text = formatDate(line.stdatemfg);
+          if (locatioinType == "R") {
+            qtyController.text = line.stqtypu.toString();
+            unitDesrt = decodeUnit(line.unitcount);
+          } else {
+            qtyController.text = "";
+          }
+        }
+      }
+    });
   }
 
   void clearScreen() {
     setState(() {
       isLoading = false;
       specialloc = false;
-      lineOps = new Countline();
-      currentPlan = new Countplan();
-      product = Product();
+      requireScanProduct = false;
+      requireScanhu = false;
+      requireGeneratehu = false;
+      curPlan = new Countplan();
+      lineProduct = Productvld();
       scanLocController.text = "";
       scanbarController.text = "";
       scanhuController.text = "";
@@ -623,9 +570,10 @@ class _CountTab extends State<CountTab> with SingleTickerProviderStateMixin {
       mfgController.text = "";
       qtyController.text = "";
       locfocusNode.requestFocus();
-      unitcount = "";
-      CountScreen.currentCountCode = currentPlan.countcode;
-      CountScreen.currentPlanCount = currentPlan.plancode;
+      unitDesrt = "";
+      locatioinType = "";
+      CountScreen.currentCountCode = curPlan.countcode;
+      CountScreen.currentPlanCount = curPlan.plancode;
       SheetTab.countPlan = new Countplan();
       SheetTab.countSheet = [];
     });
@@ -634,33 +582,31 @@ class _CountTab extends State<CountTab> with SingleTickerProviderStateMixin {
   void clearCount() {
     setState(() {
       isLoading = false;
-      lineOps = new Countline();
-      product = Product();
-      scanLocController.text = "";
+      allowScanProduct = false;
+      requireGeneratehu = false;
+      requireScanProduct = false;
+      requireScanhu = false;
+      lineProduct = Productvld();
+      if (!specialloc) {
+        scanLocController.text = "";
+        locatioinType = "";
+      }
       scanbarController.text = "";
       scanhuController.text = "";
       batchController.text = "";
       expController.text = "";
       mfgController.text = "";
       qtyController.text = "";
+      unitDesrt = "";
       locfocusNode.requestFocus();
-      unitcount = "";
     });
   }
 
-  String decTflow(String tflow) {
-    try {
-      switch (tflow) {
-        case "CC":
-          return "Cycle count";
-        case "CT":
-          return "Stock take";
-        default:
-          return tflow;
-      }
-    } catch (e) {
-      alert(context, "error", "Error", e.toString());
-      return tflow;
+  String formatDate(dynamic _date) {
+    if (_date == null || _date == '') {
+      return "";
+    } else {
+      return DateFormat('dd/MM/yyyy').format(_date);
     }
   }
 
@@ -679,44 +625,16 @@ class _CountTab extends State<CountTab> with SingleTickerProviderStateMixin {
     }
   }
 
-  Color planState(String tflow) {
-    try {
-      switch (tflow) {
-        case "XX":
-          return Colors.red;
-        case "ED":
-          return Colors.green;
-        default:
-          return Colors.grey;
-      }
-    } catch (e) {
-      return Colors.grey;
-    }
-  }
-
-  Future<void> alert(ctx, type, title, text) async {
-    setState(() => isLoading = false);
-    var alert = DialogAlert(
-      title: title,
-      content: text.replaceAll('Exception:', ''),
-      type: type,
-      onOk: () {},
-    );
-    await showDialog(
-      context: ctx,
-      builder: (BuildContext context) => alert,
-    );
-  }
-
   @override
   void initState() {
     super.initState();
     setState(() {
-      currentPlan = SheetTab.countPlan;
+      curPlan = SheetTab.countPlan;
       countSheet = SheetTab.countSheet;
+      allowScanProduct = (curPlan?.allowscanhu ?? 0) == 0 ? false : true;
     });
 
-    countUnit();
+    listUnitCount();
   }
 
   @override
@@ -740,20 +658,12 @@ class _CountTab extends State<CountTab> with SingleTickerProviderStateMixin {
     super.dispose();
   }
 
-  Future<bool> clearList() async {
-    SheetTab.countPlan = null;
-    SheetTab.lov.clear();
-    SheetTab.countSheet.clear();
-    Navigator.pop(context);
-    return true;
-  }
-
   @override
   Widget build(BuildContext context) {
     // get profile arguments
     profile = ModalRoute.of(context).settings.arguments as Profiles;
     return WillPopScope(
-      onWillPop: () async => await clearList(),
+      onWillPop: () async => await clearCountSheet(),
       child: ProgressContainer(
         child: buildScreen(context),
         inAsyncCall: isLoading,
@@ -777,80 +687,88 @@ class _CountTab extends State<CountTab> with SingleTickerProviderStateMixin {
   final expfocusNode = FocusNode();
   final mfgfocusNode = FocusNode();
   final qtyfocusNode = FocusNode();
-  Countplan currentPlan = Countplan();
+  Countplan curPlan = Countplan();
   Widget buildScreen(BuildContext context) {
     var locfromTextField = TextField(
       onSubmitted: (value) async {
         if (value.isNotEmpty) {
-          await scanloc(value);
+          await scanLocaSubmit(value);
         }
       },
       controller: scanLocController,
       focusNode: locfocusNode,
       textAlign: TextAlign.right,
+      // enabled: !requireGeneratehu,
       decoration: Txtheme.deco(
-          icon: Icons.search,
-          label: "LOC ",
-          suffix: "${lineOps?.locctype ?? ""}"),
+        icon: Icons.search,
+        label: "Location ",
+        suffix: "$locatioinType",
+        // enabled: !requireGeneratehu,
+      ),
     );
     var hunoTextField = TextField(
       controller: scanhuController,
       focusNode: hufocusNode,
       textAlign: TextAlign.right,
+      enabled: !requireGeneratehu,
       decoration: Txtheme.deco(
         icon: Icons.tab,
-        label: "HU No ",
+        label: "HU ",
+        enabled: !requireGeneratehu,
       ),
       onSubmitted: (scanhuno) async {
-        if (scanhuno.isNotEmpty) {
-          await scanhu(scanhuno);
-        }
+        await scanHunoSubmit(scanhuno);
       },
     );
 
     var barcodeTextField = TextField(
       onSubmitted: (value) async {
         if (value.isNotEmpty) {
-          await scanbar(value);
+          await scanBarcSubmit(value);
         }
       },
+      // enabled: (allowScanProduct || requireScanProduct) ? true : false,
       controller: scanbarController,
       focusNode: barfocusNode,
       textAlign: TextAlign.right,
       decoration: Txtheme.deco(
         icon: Icons.fit_screen,
         label: "Barcode ",
+        // enabled: (allowScanProduct || requireScanProduct) ? true : false,
       ),
     );
     var batchTextField = TextField(
       onSubmitted: (value) async {
         if (value.isNotEmpty) {}
       },
-      enabled: currentPlan?.isbatchno == 1 ? true : false,
+      enabled: curPlan?.isbatchno == 1 ? true : false,
       controller: batchController,
       focusNode: batchfocusNode,
+      textAlign: TextAlign.right,
       decoration: Txtheme.deco(
         icon: Icons.bookmark,
         label: "Batch No ",
-        enabled: currentPlan?.isbatchno == 1 ? true : false,
+        prefix: "",
+        suffix: "",
+        enabled: curPlan?.isbatchno == 1 ? true : false,
       ),
     );
     var expTextField = TextField(
-      enabled: currentPlan?.isdateexp == 1 ? true : false,
+      enabled: curPlan?.isdateexp == 1 ? true : false,
       controller: expController,
       focusNode: expfocusNode,
       textAlign: TextAlign.right,
       decoration: Txtheme.deco(
         icon: Icons.calendar_today,
-        label: "Expire Date ",
-        enabled: currentPlan?.isdateexp == 1 ? true : false,
+        label: "Expire Date",
+        prefix: "",
+        suffix: "",
+        enabled: curPlan?.isdateexp == 1 ? true : false,
       ),
       onTap: () async {
         await showDatePicker(
           context: context,
-          initialDate: expController.text.isEmpty
-              ? DateTime.now()
-              : DateFormat("dd/MM/yyyy").parse(expController.text),
+          initialDate: expController.text.isEmpty ? DateTime.now() : DateFormat("dd/MM/yyyy").parse(expController.text),
           firstDate: DateTime(DateTime.now().year - 10, 1),
           lastDate: DateTime(DateTime.now().year + 20, 12),
           builder: (BuildContext context, Widget picker) {
@@ -859,8 +777,7 @@ class _CountTab extends State<CountTab> with SingleTickerProviderStateMixin {
         ).then(
           (selectedDate) {
             if (selectedDate != null) {
-              expController.text =
-                  DateFormat('dd/MM/yyyy').format(selectedDate);
+              expController.text = DateFormat('dd/MM/yyyy').format(selectedDate);
               // _selectExp(expController.text);
             } else {
               mfgController.text = "";
@@ -870,67 +787,33 @@ class _CountTab extends State<CountTab> with SingleTickerProviderStateMixin {
         );
       }, // ontab
     );
-    // var mfgTextField = TextField(
-    //   enabled: plan.isdatemfg == 1 ? true : false,
-    //   controller: mfgController,
-    //   focusNode: mfgfocusNode,
-    //   decoration: Txtheme.deco(
-    //     label: "Mfg : ",
-    //     enabled: plan.isdatemfg == 1 ? true : false,
-    //   ),
-    //   onTap: () async {
-    //     await showDatePicker(
-    //       context: context,
-    //       initialDate: mfgController.text.isEmpty
-    //           ? DateTime.now()
-    //           : DateFormat("dd/MM/yyyy").parse(mfgController.text),
-    //       firstDate: DateTime(DateTime.now().year - 10, 1),
-    //       lastDate: DateTime(DateTime.now().year + 20, 12),
-    //       builder: (BuildContext context, Widget picker) {
-    //         return DatePickTheme(picker: picker);
-    //       },
-    //     ).then(
-    //       (selectedDate) {
-    //         print("selectedDate : $selectedDate");
-    //         if (selectedDate != null) {
-    //           mfgController.text = DateFormat(
-    //             'dd/MM/yyyy',
-    //           ).format(selectedDate);
-
-    //           // _selectMfg(mfgController.text);
-    //         } else {
-    //           expController.text = "";
-    //           mfgController.text = "";
-    //         }
-    //       },
-    //     );
-    //   },
-    // );
 
     var qtyTextField = TextField(
       controller: qtyController,
       focusNode: qtyfocusNode,
+      textAlign: TextAlign.right,
       keyboardType: TextInputType.number,
-      textAlign: TextAlign.center,
+      // enabled: (allowScanProduct || requireScanProduct) ? false : true,
       decoration: Txtheme.deco(
+        // enabled: (allowScanProduct || requireScanProduct) ? false : true,
         icon: Icons.save,
-        label: "Quantity ",
-        suffix: "${unitcount ?? 'SKU'}",
+        label: "Qty ",
+        suffix: "${unitDesrt ?? 'SKU'}",
       ),
     );
 
     var confirmLocButton = ButtonTheme(
       height: 30.0,
       child: ElevatedButton.icon(
-          style: ElevatedButton.styleFrom(primary: successColor),
+          style: ElevatedButton.styleFrom(primary: requireGeneratehu ? primaryColor : successColor),
           icon: Icon(Icons.save_alt, size: 13),
-          label: Text("Save"),
-          onPressed: currentPlan != null
+          label: Text(requireGeneratehu ? "Generate & Save" : "Save Count"),
+          onPressed: curPlan != null
               ? () async {
                   var conf = DialogConfirm(
-                    title: "Confirm Count",
-                    content: "do you confirm count line ?",
-                    onYes: () async => await saveCount(),
+                    title: "Confirm Count line",
+                    content: "do you confirm count quantity ?",
+                    onYes: () async => await saveLineSubmit(),
                     onNo: () {},
                   );
 
@@ -946,7 +829,7 @@ class _CountTab extends State<CountTab> with SingleTickerProviderStateMixin {
       appBar: AppBar(
         leadingWidth: 50,
         leading: IconButton(
-          onPressed: () async => await clearList(),
+          onPressed: () async => await clearCountSheet(),
           icon: Icon(CupertinoIcons.home, size: 20),
         ),
         title: Text("Stok Count"),
@@ -967,9 +850,9 @@ class _CountTab extends State<CountTab> with SingleTickerProviderStateMixin {
               );
               if (selPlan != null) {
                 setState(() {
-                  currentPlan = selPlan as Countplan;
-                  CountScreen.currentCountCode = currentPlan.countcode;
-                  CountScreen.currentPlanCount = currentPlan.plancode;
+                  curPlan = selPlan as Countplan;
+                  CountScreen.currentCountCode = curPlan.countcode;
+                  CountScreen.currentPlanCount = curPlan.plancode;
                 });
                 await getCountSheet(selPlan as Countplan);
               }
@@ -989,11 +872,12 @@ class _CountTab extends State<CountTab> with SingleTickerProviderStateMixin {
                     flex: 2,
                     child: ListTile(
                       title: Text(
-                        "${currentPlan?.planname ?? "No Plan"}",
-                        style: TextStyle(fontSize: 16, color: colorSeeds),
+                        "${curPlan?.planname ?? "No Plan"}",
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(fontSize: 14, color: colorSeeds, fontWeight: FontWeight.bold),
                       ),
                       subtitle: Text(
-                        "Type: ${currentPlan?.countType ?? ""}",
+                        "Type: ${curPlan?.countType ?? ""}",
                         style: TextStyle(fontSize: 11, color: colorBlue),
                       ),
                     ),
@@ -1001,12 +885,9 @@ class _CountTab extends State<CountTab> with SingleTickerProviderStateMixin {
                   Expanded(
                     child: ListTile(
                       title: Text(
-                        "${currentPlan?.plancode ?? "0"}",
+                        "${curPlan?.plancode ?? "0"}",
                         textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontSize: 16,
-                            color: colorSeeds,
-                            fontWeight: FontWeight.bold),
+                        style: TextStyle(fontSize: 14, color: colorSeeds, fontWeight: FontWeight.bold),
                       ),
                       subtitle: Text(
                         "Plan Code",
@@ -1026,10 +907,85 @@ class _CountTab extends State<CountTab> with SingleTickerProviderStateMixin {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  locfromTextField,
+                  Row(
+                    children: [
+                      Expanded(child: locfromTextField),
+                      SizedBox(width: 10),
+                      SizedBox(
+                        width: 50,
+                        child: Column(
+                          children: [
+                            Text(
+                              "Generate",
+                              style: TextStyle(fontSize: 12),
+                            ),
+                            Text(
+                              "NEW HU",
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: primaryColor,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                   SizedBox(height: 10),
-                  barcodeTextField,
-                  SizedBox(height: 20),
+                  Row(
+                    children: [
+                      Expanded(child: hunoTextField),
+                      SizedBox(width: 5),
+                      SizedBox(
+                        width: 55,
+                        child: Switch(
+                          value: requireGeneratehu,
+                          onChanged: (value) {
+                            setState(() {
+                              requireGeneratehu = value;
+                              if (value) {
+                                requireScanProduct = true;
+                                scanhuController.text = "";
+                                // requireScanProduct = false;
+                              } else {
+                                hufocusNode.requestFocus();
+                              }
+                            });
+                          },
+                          activeTrackColor: infoColor,
+                          activeColor: primaryColor,
+                        ),
+                        // child: CustomSwitch(
+                        //   value: requireGeneratehu,
+                        //   onChanged: (bool val) {
+                        //     setState(() {
+                        //       requireGeneratehu = val;
+                        //       if (requireGeneratehu) {
+                        //         scanhuController.text = "";
+                        //         requireScanProduct = true;
+                        //       } else {
+                        //         requireScanProduct = true;
+                        //         hufocusNode.requestFocus();
+                        //       }
+                        //     });
+                        //   },
+                        // ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 10),
+                  Row(
+                    children: [
+                      Expanded(child: barcodeTextField),
+                      SizedBox(width: 10),
+                      SizedBox(
+                        width: 50,
+                      ),
+                    ],
+                  ),
+
+                  SizedBox(height: 15),
                   Row(
                     children: [
                       SizedBox(
@@ -1039,67 +995,80 @@ class _CountTab extends State<CountTab> with SingleTickerProviderStateMixin {
                             style: TextStyle(fontSize: 12),
                           )),
                       Text(
-                        "${product.article ?? ""} ${product.lv ?? ""}",
+                        "${lineProduct.article ?? ""} ${lineProduct.lv ?? ""}",
                         style: TextStyle(color: colorPoppy, fontSize: 12),
                       )
                     ],
                   ),
                   SizedBox(height: 10),
-                  (product.descalt ?? "").isEmpty
+                  (lineProduct.descalt ?? "").isEmpty
                       ? Text(
                           "Product Description",
-                          style: TextStyle(
-                              fontSize: 12,
-                              color: Colors.grey,
-                              fontStyle: FontStyle.italic),
+                          style: TextStyle(fontSize: 12, color: Colors.grey, fontStyle: FontStyle.italic),
                         )
                       : Text(
-                          "${product.descalt ?? ""}",
+                          "${lineProduct.descalt ?? ""}",
                           style: TextStyle(fontSize: 12, color: colorPoppy),
                         ),
 
                   SizedBox(height: 15),
-                  hunoTextField,
-                  SizedBox(height: 10),
-                  batchTextField,
-                  SizedBox(height: 10),
-                  expTextField,
-                  // Row(
-                  //   children: [
-                  //     Expanded(child: mfgTextField),
-                  //     SizedBox(width: 5),
-                  //     Expanded(child: expTextField),
-                  //   ],
-                  // ),
+                  Row(
+                    children: [
+                      Expanded(child: batchTextField),
+                      SizedBox(width: 5),
+                      Expanded(child: expTextField),
+                    ],
+                  ),
+                  //   batchTextField,
+                  //   SizedBox(height: 10),
+                  //   expTextField,
                   SizedBox(height: 10),
                   Row(
                     children: [
-                      Expanded(child: qtyTextField),
+                      SizedBox(
+                        width: 150,
+                        child: Column(
+                          children: [
+                            Text(
+                              "",
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: primaryColor,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text(
+                              "Next Location",
+                              style: TextStyle(
+                                fontSize: 12,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                       SizedBox(width: 10),
-                      confirmLocButton
+                      Expanded(child: qtyTextField),
+                      //   confirmLocButton
                     ],
                   ),
                   SizedBox(height: 5),
                   Row(
                     children: [
-                      Text(
-                        "Next",
-                        style: TextStyle(
-                          fontSize: 12,
-                          color: Colors.grey,
-                        ),
-                      ),
                       SizedBox(
-                        width: 10,
-                      ),
-                      Text(
-                        nextLocation,
-                        style: TextStyle(
-                          color: colorSeeds,
-                          fontSize: 13,
-                          fontWeight: FontWeight.bold,
+                        width: 150,
+                        child: Text(
+                          nextLocation,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: primaryColor,
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
+                      SizedBox(width: 10),
+                      //  genHuButton,
+                      Expanded(child: confirmLocButton),
                     ],
                   )
                 ],

@@ -221,4 +221,12 @@ export interface product_vld {
     datemfg?: Date;
     dateexp?: Date;
     serialno?: string;
+    rtoskuofpu?: number;
+    rtopckoflayer?: number;
+    rtolayerofhu?: number;
+    rtopckofpallet?: number;
+    rtoskuofipck?: number;
+    rtoskuofpck?: number;
+    rtoskuoflayer?: number;
+    rtoskuofhu?: number;
 }

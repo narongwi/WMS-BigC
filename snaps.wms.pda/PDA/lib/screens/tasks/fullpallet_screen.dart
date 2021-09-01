@@ -194,8 +194,7 @@ class _ApproachScreen extends State<ApproachScreen> {
 
       // no data found
       if (fillterResult.length == 0) {
-        alert(context, "warning", "Warning",
-            "invalid source location $sourceloc");
+        alert(context, "warning", "Warning", "invalid source location $sourceloc");
 
         // back to scan location
         fromfocusNode.requestFocus();
@@ -239,8 +238,7 @@ class _ApproachScreen extends State<ApproachScreen> {
       if (_taskList.length == 0 || _target == null) {
         alert(context, "warning", "Warning", "invalid HU No $sourcehu");
       } else {
-        alert(
-            context, "info", "Target : ${_target.sourceloc}", "HU : $sourcehu");
+        alert(context, "info", "Target : ${_target.sourceloc}", "HU : $sourcehu");
       }
 
       setState(() {
@@ -261,11 +259,7 @@ class _ApproachScreen extends State<ApproachScreen> {
       } else {
         setState(() => isLoading = true);
         FocusScope.of(context).requestFocus(new FocusNode());
-        final _filterloc = TaskFilter(
-            tasktype: 'A',
-            tflow: 'IO',
-            sourceloc: scanLocController.text,
-            sourcehuno: sourcehu);
+        final _filterloc = TaskFilter(tasktype: 'A', tflow: 'IO', sourceloc: scanLocController.text, sourcehuno: sourcehu);
         final _selecthu = await service.lists(_filterloc);
         if (_selecthu.length == 0) {
           alert(context, "warning", "Warning", "invalid HU No $sourcehu");
@@ -284,13 +278,11 @@ class _ApproachScreen extends State<ApproachScreen> {
     final _line = _task.lines.single;
     final _arts = await service.productInfo(_line.article, _line.lv.toString());
     if (_line.accnassign != profile.accncode && _task.tflow == 'IO') {
-      alert(context, "info", "Infomation",
-          "location ${_selecthu.sourceloc} is already working on user ${_line.accnassign}");
+      alert(context, "info", "Infomation", "location ${_selecthu.sourceloc} is already working on user ${_line.accnassign}");
       setState(() => isconfirm = false);
     } else if (_task.tflow != 'IO') {
       setState(() => isconfirm = false);
-      alert(context, "success", "Information",
-          "HU ${_selecthu.sourceloc} is Finished!");
+      alert(context, "success", "Information", "HU ${_selecthu.sourceloc} is Finished!");
     } else {
       setState(() => isconfirm = true);
     }
@@ -312,8 +304,7 @@ class _ApproachScreen extends State<ApproachScreen> {
     } else if (conflocController.text.isEmpty) {
       alert(context, "warning", "Warning", "confirm location is required !");
     } else if (conflocController.text != taskline.targetadv) {
-      alert(context, "warning", "Warning",
-          "Location ${conflocController.text} is invalid !");
+      alert(context, "warning", "Warning", "Location ${conflocController.text} is invalid !");
       confirmFcusNode.requestFocus();
     } else {
       taskmvt.lines[0].skipdigit = "skip";
@@ -324,8 +315,7 @@ class _ApproachScreen extends State<ApproachScreen> {
       try {
         setState(() => isLoading = true);
         await service.confirm(taskmvt);
-        alert(context, "success", "Information",
-            " confirm replenishment success");
+        alert(context, "success", "Information", " confirm replenishment success");
 
         clearScreen();
         // refresh
@@ -412,7 +402,10 @@ class _ApproachScreen extends State<ApproachScreen> {
         onPressed: () => Navigator.pop(context),
         icon: Icon(CupertinoIcons.home, size: 20),
       ),
-      title: Text('Full Pallet'),
+      title: Text(
+        'Full Pallet',
+        style: TextStyle(fontWeight: FontWeight.bold),
+      ),
       actions: <Widget>[
         IconButton(
           icon: const Icon(CupertinoIcons.plus_circle, color: colorBlue),
@@ -482,10 +475,7 @@ class _ApproachScreen extends State<ApproachScreen> {
           product.descalt == null
               ? Text(
                   "Product Description",
-                  style: TextStyle(
-                      fontSize: 12,
-                      color: Colors.grey,
-                      fontStyle: FontStyle.italic),
+                  style: TextStyle(fontSize: 12, color: Colors.grey, fontStyle: FontStyle.italic),
                 )
               : Text(
                   "${product.descalt ?? ""}",
@@ -607,8 +597,7 @@ class _ApproachScreen extends State<ApproachScreen> {
             "Loc.Suggest ",
             style: TextStyle(fontSize: 12),
           ),
-          Text("${taskline.targetadv ?? ""}",
-              style: TextStyle(color: successColor))
+          Text("${taskline.targetadv ?? ""}", style: TextStyle(color: successColor))
         ],
       ),
     );

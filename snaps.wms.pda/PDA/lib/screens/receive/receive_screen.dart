@@ -393,8 +393,7 @@ class _ReceiveScreen extends State<ReceiveScreen> {
     } else if (poline.isdlc == 1 && this.expController.text.isEmpty) {
       alert(context, "error", "Warning", "Expire date is require");
     } else {
-      final _radio =
-          radio.firstWhere((s) => s.valopnfirst == poline.unitreceipt);
+      final _radio = radio.firstWhere((s) => s.valopnfirst == poline.unitreceipt);
       final _radiohu = radio.firstWhere((s) => s.valopnfirst == '5');
       final _skurec = int.parse(qtyController.text) * int.parse(_radio.value);
       final _purec = int.parse(qtyController.text);
@@ -429,16 +428,11 @@ class _ReceiveScreen extends State<ReceiveScreen> {
             qtyweightrec: 0,
             qtynaturalloss: 0,
             daterec: _nowdate,
-            datemfg: mfgController.text.isEmpty
-                ? null
-                : _format.parse(mfgController.text),
-            dateexp: expController.text.isEmpty
-                ? null
-                : _format.parse(expController.text),
+            datemfg: mfgController.text.isEmpty ? null : _format.parse(mfgController.text),
+            dateexp: expController.text.isEmpty ? null : _format.parse(expController.text),
             batchno: batchController.text.isEmpty ? null : batchController.text,
             lotno: batchController.text.isEmpty ? null : batchController.text,
-            serialno:
-                serialController.text.isEmpty ? null : serialController.text,
+            serialno: serialController.text.isEmpty ? null : serialController.text,
             datecreate: _nowdate,
             accncreate: poline.accncreate,
             datemodify: _nowdate,
@@ -450,8 +444,7 @@ class _ReceiveScreen extends State<ReceiveScreen> {
 
           await service.confirm(playload);
           await _searchpo(suppoController.text);
-          alert(
-              context, "success", "Receive", "  Confirm line receipt success");
+          alert(context, "success", "Receive", "  Confirm line receipt success");
           resetScanproduct();
           barcodeFocusNode.requestFocus();
           print("Saved!");
@@ -622,9 +615,7 @@ class _ReceiveScreen extends State<ReceiveScreen> {
         if (poline.isdlc != 1) return;
         await showDatePicker(
           context: context,
-          initialDate: mfgController.text.isEmpty
-              ? DateTime.now()
-              : DateFormat("dd/MM/yyyy").parse(mfgController.text),
+          initialDate: mfgController.text.isEmpty ? DateTime.now() : DateFormat("dd/MM/yyyy").parse(mfgController.text),
           firstDate: DateTime(DateTime.now().year - 10, 1),
           lastDate: DateTime(DateTime.now().year + 20, 12),
           builder: (BuildContext context, Widget picker) {
@@ -659,9 +650,7 @@ class _ReceiveScreen extends State<ReceiveScreen> {
         if (poline.isdlc != 1) return;
         await showDatePicker(
           context: context,
-          initialDate: expController.text.isEmpty
-              ? DateTime.now()
-              : DateFormat("dd/MM/yyyy").parse(expController.text),
+          initialDate: expController.text.isEmpty ? DateTime.now() : DateFormat("dd/MM/yyyy").parse(expController.text),
           firstDate: DateTime(DateTime.now().year - 10, 1),
           lastDate: DateTime(DateTime.now().year + 20, 12),
           builder: (BuildContext context, Widget picker) {
@@ -783,21 +772,14 @@ class _ReceiveScreen extends State<ReceiveScreen> {
                 headingRowHeight: 40,
                 headingRowColor: rowColor,
                 columns: [
-                  DataColumn(
-                      label: SizedBox(
-                          width: 50,
-                          child: Text("Product", style: colTextStyle))),
+                  DataColumn(label: SizedBox(width: 50, child: Text("Product", style: colTextStyle))),
                   DataColumn(label: Text("LV", style: colTextStyle)),
                   DataColumn(
-                    label: SizedBox(
-                        width: 100,
-                        child: Text("Description", style: colTextStyle)),
+                    label: SizedBox(width: 100, child: Text("Description", style: colTextStyle)),
                   ),
                   DataColumn(label: Text("Status", style: colTextStyle)),
-                  DataColumn(
-                      label: Text("PO PU", style: colTextStyle), numeric: true),
-                  DataColumn(
-                      label: Text("PO SKU", style: colTextStyle), numeric: true)
+                  DataColumn(label: Text("PO PU", style: colTextStyle), numeric: true),
+                  DataColumn(label: Text("PO SKU", style: colTextStyle), numeric: true)
                 ],
                 rows: searchpo.lines
                     .map(
@@ -807,8 +789,7 @@ class _ReceiveScreen extends State<ReceiveScreen> {
                           DataCell(Text(item.lv.toString())),
                           DataCell(Text(item.description, style: blueStyle)),
                           DataCell(
-                            Text(item.tflow == 'IO' ? 'Active' : 'Confirm',
-                                style: blueStyle),
+                            Text(item.tflow == 'IO' ? 'Active' : 'Confirm', style: blueStyle),
                           ),
                           DataCell(
                             Text(item.qtypu.toString(), style: redStyle),
@@ -834,6 +815,7 @@ class _ReceiveScreen extends State<ReceiveScreen> {
         ),
         title: Text(
           'Receive',
+          style: TextStyle(fontWeight: FontWeight.bold),
         ),
         actions: <Widget>[
           IconButton(
@@ -891,10 +873,7 @@ class _ReceiveScreen extends State<ReceiveScreen> {
             product.descalt == null
                 ? Text(
                     "Product Description",
-                    style: TextStyle(
-                        fontSize: 12,
-                        color: Colors.grey,
-                        fontStyle: FontStyle.italic),
+                    style: TextStyle(fontSize: 12, color: Colors.grey, fontStyle: FontStyle.italic),
                   )
                 : Text(
                     "${product.descalt ?? ""}",
@@ -946,55 +925,52 @@ class _ReceiveScreen extends State<ReceiveScreen> {
           child: SingleChildScrollView(
         child: Container(
           padding: const EdgeInsets.only(left: 20, right: 20, bottom: 30),
-          child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
+          child: Column(mainAxisAlignment: MainAxisAlignment.start, crossAxisAlignment: CrossAxisAlignment.start, children: [
+            SizedBox(height: 10),
+            suppoTextFiled,
+            SizedBox(height: 10),
+            supnameTextFiled,
+            recdateTextFiled,
+            SizedBox(height: 10),
+            Row(
               children: [
-                SizedBox(height: 10),
-                suppoTextFiled,
-                SizedBox(height: 10),
-                supnameTextFiled,
-                recdateTextFiled,
-                SizedBox(height: 10),
-                Row(
-                  children: [
-                    Expanded(child: dockTextFiled),
-                    SizedBox(width: 10),
-                    startButton,
-                  ],
-                ),
-                SizedBox(height: 5),
-                barcodeTextField,
-                SizedBox(height: 10),
-                productCard(),
-                Row(
-                  children: [
-                    Expanded(child: batchTextFiled),
-                    SizedBox(width: 5),
-                    Expanded(child: serialTextField),
-                  ],
-                ),
-                SizedBox(height: 10),
-                Row(
-                  children: [
-                    Expanded(child: mfgTextField),
-                    SizedBox(width: 5),
-                    Expanded(child: expTextField),
-                  ],
-                ),
-                SizedBox(height: 10),
-                Row(
-                  children: [
-                    Expanded(child: qtyTextField),
-                    SizedBox(width: 10),
-                    confirmButton,
-                  ],
-                ),
-                // SizedBox(height: 20),
-                // Text("Pending Receive", style: tsStyle),
-                SizedBox(height: 20),
-                searchpo == null ? Container() : taskTable(context),
-              ]),
+                Expanded(child: dockTextFiled),
+                SizedBox(width: 10),
+                startButton,
+              ],
+            ),
+            SizedBox(height: 5),
+            barcodeTextField,
+            SizedBox(height: 10),
+            productCard(),
+            Row(
+              children: [
+                Expanded(child: batchTextFiled),
+                SizedBox(width: 5),
+                Expanded(child: serialTextField),
+              ],
+            ),
+            SizedBox(height: 10),
+            Row(
+              children: [
+                Expanded(child: mfgTextField),
+                SizedBox(width: 5),
+                Expanded(child: expTextField),
+              ],
+            ),
+            SizedBox(height: 10),
+            Row(
+              children: [
+                Expanded(child: qtyTextField),
+                SizedBox(width: 10),
+                confirmButton,
+              ],
+            ),
+            // SizedBox(height: 20),
+            // Text("Pending Receive", style: tsStyle),
+            SizedBox(height: 20),
+            searchpo == null ? Container() : taskTable(context),
+          ]),
         ),
       )),
     );

@@ -75,10 +75,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 Text(
                   "- $updateInfo",
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: defaultColor,
-                  ),
+                  style: TextStyle(fontSize: 12, color: defaultColor),
                 )
               ],
             ),
@@ -214,16 +211,10 @@ class _LoginScreenState extends State<LoginScreen> {
   Future<void> login() async {
     try {
       if (usernameController.text.isEmpty) {
-        Fluttertoast.showToast(
-          msg: "please enter username",
-          backgroundColor: colorWatermelon,
-        );
+        Fluttertoast.showToast(msg: "please enter username", backgroundColor: colorWatermelon);
         // alert(context, "warning", "Warning", "please enter username");
       } else if (passwordController.text.isEmpty) {
-        Fluttertoast.showToast(
-          msg: "please enter password",
-          backgroundColor: colorWatermelon,
-        );
+        Fluttertoast.showToast(msg: "please enter password", backgroundColor: colorWatermelon);
         // alert(context, "warning", "Warning", "please enter password");
       } else {
         // hide keyboard focus
@@ -283,12 +274,9 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Future<bool> _checkPermission() async {
     if (Platform.isAndroid) {
-      PermissionStatus permission = await PermissionHandler()
-          .checkPermissionStatus(PermissionGroup.storage);
+      PermissionStatus permission = await PermissionHandler().checkPermissionStatus(PermissionGroup.storage);
       if (permission != PermissionStatus.granted) {
-        Map<PermissionGroup, PermissionStatus> permissions =
-            await PermissionHandler()
-                .requestPermissions([PermissionGroup.storage]);
+        Map<PermissionGroup, PermissionStatus> permissions = await PermissionHandler().requestPermissions([PermissionGroup.storage]);
         if (permissions[PermissionGroup.storage] == PermissionStatus.granted) {
           return true;
         }
@@ -302,8 +290,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Future<String> _apkLocalPath() async {
-    String _downloadPath =
-        (await _findLocalPath()) + Platform.pathSeparator + 'Download';
+    String _downloadPath = (await _findLocalPath()) + Platform.pathSeparator + 'Download';
     final savedDir = Directory(_downloadPath);
     bool hasExisted = await savedDir.exists();
     if (!hasExisted) {
@@ -314,9 +301,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Future<String> _findLocalPath() async {
-    final directory = Platform.isAndroid
-        ? await getExternalStorageDirectory()
-        : await getApplicationDocumentsDirectory();
+    final directory = Platform.isAndroid ? await getExternalStorageDirectory() : await getApplicationDocumentsDirectory();
     return directory?.path;
   }
 
@@ -365,8 +350,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
     var powerbyText = Text(
       "Powered By Snaps Solution",
-      style: TextStyle(
-          fontSize: 12, fontStyle: FontStyle.italic, color: secondaryColor),
+      style: TextStyle(fontSize: 12, fontStyle: FontStyle.italic, color: secondaryColor),
     );
     // Body
     return WillPopScope(

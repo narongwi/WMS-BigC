@@ -240,8 +240,8 @@ namespace Snaps.WMS {
         public int pv { get; set; }
         public int lv { get; set; }
         public string descalt { get; set; }
-        public decimal skuweight { get; set; }
-        public decimal skuvolume { get; set; }
+        public decimal? skuweight { get; set; }
+        public decimal? skuvolume { get; set; }
         public string unitmanage { get; set; }
         public string loccode { get; set; }
         public string locarea { get; set; }
@@ -250,7 +250,7 @@ namespace Snaps.WMS {
         public string huno { get; set; }
         public string unitcount { get; set; }
         public string unitdestr { get; set; }
-        public int skuofunit { get; set; }
+        public int? skuofunit { get; set; }
         public string countcode { get; set; }
         public string plancode { get; set; }
         public string linecode { get; set; }
@@ -261,5 +261,13 @@ namespace Snaps.WMS {
         public DateTimeOffset? datemfg { get; set; }
         public DateTimeOffset? dateexp { get; set; }
         public string serialno { get; set; }
+        public int? rtoskuofpu { get; set; }
+        public int? rtopckoflayer { get; set; }
+        public int? rtolayerofhu { get; set; }
+        public int? rtopckofpallet { get; set; }
+        public int? rtoskuofipck { get; set; }
+        public int? rtoskuofpck { get; set; }
+        public int? rtoskuoflayer { get; set; }
+        public int? rtoskuofhu { get; set; }
     }
 }

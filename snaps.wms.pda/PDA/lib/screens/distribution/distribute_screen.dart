@@ -170,8 +170,7 @@ class _DistributeScreen extends State<DistributeScreen> {
 
       // product is not equal preperation product
       if (_product.article != prepdtr.thcode) {
-        alert(context, "error", "Error",
-            "Not found barcode in this Receive Pallet");
+        alert(context, "error", "Error", "Not found barcode in this Receive Pallet");
 
         // scan product agian
         setState(() => barcodeFocusNode.requestFocus());
@@ -201,8 +200,7 @@ class _DistributeScreen extends State<DistributeScreen> {
 
       //hu empty not found
       if (emptys == null) {
-        alert(context, "warning", "Warning",
-            "Not found this Empty HU / Empty HU not available");
+        alert(context, "warning", "Warning", "Not found this Empty HU / Empty HU not available");
       } else {
         // get preperateion store by empty pallet
         final _distline = distinfo.lines.firstWhere(
@@ -211,8 +209,7 @@ class _DistributeScreen extends State<DistributeScreen> {
         );
 
         if (_distline == null) {
-          alert(context, "warning", "Warning",
-              "Not found this Empty HU / Empty HU not available");
+          alert(context, "warning", "Warning", "Not found this Empty HU / Empty HU not available");
           setState(() => emptyFocusNode.requestFocus());
         } else {
           setState(() {
@@ -286,8 +283,7 @@ class _DistributeScreen extends State<DistributeScreen> {
         setState(() => isLoading = true);
         // finish preperation and distribute
         await service.finish(distinfo);
-        alert(context, "success", "Information",
-            "Confirm Finished Successfully.");
+        alert(context, "success", "Information", "Confirm Finished Successfully.");
 
         setState(() {
           isLoading = false;
@@ -443,8 +439,7 @@ class _DistributeScreen extends State<DistributeScreen> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                Text("${unitDesc ?? ""}",
-                    style: TextStyle(color: primaryColor, fontSize: 12)),
+                Text("${unitDesc ?? ""}", style: TextStyle(color: primaryColor, fontSize: 12)),
               ],
             ),
           ),
@@ -615,8 +610,7 @@ class _DistributeScreen extends State<DistributeScreen> {
                   await scanEmpty(value);
                 }
               },
-              decoration:
-                  Txtheme.deco(icon: CupertinoIcons.tray_full, label: "Empty "),
+              decoration: Txtheme.deco(icon: CupertinoIcons.tray_full, label: "Empty "),
             ),
           ),
         ],
@@ -644,11 +638,7 @@ class _DistributeScreen extends State<DistributeScreen> {
                 builder: (BuildContext context) => conf,
               );
             },
-            decoration: Txtheme.deco(
-                icon: Icons.save,
-                label: "Put : ",
-                suffix: unitDesc,
-                enabled: enablePutline),
+            decoration: Txtheme.deco(icon: Icons.save, label: "Put : ", suffix: unitDesc, enabled: enablePutline),
           ),
         ),
         SizedBox(width: 10),
@@ -813,7 +803,10 @@ class _DistributeScreen extends State<DistributeScreen> {
           onPressed: () => Navigator.pop(context),
           icon: Icon(CupertinoIcons.home, size: 20),
         ),
-        title: Text('Distribution'),
+        title: Text(
+          'Distribution',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
         actions: <Widget>[
           IconButton(
             icon: const Icon(
@@ -840,8 +833,7 @@ class _DistributeScreen extends State<DistributeScreen> {
         child: SingleChildScrollView(
           child: Container(
             padding: const EdgeInsets.only(left: 20, right: 20, bottom: 30),
-            child:
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               SizedBox(height: 15),
               huTextField,
               SizedBox(height: 10),

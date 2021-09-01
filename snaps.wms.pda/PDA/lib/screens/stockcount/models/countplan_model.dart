@@ -41,6 +41,7 @@ class Countplan {
   int isserialno;
   int allowscanhu;
   String countType;
+  String planorigin;
 
   Countplan(
       {this.orgcode,
@@ -83,7 +84,8 @@ class Countplan {
       this.isdateexp,
       this.isbatchno,
       this.isserialno,
-      this.allowscanhu});
+      this.allowscanhu,
+      this.planorigin});
 
   Countplan.fromJson(Map<String, dynamic> json) {
     orgcode = json['orgcode'];
@@ -128,6 +130,7 @@ class Countplan {
     isbatchno = json['isbatchno'];
     isserialno = json['isserialno'];
     allowscanhu = json['allowscanhu'];
+    planorigin = json['planorigin'];
   }
 
   Map<String, dynamic> toJson() {
@@ -174,6 +177,7 @@ class Countplan {
     data['isbatchno'] = this.isbatchno;
     data['isserialno'] = this.isserialno;
     data['allowscanhu'] = this.allowscanhu;
+    data['planorigin'] = this.planorigin;
     return data;
   }
 }

@@ -527,14 +527,12 @@ export class invcountlineComponent implements OnInit, OnDestroy, AfterViewInit {
 		}
 	}
 	ngSaveLine() {
-		let errorCount: number = 0;
 		this.editLineMessage = '';
 		if (this.editorLinemd) {
 			if (
 				!this.valid(this.editorLinemd.cnbarcode) &&
 				!this.valid(this.editorLinemd.cnarticle)
 			) {
-				errorCount++;
 				this.editLineMessage = 'Barcode or Article is required !';
 				this.toastr.error(
 					"<span class='fn-07e'>" + this.editLineMessage + '</span>',
@@ -545,7 +543,6 @@ export class invcountlineComponent implements OnInit, OnDestroy, AfterViewInit {
 				this.radioGenhuno == false &&
 				!this.valid(this.editorLinemd.cnhuno)
 			) {
-				errorCount++;
 				this.editLineMessage = 'HU No is required !';
 				this.toastr.error(
 					"<span class='fn-07e'>" + this.editLineMessage + '</span>',
@@ -556,7 +553,6 @@ export class invcountlineComponent implements OnInit, OnDestroy, AfterViewInit {
 				this.crplan.isdatexp == 1 &&
 				!this.valid(this.editorLinemd.cndateexp)
 			) {
-				errorCount++;
 				this.editLineMessage = 'Date Expire is required !';
 				this.toastr.error(
 					"<span class='fn-07e'>" + this.editLineMessage + '</span>',
@@ -567,7 +563,6 @@ export class invcountlineComponent implements OnInit, OnDestroy, AfterViewInit {
 				this.crplan.isbatchno == 1 &&
 				!this.valid(this.editorLinemd.cnlotmfg)
 			) {
-				errorCount++;
 				this.editLineMessage = 'Batch no is required !';
 				this.toastr.error(
 					"<span class='fn-07e'>" + this.editLineMessage + '</span>',
@@ -575,7 +570,6 @@ export class invcountlineComponent implements OnInit, OnDestroy, AfterViewInit {
 					{ enableHtml: true }
 				);
 			} else if (!this.valid(this.editorLinemd.cnqtypu)) {
-				errorCount++;
 				this.editLineMessage = 'Count qty is required !';
 				this.toastr.error(
 					"<span class='fn-07e'>" + this.editLineMessage + '</span>',
@@ -591,7 +585,6 @@ export class invcountlineComponent implements OnInit, OnDestroy, AfterViewInit {
 						x.loccode != this.editorLinemd.loccode
 				).length > 0
 			) {
-				errorCount++;
 				this.editLineMessage =
 					'HU ' + this.editorLinemd.cnhuno + ' is duplicate !';
 				this.toastr.error(

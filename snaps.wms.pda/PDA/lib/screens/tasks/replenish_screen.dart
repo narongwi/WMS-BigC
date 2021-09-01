@@ -174,8 +174,7 @@ class _ReplenScreen extends State<ReplenScreen> {
       );
       final _selecthu = await service.lists(_filterloc);
       if (_selecthu.length == 0) {
-        alert(context, "warning", "Warning",
-            "invalid source location $sourceloc");
+        alert(context, "warning", "Warning", "invalid source location $sourceloc");
         locfocusNode.requestFocus();
       } else {
         print(_selecthu);
@@ -255,13 +254,11 @@ class _ReplenScreen extends State<ReplenScreen> {
     final _line = _task.lines.single;
     final _arts = await service.productInfo(_line.article, _line.lv.toString());
     if (_line.accnassign != profile.accncode && _task.tflow == 'IO') {
-      alert(context, "info", "Infomation",
-          "location ${_selecthu.sourceloc} is already working on user ${_line.accnassign}");
+      alert(context, "info", "Infomation", "location ${_selecthu.sourceloc} is already working on user ${_line.accnassign}");
       setState(() => isconfirm = false);
     } else if (_task.tflow != 'IO') {
       setState(() => isconfirm = false);
-      alert(context, "success", "Information",
-          "HU ${_selecthu.sourceloc} is Finished!");
+      alert(context, "success", "Information", "HU ${_selecthu.sourceloc} is Finished!");
     } else {
       setState(() => isconfirm = true);
     }
@@ -328,8 +325,7 @@ class _ReplenScreen extends State<ReplenScreen> {
       try {
         setState(() => isLoading = true);
         await service.confirm(taskmvt);
-        alert(context, "success", "Information",
-            " confirm replenishment success");
+        alert(context, "success", "Information", " confirm replenishment success");
 
         _resetScreen();
         // refresh
@@ -427,8 +423,11 @@ class _ReplenScreen extends State<ReplenScreen> {
         onPressed: () => Navigator.pop(context),
         icon: Icon(CupertinoIcons.home, size: 20),
       ),
-      centerTitle: true,
-      title: Text('Replenishment'),
+      // centerTitle: true,
+      title: Text(
+        'Replenishment',
+        style: TextStyle(fontWeight: FontWeight.bold),
+      ),
       actions: <Widget>[
         IconButton(
           icon: const Icon(CupertinoIcons.plus_circle, color: colorBlue),
@@ -508,10 +507,7 @@ class _ReplenScreen extends State<ReplenScreen> {
           product.descalt == null
               ? Text(
                   "Product Description",
-                  style: TextStyle(
-                      fontSize: 12,
-                      color: Colors.grey,
-                      fontStyle: FontStyle.italic),
+                  style: TextStyle(fontSize: 12, color: Colors.grey, fontStyle: FontStyle.italic),
                 )
               : Text(
                   "${product.descalt ?? ""}",
@@ -634,8 +630,7 @@ class _ReplenScreen extends State<ReplenScreen> {
             "Loc.Suggest ",
             style: TextStyle(fontSize: 12),
           ),
-          Text("${taskline.targetadv ?? ""}",
-              style: TextStyle(color: successColor))
+          Text("${taskline.targetadv ?? ""}", style: TextStyle(color: successColor))
         ],
       ),
     );
@@ -743,10 +738,7 @@ class _ReplenScreen extends State<ReplenScreen> {
               // DataColumn(label: Text("Task.Date", style: colTextStyle)),
               DataColumn(label: Text("Task.No", style: colTextStyle)),
               DataColumn(label: Text("Product", style: colTextStyle)),
-              DataColumn(
-                  label: SizedBox(
-                      width: 200,
-                      child: Text("Description", style: colTextStyle))),
+              DataColumn(label: SizedBox(width: 200, child: Text("Description", style: colTextStyle))),
               DataColumn(label: Text("Ref.No", style: colTextStyle)),
               DataColumn(label: Text("HU.No.", style: colTextStyle)),
               DataColumn(label: Text("Source", style: colTextStyle)),
