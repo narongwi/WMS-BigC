@@ -165,7 +165,7 @@ class BaseCloseLine {
   int pv;
   int lv;
   int qtysku;
-  int qtypu;
+  double qtypu;
   double qtyweight;
   double qtyvolume;
   String descalt;

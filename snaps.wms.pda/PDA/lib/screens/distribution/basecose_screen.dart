@@ -52,6 +52,16 @@ class _BaseClosedPage extends State<BaseClosedPage> {
 
       final filter = BaseCloseFilter(spcarea: 'XD', hutype: 'XE', huno: huno);
       final _baseCloseList = await service.baseCloselist(filter);
+      final _baseCloseLine = await service.baseCloseLine(_baseCloseList.single);
+
+      double puQty = 0;
+      double weithtQty = 0;
+      double volumeQty = 0;
+      _baseCloseLine.forEach((s) {
+        puQty = puQty+s.qtypu;
+        weithtQty = weithtQty+s.qtyweight;
+        volumeQty = volumeQty+s.qtyvolume;
+      });
 
       setState(() {
         isLoading = false;
@@ -60,9 +70,9 @@ class _BaseClosedPage extends State<BaseClosedPage> {
         storeCode = baseClose.thcode;
         storeName = baseClose.thname;
         routeno = baseClose.routeno;
-        txPUQty = baseClose.crsku.toString();
-        txWeight = baseClose.crweight.toString();
-        txVolume = baseClose.crvolume.toString();
+        txPUQty = puQty.toString();
+        txWeight = weithtQty.toString();
+        txVolume = volumeQty.toString();
         // convert status
         if (baseClose.tflow == 'IO') {
           enableBaseColse = true;
