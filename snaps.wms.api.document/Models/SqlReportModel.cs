@@ -340,9 +340,9 @@ namespace snaps.wms.api.document.Models
                 FROM (
                 SELECT x.orgcode,x.site,x.depot, r.thcode, (case when r.thcode = 'CMB' then 'Combine Route for multi store' else r.thcode + ' : ' + s.thnamealt end) thname, 
                 	(case when r.thcode = 'CMB' then 'Combine Route for multi store' else s.thnamealt end) thnamealt,
-	                r.loadtype, b.bndesc loadtypename,x.routenodel as routeno,FORMAT(r.plandate, 'dd/MM/yyyy hh:mm:ss') plandate,r.loccode,r.outrno docno,'' ordertype, 
+	                r.loadtype, b.bndesc loadtypename,x.routenodel as routeno,FORMAT(r.plandate, 'dd/MM/yyyy HH:mm:ss') plandate,r.loccode,r.outrno docno,'' ordertype, 
 	                sum(x.opspu) puqty, count(distinct x.opshuno) huqty,( sum(x.opspu * p.skuvolume)/1000) volume, sum(x.opspu * p.skugrossweight) weight,0 cubic, r.plateNo, r.driver,
-	                format(r.dateshipment, 'dd/MM/yyyy hh:mm:ss' ) as datedelivery,r.transportor, t.thname transportername,r.outrno 
+	                format(r.dateshipment, 'dd/MM/yyyy HH:mm:ss' ) as datedelivery,r.transportor, t.thname transportername,r.outrno 
                 FROM wm_outboulx x
 	                JOIN wm_outbound o ON  x.orgcode = o.orgcode and x.site = o.site and x.depot = o.depot and x.ouorder = o.ouorder
 	                JOIN wm_product p ON x.orgcode = p.orgcode and x.site = p.site and x.depot = p.depot and x.article = p.article and x.pv=p.pv and x.lv=p.lv 
@@ -351,8 +351,8 @@ namespace snaps.wms.api.document.Models
 	                LEFT JOIN wm_thparty s on r.orgcode = s.orgcode and r.site = s.site and r.depot= s.depot and r.thcode = s.thcode and s.thtype = 'CS'
 	                LEFT JOIN wm_binary b on r.orgcode = b.orgcode and r.site = b.site and r.depot = b.depot and r.loadtype = b.bnvalue and b.bncode= 'LOADTYPE' and b.apps = 'WMS' and b.bntype = 'TRANSPORT'
                 where x.orgcode = '{0}' and x.site = '{1}' and x.depot = '{2}' and x.routenodel = '{3}' and x.outrno = '{4}'
-                group by x.orgcode, x.site, x.depot, r.thcode,s.thnamealt,r.loadtype, b.bndesc, x.routenodel,format(r.plandate, 'dd/MM/yyyy hh:mm:ss'),
-	                r.loccode,r.plateNo,r.driver,format(r.dateshipment, 'dd/MM/yyyy hh:mm:ss' ),r.transportor,t.thname,r.outrno 
+                group by x.orgcode, x.site, x.depot, r.thcode,s.thnamealt,r.loadtype, b.bndesc, x.routenodel,format(r.plandate, 'dd/MM/yyyy HH:mm:ss'),
+	                r.loccode,r.plateNo,r.driver,format(r.dateshipment, 'dd/MM/yyyy HH:mm:ss' ),r.transportor,t.thname,r.outrno 
                 ) xx";
 
         //public static string TransportnoteSql =
