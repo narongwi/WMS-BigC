@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:wms/components/dialogalert_component.dart';
 import 'package:wms/components/dialogconfirm_component.dart';
 import 'package:wms/components/input_decoration.dart';
@@ -72,7 +74,7 @@ class _DistributeScreen extends State<DistributeScreen> {
       emptyInfo = Empty();
       unitDesc = "";
       enableFinish = false;
-      enablePutline = false;      
+      enablePutline = false;
       barcodeController.text = "";
       emptyHuController.text = "";
       qtyPuController.text = "";
@@ -80,7 +82,6 @@ class _DistributeScreen extends State<DistributeScreen> {
       if (distinfo.tflow == 'PA') {
         //distinfo = DistrbInfo();
         enableFinish = true;
-        
       } else {
         distinfo = DistrbInfo();
         prepdtr = Distribution();
@@ -119,15 +120,20 @@ class _DistributeScreen extends State<DistributeScreen> {
 
         // preperation information and line detail
         final _distinfo = await service.getprep(_prepdtrs.single);
-        final _lines = _distinfo.lines
-            .where((element) => element.qtypuops < element.qtypuorder);
+        final _lines = _distinfo.lines.where((x) => x.qtypuops < x.qtypuorder).toList();
         if (_lines.length == 0) {
-          alert(context, "info", "Information",
-              "This HU has already completed or No data found!");
+          final message = _distinfo.lines.length > 0 ? "This HU has already completed" : "No data found!";
+          alert(context, "info", "Information", message);
           resetScreen();
-          distinfo = _distinfo;
-          prepdtr = _prepdtrs.single;
+          setState(() {
+            distinfo = _distinfo;
+            prepdtr = _prepdtrs.single;
+          });
         } else {
+          _lines.forEach((v) {
+            print(v.toJson());
+          });
+
           setState(() {
             isLoading = false;
             prepdtr = _prepdtrs.single;
@@ -143,7 +149,6 @@ class _DistributeScreen extends State<DistributeScreen> {
             qtyPuController.text = "";
             unitDesc = "";
             emptyInfo = Empty();
-
             // confirm scan product
             barcodeFocusNode.requestFocus();
           });
@@ -164,13 +169,11 @@ class _DistributeScreen extends State<DistributeScreen> {
 
       // get xd preperation info by prep
       final _distinfo = await service.getprep(prepdtr);
-      final _lines = _distinfo.lines
-          .where((element) => element.qtypuops < element.qtypuorder);
+      final _lines = _distinfo.lines.where((element) => element.qtypuops < element.qtypuorder).toList();
       if (_lines.length == 0) {
-        alert(context, "info", "Information",
-            "This HU has already completed or No data found!");
+        // alert(context, "info", "Information", "This HU has already completed or No data found!");
         resetScreen();
-        distinfo = _distinfo;
+        setState(() => distinfo = _distinfo);
       } else {
         // update screen data
         setState(() {
@@ -199,8 +202,7 @@ class _DistributeScreen extends State<DistributeScreen> {
 
       // product is not equal preperation product
       if (_product.article != prepdtr.thcode) {
-        alert(context, "error", "Error",
-            "Not found barcode in this Receive Pallet");
+        alert(context, "error", "Error", "Not found barcode in this Receive Pallet");
 
         // scan product agian
         setState(() => barcodeFocusNode.requestFocus());
@@ -230,8 +232,7 @@ class _DistributeScreen extends State<DistributeScreen> {
 
       //hu empty not found
       if (emptys == null) {
-        alert(context, "warning", "Warning",
-            "Not found this Empty HU / Empty HU not available");
+        alert(context, "warning", "Warning", "Not found this Empty HU / Empty HU not available");
       } else {
         // get preperateion store by empty pallet
         final _distline = distinfo.lines.firstWhere(
@@ -240,8 +241,7 @@ class _DistributeScreen extends State<DistributeScreen> {
         );
 
         if (_distline == null) {
-          alert(context, "warning", "Warning",
-              "Not found this Empty HU / Empty HU not available");
+          alert(context, "warning", "Warning", "Not found this Empty HU / Empty HU not available");
           setState(() => emptyFocusNode.requestFocus());
         } else {
           setState(() {
@@ -303,27 +303,23 @@ class _DistributeScreen extends State<DistributeScreen> {
   }
 
   // finish preperation XD
-  Future<void> finish() async {
+  Future<void> finishDistr() async {
     try {
-      print(distinfo.toJson());
       // check if no scan hu
-      if (distinfo.huno == null) {
+      if (distinfo.prepno == null || distinfo.prepno.isEmpty) {
         alert(context, "error", "Warning", "HU No. Is required");
-        hunoFocusNode.requestFocus();
-      } else if (distline.qtypuorder < int.parse(qtyPuController.text)) {
-        alert(context, "error", "Warning", "Put Over Qty!");
-      } else if (int.parse(qtyPuController.text) == 0) {
-        alert(context, "error", "Warning", "The qty must be greater than 0");
+      } else if (distinfo.lines.where((x) => x.qtypuops < x.qtypuorder).length > 0) {
+        alert(context, "error", "Error", "Pick < Order please try again");
       } else {
         setState(() => isLoading = true);
-        // finish preperation and distribute       
+        // finish preperation and distribute
 
-        await service.finish(distinfo);
-        alert(context, "success", "Information",
-            "Confirm Finished Successfully.");
+        await service.finishDistr(distinfo);
+        alert(context, "success", "Information", "Confirm Finished Successfully.");
 
         setState(() {
           isLoading = false;
+          distinfo.tflow = "ED";
           resetScreen();
         });
       }
@@ -367,6 +363,7 @@ class _DistributeScreen extends State<DistributeScreen> {
     emptyHuController.dispose();
     qtyPuController.dispose();
     qtySkuController.dispose();
+    lines = null;
     // focus
     hunoFocusNode.dispose();
     docknoFocusNode.dispose();
@@ -430,12 +427,13 @@ class _DistributeScreen extends State<DistributeScreen> {
                   children: [
                     Icon(
                       Icons.store,
-                      color: defaultColor,
+                      color: primaryColor,
+                      size: 20,
                     ),
                     SizedBox(
                       height: 5,
                     ),
-                    Text("Store"),
+                    Text("store", style: TextStyle(fontSize: 13)),
                   ],
                 ),
                 SizedBox(
@@ -449,12 +447,12 @@ class _DistributeScreen extends State<DistributeScreen> {
                       style: TextStyle(
                         color: dangerColor,
                         fontWeight: FontWeight.bold,
-                        fontSize: 22,
+                        fontSize: 18,
                       ),
                     ),
                     Text(
                       "${emptyInfo.thname ?? ""}",
-                      style: TextStyle(color: primaryColor, fontSize: 12),
+                      style: TextStyle(color: primaryColor, fontSize: 13),
                     )
                   ],
                 ),
@@ -463,7 +461,7 @@ class _DistributeScreen extends State<DistributeScreen> {
           ),
           Divider(),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+            padding: const EdgeInsets.symmetric(vertical: 10),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -476,8 +474,7 @@ class _DistributeScreen extends State<DistributeScreen> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                Text("${unitDesc ?? ""}",
-                    style: TextStyle(color: primaryColor, fontSize: 12)),
+                Text("${unitDesc ?? ""}", style: TextStyle(color: primaryColor, fontSize: 12)),
               ],
             ),
           ),
@@ -525,16 +522,17 @@ class _DistributeScreen extends State<DistributeScreen> {
       ),
     );
     var productName = Padding(
-      padding: EdgeInsets.only(left: 15, top: 10),
+      padding: EdgeInsets.only(top: 5),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
-              Expanded(
+              SizedBox(
+                width: 80,
                 child: Text(
                   "Target ",
-                  style: TextStyle(fontSize: 12, color: secondaryColor),
+                  style: TextStyle(fontSize: 13, color: secondaryColor),
                 ),
               ),
               Expanded(
@@ -543,52 +541,59 @@ class _DistributeScreen extends State<DistributeScreen> {
                   style: TextStyle(fontSize: 13, color: dangerColor),
                 ),
               ),
-              Expanded(
+              SizedBox(
+                width: 80,
                 child: Text(
                   "Plan.No ",
-                  style: TextStyle(fontSize: 12, color: secondaryColor),
+                  style: TextStyle(fontSize: 13, color: secondaryColor),
                 ),
               ),
               Expanded(
                 child: Text(
                   "${prepdtr.prepno ?? ""}",
-                  style: TextStyle(fontSize: 12, color: dangerColor),
+                  style: TextStyle(fontSize: 13, color: dangerColor),
                 ),
               ),
             ],
           ),
-          Text(
-            "${prepdtr.thcode ?? ""} ${prepdtr.thname ?? ""}",
-            style: TextStyle(fontSize: 12, color: Colors.blue),
-          ),
+          SizedBox(height: 10),
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Expanded(
                 child: Text(
                   "Order ",
-                  style: TextStyle(fontSize: 12, color: secondaryColor),
+                  style: TextStyle(fontSize: 13, color: secondaryColor),
                 ),
               ),
               Expanded(
                 child: Text(
                   "${prepdtr.routeno ?? ""}",
-                  style: TextStyle(fontSize: 12, color: dangerColor),
+                  style: TextStyle(fontSize: 13, color: dangerColor),
                 ),
               ),
               Expanded(
                 child: Text(
                   " Worker ",
-                  style: TextStyle(fontSize: 12, color: secondaryColor),
+                  style: TextStyle(fontSize: 13, color: secondaryColor),
                 ),
               ),
               Expanded(
                 child: Text(
                   "${prepdtr.picker ?? ""}",
-                  style: TextStyle(fontSize: 12, color: dangerColor),
+                  style: TextStyle(fontSize: 13, color: dangerColor),
                 ),
               ),
             ],
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8),
+            child: Row(
+              children: [
+                SizedBox(width: 80, child: Text("${prepdtr.thcode ?? ""}", style: TextStyle(fontSize: 13, color: dangerColor))),
+                Expanded(child: Text("${prepdtr.thname ?? ""}", style: TextStyle(fontSize: 13, color: primaryColor))),
+              ],
+            ),
           ),
         ],
       ),
@@ -648,8 +653,7 @@ class _DistributeScreen extends State<DistributeScreen> {
                   await scanEmpty(value);
                 }
               },
-              decoration:
-                  Txtheme.deco(icon: CupertinoIcons.tray_full, label: "Empty "),
+              decoration: Txtheme.deco(icon: CupertinoIcons.tray_full, label: "Empty "),
             ),
           ),
         ],
@@ -677,11 +681,7 @@ class _DistributeScreen extends State<DistributeScreen> {
                 builder: (BuildContext context) => conf,
               );
             },
-            decoration: Txtheme.deco(
-                icon: Icons.save,
-                label: "Put : ",
-                suffix: unitDesc,
-                enabled: enablePutline),
+            decoration: Txtheme.deco(icon: Icons.save, label: "Put : ", suffix: unitDesc, enabled: enablePutline),
           ),
         ),
         SizedBox(width: 10),
@@ -766,7 +766,7 @@ class _DistributeScreen extends State<DistributeScreen> {
                       var conf = DialogConfirm(
                         title: "Finish",
                         content: "Do you confirm to end preparation ?",
-                        onYes: () async => await finish(),
+                        onYes: () async => await finishDistr(),
                         onNo: () {},
                       );
 
@@ -876,8 +876,7 @@ class _DistributeScreen extends State<DistributeScreen> {
         child: SingleChildScrollView(
           child: Container(
             padding: const EdgeInsets.only(left: 20, right: 20, bottom: 30),
-            child:
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               SizedBox(height: 15),
               huTextField,
               SizedBox(height: 10),
@@ -886,26 +885,6 @@ class _DistributeScreen extends State<DistributeScreen> {
               barcodeTextField,
               SizedBox(height: 10),
               emptyTextField,
-              // Container(
-              //   child: Row(
-              //     mainAxisAlignment: MainAxisAlignment.start,
-              //     crossAxisAlignment: CrossAxisAlignment.start,
-              //     children: [
-              //       emptyTextField,
-              //       IconButton(
-              //         icon: const Icon(Icons.run_circle, color: dangerColor),
-              //         onPressed: () => {
-              //           alert(
-              //             context,
-              //             "success",
-              //             "Information",
-              //             "HU Empty has Generated!",
-              //           )
-              //         },
-              //       ),
-              //     ],
-              //   ),
-              // ),
               SizedBox(height: 10),
               workingStore,
               SizedBox(height: 10),

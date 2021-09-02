@@ -25,7 +25,7 @@ class DistributeServices {
   Future<List<Distribution>> listprep(DistributeFilter filter) async {
     final baseUrl = "$prepApiUrl/ouprep/list/0";
     final preps = <Distribution>[];
-    final data = jsonEncode(filter.toJson());
+    final data = jsonEncode(filter);
     final resp = await http.post(baseUrl, body: data, headers: await header());
     print("listprep ==> ${resp.statusCode}");
     if (resp.statusCode == 200) {
@@ -39,7 +39,7 @@ class DistributeServices {
 
   Future<DistrbInfo> getprep(Distribution prepitem) async {
     final baseUrl = "$prepApiUrl/ouprep/get/0";
-    final data = jsonEncode(prepitem.toJson());
+    final data = jsonEncode(prepitem);
     final resp = await http.post(baseUrl, body: data, headers: await header());
     print("getprep ==> ${resp.statusCode}");
     if (resp.statusCode == 200) {
@@ -51,7 +51,7 @@ class DistributeServices {
 
   Future<bool> setstart(DistrbInfo prepinfo) async {
     final baseUrl = "$prepApiUrl/ouprep/setStart/0";
-    final data = jsonEncode(prepinfo.toJson());
+    final data = jsonEncode(prepinfo);
     final resp = await http.post(baseUrl, body: data, headers: await header());
     print("setstart ==> ${resp.statusCode}");
     if (resp.statusCode == 200) {
@@ -63,7 +63,7 @@ class DistributeServices {
 
   Future<List<Empty>> listEmpty(EmptyFilter filter) async {
     final baseUrl = "$prepApiUrl/ouhanderlingunit/list/0";
-    final data = jsonEncode(filter.toJson());
+    final data = jsonEncode(filter);
     final resp = await http.post(baseUrl, body: data, headers: await header());
     final empty = <Empty>[];
     print("getprep ==> ${resp.statusCode}");
@@ -78,7 +78,7 @@ class DistributeServices {
 
   Future<Empty> getEmpty(EmptyFilter filter) async {
     final baseUrl = "$prepApiUrl/ouhanderlingunit/get/0";
-    final data = jsonEncode(filter.toJson());
+    final data = jsonEncode(filter);
     final resp = await http.post(baseUrl, body: data, headers: await header());
     print("getprep ==> ${resp.statusCode}");
     if (resp.statusCode == 200) {
@@ -102,7 +102,7 @@ class DistributeServices {
 
   Future<bool> putline(DistrbLine distrbLine) async {
     final baseUrl = "$prepApiUrl/ouprep/opsPut/0";
-    final data = jsonEncode(distrbLine.toJson());
+    final data = jsonEncode(distrbLine);
     final resp = await http.post(baseUrl, body: data, headers: await header());
     print("putline ==> ${resp.statusCode}");
     if (resp.statusCode == 200) {
@@ -112,9 +112,11 @@ class DistributeServices {
     }
   }
 
-  Future<bool> finish(DistrbInfo prepdt) async {
+  Future<bool> finishDistr(DistrbInfo prepdt) async {
     final baseUrl = "$prepApiUrl/ouprep/setEnd/0";
-    final data = jsonEncode(prepdt.toJson());
+    final data = jsonEncode(prepdt);
+    print("==> Set end");
+    print("==> $baseUrl");
     final resp = await http.post(baseUrl, body: data, headers: await header());
     print("setend ==> ${resp.statusCode}");
     if (resp.statusCode == 200) {
@@ -126,7 +128,7 @@ class DistributeServices {
 
   Future<List<BaseClose>> baseCloselist(BaseCloseFilter filter) async {
     final baseUrl = "$prepApiUrl/ouhanderlingunit/list/0";
-    final data = jsonEncode(filter.toJson());
+    final data = jsonEncode(filter);
     final resp = await http.post(baseUrl, body: data, headers: await header());
     final empty = <BaseClose>[];
     print("baseCloselist ==> ${resp.statusCode}");
@@ -141,7 +143,7 @@ class DistributeServices {
 
   Future<List<BaseCloseLine>> baseCloseLine(BaseClose baseClose) async {
     final baseUrl = "$prepApiUrl/ouhanderlingunit/linesnonsum/0";
-    final data = jsonEncode(baseClose.toJson());
+    final data = jsonEncode(baseClose);
     final resp = await http.post(baseUrl, body: data, headers: await header());
     final lines = <BaseCloseLine>[];
     print("baseCloseLine ==> ${resp.statusCode}");
@@ -156,7 +158,7 @@ class DistributeServices {
 
   Future<bool> baseCLoseHU(BaseClose baseClose) async {
     final baseUrl = "$prepApiUrl/ouhanderlingunit/close/0";
-    final data = jsonEncode(baseClose.toJson());
+    final data = jsonEncode(baseClose);
     final resp = await http.post(baseUrl, body: data, headers: await header());
     print("baseCLoseHU ==> ${resp.statusCode}");
     if (resp.statusCode == 200) {
@@ -179,10 +181,7 @@ class DistributeServices {
   Future<Product> getProduct(String productCode) async {
     final baseUrl = "$pdaApiUrl/api/product/info/$productCode";
     print("======>$baseUrl");
-    final response = await http.get(
-      baseUrl,
-      headers: await header(),
-    );
+    final response = await http.get(baseUrl, headers: await header());
     print("Product Active ==> ${response.statusCode}");
     if (response.statusCode == 200) {
       return Product.fromJson(jsonDecode(response.body));
