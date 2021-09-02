@@ -391,22 +391,21 @@ namespace snaps.wms.api.document.Models
         //     left join wm_barcode b on x.orgcode = b.orgcode and x.site = b.site and x.depot = b.depot and x.article = b.article and x.pv = b.pv and x.lv = b.lv and b.isprimary = 1
         //    where x.orgcode = '{0}' and x.site = '{1}' and x.depot = '{2}' and x.routenodel = '{3}' and r.outrno = '{4}' and x.opssku > 0 ";
 
-        public static string PackinglistSql =
-          @"select  x.orgcode, x.site, x.depot,r.routeno, datedel,r.thcode, (case when r.thcode = 'CMB' then 'Combine Route' else t.thnameint end) thname, 
-				(case when r.thcode = 'CMB' then x.opshuno+' - '+(select distinct orh.thcode from wm_outbound orh where orh.orgcode = x.orgcode 
-					and orh.site = x.site and orh.depot = x.depot and orh.ouorder = x.ouorder) else x.opshuno end) huno,  x.ouorder, 
-                (select bndesc from wm_binary b where b.orgcode = x.orgcode and b.site = x.site and b.depot = x.depot and b.bntype = 'PRODUCT' and bncode = 'DEP' 
-	            and RIGHT(REPLICATE('0', 10) + bnvalue , 10) = RIGHT(REPLICATE('0', 10) + hdepartment , 10)) productdept,''productcate, 
-                x.article product, x.pv, x.lv, b.barcode,p.description, x.opssku skuqty, x.opspu puqty,convert(varchar, dateshipment, 103) shipdate, 
-	            substring(convert(varchar, dateshipment, 108),0,9) shiptime,max(x.oudnno) over (partition by x.ouorder order by  x.ouorder) oudnno,r.outrno,
-                (x.opssku * p.skugrossweight) opsweight
-            from wm_route r join wm_outboulx x on r.orgcode = x.orgcode and r.site = x.site and r.depot = x.depot and r.routeno = x.routenodel 
-             join wm_outbound o on x.orgcode = o.orgcode and x.site = o.site and x.depot = o.depot and x.ouorder = o.ouorder
-             join wm_thparty t on r.orgcode = t.orgcode and r.site = t.site and r.depot = t.depot and o.thcode = t.thcode  
-             join wm_product p on x.orgcode = p.orgcode and x.site = p.site and x.depot = p.depot and x.article = p.article and x.pv = p.pv and x.lv = p.lv 
-             left join wm_barcode b on x.orgcode = b.orgcode and x.site = b.site and x.depot = b.depot and x.article = b.article and x.pv = b.pv and x.lv = b.lv and b.isprimary = 1
-            where x.orgcode = '{0}' and x.site = '{1}' and x.depot = '{2}' and x.routenodel = '{3}' and r.outrno = '{4}' and x.opssku > 0 ";
-
+        //public static string PackinglistSql =
+        //  @"select  x.orgcode, x.site, x.depot,r.routeno, datedel,r.thcode, (case when r.thcode = 'CMB' then 'Combine Route' else t.thnameint end) thname, 
+        //(case when r.thcode = 'CMB' then x.opshuno+' - '+(select distinct orh.thcode from wm_outbound orh where orh.orgcode = x.orgcode 
+        //	and orh.site = x.site and orh.depot = x.depot and orh.ouorder = x.ouorder) else x.opshuno end) huno,  x.ouorder, 
+        //            (select bndesc from wm_binary b where b.orgcode = x.orgcode and b.site = x.site and b.depot = x.depot and b.bntype = 'PRODUCT' and bncode = 'DEP' 
+        //         and RIGHT(REPLICATE('0', 10) + bnvalue , 10) = RIGHT(REPLICATE('0', 10) + hdepartment , 10)) productdept,''productcate, 
+        //            x.article product, x.pv, x.lv, b.barcode,p.description, x.opssku skuqty, x.opspu puqty,convert(varchar, dateshipment, 103) shipdate, 
+        //         substring(convert(varchar, dateshipment, 108),0,9) shiptime,max(x.oudnno) over (partition by x.ouorder order by  x.ouorder) oudnno,r.outrno,
+        //            (x.opssku * p.skugrossweight) opsweight
+        //        from wm_route r join wm_outboulx x on r.orgcode = x.orgcode and r.site = x.site and r.depot = x.depot and r.routeno = x.routenodel 
+        //         join wm_outbound o on x.orgcode = o.orgcode and x.site = o.site and x.depot = o.depot and x.ouorder = o.ouorder
+        //         join wm_thparty t on r.orgcode = t.orgcode and r.site = t.site and r.depot = t.depot and o.thcode = t.thcode  
+        //         join wm_product p on x.orgcode = p.orgcode and x.site = p.site and x.depot = p.depot and x.article = p.article and x.pv = p.pv and x.lv = p.lv 
+        //         left join wm_barcode b on x.orgcode = b.orgcode and x.site = b.site and x.depot = b.depot and x.article = b.article and x.pv = b.pv and x.lv = b.lv and b.isprimary = 1
+        //        where x.orgcode = '{0}' and x.site = '{1}' and x.depot = '{2}' and x.routenodel = '{3}' and r.outrno = '{4}' and x.opssku > 0 ";
 
         //public static string PackinglistSql =
         //      @" select  x.orgcode, x.site, x.depot,r.routeno, datedel,r.thcode, t.thnameint thname, x.opshuno huno,  x.ouorder, 
@@ -421,6 +420,27 @@ namespace snaps.wms.api.document.Models
         //      join wm_thparty t on r.orgcode = t.orgcode and r.site = t.site and r.depot = t.depot and o.thcode = t.thcode  
         //      join wm_product p on x.orgcode = p.orgcode and x.site = p.site and x.depot = p.depot and x.article = p.article and x.pv = p.pv and x.lv = p.lv  
         //     where x.orgcode = '{0}' and x.site = '{1}' and x.depot = '{2}' and x.routenodel = '{3}' and r.outrno = '{4}' and x.opssku > 0";
+
+        public static string PackinglistSql =
+            @"select z.orgcode, z.site, z.depot,z.routeno, format(z.datedel, 'dd/MM/yyyy HH:mm:ss') datedel,z.thcode, z.thname, z.huno, 
+	            z.ouorder, z.productdept, z.productcate, z.product, z.pv, z.lv, z.barcode,z.description, sum(z.skuqty) skuqty,  
+	            sum(z.puqty) puqty ,z.shipdate, z.shiptime,z.oudnno, z.outrno, sum(z.opsweight) opsweight 
+            from (select  x.orgcode, x.site, x.depot,r.routeno, datedel,r.thcode, (case when r.thcode = 'CMB' then 'Combine Route' else t.thnameint end) thname, 
+        (case when r.thcode = 'CMB' then x.opshuno+' - '+(select distinct orh.thcode from wm_outbound orh where orh.orgcode = x.orgcode 
+        	and orh.site = x.site and orh.depot = x.depot and orh.ouorder = x.ouorder) else x.opshuno end) huno,  x.ouorder, 
+                    (select bndesc from wm_binary b where b.orgcode = x.orgcode and b.site = x.site and b.depot = x.depot and b.bntype = 'PRODUCT' and bncode = 'DEP' 
+                 and RIGHT(REPLICATE('0', 10) + bnvalue , 10) = RIGHT(REPLICATE('0', 10) + hdepartment , 10)) productdept,''productcate, 
+                    x.article product, x.pv, x.lv, b.barcode,p.description, x.opssku skuqty, x.opspu puqty,convert(varchar, dateshipment, 103) shipdate, 
+                 substring(convert(varchar, dateshipment, 108),0,9) shiptime,max(x.oudnno) over (partition by x.ouorder order by  x.ouorder) oudnno,r.outrno,
+                    (x.opssku * p.skugrossweight) opsweight
+                from wm_route r join wm_outboulx x on r.orgcode = x.orgcode and r.site = x.site and r.depot = x.depot and r.routeno = x.routenodel 
+                 join wm_outbound o on x.orgcode = o.orgcode and x.site = o.site and x.depot = o.depot and x.ouorder = o.ouorder
+                 join wm_thparty t on r.orgcode = t.orgcode and r.site = t.site and r.depot = t.depot and o.thcode = t.thcode  
+                 join wm_product p on x.orgcode = p.orgcode and x.site = p.site and x.depot = p.depot and x.article = p.article and x.pv = p.pv and x.lv = p.lv 
+                 left join wm_barcode b on x.orgcode = b.orgcode and x.site = b.site and x.depot = b.depot and x.article = b.article and x.pv = b.pv and x.lv = b.lv and b.isprimary = 1
+                where x.orgcode = '{0}' and x.site = '{1}' and x.depot = '{2}' and x.routenodel = '{3}' and r.outrno = '{4}' and x.opssku > 0 
+            ) z group by z.orgcode, z.site, z.depot,z.routeno, format(z.datedel, 'dd/MM/yyyy HH:mm:ss'),z.thcode, z.thname, z.huno, z.ouorder, 
+	        z.productdept, z.productcate, z.product, z.pv, z.lv, z.barcode,z.description, z.shipdate, z.shiptime,z.oudnno, z.outrno ";
 
         public static string FullpalletSql = @"select  h.orgcode, h.site, h.depot,t.thcode, t.thnameint thname,l.taskno,l.article,l.pv,l.lv,p.description,o.barcode,
 	        l.sourceloc loccode,h.routeno,o.ouorder,o.ourefno,format(b.dateprep,'dd/MM/yyyy') dateorder,format(r.datereqdelivery,'dd/MM/yyyy hh:mm') datedelivery,
