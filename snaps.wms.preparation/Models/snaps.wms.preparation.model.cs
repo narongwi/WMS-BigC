@@ -148,8 +148,10 @@ namespace Snaps.WMS.preparation {
         public String unitname { get; set; } 
         public Int32 qtyskuops { get; set; } 
         public String prepno { get; set; } 
-        public Int32 prepln { get; set; } 
-            }
+        public Int32 prepln { get; set; }
+        public string preptypeops { get; set; }
+        public int? preplineops { get; set; }
+    }
     public class prln_pm : prln_ls { }
     public class prln_ix : prln_ls { 
     }
@@ -197,6 +199,7 @@ namespace Snaps.WMS.preparation {
         public string inagrn { get; set; }
         public string ingrno { get; set; }
         public string skipdigit { get; set; }
+
     }
 
     public class prsplithu_md {

@@ -257,6 +257,8 @@ namespace Snaps.WMS.preparation {
             rn.daterec =  (r.IsDBNull(r.GetOrdinal("daterec"))) ? (DateTimeOffset?)null : r.GetDateTimeOffset(r.GetOrdinal("daterec"));
             rn.inagrn = r["inagrn"].ToString();
             rn.ingrno = r["ingrno"].ToString();
+            rn.preptypeops = r["preptypeops"].ToString();
+            rn.preplineops = r.GetInt32(r.GetOrdinal("preplineops"));
             return rn;
         }
         private SqlCommand prln_setix(prln_ix o,String sql) { 

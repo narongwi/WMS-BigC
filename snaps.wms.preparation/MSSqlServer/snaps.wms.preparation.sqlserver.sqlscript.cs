@@ -103,12 +103,12 @@ namespace Snaps.WMS.preparation {
         " where a.orgcode = @orgcode and a.site = @site and a.depot = @depot                                                                  " ;
 
         //line 
-        private String prln_sqlfnd = 
+        private String prln_sqlfnd =
         @" select   o.orgcode,o.site,o.depot,o.spcarea,o.routeno,o.thcode,o.huno,o.hunosource,o.prepno,o.prepln,o.loczone,o.loccode,o.locseq,o.locdigit
                 ,o.ouorder,o.ouln,o.barcode,o.article,o.pv,o.lv,o.stockid,o.unitprep,o.qtyskuorder,o.qtypuorder,o.qtyweightorder,o.qtyvolumeorder
                 ,o.qtyskuops,o.qtypuops,o.qtyweightops,o.qtyvolumeops,o.batchno,o.lotno,o.datemfg,o.dateexp,o.serialno,o.picker,o.datepick
                 ,o.devicecode,o.tflow,o.datecreate,o.accncreate,o.datemodify,o.accnmodify,o.procmodify
-                ,p.descalt,p.unitprep,p.rtoskuofpu, max(t.taskno) taskno,null daterec,null inagrn, null ingrno 
+                ,p.descalt,p.unitprep,p.rtoskuofpu, max(t.taskno) taskno,null daterec,null inagrn, null ingrno,o.preptypeops,o.preplineops 
         from wm_prln o join wm_product p on o.orgcode = p.orgcode and o.site = p.site 
         and o.depot = p.depot and o.article = p.article and o.pv = p.pv and o.lv = p.lv 
         left join wm_taln t on o.orgcode = t.orgcode 
@@ -117,13 +117,13 @@ namespace Snaps.WMS.preparation {
         group by o.orgcode,o.site,o.depot,o.spcarea,o.routeno,o.thcode,o.huno,o.hunosource,o.prepno,o.prepln,o.loczone,o.loccode,o.locseq,o.locdigit
                 ,o.ouorder,o.ouln,o.barcode,o.article,o.pv,o.lv,o.stockid,o.unitprep,o.qtyskuorder,o.qtypuorder,o.qtyweightorder,o.qtyvolumeorder
                 ,o.qtyskuops,o.qtypuops,o.qtyweightops,o.qtyvolumeops,o.batchno,o.lotno,o.datemfg,o.dateexp,o.serialno,o.picker,o.datepick
-                ,o.devicecode,o.tflow,o.datecreate,o.accncreate,o.datemodify,o.accnmodify,o.procmodify,p.descalt,p.unitprep,p.rtoskuofpu ";
-        private string prln_sqlfnd_dist = 
+                ,o.devicecode,o.tflow,o.datecreate,o.accncreate,o.datemodify,o.accnmodify,o.procmodify,p.descalt,p.unitprep,p.rtoskuofpu,o.preptypeops,o.preplineops";
+        private string prln_sqlfnd_dist =
         @" select   o.orgcode,o.site,o.depot,o.spcarea,o.routeno,o.thcode,o.huno,o.hunosource,o.prepno,o.prepln,o.loczone,o.loccode,o.locseq,o.locdigit
             ,o.ouorder,o.ouln,o.barcode,o.article,o.pv,o.lv,o.stockid,o.unitprep,o.qtyskuorder,o.qtypuorder,o.qtyweightorder,o.qtyvolumeorder
             ,o.qtyskuops,o.qtypuops,o.qtyweightops,o.qtyvolumeops,o.batchno,o.lotno,o.datemfg,o.dateexp,o.serialno,o.picker,o.datepick
             ,o.devicecode,o.tflow,o.datecreate,o.accncreate,o.datemodify,o.accnmodify,o.procmodify
-            ,p.descalt,p.unitprep,p.rtoskuofpu, null taskno,s.daterec daterec,s.inagrn inagrn, s.inagrn ingrno 
+            ,p.descalt,p.unitprep,p.rtoskuofpu, null taskno,s.daterec daterec,s.inagrn inagrn, s.inagrn ingrno,o.preptypeops,o.preplineops 
         from wm_prln o 
         join wm_product p on o.orgcode = p.orgcode and o.site = p.site and o.depot = p.depot and o.article = p.article and o.pv = p.pv and o.lv = p.lv 
         left join wm_stock s on o.orgcode = s.orgcode and o.site = s.site and o.depot = s.depot and o.article = s.article and p.pv = s.pv and o.lv = s.lv 
@@ -144,7 +144,8 @@ namespace Snaps.WMS.preparation {
             ord.qtyweight qtyweightorder,0.0 qtyvolumeorder,ord.qtyreqsku qtyskuops, tl.targetqty qtypuops,
             ord.qtyweight qtyweightops,0.0 qtyvolumeops,ord.batchno batchno, ord.lotno lotno, ord.datemfg datemfg,
             ord.dateexp dateexp, ord.serialno serialno, tl.accnassign picker, tl.dateassign datepick,null devicecode,tl.tflow,
-	        tl.datecreate,tl.accncreate,tl.datemodify,tl.accnmodify,tl.procmodify,p.description,p.rtoskuofpu,th.routethcode thcode, th.taskno, null daterec, null inagrn, null ingrno
+	        tl.datecreate,tl.accncreate,tl.datemodify,tl.accnmodify,tl.procmodify,p.description,p.rtoskuofpu,th.routethcode thcode, th.taskno, null daterec, null inagrn, null ingrno,
+            null preptypeops,0 preplineops 
             from wm_taln tl, wm_task th, wm_outbouln ord, wm_outbound orh , wm_product p
             where tl.orgcode = @orgcode and tl.site =@site and tl.depot = @depot and tl.spcarea = @spcarea and tl.taskno = @prepno
             and tl.orgcode = th.orgcode and tl.site = th.site and tl.depot = th.depot and tl.taskno = th.taskno
@@ -243,8 +244,8 @@ namespace Snaps.WMS.preparation {
         "  where p.prepno = @prepno and p.prepln = @prepln and  p.orgcode = @orgcode and p.site = @site and p.depot = @depot and p.article = @article and p.pv = @pv and p.lv = @lv  ";
         public String prep_opspick_stp1 =" update t  set " + 
         " qtyskuops = case when t.unitprep = 1 then 1 when t.unitprep = 2 then rtoskuofipck when t.unitprep = 3 then rtoskuofpck when t.unitprep = 4 then rtoskuoflayer when t.unitprep = 5 then rtoskuofhu else 1 end *   @qtyskuops, " + 
-        " qtypuops = @qtypuops,  datemodify = sysdatetimeoffset(), procmodify = @procmodify, serialno = @serialno,  qtyweightops = round(p.skuweight * @qtyskuops,3,1), qtyvolumeops = round(p.skuvolume * @qtyskuops,3,1), " + 
-        " datepick = sysdatetimeoffset(), picker = @accnmodify, accnmodify = @accnmodify " + 
+        " qtypuops = @qtypuops,  datemodify = sysdatetimeoffset(), procmodify = @procmodify, serialno = @serialno,  qtyweightops = round(p.skuweight * @qtyskuops,3,1), qtyvolumeops = round(p.skuvolume * @qtyskuops,3,1), " +
+        " datepick = sysdatetimeoffset(), picker = @accnmodify, accnmodify = @accnmodify , preplineops = isnull(t.preplineops) + 1" + 
         " from wm_prln t , wm_product p " + 
         " where t.orgcode = p.orgcode and t.site = p.site and t.depot = p.depot and t.article = p.article and t.pv = p.pv and t.lv = p.lv " + 
         " and t.orgcode = @orgcode and t.site = @site and t.depot = @depot and t.prepno = @prepno and t.prepln = @prepln and t.article = @article and t.pv = @pv and t.lv = @lv " ;
@@ -260,10 +261,10 @@ namespace Snaps.WMS.preparation {
         public string prep_opsput_stp1 = @"update l set qtyskuops = @qtypuops * dbo.get_ratiopu_prep(l.orgcode,l.site, l.depot, l.article, l.pv, l.lv), qtypuops  = @qtypuops, 
                     qtyweightops = round(p.skuweight * ( @qtypuops * dbo.get_ratiopu_prep(l.orgcode,l.site, l.depot, l.article, l.pv, l.lv) ),3,1),
                     qtyvolumeops = round(p.skuvolume * ( @qtypuops * dbo.get_ratiopu_prep(l.orgcode,l.site, l.depot, l.article, l.pv, l.lv) ),3,1),             
-                    procmodify = @procmodify, serialno = @serialno, huno = @huno, datemodify = sysdatetimeoffset()
+                    procmodify = @procmodify, serialno = @serialno, huno = @huno, datemodify = sysdatetimeoffset(), preplineops = isnull(l.preplineops,0) + 1
         from wm_prln l, wm_product p
         where l.orgcode = p.orgcode and l.site = p.site and l.depot = p.depot and l.article = p.article and l.pv = p.pv and l.lv = p.lv
-        and l.orgcode = @orgcode  and l.site = @site  and l.depot = @depot  and l.prepno = @prepno    and l.prepln = @prepln and l.article = @article and l.pv = @pv and l.lv = @lv";
+        and l.orgcode = @orgcode  and l.site = @site  and l.depot = @depot  and l.prepno = @prepno and l.prepln = @prepln and l.article = @article and l.pv = @pv and l.lv = @lv";
         public String prep_opsput_stp2 = " update wm_stobc set qtysku = @qtypuops * dbo.get_ratiopu_prep(orgcode,site, depot,article, pv, lv), qtypu = @qtypuops, accnmodify = @accnmodify, datemodify = @sysdate, procmodify = @procmodify " + 
         " where orgcode = @orgcode and site = @site and depot = @depot and opsno = @prepno and opsln = @prepln and article = @article and pv = @pv and lv = @lv ";//wm_stobc
         public String prep_opsput_stp3 = "update wm_prep set preppct = isnull((select (sum(qtypuops) * 100)/ sum(qtypuorder) from wm_prln l where " +

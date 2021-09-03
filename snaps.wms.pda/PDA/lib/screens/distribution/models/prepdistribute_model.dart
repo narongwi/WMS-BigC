@@ -349,60 +349,65 @@ class DistrbLine {
   int qtyskuops;
   String prepno;
   int prepln;
+  String preptypeops;
+  int preplineops;
 
-  DistrbLine(
-      {this.huno,
-      this.hunosource,
-      this.loczone,
-      this.loccode,
-      this.locseq,
-      this.locdigit,
-      this.ouorder,
-      this.ouln,
-      this.inorder,
-      this.inln,
-      this.barcode,
-      this.pv,
-      this.lv,
-      this.stockid,
-      this.qtyweightorder,
-      this.qtyvolumeorder,
-      this.qtyweightops,
-      this.qtyvolumeops,
-      this.batchno,
-      this.lotno,
-      this.datemfg,
-      this.dateexp,
-      this.serialno,
-      this.picker,
-      this.datepick,
-      this.devicecode,
-      this.datecreate,
-      this.accncreate,
-      this.accnmodify,
-      this.procmodify,
-      this.rtoskuofpu,
-      this.thcode,
-      this.taskno,
-      this.daterec,
-      this.inagrn,
-      this.ingrno,
-      this.orgcode,
-      this.site,
-      this.depot,
-      this.spcarea,
-      this.article,
-      this.description,
-      this.qtyskuorder,
-      this.qtypuorder,
-      this.qtypuops,
-      this.tflow,
-      this.datemodify,
-      this.unitprep,
-      this.unitname,
-      this.qtyskuops,
-      this.prepno,
-      this.prepln});
+  DistrbLine({
+    this.huno,
+    this.hunosource,
+    this.loczone,
+    this.loccode,
+    this.locseq,
+    this.locdigit,
+    this.ouorder,
+    this.ouln,
+    this.inorder,
+    this.inln,
+    this.barcode,
+    this.pv,
+    this.lv,
+    this.stockid,
+    this.qtyweightorder,
+    this.qtyvolumeorder,
+    this.qtyweightops,
+    this.qtyvolumeops,
+    this.batchno,
+    this.lotno,
+    this.datemfg,
+    this.dateexp,
+    this.serialno,
+    this.picker,
+    this.datepick,
+    this.devicecode,
+    this.datecreate,
+    this.accncreate,
+    this.accnmodify,
+    this.procmodify,
+    this.rtoskuofpu,
+    this.thcode,
+    this.taskno,
+    this.daterec,
+    this.inagrn,
+    this.ingrno,
+    this.orgcode,
+    this.site,
+    this.depot,
+    this.spcarea,
+    this.article,
+    this.description,
+    this.qtyskuorder,
+    this.qtypuorder,
+    this.qtypuops,
+    this.tflow,
+    this.datemodify,
+    this.unitprep,
+    this.unitname,
+    this.qtyskuops,
+    this.prepno,
+    this.prepln,
+    this.preptypeops,
+    this.preplineops,
+  });
 
   DistrbLine.fromJson(Map<String, dynamic> json) {
     huno = json['huno'];
@@ -457,6 +462,8 @@ class DistrbLine {
     qtyskuops = json['qtyskuops'];
     prepno = json['prepno'];
     prepln = json['prepln'];
+    preptypeops = json['preptypeops'];
+    preplineops = json['preplineops'];
   }
 
   Map<String, dynamic> toJson() {
@@ -513,6 +520,8 @@ class DistrbLine {
     data['qtyskuops'] = this.qtyskuops;
     data['prepno'] = this.prepno;
     data['prepln'] = this.prepln;
+    data['preptypeops'] = this.preptypeops;
+    data['preplineops'] = this.preplineops;
     return data;
   }
 }

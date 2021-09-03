@@ -168,15 +168,15 @@ namespace Snaps.WMS.preparation {
                 throw ex;
             } finally { cm.ForEach(x => x.Dispose()); }
         }
-        public async Task upsert(prep_md rs) {
-            List<prep_md> ro = new List<prep_md>();
-            try {
-                ro.Add(rs); await upsert(ro);
-            } catch(Exception ex) {
-                logger.Error(rs.orgcode,rs.site,rs.accnmodify,ex,ex.Message);
-                throw ex;
-            } finally { ro.Clear(); }
-        }
+        //public async Task upsert(prep_md rs) {
+        //    List<prep_md> ro = new List<prep_md>();
+        //    try {
+        //        ro.Add(rs); await upsert(ro);
+        //    } catch(Exception ex) {
+        //        logger.Error(rs.orgcode,rs.site,rs.accnmodify,ex,ex.Message);
+        //        throw ex;
+        //    } finally { ro.Clear(); }
+        //}
         public async Task remove(List<prep_md> rs) {
             List<SqlCommand> cm = new List<SqlCommand>();
             try {

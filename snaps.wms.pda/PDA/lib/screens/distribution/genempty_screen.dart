@@ -184,27 +184,40 @@ class _GenEmptyScreen extends State<GenEmptyScreen> {
                       color: Colors.white,
                       border: Border.all(width: 1, color: Colors.grey),
                     ),
-                    child: DropdownButton(
-                      isExpanded: true,
-                      isDense: true,
-                      underline: Container(color: Colors.transparent),
-                      value: hutypeSelect,
-                      items: hutype
-                          .map((el) => DropdownMenuItem(
-                              child: Text(
-                                el.huno,
-                                style: TextStyle(
-                                  fontSize: 13,
-                                  color: dangerColor,
-                                ),
-                              ),
-                              value: el.huno))
-                          .toList(),
-                      onChanged: (value) {
-                        setState(() {
-                          hutypeSelect = value;
-                        });
-                      },
+                    child: Row(
+                      children: [
+                        SizedBox(
+                          width: 45,
+                          child: Text(
+                            "Type  ",
+                            style: TextStyle(color: dangerColor, fontSize: 13),
+                          ),
+                        ),
+                        Expanded(
+                          child: DropdownButton(
+                            isExpanded: true,
+                            isDense: true,
+                            underline: Container(color: Colors.transparent),
+                            value: hutypeSelect,
+                            items: hutype
+                                .map((el) => DropdownMenuItem(
+                                    child: Padding(
+                                      padding: EdgeInsets.only(left: 0),
+                                      child: Text(
+                                        el.huno,
+                                        style: TextStyle(fontSize: 13),
+                                      ),
+                                    ),
+                                    value: el.huno))
+                                .toList(),
+                            onChanged: (value) {
+                              setState(() {
+                                hutypeSelect = value;
+                              });
+                            },
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ],
@@ -213,9 +226,8 @@ class _GenEmptyScreen extends State<GenEmptyScreen> {
               TextField(
                 controller: storeController,
                 decoration: Txtheme.deco(
-                  // icon: Icons.store,
-                  label: "Store : ",
-                ),
+                    // icon: Icons.store,
+                    label: " Store  "),
               ),
               SizedBox(height: 10),
               TextField(
@@ -223,7 +235,7 @@ class _GenEmptyScreen extends State<GenEmptyScreen> {
                 keyboardType: TextInputType.number,
                 decoration: Txtheme.deco(
                   // icon: Icons.book_online,
-                  label: "Qty : ",
+                  label: " Qty     ",
                 ),
               ),
               SizedBox(height: 20),

@@ -1,5 +1,6 @@
-import 'dart:convert';
+// import 'dart:convert';
 
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:wms/components/dialogalert_component.dart';
 import 'package:wms/components/dialogconfirm_component.dart';
 import 'package:wms/components/input_decoration.dart';
@@ -68,6 +69,7 @@ class _DistributeScreen extends State<DistributeScreen> {
 
   void resetScreen() {
     setState(() {
+      isLoading = false;
       //prepdtr = Distribution();
       distline = DistrbLine();
       lines = <DistrbLine>[];
@@ -120,20 +122,18 @@ class _DistributeScreen extends State<DistributeScreen> {
 
         // preperation information and line detail
         final _distinfo = await service.getprep(_prepdtrs.single);
-        final _lines = _distinfo.lines.where((x) => x.qtypuops < x.qtypuorder).toList();
+
+        final _lines = _distinfo.lines.where((x) => x.qtypuops < x.qtypuorder || x.preplineops == 0).toList();
         if (_lines.length == 0) {
           final message = _distinfo.lines.length > 0 ? "This HU has already completed" : "No data found!";
           alert(context, "info", "Information", message);
           resetScreen();
           setState(() {
+            isLoading = false;
             distinfo = _distinfo;
             prepdtr = _prepdtrs.single;
           });
         } else {
-          _lines.forEach((v) {
-            print(v.toJson());
-          });
-
           setState(() {
             isLoading = false;
             prepdtr = _prepdtrs.single;
@@ -169,11 +169,14 @@ class _DistributeScreen extends State<DistributeScreen> {
 
       // get xd preperation info by prep
       final _distinfo = await service.getprep(prepdtr);
-      final _lines = _distinfo.lines.where((element) => element.qtypuops < element.qtypuorder).toList();
+      final _lines = _distinfo.lines.where((x) => x.qtypuops < x.qtypuorder || x.preplineops == 0).toList();
       if (_lines.length == 0) {
         // alert(context, "info", "Information", "This HU has already completed or No data found!");
         resetScreen();
-        setState(() => distinfo = _distinfo);
+        setState(() {
+          isLoading = false;
+          distinfo = _distinfo;
+        });
       } else {
         // update screen data
         setState(() {
@@ -207,8 +210,15 @@ class _DistributeScreen extends State<DistributeScreen> {
         // scan product agian
         setState(() => barcodeFocusNode.requestFocus());
       } else {
+        final _lnops = lines.firstWhere(
+          (x) => x.hunosource == distinfo.huno && x.article == _product.article && x.lv == _product.lv,
+          orElse: () => null,
+        );
+
         setState(() {
           isLoading = false;
+          emptyHuController.text = (_lnops.huno ?? "");
+
           // Scan HU Empty Pallet
           emptyFocusNode.requestFocus();
         });
@@ -228,17 +238,17 @@ class _DistributeScreen extends State<DistributeScreen> {
       final emptys = await service.getEmpty(filter);
 
       // stamp auto start preperation
-      await service.setstart(distinfo);
+      if (distinfo.tflow == "IO") {
+        await service.setstart(distinfo);
+        Fluttertoast.showToast(msg: "Started", backgroundColor: colorStem);
+      }
 
       //hu empty not found
       if (emptys == null) {
         alert(context, "warning", "Warning", "Not found this Empty HU / Empty HU not available");
       } else {
         // get preperateion store by empty pallet
-        final _distline = distinfo.lines.firstWhere(
-          (x) => x.thcode == emptys.thcode,
-          orElse: () => null,
-        );
+        final _distline = distinfo.lines.firstWhere((x) => x.thcode == emptys.thcode, orElse: () => null);
 
         if (_distline == null) {
           alert(context, "warning", "Warning", "Not found this Empty HU / Empty HU not available");
@@ -255,7 +265,7 @@ class _DistributeScreen extends State<DistributeScreen> {
             // convert preperation unit description
             unitDesc = decodeUnit(distline.unitprep);
             // initail input qty
-            qtyPuController.text = "";
+            qtyPuController.text = (_distline.qtypuops ?? "").toString();
             qtyFocusNode.requestFocus();
           });
         }
@@ -283,6 +293,7 @@ class _DistributeScreen extends State<DistributeScreen> {
         alert(context, "success", "Information", "Put product to grid success");
 
         setState(() {
+          isLoading = false;
           // clear input after call api
           qtyPuController.text = "";
           emptyHuController.text = "";
@@ -406,7 +417,7 @@ class _DistributeScreen extends State<DistributeScreen> {
       },
       decoration: Txtheme.deco(
         icon: Icons.domain,
-        label: "HU No ",
+        label: "HU No   ",
       ),
     );
 
@@ -507,20 +518,21 @@ class _DistributeScreen extends State<DistributeScreen> {
     );
 
     var barcodeTextField = TextField(
-      readOnly: isscanbar,
-      keyboardType: TextInputType.number,
-      focusNode: barcodeFocusNode,
-      controller: barcodeController,
-      onSubmitted: (value) async => {
-        if (value.isNotEmpty) {await scanBarcode(value)}
-      },
-      decoration: Txtheme.decoration(
-        Icons.qr_code,
-        "Barcode ",
-        "Barcode ",
-        null,
-      ),
-    );
+        readOnly: isscanbar,
+        keyboardType: TextInputType.number,
+        focusNode: barcodeFocusNode,
+        controller: barcodeController,
+        onSubmitted: (value) async => {
+              if (value.isNotEmpty) {await scanBarcode(value)}
+            },
+        decoration: Txtheme.deco(icon: Icons.qr_code, label: "Barcode ")
+        // decoration: Txtheme.decoration(
+        //   Icons.qr_code,
+        //   "Barcode ",
+        //   "Barcode ",
+        //   null,
+        // ),
+        );
     var productName = Padding(
       padding: EdgeInsets.only(top: 5),
       child: Column(
@@ -653,7 +665,7 @@ class _DistributeScreen extends State<DistributeScreen> {
                   await scanEmpty(value);
                 }
               },
-              decoration: Txtheme.deco(icon: CupertinoIcons.tray_full, label: "Empty "),
+              decoration: Txtheme.deco(icon: CupertinoIcons.tray_full, label: "Empty  "),
             ),
           ),
         ],
