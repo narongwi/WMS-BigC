@@ -104,15 +104,14 @@ namespace Snaps.WMS.preparation {
 
         //line 
         private String prln_sqlfnd =
-        @" select   o.orgcode,o.site,o.depot,o.spcarea,o.routeno,o.thcode,o.huno,o.hunosource,o.prepno,o.prepln,o.loczone,o.loccode,o.locseq,o.locdigit
+        @" select o.orgcode,o.site,o.depot,o.spcarea,o.routeno,o.thcode,o.huno,o.hunosource,o.prepno,o.prepln,o.loczone,o.loccode,o.locseq,o.locdigit
                 ,o.ouorder,o.ouln,o.barcode,o.article,o.pv,o.lv,o.stockid,o.unitprep,o.qtyskuorder,o.qtypuorder,o.qtyweightorder,o.qtyvolumeorder
                 ,o.qtyskuops,o.qtypuops,o.qtyweightops,o.qtyvolumeops,o.batchno,o.lotno,o.datemfg,o.dateexp,o.serialno,o.picker,o.datepick
                 ,o.devicecode,o.tflow,o.datecreate,o.accncreate,o.datemodify,o.accnmodify,o.procmodify
                 ,p.descalt,p.unitprep,p.rtoskuofpu, max(t.taskno) taskno,null daterec,null inagrn, null ingrno,o.preptypeops,o.preplineops 
         from wm_prln o join wm_product p on o.orgcode = p.orgcode and o.site = p.site 
         and o.depot = p.depot and o.article = p.article and o.pv = p.pv and o.lv = p.lv 
-        left join wm_taln t on o.orgcode = t.orgcode 
-        and o.site = t.site and o.depot = t.depot and o.loccode = t.targetadv and o.article = t.article and o.pv = t.pv and o.lv = t.lv and t.tflow not in ('ED','CL') 
+        left join wm_taln t on o.orgcode = t.orgcode and o.site = t.site and o.depot = t.depot and o.stockid = t.stockid and o.loccode = t.targetadv and o.article = t.article and o.pv = t.pv and o.lv = t.lv and t.tflow not in ('ED','CL') 
         where  o.orgcode = @orgcode and o.site = @site and o.depot = @depot and o.spcarea = @spcarea and o.prepno = @prepno and o.spcarea = 'ST'
         group by o.orgcode,o.site,o.depot,o.spcarea,o.routeno,o.thcode,o.huno,o.hunosource,o.prepno,o.prepln,o.loczone,o.loccode,o.locseq,o.locdigit
                 ,o.ouorder,o.ouln,o.barcode,o.article,o.pv,o.lv,o.stockid,o.unitprep,o.qtyskuorder,o.qtypuorder,o.qtyweightorder,o.qtyvolumeorder
@@ -129,13 +128,37 @@ namespace Snaps.WMS.preparation {
         left join wm_stock s on o.orgcode = s.orgcode and o.site = s.site and o.depot = s.depot and o.article = s.article and p.pv = s.pv and o.lv = s.lv 
             and o.stockid = s.stockid and o.hunosource = s.huno
         where  o.orgcode = @orgcode and o.site = @site and o.depot = @depot and o.spcarea = 'XD' and o.prepno = @prepno and o.spcarea = 'XD'";
-        private string prlin_sqlfnd_forclose = @"select o.*, s.daterec, s.inagrn, s.ingrno from ( 
-        select o.*, p.descalt,p.rtoskuofpu, t.taskno from wm_prln o join wm_product p on o.orgcode = p.orgcode and o.site = p.site 
-        and o.depot = p.depot and o.article = p.article and o.pv = p.pv and o.lv = p.lv left join wm_taln t on o.orgcode = t.orgcode
-        and o.site = t.site and o.depot = t.depot and o.loccode = t.targetadv and o.article = t.article and o.pv = t.pv and o.lv = t.lv and t.tflow not in ('ED','CL') 
-        where o.orgcode = @orgcode and o.site = @site and o.depot = @depot and o.spcarea = @spcarea and o.prepno = @prepno
-        ) o, wm_stock s 
-        where  o.orgcode = s.orgcode and o.site = s.site and o.depot = s.depot and o.article = s.article and o.pv = s.pv and o.lv = s.lv and o.stockid = s.stockid";
+
+        // Bug decrease Stock double 09092021
+        //private string prlin_sqlfnd_forclose = @"select o.*, s.daterec, s.inagrn, s.ingrno from ( 
+        //select o.*, p.descalt,p.rtoskuofpu, t.taskno from wm_prln o join wm_product p on o.orgcode = p.orgcode and o.site = p.site 
+        //and o.depot = p.depot and o.article = p.article and o.pv = p.pv and o.lv = p.lv left join wm_taln t on o.orgcode = t.orgcode
+        //and o.site = t.site and o.depot = t.depot and o.loccode = t.targetadv and o.article = t.article and o.pv = t.pv and o.lv = t.lv and t.tflow not in ('ED','CL') 
+        //where o.orgcode = @orgcode and o.site = @site and o.depot = @depot and o.spcarea = @spcarea and o.prepno = @prepno
+        //) o, wm_stock s 
+        //where  o.orgcode = s.orgcode and o.site = s.site and o.depot = s.depot and o.article = s.article and o.pv = s.pv and o.lv = s.lv and o.stockid = s.stockid";
+
+        // Fix Bug decrease Stock double 09092021
+        private string prlin_sqlfnd_forclose = 
+           @"select
+	       o.orgcode, o.site, o.depot, o.spcarea, o.routeno, o.thcode, o.huno, o.hunosource, o.prepno, o.prepln, o.loczone, o.loccode, o.locseq, o.locdigit, o.ouorder, o.ouln, o.barcode, 
+	       o.article, o.pv, o.lv, o.stockid, o.unitprep, o.qtyskuorder, o.qtypuorder, o.qtyweightorder, o.qtyvolumeorder, o.qtyskuops, o.qtypuops, o.qtyweightops, o.qtyvolumeops, 
+	       o.batchno, o.lotno, o.datemfg, o.dateexp, o.serialno, o.picker, o.datepick, o.devicecode, o.tflow, o.datecreate, o.accncreate, o.datemodify, o.accnmodify, o.procmodify, 
+	       o.prepstockid,o.descalt,o.rtoskuofpu,o.taskno, s.daterec, s.inagrn, s.ingrno ,o.preptypeops,o.preplineops
+            from ( 
+	            select o.orgcode, o.site, o.depot, o.spcarea, o.routeno, o.thcode, o.huno, o.hunosource, o.prepno, o.prepln, o.loczone, o.loccode, o.locseq, o.locdigit, o.ouorder, o.ouln, o.barcode, 
+	               o.article, o.pv, o.lv, o.stockid, o.unitprep, o.qtyskuorder, o.qtypuorder, o.qtyweightorder, o.qtyvolumeorder, o.qtyskuops, o.qtypuops, o.qtyweightops, o.qtyvolumeops, 
+	               o.batchno, o.lotno, o.datemfg, o.dateexp, o.serialno, o.picker, o.datepick, o.devicecode, o.tflow, o.datecreate, o.accncreate, o.datemodify, o.accnmodify, o.procmodify, 
+	               o.prepstockid, p.descalt,p.rtoskuofpu, max(t.taskno) taskno,o.preptypeops,o.preplineops
+	            from wm_prln o join wm_product p on o.orgcode = p.orgcode and o.site = p.site and o.depot = p.depot and o.article = p.article and o.pv = p.pv and o.lv = p.lv 
+	            left join wm_taln t on o.orgcode = t.orgcode and o.site = t.site and o.depot = t.depot and o.stockid = t.stockid and o.loccode = t.targetadv and o.article = t.article 	and o.pv = t.pv and o.lv = t.lv  and t.tflow not in ('ED','CL') 
+	            where o.orgcode = @orgcode and o.site = @site and o.depot = @depot and o.spcarea = @spcarea and o.prepno = @prepno
+	            group by  o.orgcode, o.site, o.depot, o.spcarea, o.routeno, o.thcode, o.huno, o.hunosource, o.prepno, o.prepln, o.loczone, o.loccode, o.locseq, o.locdigit, o.ouorder, o.ouln, o.barcode, 
+	               o.article, o.pv, o.lv, o.stockid, o.unitprep, o.qtyskuorder, o.qtypuorder, o.qtyweightorder, o.qtyvolumeorder, o.qtyskuops, o.qtypuops, o.qtyweightops, o.qtyvolumeops, 
+	               o.batchno, o.lotno, o.datemfg, o.dateexp, o.serialno, o.picker, o.datepick, o.devicecode, o.tflow, o.datecreate, o.accncreate, o.datemodify, o.accnmodify, o.procmodify, 
+	               o.prepstockid, p.descalt,p.rtoskuofpu,o.preptypeops,o.preplineops
+            ) o, wm_stock s 
+            where  o.orgcode = s.orgcode and o.site = s.site and o.depot = s.depot and o.article = s.article and o.pv = s.pv and o.lv = s.lv and o.stockid = s.stockid";
 
         //line 
         private String prln_sqlfndA = @"select th.orgcode,th.site,th.depot,th.spcarea,tl.sourcehuno huno,tl.sourcehuno hunosource,
