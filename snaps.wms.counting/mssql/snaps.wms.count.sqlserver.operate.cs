@@ -670,8 +670,8 @@ namespace Snaps.WMS {
                     cm.snapsPar(o.depot,"depot");
                     cm.snapsPar(o.loccode,"loccode");
                     cm.snapsPar(o.article,"article");
-                    cm.snapsPar(o.pv,"pv");
-                    cm.snapsPar(o.lv,"lv");
+                    cm.snapsPar(o.pv.ToString(),"pv");
+                    cm.snapsPar(o.lv.ToString(),"lv");
                     cm.snapsPar(o.qtycount,"qtypu");
                     cm.snapsPar(o.unitcount,"qtyunit");
                     cm.snapsPar(o.countcode,"countno");
@@ -710,8 +710,8 @@ namespace Snaps.WMS {
                             ln.unitcount = o.unitcount;
                             ln.cnbarcode = o.barcode;
                             ln.cnarticle = o.article;
-                            ln.cnpv = o.pv;
-                            ln.cnlv = o.lv;
+                            ln.cnpv = o.pv ?? ln.cnpv;
+                            ln.cnlv = o.lv ?? ln.cnpv;
                             ln.cnlotmfg = o.lotmfg;
                             ln.cndateexp = o.dateexp;
                             ln.cndatemfg = o.datemfg;
@@ -777,7 +777,7 @@ namespace Snaps.WMS {
                     cm.snapsPar(o.loccode,"loccode");
                     cm.snapsPar(string.IsNullOrEmpty(o.barcode)?o.article: o.barcode,"product");
                     if(o.lv != -1)
-                        cm.snapsCdn(o.lv,"lv");
+                        cm.snapsCdn(o.lv.ToString(),"lv");
 
                     // get product
                     using(SqlDataReader r = await cm.snapsReadAsync()) {
@@ -875,8 +875,8 @@ namespace Snaps.WMS {
                                     ln.unitcount = o.unitcount;
                                     ln.cnbarcode = o.barcode;
                                     ln.cnarticle = o.article;
-                                    ln.cnpv = o.pv;
-                                    ln.cnlv = o.lv;
+                                    ln.cnpv = o.pv ?? ln.cnpv;
+                                    ln.cnlv = o.lv ?? ln.cnpv;
                                     ln.cnlotmfg = o.lotmfg;
                                     ln.cndateexp = o.dateexp;
                                     ln.cndatemfg = o.datemfg;
@@ -923,8 +923,8 @@ namespace Snaps.WMS {
                                 ln.unitcount = o.unitcount;
                                 ln.cnbarcode = o.barcode;
                                 ln.cnarticle = o.article;
-                                ln.cnpv = o.pv;
-                                ln.cnlv = o.lv;
+                                ln.cnpv = o.pv ?? ln.cnpv;
+                                ln.cnlv = o.lv ?? ln.cnpv;
                                 ln.cnlotmfg = o.lotmfg;
                                 ln.cndateexp = o.dateexp;
                                 ln.cndatemfg = o.datemfg;

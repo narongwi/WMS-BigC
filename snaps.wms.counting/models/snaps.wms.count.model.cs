@@ -237,8 +237,8 @@ namespace Snaps.WMS {
         public string depot { get; set; }
         public string barcode { get; set; }
         public string article { get; set; }
-        public int pv { get; set; }
-        public int lv { get; set; }
+        public int? pv { get; set; }
+        public int? lv { get; set; }
         public string descalt { get; set; }
         public decimal? skuweight { get; set; }
         public decimal? skuvolume { get; set; }
