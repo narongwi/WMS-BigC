@@ -191,6 +191,9 @@ namespace Snaps.WMS {
                 accnmodify = r["accnmodify"].ToString(),
                 procmodify = r["procmodify"].ToString(),
                 taskname = r["taskname"].ToString(),
+                setno = r["setno"].ToString(),
+                //routethcode = r["routethcode"].ToString(),
+
             };
         }
         private SqlCommand ixcommand(task_ix o,String sql) { 

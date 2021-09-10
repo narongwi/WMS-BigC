@@ -1559,8 +1559,8 @@ namespace Snaps.WMS.preparation {
                             lstRoute.Add(opsRoute);
 
                         } catch(Exception xx) {
-                            logger.Error(orgcode,site,setno,xx,$"gen preperateion HU store {orderln.thcode} error");
-                            throw new Exception($"get preperateion preperateion HU store {orderln.thcode} error");
+                            logger.Error(orgcode,site,setno,xx,$"get route store {orderln.thcode} error");
+                            throw new Exception($"get route store {orderln.thcode} error");
                         }
                     } else {
                         // use current route
@@ -1583,8 +1583,8 @@ namespace Snaps.WMS.preparation {
                             lstPreps.Add(generatepreps(huGen,orderln.spcarea,orderln.thcode,opsRoute.routeno,orderln.przone,prepno,setno,accncode));
                             // add route to list
                         } catch(Exception xx) {
-                            logger.Error(orgcode,site,setno,xx,$"gen preperateion HU store {orderln.thcode} error");
-                            throw new Exception($"get preperateion preperateion HU store {orderln.thcode} error");
+                            logger.Error(orgcode,site,setno,xx,$"gen generate HU store {orderln.thcode} error");
+                            throw new Exception($"get generate HU store {orderln.thcode} error");
                         }
                     }
 

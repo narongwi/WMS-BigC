@@ -369,14 +369,14 @@ namespace Snaps.WMS {
                     cm.Last().snapsParsysdateoffset();
                 } else if(o.tasktype == "A") {
                     // Un reserved process Stock
-                    cm.Add(sqlstock_reserved_step1.snapsCommand(cn));
+                    cm.Add(sqlcancel_reserved_step1.snapsCommand(cn));
                     cm.Last().snapsPar(o.orgcode,"orgcode");
                     cm.Last().snapsPar(o.site,"site");
                     cm.Last().snapsPar(o.depot,"depot");
                     cm.Last().snapsPar(o.taskno,"taskno");
                     cm.Last().snapsPar(o.setno,"setno");
 
-                    cm.Add(sqlstock_reserved_step2.snapsCommand(cn));
+                    cm.Add(sqlcancel_reserved_step2.snapsCommand(cn));
                     cm.Last().snapsPar(o.orgcode,"orgcode");
                     cm.Last().snapsPar(o.site,"site");
                     cm.Last().snapsPar(o.depot,"depot");
@@ -479,7 +479,9 @@ namespace Snaps.WMS {
                         cm.Add(sqlconfirm_task_step3.snapsCommand(cn));
 
                         // set finish transfer task
-                        if(o.tasktype == "T") { cm.Add(sqlconfirm_task_step7.snapsCommand(cn));}
+                        if(o.tasktype == "T") { 
+                            cm.Add(sqlconfirm_task_step7.snapsCommand(cn));
+                        }
                     }
 
                     cm.ForEach(x => {

@@ -198,7 +198,7 @@ namespace Snaps.WMS.preparation {
         public string prsrp_sqlhead = 
             @"update r set tflow = iif((select sum(iif(l.tflow = 'IO',1,0)) from wm_prepsrl l where r.orgcode = l.orgcode and r.site = l.site and r.depot = l.depot and r.setno = l.setno and r.stockid = l.stockid) > 0,'IO','ED'),
             tflowdate = SYSDATETIMEOFFSET() from wm_prepsrp r where r.orgcode  = @orgcode and r.site = @site and r.depot = @depot and r.setno  = @setno";
-        public string prsrp_sqlline = "UPDATE wm_prepsrl SET tflow ='ED',tflowdate = SYSDATETIMEOFFSET() WHERE orgcode = @orgcode and site = @site and depot = @depot and stockid  = @stockid and setno  = @setno and prepno  = @prepno and article  = @article and pv = @pv and lv = @lv";
+        public string prsrp_sqlline = "UPDATE wm_prepsrl SET tflow ='ED',tflowdate = SYSDATETIMEOFFSET() WHERE orgcode = @orgcode and site = @site and depot = @depot and stockid = @stockid and setno = @setno and prepno = @prepno and ouorder = @ouorder";
         public String prep_sqlupdprc = " update wm_outbound set tflow = 'PC' where orgcode = @orgcode and site = @site and depot = @depot and ouorder in ({0}) ";
         public String prep_getpickstock = "select top 1 s.orgcode, s.site, s.depot, stockid, huno, article, pv, lv, qtysku, qtypu,s.loccode, dateexp,datemfg, batchno, lotno " + 
         "  from wm_stock s, wm_locdw l where s.orgcode = l.orgcode " +
@@ -271,7 +271,7 @@ namespace Snaps.WMS.preparation {
         public String prep_opspick_stp1 =" update t  set " + 
         " qtyskuops = case when t.unitprep = 1 then 1 when t.unitprep = 2 then rtoskuofipck when t.unitprep = 3 then rtoskuofpck when t.unitprep = 4 then rtoskuoflayer when t.unitprep = 5 then rtoskuofhu else 1 end *   @qtyskuops, " + 
         " qtypuops = @qtypuops,  datemodify = sysdatetimeoffset(), procmodify = @procmodify, serialno = @serialno,  qtyweightops = round(p.skuweight * @qtyskuops,3,1), qtyvolumeops = round(p.skuvolume * @qtyskuops,3,1), " +
-        " datepick = sysdatetimeoffset(), picker = @accnmodify, accnmodify = @accnmodify , preplineops = isnull(t.preplineops) + 1" + 
+        " datepick = sysdatetimeoffset(), picker = @accnmodify, accnmodify = @accnmodify , preplineops = isnull(t.preplineops,0) + 1 " + 
         " from wm_prln t , wm_product p " + 
         " where t.orgcode = p.orgcode and t.site = p.site and t.depot = p.depot and t.article = p.article and t.pv = p.pv and t.lv = p.lv " + 
         " and t.orgcode = @orgcode and t.site = @site and t.depot = @depot and t.prepno = @prepno and t.prepln = @prepln and t.article = @article and t.pv = @pv and t.lv = @lv " ;

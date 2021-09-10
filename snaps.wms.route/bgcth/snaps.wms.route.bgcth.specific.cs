@@ -224,7 +224,7 @@ namespace Snaps.WMS {
                     "          else cast(datepart(dw, getdate()) as varchar(1)) + t.thcode + format(sysdatetimeoffset(), 'MMdd') + cast(RIGHT('00' + CAST(count(r.routeno) + 1 AS VARCHAR(3)), 2) as varchar(4))  end) " +
                     "   from wm_thparty t left join wm_route r  on t.orgcode = r.orgcode and t.site = r.site and t.depot = r.depot and t.thcode = r.thcode  " +
                     "   and cast(plandate as date) = cast(@plandate as date) where t.tflow = 'IO' and t.orgcode = @orgcode and t.site = @site and t.depot = @depot " +
-                    "   and t.thcode = @thcode  group by t.thcode ";
+                    "   and t.thcode = @thcode group by t.thtype,t.thcode ";
 
                     // new route number
                     nroute = cm.snapsScalarStrAsync().Result;

@@ -360,9 +360,10 @@ namespace Snaps.WMS.preparation {
             cm.snapsPar(o.stockid,"stockid");
             cm.snapsPar(setno,"setno");
             cm.snapsPar(o.prepno,"prepno");
-            cm.snapsPar(o.article,"article");
-            cm.snapsPar(o.pv,"pv");
-            cm.snapsPar(o.lv,"lv");
+            cm.snapsPar(o.ouorder,"ouorder");
+            //cm.snapsPar(o.article,"article");
+            //cm.snapsPar(o.pv,"pv");
+            //cm.snapsPar(o.lv,"lv");
             return cm;
         }
         private SqlCommand prsp_setmd(string orgcode,string site,string depot,string setno,String sql) {
