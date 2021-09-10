@@ -143,7 +143,11 @@ export class oubprocessstockoperateComponent implements OnInit, OnDestroy {
     t.description = s.articledsc;
     return t;
   }
-  setedit(o: outbouln_md) { this.rqedit = 1; this.slcline = o; }
+  setedit(o: outbouln_md) { 
+    // this.rqedit = 1; 
+    this.rqedit = 0; // disabled
+    this.slcline = o; 
+  }
   flagremarks() { this.chnremark = (this.chnremark == 0) ? 1 : 0; }
   /* Row limit changing */
   changerowlmt() { this.pageSize = parseInt(this.slrowlmt.value); }
