@@ -367,6 +367,20 @@ namespace Snaps.WMS {
                     cm.Last().snapsPar(o.lines[0].accnassign,"accnassign");
                     cm.Last().snapsPar(o.accnmodify,"accnmodify");
                     cm.Last().snapsParsysdateoffset();
+                } else if(o.tasktype == "A") {
+                    // Un reserved process Stock
+                    cm.Add(sqlstock_reserved_step1.snapsCommand(cn));
+                    cm.Last().snapsPar(o.orgcode,"orgcode");
+                    cm.Last().snapsPar(o.site,"site");
+                    cm.Last().snapsPar(o.depot,"depot");
+                    cm.Last().snapsPar(o.taskno,"taskno");
+                    cm.Last().snapsPar(o.setno,"setno");
+
+                    cm.Add(sqlstock_reserved_step2.snapsCommand(cn));
+                    cm.Last().snapsPar(o.orgcode,"orgcode");
+                    cm.Last().snapsPar(o.site,"site");
+                    cm.Last().snapsPar(o.depot,"depot");
+                    cm.Last().snapsPar(o.setno,"setno");
                 }
 
                 await cm.snapsExecuteTransAsync(cn);
@@ -455,6 +469,11 @@ namespace Snaps.WMS {
                         cm.Add(sqlconfirm_task_step4.snapsCommand(cn));
                         cm.Add(sqlconfirm_task_step5.snapsCommand(cn));
                         cm.Add(sqlconfirm_task_step6.snapsCommand(cn));
+
+                        // completed reserve stock
+                        cm.Add(sqlstock_reserved_step1.snapsCommand(cn));
+                        cm.Add(sqlstock_reserved_step2.snapsCommand(cn));
+
                     } else {
                         // update stock info replen , putaway , transfer 
                         cm.Add(sqlconfirm_task_step3.snapsCommand(cn));
@@ -473,6 +492,7 @@ namespace Snaps.WMS {
                         x.snapsPar(o.devid,"device");
                         x.snapsPar(loccodeadv,"loccode");
                         x.snapsPar(huno,"huno");
+                        x.snapsPar(o.setno,"setno");
                         x.snapsParsysdateoffset();
                         // full pallet step 4
                         x.snapsPar(o.iorefno,"ouorder");

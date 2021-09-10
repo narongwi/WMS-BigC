@@ -139,29 +139,36 @@ namespace Snaps.WMS.preparation {
             List<SqlCommand> cm = new List<SqlCommand>();
             Int32 ix = 0;
             try {
-                foreach(prep_md ln in rs) {
-                    cm.Add(prep_setmd(ln,prep_sqlins));
-                    //cm[ix].CommandText = (cm[ix].snapsScalarStrAsync().Result == "0") ? prep_sqlins : prep_sqlupd; 
-                    foreach(prln_md rn in ln.lines) {
-                        rn.devicecode = "";
-                        rn.huno = (ln.spcarea == "XD") ? null : ln.huno;
-                        rn.locdigit = "";
-                        rn.loczone = ln.przone;
-                        rn.picker = "";
-                        rn.prepno = ln.prepno;
-                        rn.procmodify = ln.procmodify;
-                        rn.spcarea = ln.spcarea;
-                        rn.unitname = "";
-                        rn.accncreate = ln.accncreate;
-                        cm.Add(prln_setmd(rn,prln_sqlins));
-                        cm.Add(prbc_setmd(rn,"P",ln.hutype,prbc_sqlins)); // assign block stock for prepline 
-                        cm.Add(prsp_setmd(rn,ln.setno,prsrp_sqlhead)); // finish reserved process stock
-                        cm.Add(prsp_setmd(rn,ln.setno,prsrp_sqlline)); // finish reserved process stock
+                if(rs.Count > 0) {
+
+                    foreach(prep_md ln in rs) {
+                        cm.Add(prep_setmd(ln,prep_sqlins));
+                        //cm[ix].CommandText = (cm[ix].snapsScalarStrAsync().Result == "0") ? prep_sqlins : prep_sqlupd; 
+                        foreach(prln_md rn in ln.lines) {
+                            rn.devicecode = "";
+                            rn.huno = (ln.spcarea == "XD") ? null : ln.huno;
+                            rn.locdigit = "";
+                            rn.loczone = ln.przone;
+                            rn.picker = "";
+                            rn.prepno = ln.prepno;
+                            rn.procmodify = ln.procmodify;
+                            rn.spcarea = ln.spcarea;
+                            rn.unitname = "";
+                            rn.accncreate = ln.accncreate;
+                            cm.Add(prln_setmd(rn,prln_sqlins));
+                            cm.Add(prbc_setmd(rn,"P",ln.hutype,prbc_sqlins)); // assign block stock for prepline 
+                            cm.Add(prsl_setmd(rn,ln.setno,prsrp_sqlline)); // finish reserved process stock line
+                        }
+                        ix++;
                     }
-                    ix++;
+                    // finish reserved process stock header
+                    var fs = rs.FirstOrDefault();
+                    cm.Add(prsp_setmd(fs.orgcode,fs.site,fs.depot,fs.setno,prsrp_sqlhead));
+
+                    // ExecuteTransaction
+                    await cm.snapsExecuteTransAsync(cn);
+                    // Execute and Tags Result
                 }
-                await cm.snapsExecuteTransAsync(cn);
-                // Execute and Tags Result
             } catch(Exception ex) {
                 var es = rs.FirstOrDefault();
                 logger.Error(es.orgcode,es.site,es.accnmodify,ex,ex.Message);
@@ -381,7 +388,7 @@ namespace Snaps.WMS.preparation {
             try {
                 o = await get(o.orgcode,o.site,o.depot,o.spcarea,o.prepno,o.preptype,true);
                 if(o == null) { throw new Exception("Preparation Data Not Found"); }
-                if(o.lines.Count(x=>x.qtypuops > 0) == 0) { throw new Exception("Preparation line Quantity is required");}
+                if(o.lines.Count(x => x.qtypuops > 0) == 0) { throw new Exception("Preparation line Quantity is required"); }
 
                 //Move stock from storage to dispath coz it safty than use the same location
                 o.lines.Where(e => e.qtyskuops > 0).ToList().ForEach(ln => {
@@ -1366,7 +1373,7 @@ namespace Snaps.WMS.preparation {
         string article,int pv,int lv,int rsvqty,string setno,string loccode,string huno,string tasktype,string targetloc,
         string ouorder,string prepno,string accncode) {
             SqlConnection oox = new SqlConnection(cnx);
-            SqlCommand ol = new SqlCommand("dbo.snaps_Reservestock",oox);
+            SqlCommand ol = new SqlCommand("[dbo].[snaps_Reservestock]",oox);
             try {
                 ol.snapsPar(orgcode,"orgcode");
                 ol.snapsPar(site,"site");
@@ -1414,9 +1421,9 @@ namespace Snaps.WMS.preparation {
             SqlConnection oox = new SqlConnection(cnx);
             List<SqlCommand> command = new List<SqlCommand>();
             try {
-                foreach(var ouorder in orderno) {
+                foreach(string ouorder in orderno.Distinct().ToList()) {
                     SqlCommand om = new SqlCommand();
-                    om.CommandText = "snaps_Unreservestock";
+                    om.CommandText = "[dbo].[snaps_Unreservestock]";
                     om.CommandType = CommandType.StoredProcedure;
                     om.snapsPar(orgcode,"orgcode");
                     om.snapsPar(site,"site");
@@ -1617,6 +1624,7 @@ namespace Snaps.WMS.preparation {
                             var rollbackorder = stockops.Select(s => s.ouorder).Distinct().ToList();
                             if(rollbackorder.Count > 0) {
                                 await ProcessUnReservestock(orgcode,site,depot,setno,accncode,rollbackorder,"all");
+                                stockops.Clear();
                             }
                         } catch(Exception ux) {
                             logger.Error(orgcode,site,setno,ux,"Process UnReservestock Error"," setno ",setno);
@@ -1644,7 +1652,6 @@ namespace Snaps.WMS.preparation {
 
                         // un block stock 
                         if(unreserve.Count > 0) {
-                            throwerror = true;
                             unpickord = (from s in stockops where unreserve.Contains(s.ouorder) select s).ToList();
 
                             // remove order in prep list 
@@ -1653,17 +1660,28 @@ namespace Snaps.WMS.preparation {
                             // remove order in task list 
                             taskGen = (from s in taskGen where s.lines.Any(x => !unreserve.Contains(x.ouorder)) select s).ToList();
 
-                            // repreperateion
+                            // un reserve by setno
                             await ProcessUnReservestock(orgcode,site,depot,setno,accncode,unreserve,"all");
+                            stockops.Clear();
+                            throwerror = true;
                         } else {
                             // stock not enourgh 
                             nostock = (from prepsln px in prepSet.orders
                                        where stockops.Count(e => e.ouorder == px.ouorder && e.article == px.article && e.pv == px.pv.ToString() && e.lv == px.lv.ToString()) == 0
                                        select px).ToList();
 
-                            if(nostock.Count > 0) { throwerror = true; }
+                            if(nostock.Count > 0) {
+                                // un reserve by setno
+                                await ProcessUnReservestock(orgcode,site,depot,setno,accncode,unreserve,"all");
+                                stockops.Clear();
+                                throwerror = true;
+                            }
                         }
-                        if(throwerror) throw new Exception("Stock not enourgh with allow partial process order parameter");
+
+                        if(throwerror) {
+
+                            throw new Exception("Stock not enourgh with allow partial process order parameter");
+                        }
 
                     } catch(Exception ux) {
                         logger.Error(orgcode,site,setno,ux,ux.Message);
@@ -1678,7 +1696,14 @@ namespace Snaps.WMS.preparation {
                         await prepPo.upsert(prep);
                     }
                 } catch(Exception xx) {
-                    logger.Error(orgcode,site,setno,xx,"Update Prep Failed"); throw xx;
+                    if(stockops.Count > 0) {
+                        // Un reserve Stock if Create Prep Error
+                        List<string> unreserve = stockops.Select(x => x.ouorder).Distinct().ToList();
+                        await ProcessUnReservestock(orgcode,site,depot,setno,accncode,unreserve,"all");
+                        stockops.Clear();
+                    }
+                    logger.Error(orgcode,site,setno,xx,"Update Prep Failed"); 
+                    throw xx;
                 }
 
                 try {
@@ -1687,6 +1712,12 @@ namespace Snaps.WMS.preparation {
                         await taskOps.generate(taskGen);
                     }
                 } catch(Exception xx) {
+                    if(stockops.Count > 0) {
+                        // Un reserve Stock if Create Task Error
+                        List<string> unreserve = stockops.Select(x => x.ouorder).Distinct().ToList();
+                        await ProcessUnReservestock(orgcode,site,depot,setno,accncode,unreserve,"all");
+                        stockops.Clear();
+                    }
                     logger.Error(orgcode,site,setno,xx,"generate task error");
                     throw xx;
                 }
@@ -1743,7 +1774,7 @@ namespace Snaps.WMS.preparation {
                 }
                 try {
                     cm.CommandText = sqlprepset_finish_step3;
-                   await cm.snapsExecuteAsync();
+                    await cm.snapsExecuteAsync();
                 } catch(Exception xx) {
                     logger.Error(orgcode,site,setno,xx,"update handerlingunit info error");
                     throw xx;
@@ -1769,7 +1800,8 @@ namespace Snaps.WMS.preparation {
                     }
 
                 } catch(Exception xx) {
-                    logger.Error(orgcode,site,setno,xx,"update product statistic error"); throw xx;
+                    logger.Error(orgcode,site,setno,xx,"update product statistic error"); 
+                    throw xx;
                 }
 
                 //update hu statistic 
@@ -1880,7 +1912,7 @@ namespace Snaps.WMS.preparation {
 
                             // read data
                             var opsStock = getstock(dr);// fill data
-                                                        //====> reserve stock and return pending qty
+                            //====> reserve stock and return pending qty
                             int pending_skuorderqty = ProcessReservestock(opsStock.orgcode,opsStock.site,opsStock.depot,opsStock.spcarea,opsStock.stockid.ToString().CInt32(),
                             opsStock.article,opsStock.pv,opsStock.lv,current_skuorderqty,opsPreps.setno,opsStock.loccode,opsStock.huno,"R",opsRoute.loccode,
                             orderln.ouorder,opsPreps.prepno,opsPreps.accncreate).Result;

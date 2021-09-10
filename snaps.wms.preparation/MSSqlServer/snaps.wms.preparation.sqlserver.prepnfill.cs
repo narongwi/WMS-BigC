@@ -352,15 +352,27 @@ namespace Snaps.WMS.preparation {
             cm.snapsParsysdateoffset();
             return cm;
         }
-        private SqlCommand prsp_setmd(prln_md o,string setno,String sql) {
+        private SqlCommand prsl_setmd(prln_md o,string setno,String sql) {
             SqlCommand cm = new SqlCommand(sql,cn);
             cm.snapsPar(o.orgcode,"orgcode");
             cm.snapsPar(o.site,"site");
             cm.snapsPar(o.depot,"depot");
+            cm.snapsPar(o.stockid,"stockid");
+            cm.snapsPar(setno,"setno");
+            cm.snapsPar(o.prepno,"prepno");
+            cm.snapsPar(o.article,"article");
+            cm.snapsPar(o.pv,"pv");
+            cm.snapsPar(o.lv,"lv");
+            return cm;
+        }
+        private SqlCommand prsp_setmd(string orgcode,string site,string depot,string setno,String sql) {
+            SqlCommand cm = new SqlCommand(sql,cn);
+            cm.snapsPar(orgcode,"orgcode");
+            cm.snapsPar(site,"site");
+            cm.snapsPar(depot,"depot");
             cm.snapsPar(setno,"setno");
             return cm;
         }
-
 
         //For process order task  - prepset 
         public SqlCommand prepset_setcmd(prepset o){ 

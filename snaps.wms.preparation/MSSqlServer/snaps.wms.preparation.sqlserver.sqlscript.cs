@@ -194,8 +194,11 @@ namespace Snaps.WMS.preparation {
         " values " + 
         " (@orgcode,@site,@depot,@spcarea,@stockid,@hutype,@huno,@inorder,@inln,@ouorder,@ouln,@opstype,@opsno,@opsln " +
         " ,@article,@pv,@lv,@rsvsku,@rsvpu,0,0,@batchno,@lotno,@datemfg,@dateexp,@serialno,@tflow,@datecreate,@accncreate,@procmodify, @loccode, @hunosource)";
-        private string prsrp_sqlhead = "UPDATE dbo.wm_prepsrp SET tflow ='ED',tflowdate = SYSDATETIMEOFFSET() WHERE orgcode = @orgcode AND site = @site AND depot = @depot AND setno = @setno and tflow='IO'";
-        private string prsrp_sqlline = "UPDATE dbo.wm_prepsrl SET tflow ='ED',tflowdate = SYSDATETIMEOFFSET() WHERE orgcode = @orgcode AND site = @site AND depot = @depot AND setno = @setno and tflow='IO'";
+        //private string prsrp_sqlhead = "UPDATE wm_prepsrp SET tflow ='ED',tflowdate = SYSDATETIMEOFFSET() WHERE orgcode = @orgcode AND site = @site AND depot = @depot AND setno = @setno and tflow='IO'";
+        public string prsrp_sqlhead = 
+            @"update r set tflow = iif((select sum(iif(l.tflow = 'IO',1,0)) from wm_prepsrl l where r.orgcode = l.orgcode and r.site = l.site and r.depot = l.depot and r.setno = l.setno and r.stockid = l.stockid) > 0,'IO','ED'),
+            tflowdate = SYSDATETIMEOFFSET() from wm_prepsrp r where r.orgcode  = @orgcode and r.site = @site and r.depot = @depot and r.setno  = @setno";
+        public string prsrp_sqlline = "UPDATE wm_prepsrl SET tflow ='ED',tflowdate = SYSDATETIMEOFFSET() WHERE orgcode = @orgcode and site = @site and depot = @depot and stockid  = @stockid and setno  = @setno and prepno  = @prepno and article  = @article and pv = @pv and lv = @lv";
         public String prep_sqlupdprc = " update wm_outbound set tflow = 'PC' where orgcode = @orgcode and site = @site and depot = @depot and ouorder in ({0}) ";
         public String prep_getpickstock = "select top 1 s.orgcode, s.site, s.depot, stockid, huno, article, pv, lv, qtysku, qtypu,s.loccode, dateexp,datemfg, batchno, lotno " + 
         "  from wm_stock s, wm_locdw l where s.orgcode = l.orgcode " +

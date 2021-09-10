@@ -171,6 +171,17 @@ namespace Snaps.WMS {
 	            and t.orgcode = @orgcode 
 	            and t.site = @site 
 	            and t.depot = @depot ";
+
+        // unblock reserve stock line
+        string sqlstock_reserved_step1 = @"update s set tflow ='ED',tflowdate = SYSDATETIMEOFFSET() from wm_prepsrl s 
+	    where exists( select * from wm_task t join wm_taln d on t.orgcode = d.orgcode and t.site = d.site and t.depot = d.depot and t.taskno = d.taskno
+		and s.orgcode = d.orgcode and s.site = d.site and s.depot = d.depot and s.stockid = d.stockid and s.ouorder = d.iorefno and s.article = d.article and s.pv = d.pv and s.lv = d.lv 
+		and t.orgcode  = @orgcode and t.site = @site and t.depot = @depot and tasktype ='A' and t.taskno = @taskno and t.setno = @setno)";
+
+        // unblock reserve stock header
+        string sqlstock_reserved_step2 = @"update r set tflow = iif((select sum(iif(l.tflow = 'IO',1,0)) from wm_prepsrl l where r.orgcode = l.orgcode and r.site = l.site and r.depot = l.depot and r.setno = l.setno and r.stockid = l.stockid) > 0,'IO','ED'),
+		tflowdate = SYSDATETIMEOFFSET() from wm_prepsrp r where r.orgcode  = @orgcode and r.site = @site and r.depot = @depot and r.setno  = @setno";
+
         string sqlconfirm_task_step7 = "update wm_transfer set tflow ='ED', dateops = SYSDATETIMEOFFSET(),accnops = @accnmodify where orgcode = @orgcode and site = @site and depot = @depot and rsltaskno = @taskno";
 
         String sqlstategic_step1_stockvalidate = @"update t set t.tflow = 'PE', t.crvolume = l.sourcevolume
