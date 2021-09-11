@@ -335,21 +335,20 @@ class _HomeScreenState extends State<HomeScreen> {
           Row(
             children: [
               Expanded(
-                flex: 2,
                 child: ListTile(
                   title: Text(
-                    '${profile.accncode}',
+                    '${profile.accncode ?? 'waiting'}',
                     textAlign: TextAlign.center,
+                    overflow: TextOverflow.ellipsis,
                     style: TextStyle(color: dangerColor, fontSize: 13, fontWeight: FontWeight.bold),
                   ),
-                  subtitle: Text('${profile.cfgcode}', textAlign: TextAlign.center, style: TextStyle(fontSize: 12)),
+                  subtitle: Text('${profile.cfgcode ?? 'waiting'}', overflow: TextOverflow.ellipsis, textAlign: TextAlign.center, style: TextStyle(fontSize: 12)),
                 ),
               ),
               Expanded(
-                flex: 1,
                 child: ListTile(
                   title: Text(
-                    '${profile.site}',
+                    '${profile.site ?? 'waiting'}',
                     textAlign: TextAlign.center,
                     style: TextStyle(color: dangerColor, fontSize: 13, fontWeight: FontWeight.bold),
                   ),
@@ -357,10 +356,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               Expanded(
-                flex: 1,
                 child: ListTile(
                   title: Text(
-                    '${profile.depot}',
+                    '${profile.depot ?? 'waiting'}',
                     textAlign: TextAlign.center,
                     style: TextStyle(color: dangerColor, fontSize: 13, fontWeight: FontWeight.bold),
                   ),

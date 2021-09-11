@@ -844,14 +844,14 @@ namespace Snaps.WMS {
                     cm.snapsPar(o.loccode,"loccode");
                     cm.snapsPar(o.huno,"huno");
                     cm.snapsPar(o.article,"article");
-
+                    bool isstock = !string.IsNullOrEmpty(o.loccode) && string.IsNullOrEmpty(o.huno) && string.IsNullOrEmpty(o.article) ? false : true;
                     // check hu is active in table
-                    if(Convert.ToInt32(await cm.snapsScalarAsync()) == 0) {
+                    if(isstock && Convert.ToInt32(await cm.snapsScalarAsync()) == 0) {
                         throw new Exception("huno not exists in system");
                     } else {
                         // check hu is using with other product
                         cm.CommandText = sqlcount_huother_product;
-                        if(Convert.ToInt32(await cm.snapsScalarAsync()) > 0) {
+                        if(isstock && Convert.ToInt32(await cm.snapsScalarAsync()) > 0) {
                             throw new Exception("huno already in use by another product");
                         } else if(o.isnewhu) {
                             cm.Parameters.Clear();
@@ -911,9 +911,10 @@ namespace Snaps.WMS {
                             cm.snapsPar(o.countcode,"countcode");
                             cm.snapsPar(o.plancode,"plancode");
                             cm.snapsCdn(o.loccode,"loccode"," and loccode = @loccode");
-                            cm.snapsCdn(o.huno,"cnhuno"," and cnhuno = @cnhuno");
                             cm.snapsCdn(o.linecode,"locseq"," and locseq = @locseq");
-
+                            if(isstock) {
+                                cm.snapsCdn(o.huno,"cnhuno"," and cnhuno = @cnhuno");
+                            }
                             r = await cm.snapsReadAsync();
 
                             while(await r.ReadAsync()) {

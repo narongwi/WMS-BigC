@@ -170,7 +170,7 @@ class CountServices {
     print(baseUrl);
     print(data);
     final resp = await http.post(baseUrl, body: data, headers: await header());
-    print("genNewHuno ==> ${resp.statusCode}");
+    print("validateHu ==> ${resp.statusCode}");
     if (resp.statusCode == 200) {
       return Countline.fromJson(jsonDecode(resp.body));
     } else {
@@ -182,11 +182,13 @@ class CountServices {
     final baseUrl = "$countApiUrl/count/validateline/0";
     final data = jsonEncode(o);
     print(baseUrl);
+    print(data);
     final resp = await http.post(baseUrl, body: data, headers: await header());
-    print("genNewHuno ==> ${resp.statusCode}");
+    print("validateline ==> ${resp.statusCode}");
     if (resp.statusCode == 200) {
       return Countline.fromJson(jsonDecode(resp.body));
     } else {
+      print(resp.body);
       throw Exception(getMessage(resp.body));
     }
   }

@@ -38,9 +38,9 @@ class _SheetTab extends State<SheetTab> with SingleTickerProviderStateMixin {
       if ((SheetTab.countPlan.plancode ?? "") == "") return;
       var _lines = await sv.countLine(SheetTab.countPlan);
       if (_lines.length > 0) {
-        _lines.forEach((element) {
-          element.unitcount = decodeUnit(element.unitcount);
-        });
+        // _lines.forEach((element) {
+        //   element.unitcount = decodeUnit(element.unitcount);
+        // });
 
         // initail count sheet
         setState(() {

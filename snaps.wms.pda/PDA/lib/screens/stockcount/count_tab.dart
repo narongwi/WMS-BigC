@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -99,6 +101,9 @@ class _CountTab extends State<CountTab> with SingleTickerProviderStateMixin {
         if (respline.length == 1) {
           Countline line = respline.first;
           await bindingControls(line);
+          // Todo show next location
+          getNextLocation(line.locseq);
+
           if (!isLineCounted) {
             if (scanhuController.text.isEmpty) {
               setState(() => hufocusNode.requestFocus());
@@ -116,6 +121,12 @@ class _CountTab extends State<CountTab> with SingleTickerProviderStateMixin {
         // ? Multiple count line
         else {
           Fluttertoast.showToast(msg: "Multiple Count line ", backgroundColor: colorStem);
+
+          // Todo show next location
+          if (prevLocseq == -1) {
+            getNextLocation(respline.first.locseq);
+          }
+
           // * variable
           // * call method
           // * controls
@@ -155,6 +166,9 @@ class _CountTab extends State<CountTab> with SingleTickerProviderStateMixin {
           final _lines = countSheet.where((x) => x.loccode == _locOps && x.sthuno.isEmpty);
           if (_lines.length > 0) {
             await bindingControls(_lines.first);
+            // Todo show next location
+            getNextLocation(_lines.first.locseq);
+
             setState(() {
               isLoading = false;
               qtyfocusNode.requestFocus();
@@ -171,7 +185,13 @@ class _CountTab extends State<CountTab> with SingleTickerProviderStateMixin {
           final _linOps = countSheet.where((x) => x.loccode == _locOps && (x.cnflow == 'IO' ? x.cnhuno : x.sthuno) == _hunoval);
           // ? check notfound
           if (_linOps.length == 0) {
-            alert(context, "warning", "Warning", "HU: $_hunoval \n not found !");
+            // alert(context, "warning", "Warning", "HU: $_hunoval \n not found !");
+            Fluttertoast.showToast(msg: "Count New HU No.", backgroundColor: colorStem);
+            setState(() {
+              isLoading = false;
+              requireScanProduct = true;
+              barfocusNode.requestFocus();
+            });
           }
           // ? check duplicate whit other location
           else if (countSheet.where((e) => e.cnhuno == _hunoval && e.loccode != _locOps).length > 0) {
@@ -179,7 +199,16 @@ class _CountTab extends State<CountTab> with SingleTickerProviderStateMixin {
           }
           // * single product
           else if (_linOps.length == 1) {
+            setState(() {
+              isLoading = false;
+              requireScanProduct = false;
+            });
+
             await bindingControls(_linOps.first);
+
+            // Todo show next location
+            getNextLocation(_linOps.first.locseq);
+
             if (allowScanProduct || requireScanProduct) {
               setState(() {
                 isLoading = false;
@@ -251,6 +280,7 @@ class _CountTab extends State<CountTab> with SingleTickerProviderStateMixin {
             scanbarController.text = _product.barcode;
           });
 
+          print("product=>${jsonEncode(lineProduct)}");
           final _lineOps = countSheet.firstWhere(
             (x) => x.loccode == _locOps && (x.cnflow == 'IO' ? x.cnhuno : x.sthuno) == _chuOps && (x.cnflow == 'IO' ? x.cnarticle : x.starticle) == _product.article && (x.cnflow == 'IO' ? x.cnlv : x.stlv) == _product.lv,
             orElse: () => null,
@@ -265,12 +295,16 @@ class _CountTab extends State<CountTab> with SingleTickerProviderStateMixin {
               qtyfocusNode.requestFocus();
             });
           } else {
-            Fluttertoast.showToast(msg: "New count line", backgroundColor: colorStem);
+            // Fluttertoast.showToast(msg: "New count line", backgroundColor: colorStem);
+            // Todo show next location
+            // getNextLocation(_lineOps.locseq);
+
             // Todo worng product
             setState(() {
               expController.text = "";
               mfgController.text = "";
               qtyController.text = "";
+              unitDesrt = decodeUnit(lineProduct.unitcount);
               qtyfocusNode.requestFocus();
             });
           }
@@ -301,19 +335,38 @@ class _CountTab extends State<CountTab> with SingleTickerProviderStateMixin {
     _productVld.datemfg = curPlan.isdateexp == 1 && mfgController.text.trim().isNotEmpty ? _format.parse(mfgController.text) : line.cndatemfg;
     _productVld.serialno = "";
     _productVld.loccode = line.loccode;
-    _productVld.huno = scanhuController.text;
+    _productVld.huno = scanhuController.text.trim();
     _productVld.countcode = line.countcode;
     _productVld.plancode = line.plancode;
     _productVld.linecode = line.locseq.toString();
     _productVld.qtycount = qtyController.text.trim().isEmpty ? 0 : int.parse(qtyController.text.trim());
 
-    if (line.cnflow == "IO" && scanhuController.text == line.cnhuno && lineProduct.article == line.cnarticle && lineProduct.lv == line.cnlv) {
-      _productVld.isnewhu = false;
-    } else if (line.cnflow.trim() == "" && scanhuController.text == line.sthuno && lineProduct.article == line.starticle && lineProduct.lv == line.stlv) {
-      _productVld.isnewhu = false;
+    if (line.cnflow == "IO") {
+      // is already confirm count qty
+      if (scanhuController.text.trim() == (line.cnhuno ?? "").trim() && (lineProduct.article ?? "") == (line.cnarticle ?? "") && (lineProduct.lv ?? 0) == (line.cnlv ?? 0)) {
+        // no change
+        _productVld.isnewhu = false;
+      } else {
+        // is change data
+        _productVld.isnewhu = true;
+      }
     } else {
-      _productVld.isnewhu = true;
+      // pending not confirm count
+      if (scanhuController.text.isEmpty && scanhuController.text.trim() == (line.sthuno ?? "").trim() && (lineProduct.article ?? "").trim() == (line.starticle ?? "").trim() && (lineProduct.lv ?? 0) == (line.stlv ?? 0)) {
+        // no change
+        _productVld.isnewhu = false;
+      } else {
+        // is change data
+        _productVld.isnewhu = true;
+      }
     }
+    // if (line.cnflow == "IO" && scanhuController.text == line.cnhuno && lineProduct.article == line.cnarticle && lineProduct.lv == line.cnlv) {
+    //   _productVld.isnewhu = false;
+    // } else if (line.cnflow.isEmpty && scanhuController.text == line.sthuno && lineProduct.article == line.starticle && lineProduct.lv == line.stlv) {
+    //   _productVld.isnewhu = false;
+    // } else {
+    //   _productVld.isnewhu = true;
+    // }
     return _productVld;
   }
 
@@ -354,7 +407,7 @@ class _CountTab extends State<CountTab> with SingleTickerProviderStateMixin {
           await getCountSheet(curPlan);
 
           // Todo show next location
-          getNextLocation(prevLocseq);
+          getNextLocation(_countLine.locseq);
 
           clearCount();
         } else {
@@ -370,6 +423,8 @@ class _CountTab extends State<CountTab> with SingleTickerProviderStateMixin {
               _productVld = await fillCountline(_countedLine.first, false);
               _isCountline = true; // finish
             }
+
+            print("step 1 isCountline:$_isCountline");
           }
 
           // * step 2 check counting line
@@ -382,6 +437,21 @@ class _CountTab extends State<CountTab> with SingleTickerProviderStateMixin {
               _productVld = await fillCountline(_countingLine.first, false);
               _isCountline = true; // finish
             }
+
+            print("step 2 isCountline:$_isCountline");
+          }
+
+          // * step 2.1 check hu is already
+          if (!_isCountline) {
+            final _countingLine = countSheet.where((x) => x.loccode == _locOps && (x.cnhuno ?? "").isNotEmpty && (x.cnhuno ?? "") == _hunOps && (x.starticle ?? "") != (lineProduct.article ?? ""));
+            if (_countingLine.length > 0) {
+              alert(context, "warning", "Warning", "huno already in use by another product");
+              setState(() {
+                scanbarController.text = "";
+                barfocusNode.requestFocus();
+              });
+              return; // exit function
+            }
           }
 
           // * step 3 check hu counted
@@ -391,15 +461,19 @@ class _CountTab extends State<CountTab> with SingleTickerProviderStateMixin {
               _productVld = await fillCountline(_countingLine.first, false);
               _isCountline = true; // finish
             }
+
+            print("step 3 isCountline:$_isCountline");
           }
 
           // * step 4 check hu counting
           if (!_isCountline) {
-            final _countingLine = countSheet.where((x) => x.cnflow.isEmpty && x.loccode == _locOps && x.sthuno == _hunOps);
+            final _countingLine = countSheet.where((x) => x.cnflow.isEmpty && x.loccode == _locOps && (x.sthuno ?? "").trim() == (_hunOps ?? "").trim());
             if (_countingLine.length > 0) {
               _productVld = await fillCountline(_countingLine.first, false);
               _isCountline = true; // finish
             }
+
+            print("step 4 isCountline:$_isCountline");
           }
 
           // * step 5 check empty stock line
@@ -409,6 +483,8 @@ class _CountTab extends State<CountTab> with SingleTickerProviderStateMixin {
               _productVld = await fillCountline(_emptyStockLine.first, true);
               _isCountline = true; // finish
             }
+
+            print("step 5 isCountline:$_isCountline");
           }
 
           // * processing count line
@@ -425,16 +501,11 @@ class _CountTab extends State<CountTab> with SingleTickerProviderStateMixin {
 
             alert(context, "success", "Save Result", "Save Linecount success");
 
-            // refresh count sheet
+            // * refresh count sheet
             await getCountSheet(curPlan);
 
             // Todo show next location
-            if (_productVld.isnewhu) {
-              getNextLocation(prevLocseq);
-            } else {
-              getNextLocation(_countLine.locseq);
-            }
-
+            getNextLocation(_countLine.locseq);
             clearCount();
           }
         }
@@ -499,6 +570,13 @@ class _CountTab extends State<CountTab> with SingleTickerProviderStateMixin {
       lineBarcode = line.cnbarcode.isEmpty ? line.stbarcode : line.cnbarcode;
       _product = await sv.findProduct(Productvld(barcode: lineBarcode, pv: -1, lv: -1, qtycount: 0, isnewhu: false, loccode: line.loccode));
     }
+    // print('allowScanProduct:$allowScanProduct');
+    // print('requireScanProduct:$requireScanProduct');
+    // print('line.unitcount:${line.unitcount}');
+    // lov.forEach((element) {
+    //   print('lov.unitlist:${element.desc}');
+    // });
+
     setState(() {
       if (isLineCounted) {
         Fluttertoast.showToast(msg: "Line is Counted", backgroundColor: colorStem);
@@ -526,7 +604,7 @@ class _CountTab extends State<CountTab> with SingleTickerProviderStateMixin {
         Fluttertoast.showToast(msg: "Start Couting", backgroundColor: colorStem);
         scanhuController.text = line.sthuno;
 
-        if ((allowScanProduct || requireScanProduct)) {
+        if (allowScanProduct || requireScanProduct) {
           isLineBarcode = false;
           requireScanProduct = true;
           scanbarController.text = "";
@@ -542,9 +620,9 @@ class _CountTab extends State<CountTab> with SingleTickerProviderStateMixin {
           qtyController.text = line.stqtypu.toString();
           expController.text = formatDate(line.stdateexp);
           mfgController.text = formatDate(line.stdatemfg);
+          unitDesrt = decodeUnit(line.unitcount);
           if (locatioinType == "R") {
             qtyController.text = line.stqtypu.toString();
-            unitDesrt = decodeUnit(line.unitcount);
           } else {
             qtyController.text = "";
           }
@@ -577,6 +655,8 @@ class _CountTab extends State<CountTab> with SingleTickerProviderStateMixin {
       SheetTab.countPlan = new Countplan();
       SheetTab.countSheet = [];
     });
+    // * reset next location
+    getNextLocation(-1);
   }
 
   void clearCount() {
@@ -1092,9 +1172,9 @@ class _CountTab extends State<CountTab> with SingleTickerProviderStateMixin {
     try {
       var _lines = await sv.countLine(slplan);
       if (_lines.length > 0) {
-        _lines.forEach((element) {
-          element.unitcount = decodeUnit(element.unitcount);
-        });
+        // _lines.forEach((element) {
+        //   element.unitcount = decodeUnit(element.unitcount);
+        // });
 
         // initail count sheet
         countSheet = _lines;
