@@ -915,6 +915,7 @@ namespace Snaps.WMS {
                             if(isstock) {
                                 cm.snapsCdn(o.huno,"cnhuno"," and cnhuno = @cnhuno");
                             }
+
                             r = await cm.snapsReadAsync();
 
                             while(await r.ReadAsync()) {

@@ -223,19 +223,28 @@ namespace Snaps.WMS {
 	        procmodify, isblock, isdatemfg, isdatexp,isbatchno, allowscanhu, isserailno,iif(isnull(planorigin,0)=0,plancode,planorigin) planorigin
         from wm_coupn where orgcode = @orgcode and site = @site and depot = @depot and countcode = @countcode and plancode = @plancode ";
 
-        private string sqlplan_recount_line =
-       @"insert into wm_couln(orgcode, site, depot, spcarea, countcode, plancode, loccode, locseq, unitcount, stbarcode, starticle, stpv, stlv, stqtysku, 
-        stqtypu, stlotmfg, stdatemfg, stdateexp, stserialno, sthuno,tflow, datecreate, accncreate, datemodify, accnmodify, procmodify,locctype)
-        select orgcode, site, depot, spcarea, countcode, @newplan plancode, loccode, locseq, unitcount, stbarcode, starticle, stpv, stlv, stqtysku, stqtypu, stlotmfg, stdatemfg, stdateexp, 
-        stserialno, sthuno,'IO' tflow, sysdatetimeoffset() datecreate, @accnmodify accncreate,sysdatetimeoffset() datemodify,@accnmodify accnmodify,'' procmodify,locctype        
-        from wm_couln where orgcode = @orgcode and site = @site and depot = @depot and countcode = @countcode and plancode = @plancode and tflow in('OL','OH','WQ')";
-     
-       // private string sqlplan_recount_reline =
+       // private string sqlplan_recount_line =
        //@"insert into wm_couln(orgcode, site, depot, spcarea, countcode, plancode, loccode, locseq, unitcount, stbarcode, starticle, stpv, stlv, stqtysku, 
        // stqtypu, stlotmfg, stdatemfg, stdateexp, stserialno, sthuno,tflow, datecreate, accncreate, datemodify, accnmodify, procmodify,locctype)
        // select orgcode, site, depot, spcarea, countcode, @newplan plancode, loccode, locseq, unitcount, stbarcode, starticle, stpv, stlv, stqtysku, stqtypu, stlotmfg, stdatemfg, stdateexp, 
-       // stserialno, sthuno,'IO' tflow, sysdatetimeoffset() datecreate, @accnmodify accncreate,sysdatetimeoffset() datemodify,@accnmodify accnmodify,'' procmodify,locctype
-       // from wm_couln where orgcode = @orgcode and site = @site and depot = @depot and countcode = @countcode and plancode = @plancode";
+       // stserialno, sthuno,'IO' tflow, sysdatetimeoffset() datecreate, @accnmodify accncreate,sysdatetimeoffset() datemodify,@accnmodify accnmodify,'' procmodify,locctype        
+       // from wm_couln where orgcode = @orgcode and site = @site and depot = @depot and countcode = @countcode and plancode = @plancode and tflow in('OL','OH','WQ')";
+     
+        private string sqlplan_recount_line =
+        @"insert into wm_couln(orgcode, site, depot, spcarea, countcode, plancode, loccode, locseq, unitcount, stbarcode, starticle, stpv, stlv, stqtysku, 
+        stqtypu, stlotmfg, stdatemfg, stdateexp, stserialno, sthuno,tflow, datecreate, accncreate, datemodify, accnmodify, procmodify,locctype)
+        select orgcode, site, depot, spcarea, countcode, @newplan plancode, loccode, locseq, unitcount, cnbarcode stbarcode, cnarticle as starticle,cnpv as stpv,cnlv as stlv,cnqtysku as stqtysku, 
+	    cnqtypu as stqtypu, cnlotmfg as stlotmfg, cndatemfg as stdatemfg, cndateexp as stdateexp,cnserialno as stserialno,cnhuno as sthuno,'IO' tflow, sysdatetimeoffset() datecreate,
+	    @accnmodify accncreate,sysdatetimeoffset() datemodify, @accnmodify accnmodify,'' procmodify, locctype  
+        from wm_couln where orgcode = @orgcode and site = @site and depot = @depot and countcode = @countcode and plancode = @plancode and tflow in('OL','OH','WQ')";
+
+
+        // private string sqlplan_recount_reline =
+        //@"insert into wm_couln(orgcode, site, depot, spcarea, countcode, plancode, loccode, locseq, unitcount, stbarcode, starticle, stpv, stlv, stqtysku, 
+        // stqtypu, stlotmfg, stdatemfg, stdateexp, stserialno, sthuno,tflow, datecreate, accncreate, datemodify, accnmodify, procmodify,locctype)
+        // select orgcode, site, depot, spcarea, countcode, @newplan plancode, loccode, locseq, unitcount, stbarcode, starticle, stpv, stlv, stqtysku, stqtypu, stlotmfg, stdatemfg, stdateexp, 
+        // stserialno, sthuno,'IO' tflow, sysdatetimeoffset() datecreate, @accnmodify accncreate,sysdatetimeoffset() datemodify,@accnmodify accnmodify,'' procmodify,locctype
+        // from wm_couln where orgcode = @orgcode and site = @site and depot = @depot and countcode = @countcode and plancode = @plancode";
 
         //private string sqlline_fnd = "select * from wm_couln where orgcode = @orgcode and site = @site and depot = @depot and countcode = @countcode and plancode = @plancode  ";
         //private string sqlline_fnd = "	select *,p.description from wm_couln l left join wm_product p on l.orgcode = p.orgcode and l.site = p.site and l.depot = p.depot " +
