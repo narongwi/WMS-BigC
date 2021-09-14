@@ -272,8 +272,8 @@ class _HomeScreenState extends State<HomeScreen> {
               Padding(
                 padding: const EdgeInsets.only(bottom: 10),
                 child: Text(
-                  "version ${_packageInfo.version}+${_packageInfo.buildNumber}",
-                  style: TextStyle(fontSize: 12, fontStyle: FontStyle.italic, color: defaultColor),
+                  "$appConfig version ${_packageInfo.version}+${_packageInfo.buildNumber}",
+                  style: TextStyle(fontSize: 12, fontStyle: FontStyle.italic, color: appConfig == "SIM" ? colorPoppy : defaultColor),
                 ),
               )
             ],

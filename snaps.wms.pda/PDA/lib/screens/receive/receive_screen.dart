@@ -108,7 +108,10 @@ class _ReceiveScreen extends State<ReceiveScreen> {
       print("Is Start Load $enableStart");
       print("Count line $_count");
 
-      if (_searchpo.tflow == "ED") {
+      if (_searchpo.invno.isEmpty) {
+        alert(context, "error", "Warning", "PO is required invoice no");
+        return;
+      } else if (_searchpo.tflow == "ED") {
         alert(context, "info", "Infomation", "$pono PO is already Closed");
       } else {
         // Display Data

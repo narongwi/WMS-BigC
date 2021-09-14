@@ -24,6 +24,7 @@ import 'package:wms/size_config.dart';
 // const String countApiUrl = "http://192.168.1.13:4520";
 
 /* Development Config*/
+const String appConfig = "SIM";
 const String authApiUrl = "http://10.4.5.194:5001";
 const String adminApiUrl = "http://10.4.5.194:4220";
 const String pdaApiUrl = "http://10.4.5.194:5002";
@@ -34,6 +35,7 @@ const String prepApiUrl = "http://10.4.5.194:4620";
 const String countApiUrl = "http://10.4.5.194:4520";
 
 /* Production Config*/
+// const String appConfig = "";
 // const String authApiUrl = "http://172.28.8.48:5101";
 // const String adminApiUrl = "http://172.28.8.48:5102";
 // const String accnApiUrl = "http://172.28.8.48:5102";
