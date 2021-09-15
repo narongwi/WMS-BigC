@@ -25,34 +25,9 @@ class TaskMovement {
   String routethcode;
   String opscode;
   String intype;
+  String setno;
 
-  TaskMovement(
-      {this.orgcode,
-      this.site,
-      this.depot,
-      this.spcarea,
-      this.tasktype,
-      this.taskno,
-      this.iopromo,
-      this.iorefno,
-      this.priority,
-      this.taskdate,
-      this.tflow,
-      this.datemodify,
-      this.datestart,
-      this.dateend,
-      this.datecreate,
-      this.accncreate,
-      this.accnmodify,
-      this.procmodify,
-      this.taskname,
-      this.lines,
-      this.confirmdigit,
-      this.devid,
-      this.routeno,
-      this.routethcode,
-      this.opscode,
-      this.intype});
+  TaskMovement({this.orgcode, this.site, this.depot, this.spcarea, this.tasktype, this.taskno, this.iopromo, this.iorefno, this.priority, this.taskdate, this.tflow, this.datemodify, this.datestart, this.dateend, this.datecreate, this.accncreate, this.accnmodify, this.procmodify, this.taskname, this.lines, this.confirmdigit, this.devid, this.routeno, this.routethcode, this.opscode, this.intype, this.setno});
 
   TaskMovement.fromJson(Map<String, dynamic> json) {
     orgcode = json['orgcode'];
@@ -86,6 +61,7 @@ class TaskMovement {
     routethcode = json['routethcode'];
     opscode = json['opscode'];
     intype = json['intype'];
+    setno = json['setno'];
   }
 
   Map<String, dynamic> toJson() {
@@ -118,6 +94,7 @@ class TaskMovement {
     data['routethcode'] = this.routethcode;
     data['opscode'] = this.opscode;
     data['intype'] = this.intype;
+    data['setno'] = this.setno;
     return data;
   }
 }
@@ -244,8 +221,7 @@ class MovementLines {
     datemfg = json['datemfg'] == null ? null : DateTime.parse(json["datemfg"]);
     dateexp = json["dateexp"] == null ? null : DateTime.parse(json["dateexp"]);
     serialno = json['serialno'];
-    datecreate =
-        json['datecreate'] == null ? null : DateTime.parse(json["datecreate"]);
+    datecreate = json['datecreate'] == null ? null : DateTime.parse(json["datecreate"]);
     accncreate = json['accncreate'];
     accnmodify = json['accnmodify'];
     procmodify = json['procmodify'];
@@ -296,13 +272,10 @@ class MovementLines {
     data['datefill'] = this.datefill;
     data['datecollect'] = this.datecollect;
     data['lotno'] = this.lotno;
-    data['datemfg'] =
-        this.datemfg != null ? datemfg.toIso8601String() : datemfg;
-    data['dateexp'] =
-        this.dateexp != null ? dateexp.toIso8601String() : dateexp;
+    data['datemfg'] = this.datemfg != null ? datemfg.toIso8601String() : datemfg;
+    data['dateexp'] = this.dateexp != null ? dateexp.toIso8601String() : dateexp;
     data['serialno'] = this.serialno;
-    data['datecreate'] =
-        this.datecreate != null ? datecreate.toIso8601String() : datecreate;
+    data['datecreate'] = this.datecreate != null ? datecreate.toIso8601String() : datecreate;
     data['accncreate'] = this.accncreate;
     data['accnmodify'] = this.accnmodify;
     data['procmodify'] = this.procmodify;

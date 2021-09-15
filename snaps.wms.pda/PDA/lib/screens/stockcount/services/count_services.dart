@@ -33,6 +33,7 @@ class CountServices {
       body: jsonEncode({}),
       headers: await header(),
     );
+    print("CountTask ==> $baseUrl");
     print("CountTask ==> ${response.statusCode}");
     if (response.statusCode == 200) {
       (jsonDecode(response.body) as List).forEach((v) {

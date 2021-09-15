@@ -275,6 +275,7 @@ class _ApproachScreen extends State<ApproachScreen> {
 
   Future<void> autoAssignTask(TaskList _selecthu) async {
     final _task = await service.assignTask(_selecthu, profile.accncode);
+    print("_task.setno : ${_task.setno}");
     final _line = _task.lines.single;
     final _arts = await service.productInfo(_line.article, _line.lv.toString());
     if (_line.accnassign != profile.accncode && _task.tflow == 'IO') {

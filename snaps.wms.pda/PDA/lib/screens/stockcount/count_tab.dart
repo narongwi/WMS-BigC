@@ -352,7 +352,7 @@ class _CountTab extends State<CountTab> with SingleTickerProviderStateMixin {
       }
     } else {
       // pending not confirm count
-      if (scanhuController.text.isEmpty && scanhuController.text.trim() == (line.sthuno ?? "").trim() && (lineProduct.article ?? "").trim() == (line.starticle ?? "").trim() && (lineProduct.lv ?? 0) == (line.stlv ?? 0)) {
+      if (scanhuController.text.trim() == (line.sthuno ?? "").trim() && (lineProduct.article ?? "").trim() == (line.starticle ?? "").trim() && (lineProduct.lv ?? 0) == (line.stlv ?? 0)) {
         // no change
         _productVld.isnewhu = false;
       } else {
@@ -420,11 +420,10 @@ class _CountTab extends State<CountTab> with SingleTickerProviderStateMixin {
             );
 
             if (_countedLine.length > 0) {
+              print("step 1 isCountline:$_isCountline");
               _productVld = await fillCountline(_countedLine.first, false);
               _isCountline = true; // finish
             }
-
-            print("step 1 isCountline:$_isCountline");
           }
 
           // * step 2 check counting line
@@ -434,11 +433,10 @@ class _CountTab extends State<CountTab> with SingleTickerProviderStateMixin {
             );
 
             if (_countingLine.length > 0) {
+              print("step 2 isCountline:$_isCountline");
               _productVld = await fillCountline(_countingLine.first, false);
               _isCountline = true; // finish
             }
-
-            print("step 2 isCountline:$_isCountline");
           }
 
           // * step 2.1 check hu is already
@@ -497,6 +495,7 @@ class _CountTab extends State<CountTab> with SingleTickerProviderStateMixin {
             alert(context, "warning", "Warning", "Barcode is required");
           } else {
             // validate and save count line
+            final isgenhu = _productVld.isnewhu;
             final _countLine = await sv.validateline(_productVld);
 
             alert(context, "success", "Save Result", "Save Linecount success");
@@ -505,7 +504,9 @@ class _CountTab extends State<CountTab> with SingleTickerProviderStateMixin {
             await getCountSheet(curPlan);
 
             // Todo show next location
-            getNextLocation(_countLine.locseq);
+            if (!isgenhu) {
+              getNextLocation(_countLine.locseq);
+            }
             clearCount();
           }
         }
@@ -542,18 +543,22 @@ class _CountTab extends State<CountTab> with SingleTickerProviderStateMixin {
     prevLocseq = currentseq;
     final _sheet = countSheet;
     if (countSheet.length == 0) return;
-    if (scanLocController.text.isEmpty) return;
+    // if (scanLocController.text.isEmpty) return;
     int _nextIndex = _sheet.indexWhere((x) => x.locseq > currentseq && (x.cnflow ?? "") == "");
+    print("_nextIndex: $_nextIndex");
     // ! re check is no count
     if (_nextIndex == -1) {
       _nextIndex = _sheet.indexWhere((x) => x.locseq > 0 && x.locseq != currentseq && (x.cnflow ?? "") == "");
     }
+
     // * Display Next Location
     setState(() {
       if (_nextIndex == -1 || _nextIndex > _sheet.length - 1) {
         nextLocation = ""; // * empty with Completed
+        CountScreen.currentNextLocation = nextLocation;
       } else {
         nextLocation = countSheet[_nextIndex].loccode; // * Show Next Location
+        CountScreen.currentNextLocation = nextLocation;
       }
     });
   }
@@ -652,6 +657,7 @@ class _CountTab extends State<CountTab> with SingleTickerProviderStateMixin {
       locatioinType = "";
       CountScreen.currentCountCode = curPlan.countcode;
       CountScreen.currentPlanCount = curPlan.plancode;
+      CountScreen.currentNextLocation = nextLocation;
       SheetTab.countPlan = new Countplan();
       SheetTab.countSheet = [];
     });
@@ -678,6 +684,8 @@ class _CountTab extends State<CountTab> with SingleTickerProviderStateMixin {
       mfgController.text = "";
       qtyController.text = "";
       unitDesrt = "";
+
+      CountScreen.currentNextLocation = "";
       locfocusNode.requestFocus();
     });
   }
@@ -807,14 +815,12 @@ class _CountTab extends State<CountTab> with SingleTickerProviderStateMixin {
           await scanBarcSubmit(value);
         }
       },
-      // enabled: (allowScanProduct || requireScanProduct) ? true : false,
       controller: scanbarController,
       focusNode: barfocusNode,
       textAlign: TextAlign.right,
       decoration: Txtheme.deco(
         icon: Icons.fit_screen,
         label: "Barcode ",
-        // enabled: (allowScanProduct || requireScanProduct) ? true : false,
       ),
     );
     var batchTextField = TextField(
@@ -933,7 +939,10 @@ class _CountTab extends State<CountTab> with SingleTickerProviderStateMixin {
                   curPlan = selPlan as Countplan;
                   CountScreen.currentCountCode = curPlan.countcode;
                   CountScreen.currentPlanCount = curPlan.plancode;
+                  CountScreen.currentNextLocation = nextLocation;
                 });
+                // prevLocseq = -2; // reset next location to default
+                // print("reset next location to default");
                 await getCountSheet(selPlan as Countplan);
               }
             },
@@ -1137,7 +1146,7 @@ class _CountTab extends State<CountTab> with SingleTickerProviderStateMixin {
                       SizedBox(
                         width: 150,
                         child: Text(
-                          nextLocation,
+                          CountScreen.currentNextLocation,
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: primaryColor,
@@ -1175,6 +1184,11 @@ class _CountTab extends State<CountTab> with SingleTickerProviderStateMixin {
         // _lines.forEach((element) {
         //   element.unitcount = decodeUnit(element.unitcount);
         // });
+        // order by locseq ascending
+        _lines.sort((a, b) => a.locseq.compareTo(b.locseq));
+
+        // order by locseq descending
+        //_lines.sort((b, a) => a.locseq.compareTo(b.locseq));
 
         // initail count sheet
         countSheet = _lines;

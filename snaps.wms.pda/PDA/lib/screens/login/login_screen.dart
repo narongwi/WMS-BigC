@@ -375,8 +375,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 powerbyText,
                 SizedBox(height: 5.0),
                 Text(
-                  "version ${_packageInfo.version}+${_packageInfo.buildNumber}",
-                  style: TextStyle(fontSize: 11),
+                  "$appConfig version ${_packageInfo.version}+${_packageInfo.buildNumber}",
+                  style: TextStyle(fontSize: 11, color: appConfig == "SIM" ? colorPoppy : defaultColor),
                 )
               ],
             ),

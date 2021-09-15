@@ -10,6 +10,7 @@ class CountScreen extends StatefulWidget {
   static const routeName = '/stockcount';
   static String currentCountCode = "";
   static String currentPlanCount = "";
+  static String currentNextLocation = "";
 
   @override
   State<StatefulWidget> createState() {
@@ -17,8 +18,7 @@ class CountScreen extends StatefulWidget {
   }
 }
 
-class _CountScreen extends State<CountScreen>
-    with SingleTickerProviderStateMixin {
+class _CountScreen extends State<CountScreen> with SingleTickerProviderStateMixin {
   Profiles profile = Profiles();
   int tabIndex = 0;
   List<Widget> listScreens;
@@ -32,6 +32,7 @@ class _CountScreen extends State<CountScreen>
 
     CountScreen.currentCountCode = "";
     CountScreen.currentPlanCount = "";
+    CountScreen.currentNextLocation = "";
   }
 
   @override
