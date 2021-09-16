@@ -61,6 +61,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Future<bool> updateDialog(String updateInfo, String version) async {
     return showDialog<bool>(
+      barrierDismissible: false,
       context: context,
       builder: (context) {
         return AlertDialog(
@@ -81,12 +82,12 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
           ),
           actions: <Widget>[
-            new TextButton(
-              child: Text("Cancel"),
-              onPressed: () {
-                Navigator.of(context).pop(false); // Close the dialog
-              },
-            ),
+            // new TextButton(
+            //   child: Text("Cancel"),
+            //   onPressed: () {
+            //     Navigator.of(context).pop(false); // Close the dialog
+            //   },
+            // ),
             ConstrainedBox(
               constraints: BoxConstraints.tightFor(width: 120),
               child: ElevatedButton(
@@ -238,7 +239,7 @@ class _LoginScreenState extends State<LoginScreen> {
               upgradeInfo.information,
               upgradeInfo.version,
             );
-            if (confirm) {
+            if ((confirm ?? true)) {
               if (Platform.isIOS) {
               } else if (Platform.isAndroid) {
                 if (upgradeInfo.downloaduri.isNotEmpty) {
