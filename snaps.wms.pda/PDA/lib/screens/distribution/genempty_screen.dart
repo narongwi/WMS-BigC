@@ -36,22 +36,24 @@ class _GenEmptyScreen extends State<GenEmptyScreen> {
   int recqty = 0;
   bool isLoading = false;
   bool ispoline = false;
-  String hutypeSelect;
 
-  List<Empty> hutype = <Empty>[];
-  Future<void> gethutype() async {
-    try {
-      setState(() => isLoading = true);
-      final _filter = EmptyFilter(hutype: 'MS');
-      final _hutype = await service.listEmpty(_filter);
-      setState(() {
-        isLoading = false;
-        hutype = _hutype;
-      });
-    } catch (e) {
-      alert(context, "error", "Error", e.toString());
-    }
-  }
+  // fix value for master
+  String hutypeSelect = "XE";
+
+  // List<Empty> hutype = <Empty>[];
+  // Future<void> gethutype() async {
+  //   try {
+  //     setState(() => isLoading = true);
+  //     final _filter = EmptyFilter(hutype: 'MS');
+  //     final _hutype = await service.listEmpty(_filter);
+  //     setState(() {
+  //       isLoading = false;
+  //       hutype = _hutype;
+  //     });
+  //   } catch (e) {
+  //     alert(context, "error", "Error", e.toString());
+  //   }
+  // }
 
   Future<void> genEmpty() async {
     try {
@@ -64,7 +66,7 @@ class _GenEmptyScreen extends State<GenEmptyScreen> {
       } else {
         setState(() => isLoading = true);
 
-        EmptyGen empty = new EmptyGen(crsku: 0, crvolume: 0, crweight: 0, huno: hutypeSelect, hutype: 'XE', spcarea: "XD", thcode: storeController.text, loccode: storeController.text, routeno: storeController.text, priority: 0, quantity: int.parse(qtyController.text), mxsku: 9999, mxweight: 999999999);
+        EmptyGen empty = new EmptyGen(crsku: 0, crvolume: 0, crweight: 0, huno: 'XE', hutype: 'XE', spcarea: "XD", thcode: storeController.text, loccode: storeController.text, routeno: storeController.text, priority: 0, quantity: int.parse(qtyController.text), mxsku: 9999, mxweight: 999999999);
         await service.genEmpty(empty);
         alert(context, "success", "Information", "generate huno for store ${storeController.text} success");
       }
@@ -90,7 +92,7 @@ class _GenEmptyScreen extends State<GenEmptyScreen> {
   @override
   void initState() {
     super.initState();
-    gethutype();
+    // gethutype();
   }
 
   @override
@@ -164,70 +166,21 @@ class _GenEmptyScreen extends State<GenEmptyScreen> {
               //   ),
               // ),
               SizedBox(height: 10),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Center(
-                    child: Text(
-                      "Generate Handling Unit type",
-                      style: TextStyle(
-                        fontSize: 16,
-                      ),
-                    ),
+              Center(
+                child: Text(
+                  "Generate Handling",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 16,
                   ),
-                  SizedBox(height: 20),
-                  Container(
-                    height: 35,
-                    padding: EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(50),
-                      color: Colors.white,
-                      border: Border.all(width: 1, color: Colors.grey),
-                    ),
-                    child: Row(
-                      children: [
-                        SizedBox(
-                          width: 45,
-                          child: Text(
-                            "Type  ",
-                            style: TextStyle(color: dangerColor, fontSize: 13),
-                          ),
-                        ),
-                        Expanded(
-                          child: DropdownButton(
-                            isExpanded: true,
-                            isDense: true,
-                            underline: Container(color: Colors.transparent),
-                            value: hutypeSelect,
-                            items: hutype
-                                .map((el) => DropdownMenuItem(
-                                    child: Padding(
-                                      padding: EdgeInsets.only(left: 0),
-                                      child: Text(
-                                        el.huno,
-                                        style: TextStyle(fontSize: 13),
-                                      ),
-                                    ),
-                                    value: el.huno))
-                                .toList(),
-                            onChanged: (value) {
-                              setState(() {
-                                hutypeSelect = value;
-                              });
-                            },
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
+                ),
               ),
-              SizedBox(height: 10),
+              SizedBox(height: 20),
               TextField(
                 controller: storeController,
                 decoration: Txtheme.deco(
                     // icon: Icons.store,
-                    label: " Store  "),
+                    label: " Store : "),
               ),
               SizedBox(height: 10),
               TextField(
@@ -235,7 +188,7 @@ class _GenEmptyScreen extends State<GenEmptyScreen> {
                 keyboardType: TextInputType.number,
                 decoration: Txtheme.deco(
                   // icon: Icons.book_online,
-                  label: " Qty     ",
+                  label: " Qty     : ",
                 ),
               ),
               SizedBox(height: 20),

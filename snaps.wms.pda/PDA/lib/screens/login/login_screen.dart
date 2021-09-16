@@ -71,9 +71,7 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Column(
               children: [
                 Text("Ready to update version $version "),
-                SizedBox(
-                  height: 10,
-                ),
+                SizedBox(height: 10),
                 Text(
                   "- $updateInfo",
                   style: TextStyle(fontSize: 12, color: defaultColor),
