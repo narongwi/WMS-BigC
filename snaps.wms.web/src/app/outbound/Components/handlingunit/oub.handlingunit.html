@@ -292,7 +292,7 @@
                                     <div class="row mg-0 ln ">
                                         <div class="col-md-4 text-dark pdt-5">HU Type</div>
                                         <div class="col-md-8">
-                                            <ng-select class="custom" [items]="lshandling" bindLabel="huno" bindvalue="huno" [clearable]="false" [(ngModel)]="slcgentype" (change)="seltype()">
+                                            <ng-select class="custom" [items]="lsemptyhu" bindLabel="huno" bindvalue="huno" [clearable]="false" [(ngModel)]="slcgentype" (change)="seltype()">
                                                 <ng-template ng-label-tmp let-item="item"><span class="text-danger fnb">{{item.huno}}</span> </ng-template>
                                                 <ng-template ng-option-tmp let-item="item"><span class="text-danger fnb">{{item.huno}}</span> </ng-template>
                                             </ng-select>
