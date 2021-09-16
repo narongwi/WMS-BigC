@@ -46,6 +46,14 @@ namespace snaps.wms.api.document.Models
             "    and t.orgcode = s.orgcode and t.site = s.site and t.depot = s.depot and t.stockid = s.stockid " +
             "    and t.orgcode = b.orgcode and t.site = b.site and t.depot = b.depot and t.article = b.article and t.pv = b.pv and t.lv = b.lv " +
             "    and t.orgcode = '{0}' and t.site = '{1}' and t.depot = '{2}' and t.taskno = '{3}'  and b.isprimary = '1' ";
+        public static string InboundSql =
+            @"select s.article, s.lv, s.pv, s.loccode location, p.description,convert(varchar, s.datecreate, 103)  daterecipt, inrefno inorder, qtysku quantitysku, 
+             s.qtyweight weight, convert(varchar, s.dateexp, 103) dateexp,convert(varchar, s.datemfg, 103)  datemfg, cast(rtopckoflayer as varchar(10)) + ' x ' + cast(rtolayerofhu as varchar(20)) tihi,
+ 	         rtoskuofhu skuofpallet, rtoskuofipck skuofipck, rtoskuofpck skuofpck,0 ipckofpck, 0 pckofpallet, s.huno, b.barcode
+             from wm_product p, wm_stock s, wm_barcode b
+             where s.orgcode = p.orgcode and s.site = p.site and s.depot = p.depot and s.article = p.article and s.pv = p.pv and s.lv = p.lv
+             and s.orgcode = b.orgcode and s.site = b.site and s.depot = b.depot and s.article = b.article and s.pv = b.pv and s.lv = b.lv
+             and s.orgcode = '{0}' and s.site = '{1}' and s.depot = '{2}' and s.inrefno = '{3}'  and b.isprimary = '1' and b.tflow = 'IO' ";
 
         public static string MergeHuLabel =
              @"select 

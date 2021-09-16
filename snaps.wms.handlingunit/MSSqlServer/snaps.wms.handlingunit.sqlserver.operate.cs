@@ -140,7 +140,9 @@ namespace Snaps.WMS
         {
             List<SqlCommand> cm = new List<SqlCommand>();
             try {
-                foreach (handerlingunit ln in rs) { cm.Add(handerlingunit_setcmd(ln, hu_sqlins_stp1)); }
+                foreach (handerlingunit ln in rs) { 
+                    cm.Add(handerlingunit_setcmd(ln, hu_sqlins_stp1)); 
+                }
                 await cm.snapsExecuteTransAsync(cn);
             }
             catch (Exception ex) {
@@ -188,8 +190,8 @@ namespace Snaps.WMS
             }
             finally { ro.Clear(); }
         }
-        
-        
+
+
         public async Task generate(handerlingunit_gen o) {
             List<handerlingunit> gn = new List<handerlingunit>();
             SqlCommand cm = new SqlCommand("", cn);
@@ -309,11 +311,46 @@ namespace Snaps.WMS
                 }
 
                 await upsert(gn);
-                if (gn.Count > 0) { o.huno = gn[0].huno; }
+                if (gn.Count > 0) { 
+                    o.huno = gn[0].huno; 
+                }
+
+                // Send Empty Label to Printer
+                if(o.spcarea == "XD" && o.hutype == "XE") {
+                    await printEmpty(o.orgcode,o.site,o.depot,gn[0].huno,o.accncreate);
+                }
             }
             catch (Exception ex) { throw ex; }
             finally {
                 
+            }
+        }
+        private async Task<bool> printEmpty(string orgcode,string site,string depot,string huno,string accode) {
+            try {
+                // get document api config
+                string command =
+                    @"select top 1 bnflex1 from wm_binary where orgcode=@orgcode and site=@site and depot=@depot 
+                    and apps='WMS' and bntype = 'PRINTER' and bncode ='LABEL'";
+
+                SqlCommand pm = new SqlCommand(command,cn);
+                pm.snapsPar(orgcode,"orgcode");
+                pm.snapsPar(site,"site");
+                pm.snapsPar(depot,"depot");
+                string baseAddress = pm.snapsScalarStrAsync().Result;
+                using(var httpClient = new System.Net.Http.HttpClient()) {
+                    httpClient.Timeout = TimeSpan.FromSeconds(60);
+                    httpClient.BaseAddress = new Uri(baseAddress);
+                    var formVariables = new List<KeyValuePair<string,string>>();
+                    formVariables.Add(new KeyValuePair<string,string>("orgcode",orgcode));
+                    formVariables.Add(new KeyValuePair<string,string>("site",site));
+                    formVariables.Add(new KeyValuePair<string,string>("depot",depot));
+                    formVariables.Add(new KeyValuePair<string,string>("huno",huno));
+                    var formContent = new System.Net.Http.FormUrlEncodedContent(formVariables);
+                    var httpResponse = await httpClient.PostAsync("print/huempty",formContent);
+                    return httpResponse.IsSuccessStatusCode;
+                }
+            } catch(Exception) {
+                return false;
             }
         }
         public async Task<List<lov>> getmaster(String orgcode, String site, String depot)

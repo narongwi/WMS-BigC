@@ -374,7 +374,7 @@ namespace Snaps.WMS {
 
                 if(!r.IsClosed)
                     await r.CloseAsync();
-                
+
                 if(vld.waitconfirm > 0) throw new Exception("Order item is waiting confirm receipt");
                 if(vld.pendinginf > 0) throw new Exception("Order item is waiting finish load");
 
@@ -391,7 +391,7 @@ namespace Snaps.WMS {
                         command.Parameters.AddWithValue("@accncode",accncode);
                         await command.snapsExecuteAsync();
                     }// end using
-                }else {
+                } else {
                     // confirm close order
                     cm.CommandText = sqlfinish;
                     await cm.snapsExecuteAsync();
@@ -399,7 +399,7 @@ namespace Snaps.WMS {
             } catch(Exception ex) {
                 logger.Error(orgcode,site,accncode,ex,ex.Message,"inorder",inorder);
                 throw ex;
-            } finally { 
+            } finally {
                 cm.Dispose();
 
                 if(cn.State == System.Data.ConnectionState.Open)
@@ -585,7 +585,7 @@ namespace Snaps.WMS {
                         skuohd = lx.qtyskurec;
                         xloccode = lx.dockno;
 
-                        while(skuohd > 0) { 
+                        while(skuohd > 0) {
                             //Split SKU receipted into HU
                             miv.Add(getStockIn(lx));
                             miv.Last().opscode = lsops.Last().ingrno;
@@ -678,7 +678,7 @@ namespace Snaps.WMS {
 
                     // list task afetr generate putaway
                     List<string> putawys = new List<string>();
-
+                    List<string> hulabel = new List<string>();
                     //Generate task movemnet for stoking 
                     if(ln.spcarea == "ST") {
                         foreach(stock_mvin tn in miv) {
@@ -686,7 +686,11 @@ namespace Snaps.WMS {
                             tls.Last().lines.Add(filltaskln(tn));
                         }
                         // Generate Putaway Task
-                        putawys =  await top.generateInboundAsync(tls);
+                        putawys = await top.generateInboundAsync(tls);
+                    }else {
+                        foreach(stock_mvin tn in miv) {
+                           
+                        }
                     }
 
                     // Generate distribution plan for XD
@@ -720,12 +724,18 @@ namespace Snaps.WMS {
                     }
 
                     /* PRINT LABEL */
-                    //if(ln.spcarea == "ST" && taskidls.Count > 0) {
-                    if(putawys.Count > 0) {
-                        //get DC parameter operate
-                        var m = miv.FirstOrDefault();
-                        foreach(var taskno in putawys.Distinct().ToList()) {
-                            await printPutaway(m.orgcode,m.site,m.depot,taskno,m.opsaccn);                           
+                    if(ln.spcarea == "ST") {
+                        /* PRINT LABEL */
+                        if(putawys.Count > 0) {
+                            var m = miv.FirstOrDefault();
+                            foreach(var taskno in putawys.Distinct().ToList()) {
+                                await printPutaway(m.orgcode,m.site,m.depot,taskno,m.opsaccn);
+                            }
+                        }
+                    } else {
+                        /* PRINT LABEL XD inbound Label HU */
+                        foreach(string huno in miv.Select(x => x.opshuno).Distinct().ToList<string>()) {
+                            await printInbound(ln.orgcode,ln.site,ln.depot,huno,ln.accncreate);
                         }
                     }
 
@@ -744,7 +754,7 @@ namespace Snaps.WMS {
                 throw ex;
             } finally { if(cm != null) { cm.Dispose(); } }
         }
-        private async Task<bool> printNormalHU(string orgcode,string site,string depot,string huno,string accode) {
+        private async Task<bool> printInbound(string orgcode,string site,string depot,string huno,string accode) {
             try {
                 // get document api config
                 string command =
@@ -765,7 +775,7 @@ namespace Snaps.WMS {
                     formVariables.Add(new KeyValuePair<string,string>("depot",depot));
                     formVariables.Add(new KeyValuePair<string,string>("huno",huno));
                     var formContent = new System.Net.Http.FormUrlEncodedContent(formVariables);
-                    var httpResponse = await httpClient.PostAsync("print/printhu",formContent);
+                    var httpResponse = await httpClient.PostAsync("print/hu",formContent);
                     return httpResponse.IsSuccessStatusCode;
                 }
             } catch(Exception ex) {
@@ -804,7 +814,7 @@ namespace Snaps.WMS {
                 return false;
             }
         }
-        
+
         private bool disposedValue = false;
         protected virtual void Dispose(bool Disposing) {
             if(!disposedValue) { if(cn != null) { cn.Dispose(); } }

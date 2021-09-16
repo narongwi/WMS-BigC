@@ -75,6 +75,38 @@ namespace snaps.wms.api.document.Controllers {
                 tb.Dispose();
             }
         }
+        [HttpPost]
+        public ActionResult printInbound(string orgcode,string site,string depot,string inorder) {
+            ReportViewer rv = new ReportViewer();
+            DataTable tb = new DataTable();
+            try {
+                // report data source
+                string sqlcm = string.Format(SqlReportModel.InboundSql,orgcode,site,depot,inorder);
+                using(var cn = new SqlConnection(cnx))
+                using(var dataAdapter = new SqlDataAdapter(sqlcm,cn))
+                    dataAdapter.Fill(tb);
+
+                if(tb.Rows.Count > 0) {
+                    // printer print
+                    string printerName = getPrinterName(orgcode,site,depot,"PUTAWAY");
+                    foreach(DataRow rw in tb.Rows) {
+                        using(DataTable ds = new DataTable()) {
+                            ds.ImportRow(rw);
+                            ds.Columns.Add("imgbarhuno",typeof(byte[]));
+                            ds.Rows[0]["imgbarhuno"] = _GBar(tb.Rows[0]["huno"].ToString());
+                            rv.ProcessingMode = ProcessingMode.Local;
+                            rv.LocalReport.ReportPath = Server.MapPath("~") + "/reprdlc/L011_Inbound_Putaway.rdlc";
+                            rv.LocalReport.DataSources.Add(new ReportDataSource("DataSet1",tb));
+                            rv.LocalReport.Print(printerName);
+                        }
+                    }
+                }
+                return Content("");
+            } catch(Exception ex) { throw ex; } finally {
+                rv.Dispose();
+                tb.Dispose();
+            }
+        }
 
         [HttpPost]
         public ActionResult labelhu(string orgcode,string site,string depot,string huno,string hutype) {
