@@ -9,9 +9,9 @@
                     <div class="col-md-3 "></div>
                 </div>
             </div>
-        
+
             <div class="line bgsub-head ">
-                <div class="row mg-0 ln " >
+                <div class="row mg-0 ln ">
                     <div class="col-md-6 lh-07e">
                         <span class="text-dark fnb ">Site </span><br />
                         <span class="text-muted">site code of warehouse</span>
@@ -20,7 +20,7 @@
                         <span class="text-danger fnb ">{{ops.site}}</span>
                     </div>
                 </div>
-                <div class="row mg-0 ln " >
+                <div class="row mg-0 ln ">
                     <div class="col-md-6 lh-07e">
                         <span class="text-dark fnb ">Depot</span><br />
                         <span class="text-muted">depot code of warehouse</span>
@@ -29,15 +29,13 @@
                         <span class="text-danger fnb ">{{ops.depot}}</span>
                     </div>
                 </div>
-                <div class="row mg-0 ln " >
+                <div class="row mg-0 ln ">
                     <div class="col-md-6 lh-07e">
                         <span class="text-dark fnb ">Zone</span><br />
                         <span class="text-muted">Zone code on warehouse</span>
                     </div>
                     <div class="col-md-3">
-                        <ng-select  class=" " class="custom" bindLabel="item.desc" bindvalue="item.value" 
-                                    [items]="lszone"  [clearable]="false" [searchable]="false" 
-                                    [(ngModel)]="slczone">
+                        <ng-select class=" " class="custom" bindLabel="item.desc" bindvalue="item.value" [items]="lszone" [clearable]="false" [searchable]="false" [(ngModel)]="slczone">
                             <ng-template ng-label-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
                             <ng-template ng-option-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
                         </ng-select>
@@ -45,130 +43,130 @@
                     <div class="col-md-3">&nbsp;</div>
                 </div>
 
-                <div class="row mg-0 ln " >
+                <div class="row mg-0 ln ">
                     <div class="col-md-6 lh-07e">
                         <span class="text-dark fnb ">Quantity</span><br />
                         <span class="text-muted">Quantity of location to be generate</span>
                     </div>
                     <div class="col-md-3">
                         <div class="form-group form-control-sm mg-0">
-                            <input class="form-control  text-danger fnb" type="text" placeholder="" [(ngModel)]="ops.location" >
-                        </div> 
+                            <input class="form-control  text-danger fnb" type="text" placeholder="" [(ngModel)]="ops.location">
+                        </div>
                     </div>
                     <div class="col-md-3">
                     </div>
                 </div>
-                <div class="row mg-0 ln " >
+                <div class="row mg-0 ln ">
                     <div class="col-md-6 lh-07e">
                         <span class="text-dark fnb ">Sequence</span><br />
                         <span class="text-muted">Sequence no for align priority </span>
                     </div>
                     <div class="col-md-3">
                         <div class="form-group form-control-sm mg-0">
-                            <input class="form-control  text-danger fnb" type="text" placeholder=""  [(ngModel)]="ops.lsseq" >
-                        </div> 
+                            <input class="form-control  text-danger fnb" type="text" placeholder="" [(ngModel)]="ops.lsseq">
+                        </div>
                     </div>
                     <div class="col-md-3"></div>
                 </div>
-                <div class="row mg-0 ln " >
+                <div class="row mg-0 ln ">
                     <div class="col-md-6 lh-07e">
                         <span class="text-dark fnb ">Status</span><br />
                         <span class="text-muted">Status of location</span>
                     </div>
                     <div class="col-md-3">
                         <div class="form-group form-control-sm mg-0">
-                            <ui-switch checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" [(ngModel)]="swflow" ></ui-switch>
-                        </div> 
-                    </div>                    
+                            <ui-switch checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" [(ngModel)]="swflow"></ui-switch>
+                        </div>
+                    </div>
                 </div>
-                <div class="row mg-0 ln " >
+                <div class="row mg-0 ln ">
                     <div class="col-md-6 lh-07e">
                         <span class="text-dark fnb ">Location format</span><br />
                         <span class="text-muted">Formatting of location</span>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group form-control-sm mg-0">
-                            <input class="form-control  text-danger fnb" type="text" placeholder=""  [(ngModel)]="ops.lsformat" >
+                            <input class="form-control  text-danger fnb" type="text" placeholder="" [(ngModel)]="ops.lsformat">
                         </div>
-                    </div>                    
+                    </div>
                 </div>
-                <div class="row mg-0 ln " >
+                <div class="row mg-0 ln ">
                     <div class="col-md-6 lh-07e">
-                        <span class="text-dark fnb ">Dimemnsion of location storage </span><br />
+                        <span class="text-dark fnb ">Dimension of location storage </span><br />
                         <span class="text-muted">No of Length x Width x Height of storage area</span>
                     </div>
                     <div class="col-md-2">
                         <div class="form-group form-control-sm mg-0">
-                            <input class="form-control  text-danger fnb" type="text" placeholder="Length" [(ngModel)]="ops.lslength" >
-                        </div> 
+                            <input class="form-control  text-danger fnb" type="text" placeholder="Length" [(ngModel)]="ops.lslength">
+                        </div>
                     </div>
                     <div class="col-md-2">
                         <div class="form-group form-control-sm mg-0">
-                            <input class="form-control  text-danger fnb" type="text" placeholder="Width" [(ngModel)]="ops.lswidth" >
-                        </div> 
+                            <input class="form-control  text-danger fnb" type="text" placeholder="Width" [(ngModel)]="ops.lswidth">
+                        </div>
                     </div>
                 </div>
-                <div class="row mg-0 ln " >
+                <div class="row mg-0 ln ">
                     <div class="col-md-6 lh-07e">
                         <span class="text-dark fnb ">Maximum weight</span><br />
                         <span class="text-muted">No of maximum weight that can storage in location </span>
                     </div>
                     <div class="col-md-3">
                         <div class="form-group form-control-sm mg-0">
-                            <input class="form-control  text-danger fnb" type="text" placeholder="" [(ngModel)]="ops.lsmxweight" >
-                        </div> 
+                            <input class="form-control  text-danger fnb" type="text" placeholder="" [(ngModel)]="ops.lsmxweight">
+                        </div>
                     </div>
                     <div class="col-md-3"></div>
                 </div>
-                <div class="row mg-0 ln " >
+                <div class="row mg-0 ln ">
                     <div class="col-md-6 lh-07e">
                         <span class="text-dark fnb ">Maximum volume</span><br />
                         <span class="text-muted">No of maximum volume that can storage in location</span>
                     </div>
                     <div class="col-md-3">
                         <div class="form-group form-control-sm mg-0">
-                            <input class="form-control  text-danger fnb" type="text" placeholder="" [(ngModel)]="ops.lsmxvolume" >
-                        </div> 
+                            <input class="form-control  text-danger fnb" type="text" placeholder="" [(ngModel)]="ops.lsmxvolume">
+                        </div>
                     </div>
                     <div class="col-md-3"></div>
                 </div>
-                <div class="row mg-0 ln " >
+                <div class="row mg-0 ln ">
                     <div class="col-md-6 lh-07e">
                         <span class="text-dark fnb ">Maximum Handling</span><br />
                         <span class="text-muted">No of maximum HU that can storage in location</span>
                     </div>
                     <div class="col-md-3">
                         <div class="form-group form-control-sm mg-0">
-                            <input class="form-control  text-danger fnb" type="text" placeholder="" [(ngModel)]="ops.lsmxhuno" >
-                        </div> 
+                            <input class="form-control  text-danger fnb" type="text" placeholder="" [(ngModel)]="ops.lsmxhuno">
+                        </div>
                     </div>
                     <div class="col-md-3"></div>
                 </div>
-                <div class="row mg-0 ln " >
+                <div class="row mg-0 ln ">
                     <div class="col-md-6 lh-07e">
                         <span class="text-dark fnb ">Customer code</span><br />
                         <span class="text-muted">code of customer for specific </span>
                     </div>
                     <div class="col-md-3">
                         <div class="form-group form-control-sm mg-0">
-                            <input class="form-control  text-danger fnb" type="text" placeholder="" [(ngModel)]="ops.spcthcode" >
-                        </div> 
+                            <input class="form-control  text-danger fnb" type="text" placeholder="" [(ngModel)]="ops.spcthcode">
+                        </div>
                     </div>
                     <div class="col-md-3"></div>
                 </div>
-                <div class="row mg-0 ln " >
+                <div class="row mg-0 ln ">
                     <div class="col-md-6 lh-07e">
                         <span class="text-dark fnb ">Mixing product</span><br />
                         <span class="text-muted">Allow to mixing product in location</span>
                     </div>
                     <div class="col-md-3">
                         <div class="form-group form-control-sm mg-0">
-                            <ui-switch checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" [(ngModel)]="swmixproduct" ></ui-switch>
-                        </div> 
+                            <ui-switch checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" [(ngModel)]="swmixproduct"></ui-switch>
+                        </div>
                     </div>
                     <div class="col-md-3"></div>
                 </div>
-                <div class="row mg-0 ln " >
+                <div class="row mg-0 ln ">
                     <div class="col-md-9"></div>
                     <div class="col-md-3">
 
@@ -180,8 +178,8 @@
 
                     </div>
                 </div>
-            </div>        
+            </div>
         </div>
     </div>
     <div class="col-md-2"></div>
-  </div>
+</div>

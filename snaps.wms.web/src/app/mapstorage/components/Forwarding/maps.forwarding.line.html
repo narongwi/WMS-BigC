@@ -1,29 +1,27 @@
-
 <div class="row fnb fn-07e">
     <div class="col-md-8">
         <div class="lsset  ">
             <div class="head">
                 <div class="row mg-0 ln ">
                     <div class="col-md-1 ">Code</div>
-                    <div class="col-md-2 ">Name</div>                   
+                    <div class="col-md-2 ">Name</div>
                     <div class="col-md-6 ">Description</div>
                     <div class="col-md-1 ">Seq.</div>
                     <div class="col-md-2 ">State</div>
                 </div>
             </div>
-        
+
             <div class="line bgsub-head dgforward ">
-                <div class="row mg-0 ln mpswitch " *ngFor="let ln of lsforward" >
+                <div class="row mg-0 ln mpswitch " *ngFor="let ln of lsforward">
                     <div class="col-md-1 text-danger ">{{ln.lscode}}</div>
                     <div class="col-md-2 text-success">{{ln.lscodealt}}</div>
                     <div class="col-md-6 ">{{ln.lsdesc}}</div>
                     <div class="col-md-1 text-center">{{ln.lsseq}}</div>
-                    <div class="col-md-2 "(click)="selforward(ln)">
+                    <div class="col-md-2 " (click)="selforward(ln)">
                         <span class="{{ngDecIcon(ln.tflow)}} w20 dp"></span>
-                        <span class="fas fa-wrench text-warning w20 hd" ></span>
-                        &nbsp;&nbsp;{{ngDecState(ln.tflow)}}
+                        <span class="fas fa-wrench text-warning w20 hd"></span> &nbsp;&nbsp;{{ngDecState(ln.tflow)}}
                     </div>
-                    
+
                 </div>
             </div>
 
@@ -32,22 +30,21 @@
                     <div class="col-md-2 pdt-5">
                         Total &nbsp; &nbsp;<span class="text-danger">{{lsforward.length | number }}</span> &nbsp; &nbsp; Locations
                     </div>
-                   
+
                     <div class="col-md-1 tx-right lh-07e">
                         <div class="fn-06e fnb text-danger">Rows</div>
                         <div class="fn-06e">Per Page</div>
                     </div>
                     <div class="col-md-2">
 
-                        <ng-select class=" text-danger"  class="custom custom-sm" bindLabel="value" bindvalue="value" 
-                                    [clearable]="false"  [(ngModel)]="slrowlmt" [items]="lsrowlmt" (change)="ngChangeRowlmt()" >
+                        <ng-select class=" text-danger" class="custom custom-sm" bindLabel="value" bindvalue="value" [clearable]="false" [(ngModel)]="slrowlmt" [items]="lsrowlmt" (change)="ngChangeRowlmt()">
                             <ng-template ng-label-tmp let-item="item"><span class="text-danger b">{{item.value}}</span> </ng-template>
                             <ng-template ng-option-tmp let-item="item"><span class="text-danger b">{{item.value}}</span> </ng-template>
                         </ng-select>
-                    
+
                     </div>
                     <div class="col-md-7 tx-right">
-                        <ngb-pagination [(page)]="page" [pageSize]="pageSize" [collectionSize]="lsforward.length" class="d-flex justify-content-end" ></ngb-pagination>
+                        <ngb-pagination [(page)]="page" [pageSize]="pageSize" [collectionSize]="lsforward.length" class="d-flex justify-content-end"></ngb-pagination>
                     </div>
                 </div>
             </div>
@@ -65,13 +62,13 @@
                             <i class="fas fa-plus-square text-primary fa-lg"></i>&nbsp;
                             New forward location
                         </span>
-                        
+
                     </div>
                 </div>
             </div>
-        
+
             <div class="line bgsub-head dgforward">
-                <div class="row mg-0 ln " >
+                <div class="row mg-0 ln ">
                     <div class="col-md-7 lh-08e pdt-3">
                         <span class="text-dark fnb">Site </span><br />
                         <span class="text-mute">site code of warehouse</span>
@@ -80,7 +77,7 @@
                         <span class="text-danger fnb ">{{crforward.site}}</span>
                     </div>
                 </div>
-                <div class="row mg-0 ln " >
+                <div class="row mg-0 ln ">
                     <div class="col-md-7 lh-08e pdt-3">
                         <span class="text-dark fnb">Depot</span><br />
                         <span class="text-mute">depot code of warehouse</span>
@@ -89,23 +86,21 @@
                         <span class="text-danger fnb ">{{crforward.depot}}</span>
                     </div>
                 </div>
-                <div class="row mg-0 ln " >
+                <div class="row mg-0 ln ">
                     <div class="col-md-7 lh-1e1">
-                        <span class="text-dark fnb ">Staging Category</span><br />
+                        <span class="text-dark fnb ">Forwarding Category</span><br />
                         <span class="text-mute">Category of forward</span>
                     </div>
                     <div class="col-md-5">
-                        <ng-select class=" "  class="custom" bindLabel="desc" bindvalue="value" 
-                                    [clearable]="false"  [(ngModel)]="slccategory" [items]="msdcategory"
-                                    >
+                        <ng-select class=" " class="custom" bindLabel="desc" bindvalue="value" [clearable]="false" [(ngModel)]="slccategory" [items]="msdcategory">
                             <ng-template ng-label-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
                             <ng-template ng-option-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span> </ng-template>
                         </ng-select>
                     </div>
                 </div>
-                <div class="row mg-0 ln " >
+                <div class="row mg-0 ln ">
                     <div class="col-md-7 lh-08e pdt-3">
-                        <span class="text-dark fnb">Staging Code</span><br />
+                        <span class="text-dark fnb">Forwarding Code</span><br />
                         <span class="text-mute">Identity of location</span>
                     </div>
                     <div class="col-md-5">
@@ -113,9 +108,9 @@
                         <input class="form-control form-control-xs  text-danger fnb" type="text" placeholder="" [(ngModel)]="crforward.lscode" *ngIf="crforward.tflow == 'NW'">
                     </div>
                 </div>
-                <div class="row mg-0 ln " >
+                <div class="row mg-0 ln ">
                     <div class="col-md-7 lh-08epdt-3">
-                        <span class="text-dark fnb">Staging name</span><br />
+                        <span class="text-dark fnb">Forwarding name</span><br />
                         <span class="text-mute">Code name of forward</span>
                     </div>
                     <div class="col-md-5">
@@ -123,7 +118,7 @@
                     </div>
                 </div>
 
-                <div class="row mg-0 ln " >
+                <div class="row mg-0 ln ">
                     <div class="col-md-7 lh-08epdt-3">
                         <span class="text-dark fnb">Sequence</span><br />
                         <span class="text-mute">Sequence no for align priority</span>
@@ -131,7 +126,7 @@
                     <div class="col-md-5">
                         <input class="form-control form-control-xs  text-danger fnb" type="text" placeholder="" [(ngModel)]="crforward.lsseq">
                     </div>
-                </div> 
+                </div>
 
                 <div class="row mg-0 ln">
                     <div class="col-md-7 lh-08epdt-3">
@@ -140,10 +135,10 @@
                     </div>
                     <div class="col-md-5">
                         <input class="form-control form-control-xs  text-danger fnb" type="text" placeholder="" [(ngModel)]="crforward.lsdesc">
-                    </div> 
+                    </div>
                 </div>
 
-                <div class="row mg-0 ln " >
+                <div class="row mg-0 ln ">
                     <div class="col-md-7 lh-07e pdt-3">
                         <span class="text-dark fnb">Third Party</span><br />
                         <span class="text-mute  fnnb">Setup third party code for specific</span>
@@ -153,7 +148,7 @@
                     </div>
                 </div>
 
-                <div class="row mg-0 ln " >
+                <div class="row mg-0 ln ">
                     <div class="col-md-7 lh-07e pdt-3">
                         <span class="text-dark fnb">Maximum HU</span><br />
                         <span class="text-mute  fnnb">Capacity of staging to support HU</span>
@@ -161,7 +156,7 @@
                     <div class="col-md-5">
                         <input class="form-control form-control-xs  text-danger fnb" type="text" placeholder="" [(ngModel)]="lnforward.lsmxhuno">
                     </div>
-                </div> 
+                </div>
 
                 <div class="row mg-0 ln">
                     <div class="col-md-7 lh-08e">
@@ -169,7 +164,8 @@
                         <span class="text-mute">Status of forward </span>
                     </div>
                     <div class="col-md-5 text-center">
-                        <ui-switch checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" [(ngModel)]="crstate" ></ui-switch></div>
+                        <ui-switch checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" [(ngModel)]="crstate"></ui-switch>
+                    </div>
                 </div>
 
 
@@ -179,7 +175,7 @@
                         <span class="text-dark">Full name of forward</span>
                     </div>
                     <div class="col-md-5">
-                        <button type="button" class="btn snaps-primary btn-xs btn-block mp"  (click)="validate()">
+                        <button type="button" class="btn snaps-primary btn-xs btn-block mp" (click)="validate()">
                             <i class="fas fa-check-circle"></i>
                             Save
                         </button>
@@ -190,18 +186,18 @@
                     <div class="col-md-7 lh-07e">
                     </div>
                     <div class="col-md-5">
-                        <button type="button" class="btn snaps-danger btn-xs btn-block mp"  (click)="drop()" *ngIf="crstate == false && crforward.tflow != 'NW'">
+                        <button type="button" class="btn snaps-danger btn-xs btn-block mp" (click)="drop()" *ngIf="crstate == false && crforward.tflow != 'NW'">
                             <i class="fas fa-trash-alt"></i>
                             Delete 
-                        </button> 
+                        </button>
                     </div>
                 </div>
-                
+
             </div>
 
             <div class="foot bgsub-head fnb pd-5 h38">
                 <div class="row mg-0 pdt-5">
-                    <div class="col-md-3 tx-overflow"> Modify date </div>                   
+                    <div class="col-md-3 tx-overflow"> Modify date </div>
                     <div class="col-md-8"> {{crforward.datemodify | date : formatdatelong}} by <span class="text-danger">{{crforward.accnmodify}}</span> </div>
                 </div>
             </div>
