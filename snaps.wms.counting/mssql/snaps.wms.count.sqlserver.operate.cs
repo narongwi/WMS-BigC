@@ -644,7 +644,7 @@ namespace Snaps.WMS {
                             cm.snapsPar(o.site,"site");
                             cm.snapsPar(o.depot,"depot");
                             cm.snapsPar(o.countcode,"countcode");
-                            cm.snapsPar(o.accnmodify,"@coraccn");
+                            cm.snapsPar(o.accnmodify,"coraccn");
                             await cm.ExecuteNonQueryAsync();
                         }
                         cn.Close();
