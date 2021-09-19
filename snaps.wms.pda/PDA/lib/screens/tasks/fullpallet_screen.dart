@@ -316,7 +316,7 @@ class _ApproachScreen extends State<ApproachScreen> {
       try {
         setState(() => isLoading = true);
         await service.confirm(taskmvt);
-        alert(context, "success", "Information", " confirm replenishment success");
+        alert(context, "success", "Information", " confirm Pallet Pick success");
 
         clearScreen();
         // refresh
@@ -404,7 +404,7 @@ class _ApproachScreen extends State<ApproachScreen> {
         icon: Icon(CupertinoIcons.home, size: 20),
       ),
       title: Text(
-        'Full Pallet',
+        'Pallet Pick',
         style: TextStyle(fontWeight: FontWeight.bold),
       ),
       actions: <Widget>[

@@ -298,7 +298,7 @@ class _TranferStockScreen extends State<TranferStockScreen> {
       try {
         setState(() => isLoading = true);
         await service.confirm(taskmvt);
-        alert(context, "success", "Information", " confirm replenishment success");
+        alert(context, "success", "Information", " confirm transfer success");
 
         _resetScreen();
         // refresh

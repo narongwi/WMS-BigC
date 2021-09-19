@@ -693,7 +693,7 @@ class _ReplenScreen extends State<ReplenScreen> {
             ? () {
                 if (conflocController.text.isEmpty) return;
                 var conf = DialogConfirm(
-                  title: "Confirm Putaway",
+                  title: "Confirm Replenishment",
                   content: "Location ${conflocController.text} Are you sure ?",
                   onYes: () async => await _confirm(),
                   onNo: () {},
