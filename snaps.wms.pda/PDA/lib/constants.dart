@@ -14,26 +14,26 @@ import 'package:wms/size_config.dart';
 // const String urlAPI = "http://10.0.3.2:5720";
 
 /* Localhost  Config */
-// const String appConfig = "SIM";
-// const String authApiUrl = "http://192.168.1.13:5001";
-// const String adminApiUrl = "http://192.168.1.13:4220";
-// const String pdaApiUrl = "http://192.168.1.13:5002";
-// const String accnApiUrl = "http://192.168.1.13:4220";
-// const String recvApiUrl = "http://192.168.1.13:4320";
-// const String taskApiUrl = "http://192.168.1.13:4420";
-// const String prepApiUrl = "http://192.168.1.13:4620";
-// const String countApiUrl = "http://192.168.1.13:4520";
+const String appConfig = "SIM";
+const String authApiUrl = "http://192.168.1.13:5001";
+const String adminApiUrl = "http://192.168.1.13:4220";
+const String pdaApiUrl = "http://192.168.1.13:5002";
+const String accnApiUrl = "http://192.168.1.13:4220";
+const String recvApiUrl = "http://192.168.1.13:4320";
+const String taskApiUrl = "http://192.168.1.13:4420";
+const String prepApiUrl = "http://192.168.1.13:4620";
+const String countApiUrl = "http://192.168.1.13:4520";
 
 /* Development Config*/
-const String appConfig = "SIM";
-const String authApiUrl = "http://10.4.5.194:5001";
-const String adminApiUrl = "http://10.4.5.194:4220";
-const String pdaApiUrl = "http://10.4.5.194:5002";
-const String accnApiUrl = "http://10.4.5.194:4220";
-const String recvApiUrl = "http://10.4.5.194:4320";
-const String taskApiUrl = "http://10.4.5.194:4420";
-const String prepApiUrl = "http://10.4.5.194:4620";
-const String countApiUrl = "http://10.4.5.194:4520";
+// const String appConfig = "SIM";
+// const String authApiUrl = "http://10.4.5.194:5001";
+// const String adminApiUrl = "http://10.4.5.194:4220";
+// const String pdaApiUrl = "http://10.4.5.194:5002";
+// const String accnApiUrl = "http://10.4.5.194:4220";
+// const String recvApiUrl = "http://10.4.5.194:4320";
+// const String taskApiUrl = "http://10.4.5.194:4420";
+// const String prepApiUrl = "http://10.4.5.194:4620";
+// const String countApiUrl = "http://10.4.5.194:4520";
 
 /* Production Config*/
 // const String appConfig = "PROD";

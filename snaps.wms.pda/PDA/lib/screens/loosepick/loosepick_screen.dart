@@ -50,7 +50,7 @@ class _LoosePickScreen extends State<LoosePickScreen> {
   Product _productinfo = Product();
   PrepDetails _prepdetail = PrepDetails();
   List<PrepLines> _preplines = <PrepLines>[];
-  PrepLines _prepops = PrepLines();
+  PrepLines _preplineops = PrepLines();
   PrepLists _currentprep = PrepLists();
   List<Lov> lov = <Lov>[];
 
@@ -159,14 +159,12 @@ class _LoosePickScreen extends State<LoosePickScreen> {
         if (_prepln.length == 0) {
           throw Exception("invalid location $locationNo !");
         } else {
-          // table data source
-          setState(() => _preplines = _prepln);
           print("tflow : ${_prepdetail.tflow}");
-
           // * Auto Assign Preparation
           if (_prepdetail.tflow == 'IO') {
             // * set start by login user
             await service.setstart(_prepln.first);
+
             // * refresh prep status
             await selectprep(_currentprep);
 
@@ -175,7 +173,7 @@ class _LoosePickScreen extends State<LoosePickScreen> {
             print("Preparation is already started");
           }
 
-          if (_preplines.length == 1) {
+          if (_prepln.length == 1) {
             // get product master infomation
             final _product = await service.productInfo(
               _prepln.first.article,
@@ -187,8 +185,9 @@ class _LoosePickScreen extends State<LoosePickScreen> {
               enableSave = true;
               isScanbar = false;
               _productinfo = _product;
-              _prepops = _prepln.first;
-              unitDesc = decodeUnit(_preplines.first.unitprep);
+              _preplineops = _prepln.first;
+              _preplines = _prepln;
+              unitDesc = decodeUnit(_prepln.first.unitprep);
               scanbarController.text = _productinfo.barcode;
               confqtyController.text = "";
               qtyFocus.requestFocus();
@@ -197,7 +196,8 @@ class _LoosePickScreen extends State<LoosePickScreen> {
             Fluttertoast.showToast(msg: "Multiple pick line", backgroundColor: colorStem);
             setState(() {
               _productinfo = Product();
-              _prepops = PrepLines();
+              _preplineops = PrepLines();
+              _preplines = _prepln;
               isLoading = false;
               enableSave = false;
               isScanbar = true;
@@ -221,31 +221,37 @@ class _LoosePickScreen extends State<LoosePickScreen> {
         alert(context, "warning", "Invalid Preparation", "please select Preparation No.");
       } else {
         setState(() => isLoading = true);
+
+        // get product master
         final product = await service.getProduct(barcode);
-        // step 3 get product master infomation
+
         if ((product.article ?? "").isEmpty) {
           alert(context, "warning", "Find Product", "Data Not found.");
           setState(() => barFocus.requestFocus());
         } else {
           // get prep line
-          final prepln = _preplines.firstWhere(
-            (x) => (x.article == product.article),
-            orElse: () => null,
-          );
+          final lineops = _preplines.where((x) => (x.article == product.article)).toList();
 
-          if (prepln == null) {
+          if (lineops.length == 0) {
             alert(context, "warning", "Check Line", "Data Not found.");
             setState(() => barFocus.requestFocus());
           } else {
+            if (lineops.length > 1) {
+              Fluttertoast.showToast(msg: "Multiple pick huno", backgroundColor: colorStem);
+            }
+
             setState(() {
               isLoading = false;
               enableSave = true;
               isScanbar = false;
               _productinfo = product;
-              _prepops = prepln;
-              unitDesc = decodeUnit(prepln.unitprep);
+              _preplineops = lineops.first;
+              unitDesc = decodeUnit(_preplineops.unitprep);
               scanbarController.text = product.barcode;
               confqtyController.text = "";
+            });
+
+            setState(() {
               qtyFocus.requestFocus();
             });
           }
@@ -259,7 +265,8 @@ class _LoosePickScreen extends State<LoosePickScreen> {
 
   Future<void> savePick() async {
     try {
-      int _sumorderqty = _preplines.fold(0, (tot, item) => tot + item.qtypuorder);
+      //int _sumorderqty = _preplines.fold(0, (tot, item) => tot + item.qtypuorder);
+
       _currentPickqty = int.parse(confqtyController.text);
       if (_prepdetail.prepno == null) {
         alert(context, "error", "Error", "please enter preperation no.");
@@ -267,56 +274,63 @@ class _LoosePickScreen extends State<LoosePickScreen> {
         alert(context, "error", "Error", "please enter preperation no.");
       } else if (confqtyController.text.isEmpty) {
         alert(context, "error", "Error", "Quantity is required");
-      } else if (_currentPickqty > _sumorderqty) {
-        alert(context, "error", "Error", "Quantity is over order");
-      } else if (confqtyController.text.isNotEmpty) {
-        // Support Multiple Pallet on Picking
-        for (var i = 0; i < _preplines.length; i++) {
-          int _physicalPickqty = (_currentPickqty <= _preplines[i].qtypuorder ? _currentPickqty : _preplines[i].qtypuorder);
+        // } else if (_currentPickqty > _sumorderqty) {
+      } else {
+        final linehuops = _preplines.where((x) => (x.article == _productinfo.article)).toList();
+        final qtypuorder = linehuops.fold(0, (tot, item) => tot + item.qtypuorder);
+        if (_currentPickqty > qtypuorder) {
+          alert(context, "error", "Error", "Quantity is over order");
+        } else {
+          // Support Multiple Pallet on Picking
+          for (var i = 0; i < linehuops.length; i++) {
+            // set pick qty is not over order qty
+            int _physicalPickqty = (_currentPickqty <= linehuops[i].qtypuorder ? _currentPickqty : linehuops[i].qtypuorder);
 
-          // Update Pick qty
-          _preplines[i].qtypuops = _physicalPickqty * _preplines[i].rtoskuofpu;
-          _preplines[i].qtyskuops = _physicalPickqty;
-          _preplines[i].accnmodify = profile.accncode;
-          _preplines[i].locdigit = "";
-          _preplines[i].skipdigit = "skip";
+            // Update Pick qty
+            linehuops[i].qtypuops = _physicalPickqty * linehuops[i].rtoskuofpu;
+            linehuops[i].qtyskuops = _physicalPickqty;
+            linehuops[i].accnmodify = profile.accncode;
+            linehuops[i].locdigit = "";
+            linehuops[i].skipdigit = "skip";
 
-          // cal confirm qty
-          _currentPickqty = (_currentPickqty - _physicalPickqty);
+            // cal confirm qty
+            _currentPickqty = (_currentPickqty - _physicalPickqty);
 
-          print("_physicalhuno: ${_preplines[i].huno} line ${_preplines[i].prepln}");
-          print("_physicalPickqty: $_physicalPickqty");
-          print("_currentPickqty: $_physicalPickqty");
+            print("_physicalhuno: ${linehuops[i].huno} line ${linehuops[i].prepln}");
+            print("_physicalPickqty: $_physicalPickqty");
+            print("_currentPickqty: $_physicalPickqty");
 
-          // exit loop;
-          // if (_currentPickqty == 0) break;
+            // exit loop;
+            if (_currentPickqty <= 0) break;
+          }
+
+          // save pick
+          setState(() => isLoading = true);
+          await service.setpick(linehuops);
+
+          setState(() {
+            isLoading = false;
+            scanbarController.text = "";
+            confqtyController.text = "";
+            unitDesc = "";
+            _productinfo = new Product();
+            _preplineops = new PrepLines();
+
+            if (_preplines.length == 1) {
+              locnoController.text = "";
+            }
+          });
+
+          // refresh screen
+          await selectprep(_currentprep);
+          Fluttertoast.showToast(msg: "Picked Successfully !", backgroundColor: colorSpringGreen);
+
+          if (_preplines.length == 1) {
+            setState(() => locFocus.requestFocus());
+          } else {
+            setState(() => barFocus.requestFocus());
+          }
         }
-
-        // save pick
-        setState(() => isLoading = true);
-        await service.setpick(_preplines);
-        setState(() => isLoading = false);
-
-        setState(() {
-          locnoController.text = "";
-          scanbarController.text = "";
-          confqtyController.text = "";
-          unitDesc = "";
-
-          _productinfo = new Product();
-          _prepops = new PrepLines();
-
-          locFocus.requestFocus();
-        });
-
-        // refresh screen
-        await selectprep(_currentprep);
-
-        // alert(context, "success", "Infomation", "Picked Successfully !");
-        Fluttertoast.showToast(
-          msg: "Picked Successfully !",
-          backgroundColor: colorSpringGreen,
-        );
       }
     } catch (e) {
       alert(context, "error", "Error", e.toString());
@@ -375,7 +389,7 @@ class _LoosePickScreen extends State<LoosePickScreen> {
     _prepdetail = PrepDetails();
     _prepdetail.preplines = <PrepLines>[];
     _preplines = <PrepLines>[];
-    _prepops = PrepLines();
+    _preplineops = PrepLines();
     _currentprep = PrepLists();
     _productinfo = Product();
     unitDesc = "";
@@ -392,7 +406,7 @@ class _LoosePickScreen extends State<LoosePickScreen> {
     _prepdetail = PrepDetails();
     _prepdetail.preplines = <PrepLines>[];
     _preplines = <PrepLines>[];
-    _prepops = PrepLines();
+    _preplineops = PrepLines();
     _currentprep = PrepLists();
     _productinfo = Product();
     unitDesc = "";
@@ -507,9 +521,9 @@ class _LoosePickScreen extends State<LoosePickScreen> {
     var productControl = Padding(
       padding: const EdgeInsets.only(top: 3, bottom: 10),
       child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-        CardLabel(title: _prepops.batchno, subTitle: "Batch"),
-        CardLabel(title: _formatDate(_prepops.datemfg), subTitle: "MFG"),
-        CardLabel(title: _formatDate(_prepops.dateexp), subTitle: "EXP"),
+        CardLabel(title: _preplineops.batchno, subTitle: "Batch"),
+        CardLabel(title: _formatDate(_preplineops.datemfg), subTitle: "MFG"),
+        CardLabel(title: _formatDate(_preplineops.dateexp), subTitle: "EXP"),
       ]),
     );
 
@@ -535,7 +549,7 @@ class _LoosePickScreen extends State<LoosePickScreen> {
                 ),
                 Expanded(
                   child: Text(
-                    "${_prepops.ouorder ?? ""}",
+                    "${_preplineops.ouorder ?? ""}",
                     style: TextStyle(fontSize: 12, color: Colors.red),
                   ),
                 ),
@@ -547,7 +561,7 @@ class _LoosePickScreen extends State<LoosePickScreen> {
                 ),
                 Expanded(
                   child: Text(
-                    "${_prepops.picker ?? ""}",
+                    "${_preplineops.picker ?? ""}",
                     style: TextStyle(fontSize: 12, color: Colors.red),
                   ),
                 ),
@@ -568,7 +582,7 @@ class _LoosePickScreen extends State<LoosePickScreen> {
                 ),
                 Expanded(
                   child: Text(
-                    " ${_prepops.loczone ?? ""}",
+                    " ${_preplineops.loczone ?? ""}",
                     style: TextStyle(fontSize: 12, color: Colors.red),
                   ),
                 ),

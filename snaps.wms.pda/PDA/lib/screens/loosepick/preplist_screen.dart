@@ -143,8 +143,7 @@ class _PrepListScreen extends State<PrepListScreen> {
                               });
                             },
                             cells: [
-                              DataCell(SizedBox(
-                                width: pageWidth,
+                              DataCell(Container(
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
