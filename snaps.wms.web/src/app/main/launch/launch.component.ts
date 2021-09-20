@@ -1,4 +1,11 @@
-import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { authService } from 'src/app/auth/services/auth.service';
 import { BehaviorSubject, Observable } from 'rxjs';
@@ -9,7 +16,7 @@ declare var $: any;
 @Component({
   selector: 'app-launch',
   templateUrl: './launch.component.html',
-  styleUrls: ['./launch.component.scss']
+  styleUrls: ['./launch.component.scss'],
 })
 export class LaunchComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('backdrop') backdrop: ElementRef;
@@ -22,17 +29,17 @@ export class LaunchComponent implements OnInit, AfterViewInit, OnDestroy {
 
   onStarted() {
     this.isbackdrop = true;
-    console.log("loadding is started");
+    console.log('loadding is started');
   }
 
   onCompleted() {
-    console.log("loadding is Completed!");
+    console.log('loadding is Completed!');
     this.isbackdrop = false;
   }
   ngOnInit(): void {
     // Progress bar events (optional)
     this.crprofile = this.sv.crProfile;
-    // console.log(this.crprofile);
+    console.log(this.crprofile);
   }
   ngOnDestroy(): void {
     this.isbackdrop = false;
@@ -44,8 +51,8 @@ export class LaunchComponent implements OnInit, AfterViewInit, OnDestroy {
     }, 800);
   }
   public toggleSidebar() {
-    var toggleClassName = "layout-fullwidth";
-    var bodyElement = document.querySelectorAll("body")[0];
+    var toggleClassName = 'layout-fullwidth';
+    var bodyElement = document.querySelectorAll('body')[0];
     if (bodyElement.classList.contains(toggleClassName)) {
       bodyElement.classList.remove(toggleClassName);
     } else {
@@ -53,8 +60,8 @@ export class LaunchComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  //   setMenu() { 
-  // 
+  //   setMenu() {
+  //
 
   // 	// sidebar nav scrolling
   // 	$('#left-sidebar .sidebar-scroll').slimScroll({
@@ -74,7 +81,6 @@ export class LaunchComponent implements OnInit, AfterViewInit, OnDestroy {
   // 				left: "+=28px"
   // 			}, 800);
 
-
   // 		} else {
   // 			$('body').removeClass('layout-fullwidth');
   // 			$(this).find(".fa").toggleClass('fa-angle-left fa-angle-right');
@@ -86,26 +92,26 @@ export class LaunchComponent implements OnInit, AfterViewInit, OnDestroy {
   // 	});
   //   }
 
-  //   singout() { 
+  //   singout() {
   // 	  this.sv.signout();
   // 	  this.router.navigate(['/signin']);
   //   }
 
-  //   setprofile() { 
-  // 	if (!!localStorage.getItem('snapsacnwms')) { 
-  // 		this.crprofile = this.sv.getprofile();				
-  // 	}else { 
-  // 		this.callProfile();		
+  //   setprofile() {
+  // 	if (!!localStorage.getItem('snapsacnwms')) {
+  // 		this.crprofile = this.sv.getprofile();
+  // 	}else {
+  // 		this.callProfile();
   // 	}
   //   }
   //   callProfile() {
-  //     try { 
+  //     try {
   // 		this.sv.getAccess();
   // 		this.sv.retriveProfile("").pipe().subscribe(
   // 			orsl => { this.crprofile =  this.sv.getProfile;  this.setMenu(); } ,
   // 			err => { console.log(err); }
   // 		  );
-  // 	  }catch (exx){ 
+  // 	  }catch (exx){
   // 		console.log(exx);
   // 	  }
   //   }

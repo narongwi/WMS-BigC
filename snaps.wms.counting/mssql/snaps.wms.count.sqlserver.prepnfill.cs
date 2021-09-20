@@ -478,6 +478,8 @@ namespace Snaps.WMS {
             rn.procmodify = r["procmodify"].ToString();
             rn.productdesc = r["description"].ToString();
             rn.locctype = r["locctype"].ToString();
+            rn.seqno = (r["seqno"]??0).ToString().CDouble();
+            rn.addnew = (r["addnew"]??0).ToString().CInt32();
             return rn;
         }
 

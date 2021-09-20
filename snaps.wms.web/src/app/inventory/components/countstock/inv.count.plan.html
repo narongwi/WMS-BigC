@@ -13,7 +13,8 @@
 
             <div class="line bgsub-head dgtask">
                 <ng-scrollbar>
-                    <div class="row mg-0 ln fnb" *ngFor="let ln of lsplan;let i=index" (click)="ngSelect(ln,i)" [class.row-active]="i== rowselected">
+                    <div class="row mg-0 ln fnb" *ngFor="let ln of lsplan;let i=index" (click)="ngSelect(ln,i)"
+                        [class.row-active]="i== rowselected">
                         <div class="col-md-1">{{i+1}}</div>
                         <div class="col-md-1 text-primary tx-overflow">{{ln.plancode}}</div>
                         <div class="col-md-8 text-truncate">{{ln.planname}}</div>
@@ -28,17 +29,20 @@
             <div class="foot">
                 <div class="row mg-0 ln">
                     <div class="col-md-3 pdt-2">
-                        <button type="button" class="btn snaps-default btn-block btn-xs mp" [disabled]="crrtask?.tflow != 'IO'" (click)="ngNew()">
-              <i class="fas fa-tasks"></i>
-              &nbsp; New plan
-            </button>
+                        <button type="button" class="btn snaps-default btn-block btn-xs mp"
+                            [disabled]="crrtask?.tflow != 'IO'" (click)="ngNew()">
+                            <i class="fas fa-tasks"></i>
+                            &nbsp; New plan
+                        </button>
                     </div>
                     <div class="col-md-1">&nbsp;</div>
                     <div class="col-md-3 fnb" style="text-align: right;padding-top: 6px">Valildated</div>
                     <!-- style="width: 25%;" -->
                     <div class="col-md-5 fnb" style="padding-top: 6px">
                         <div class="progress">
-                            <div [ngClass]="{'progress-bar bg-warning': planvalidated < planTotal,'progress-bar bg-success text-white': planvalidated == planTotal}" [style.width]="planprogress + '%'" [attr.aria-valuenow]="planvalidated" [attr.aria-valuemin]="0" [attr.aria-valuemax]="planTotal">
+                            <div [ngClass]="{'progress-bar bg-warning': planvalidated < planTotal,'progress-bar bg-success text-white': planvalidated == planTotal}"
+                                [style.width]="planprogress + '%'" [attr.aria-valuenow]="planvalidated"
+                                [attr.aria-valuemin]="0" [attr.aria-valuemax]="planTotal">
                                 {{planvalidated}} of {{planTotal}}
                             </div>
                         </div>
@@ -61,11 +65,10 @@
                         <span class="text-dark fnb">Task</span>
                     </div>
                     <div class="col-md-2">
-                        <span class="text-danger fnb tx-overflow">{{crplan.countcode}}</span
-            >
-          </div>
-          <div class="col-md-2">
-            <span class="text-dark fnb">Plan code</span>
+                        <span class="text-danger fnb tx-overflow">{{crplan.countcode}}</span>
+                    </div>
+                    <div class="col-md-2">
+                        <span class="text-dark fnb">Plan code</span>
                     </div>
                     <div class="col-md-2">
                         <span class="fnb">{{crplan.plancode}}</span>
@@ -131,15 +134,14 @@
                     </div>
                     <div class="col-md-2 fnb">Start</div>
                     <div class="col-md-2">
-                        <span class="text-dark fnb">{{crplan.datestart | date : dateformat }}</span
-            >
-          </div>
-        </div>
+                        <span class="text-dark fnb">{{crplan.datestart | date : dateformat }}</span>
+                    </div>
+                </div>
 
-        <div class="row mg-0 ln">
-          <div class="col-md-2 fnb">Level from</div>
-          <div class="col-md-2">
-            <span class="text-dark fnb">{{crplan.slevel}}</span>
+                <div class="row mg-0 ln">
+                    <div class="col-md-2 fnb">Level from</div>
+                    <div class="col-md-2">
+                        <span class="text-dark fnb">{{crplan.slevel}}</span>
                     </div>
                     <div class="col-md-2 fnb">Level to</div>
                     <div class="col-md-2">
@@ -147,58 +149,42 @@
                     </div>
                     <div class="col-md-2 fnb">Confirm</div>
                     <div class="col-md-2">
-                        <span class="text-dark fnb">{{crplan.datestart | date : dateformat }}</span
-            >
-          </div>
-        </div>
+                        <span class="text-dark fnb">{{crplan.datestart | date : dateformat }}</span>
+                    </div>
+                </div>
 
-        <div class="row mg-0 ln" *ngIf="crplan.tflow == 'IO'">
-          <div class="col-md-2 fnb lh-07e pdt-3">Remarks<br />Count</div>
-          <div class="col-md-7">
-            <input
-              class="form-control text-danger fnb"
-              type="text"
-              [(ngModel)]="crplan.remarksvld"
-            />
-          </div>
-        </div>
+                <div class="row mg-0 ln" *ngIf="crplan.tflow == 'IO'">
+                    <div class="col-md-2 fnb lh-07e pdt-3">Remarks<br />Count</div>
+                    <div class="col-md-7">
+                        <input class="form-control text-danger fnb" type="text" [(ngModel)]="crplan.remarksvld" />
+                    </div>
+                </div>
 
-        <div class="row mg-0 ln" *ngIf="crplan.tflow == 'IO'">
-          <div class="col-md-3">
-            <button
-              type="button"
-              class="btn snaps-danger btn-xs btn-block mp"
-              (click)="ngCancel()"
-            >
-              <i class="fas fa-check-circle"></i>
-              &nbsp; Cancel plan
-            </button>
-          </div>
-          <div class="col-md-1">&nbsp;</div>
-          <div class="col-md-2 fnb lh-07e">Valdate<br />Count</div>
-          <div class="col-md-3">
-            <ng-select
-              [disabled]="crrtask.counttype == 'CC'"
-              class="fn-07e"
-              class="custom custom-sm"
-              bindLabel="desc"
-              bindvalue="value"
-              [clearable]="false"
-              [(ngModel)]="slcpct"
-              [items]="lspctval"
-            >
-              <ng-template ng-label-tmp let-item="item"
-                ><span class="text-danger fnb">{{item.desc}}</span>
-                        </ng-template>
-                        <ng-template ng-option-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span>
-                        </ng-template>
+                <div class="row mg-0 ln" *ngIf="crplan.tflow == 'IO'">
+                    <div class="col-md-3">
+                        <button type="button" class="btn snaps-danger btn-xs btn-block mp" (click)="ngCancel()">
+                            <i class="fas fa-check-circle"></i>
+                            &nbsp; Cancel plan
+                        </button>
+                    </div>
+                    <div class="col-md-1">&nbsp;</div>
+                    <div class="col-md-2 fnb lh-07e">Valdate<br />Count</div>
+                    <div class="col-md-3">
+                        <ng-select [disabled]="crrtask.counttype == 'CC'" class="fn-07e" class="custom custom-sm"
+                            bindLabel="desc" bindvalue="value" [clearable]="false" [(ngModel)]="slcpct"
+                            [items]="lspctval">
+                            <ng-template ng-label-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span>
+                            </ng-template>
+                            <ng-template ng-option-tmp let-item="item"><span
+                                    class="text-danger fnb">{{item.desc}}</span>
+                            </ng-template>
                         </ng-select>
                     </div>
                     <div class="col-md-3">
                         <button type="button" class="btn snaps-primary btn-xs btn-block mp" (click)="ngValidate()">
-              <i class="fas fa-check-circle"></i>
-              &nbsp; Validate
-            </button>
+                            <i class="fas fa-check-circle"></i>
+                            &nbsp; Validate
+                        </button>
                     </div>
                 </div>
 
@@ -228,17 +214,20 @@
                         <span class="text-dark fnb">Plan Name </span>
                     </div>
                     <div class="col-md-4">
-                        <input class="form-control form-control-sm text-danger fnb" type="text" placeholder="" [(ngModel)]="crplan.planname" />
+                        <input class="form-control form-control-sm text-danger fnb" type="text" placeholder=""
+                            [(ngModel)]="crplan.planname" />
                     </div>
 
                     <div class="col-md-2">
                         <span class="text-dark fnb">Zone </span>
                     </div>
                     <div class="col-md-2">
-                        <ng-select class="fn-07e" class="custom custom-sm" bindLabel="desc" bindvalue="value" [clearable]="false" [(ngModel)]="slczone" [items]="lszone" (change)="zoneChange()">
+                        <ng-select class="fn-07e" class="custom custom-sm" bindLabel="desc" bindvalue="value"
+                            [clearable]="false" [(ngModel)]="slczone" [items]="lszone" (change)="zoneChange()">
                             <ng-template ng-label-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span>
                             </ng-template>
-                            <ng-template ng-option-tmp let-item="item"><span class="text-danger fnb">{{item.desc}}</span>
+                            <ng-template ng-option-tmp let-item="item"><span
+                                    class="text-danger fnb">{{item.desc}}</span>
                             </ng-template>
                         </ng-select>
                     </div>
@@ -250,20 +239,24 @@
                         <span class="text-dark fnb">Aisle<br />from - to </span>
                     </div>
                     <div class="col-md-2">
-                        <input class="form-control form-control-sm text-danger fnb" type="text" placeholder="" [(ngModel)]="crplan.saisle" [disabled]="isbulkplan" required />
+                        <input class="form-control form-control-sm text-danger fnb" type="text" placeholder=""
+                            [(ngModel)]="crplan.saisle" [disabled]="isbulkplan" required />
                     </div>
                     <div class="col-md-2">
-                        <input class="form-control form-control-sm text-danger fnb" type="text" placeholder="" [(ngModel)]="crplan.eaisle" [disabled]="isbulkplan" required />
+                        <input class="form-control form-control-sm text-danger fnb" type="text" placeholder=""
+                            [(ngModel)]="crplan.eaisle" [disabled]="isbulkplan" required />
                     </div>
 
                     <div class="col-md-2">
                         <span class="text-dark fnb">Bay<br />from - to</span>
                     </div>
                     <div class="col-md-2">
-                        <input class="form-control form-control-sm text-danger fnb" type="text" placeholder="" [(ngModel)]="crplan.sbay" [disabled]="isbulkplan" required />
+                        <input class="form-control form-control-sm text-danger fnb" type="text" placeholder=""
+                            [(ngModel)]="crplan.sbay" [disabled]="isbulkplan" required />
                     </div>
                     <div class="col-md-2">
-                        <input class="form-control form-control-sm text-danger fnb" type="text" placeholder="" [(ngModel)]="crplan.ebay" [disabled]="isbulkplan" required />
+                        <input class="form-control form-control-sm text-danger fnb" type="text" placeholder=""
+                            [(ngModel)]="crplan.ebay" [disabled]="isbulkplan" required />
                     </div>
                 </div>
 
@@ -272,10 +265,12 @@
                         <span class="text-dark fnb">Level<br />from - to </span>
                     </div>
                     <div class="col-md-2">
-                        <input class="form-control form-control-sm text-danger fnb" type="text" placeholder="" [disabled]="isbulkplan" [(ngModel)]="crplan.slevel" required />
+                        <input class="form-control form-control-sm text-danger fnb" type="text" placeholder=""
+                            [disabled]="isbulkplan" [(ngModel)]="crplan.slevel" required />
                     </div>
                     <div class="col-md-2">
-                        <input class="form-control form-control-sm text-danger fnb" type="text" placeholder="" [disabled]="isbulkplan" [(ngModel)]="crplan.elevel" required />
+                        <input class="form-control form-control-sm text-danger fnb" type="text" placeholder=""
+                            [disabled]="isbulkplan" [(ngModel)]="crplan.elevel" required />
                     </div>
                     <div class="col-md-1">&nbsp;</div>
                     <div class="col-md-3" *ngIf="crrtask.counttype == 'CC'">
@@ -283,7 +278,8 @@
                     </div>
                     <div class="col-md-2" *ngIf="crrtask.counttype == 'CC'">
                         <div class="form-group form-control-xs mg-0">
-                            <ui-switch checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" [(ngModel)]="swblock"></ui-switch>
+                            <ui-switch checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00"
+                                [(ngModel)]="swblock"></ui-switch>
                         </div>
                     </div>
                 </div>
@@ -303,7 +299,8 @@
                     </div>
                     <div class="col-md-2">
                         <div class="form-group form-control-xs mg-0">
-                            <ui-switch checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" [(ngModel)]="swdatemfg"></ui-switch>
+                            <ui-switch checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00"
+                                [(ngModel)]="swdatemfg"></ui-switch>
                         </div>
                     </div>
 
@@ -312,7 +309,8 @@
                     </div>
                     <div class="col-md-2">
                         <div class="form-group form-control-xs mg-0">
-                            <ui-switch checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" [(ngModel)]="swdateexp"></ui-switch>
+                            <ui-switch checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00"
+                                [(ngModel)]="swdateexp"></ui-switch>
                         </div>
                     </div>
                 </div>
@@ -323,7 +321,8 @@
                     </div>
                     <div class="col-md-2">
                         <div class="form-group form-control-xs mg-0">
-                            <ui-switch checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" [(ngModel)]="swbatchno"></ui-switch>
+                            <ui-switch checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00"
+                                [(ngModel)]="swbatchno"></ui-switch>
                         </div>
                     </div>
 
@@ -342,7 +341,8 @@
                     </div>
                     <div class="col-md-2">
                         <div class="form-group form-control-xs mg-0">
-                            <ui-switch checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" [(ngModel)]="swalloddeven"></ui-switch>
+                            <ui-switch checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00"
+                                [(ngModel)]="swalloddeven"></ui-switch>
                         </div>
                     </div>
 
@@ -351,7 +351,8 @@
                     </div>
                     <div class="col-md-2">
                         <div class="form-group form-control-xs mg-0">
-                            <ui-switch checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00" [(ngModel)]="swallowscanhu"></ui-switch>
+                            <ui-switch checkedLabel="Active" uncheckedLabel="Inactive" size="small" color="#bbce00"
+                                [(ngModel)]="swallowscanhu"></ui-switch>
                         </div>
                     </div>
                 </div>
@@ -360,15 +361,15 @@
                     <div class="col-md-6"></div>
                     <div class="col-md-3">
                         <button type="button" class="btn snaps-danger btn-xs btn-block mp" (click)="cancel()">
-              <i class="fas fa-chevron-circle-left"></i>
-              &nbsp; Cancel
-            </button>
+                            <i class="fas fa-chevron-circle-left"></i>
+                            &nbsp; Cancel
+                        </button>
                     </div>
                     <div class="col-md-3">
                         <button type="button" class="btn snaps-primary btn-xs btn-block mp" (click)="ngUpsert()">
-              <i class="fas fa-check-circle"></i>
-              &nbsp; Create plan
-            </button>
+                            <i class="fas fa-check-circle"></i>
+                            &nbsp; Create plan
+                        </button>
                     </div>
                 </div>
             </div>
@@ -399,30 +400,26 @@
 
                         <div class="line bgsub-head dglines">
                             <ng-scrollbar>
-                                <div class="row mg-0 ln fnb" *ngFor="let ln of lsline">
+                                <div class="row mg-0 ln fnb"  *ngFor="let ln of lsline"  [class.bgnew]="ln.addnew > 0">
                                     <div class="px-120">
-                                        <span [ngClass]="ln.locctype=='R'?'text-info':'text-danger'">{{ln.locctype}}</span
-                    >
-                    : {{ln.loccode}}
-                  </div>
-                  <div class="px-120">{{ln.cnbarcode}}</div>
-                  <div class="col text-truncate">
-                     <!--span class="text-danger"
-                      >{{ln.cnarticle}}-{{ln.cnlv}}</span                      
-                    -->
-                    <span class="text-danger"
-                      >{{ln.cnarticle}}{{ln.cnarticle==''?'':'-'}}{{ln.cnarticle==''?'':ln.cnlv}}</span                      
-                    >
-                    &nbsp;{{ln.productdesc}}
-                  </div>
-                  <div class="px-130">{{ln.cnhuno}}</div>
-                  <!-- <div class="col-md-1 ">{{ln.stdatemfg| date:'dd/MM/yyyy'}}</div>   -->
-                  <div class="px-100">{{ln.cndateexp| date:'dd/MM/yyyy'}}</div>
-                  <div class="px-100">{{ln.cnlotmfg}}</div>
-                  <div class="px-80 tx-right text-danger">{{ln.cnqtypu}}</div>
-                  <div class="px-80 tx-right text-danger">{{ln.stqtypu}}</div>
-                  <div class="px-120 tx-overflow">
-                    <span class="fas {{decIcon(ln.tflow)}}"></span> &nbsp; {{decTflow(ln.tflow)}}
+                                        <span
+                                            [ngClass]="ln.locctype=='R'?'text-info':'text-danger'">{{ln.locctype}}</span>
+                                        : {{ln.loccode}}
+                                    </div>
+                                    <div class="px-120">{{ln.cnbarcode}}</div>
+                                    <div class="col text-truncate">
+                                        <span
+                                            class="text-danger">{{ln.cnarticle}}{{ln.cnarticle==''?'':'-'}}{{ln.cnarticle==''?'':ln.cnlv}}</span>
+                                        &nbsp;{{ln.productdesc}}
+                                    </div>
+                                    <div class="px-130">{{ln.cnhuno}}</div>
+                                    <!-- <div class="col-md-1 ">{{ln.stdatemfg| date:'dd/MM/yyyy'}}</div>   -->
+                                    <div class="px-100">{{ln.cndateexp| date:'dd/MM/yyyy'}}</div>
+                                    <div class="px-100">{{ln.cnlotmfg}}</div>
+                                    <div class="px-80 tx-right text-danger">{{ln.cnqtypu}}</div>
+                                    <div class="px-80 tx-right text-danger">{{ln.stqtypu}}</div>
+                                    <div class="px-120 tx-overflow">
+                                        <span class="fas {{decIcon(ln.tflow)}}"></span> &nbsp; {{decTflow(ln.tflow)}}
                                     </div>
                                 </div>
                             </ng-scrollbar>

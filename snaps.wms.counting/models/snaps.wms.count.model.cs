@@ -130,6 +130,8 @@ namespace Snaps.WMS {
         public string procmodify    { get; set; }
         public string productdesc { get; set; }
         public string locctype { get; set; }
+        public double seqno { get; set; }
+        public double addnew { get; set; }
     }
 
     public class findcountline_md
