@@ -231,40 +231,35 @@ class _LoginScreenState extends State<LoginScreen> {
 
           print("local version : ${_packageInfo.version}");
           print("lasted version : ${upgradeInfo.version}");
-          Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (context) => HomeScreen()),
-          );
+          if (upgradeInfo.version != _packageInfo.version) {
+            final confirm = await updateDialog(upgradeInfo.information, upgradeInfo.version);
+            if ((confirm ?? true)) {
+              if (Platform.isIOS) {
+              } else if (Platform.isAndroid) {
+                if (upgradeInfo.downloaduri.isNotEmpty) {
+                  var per = await _checkPermission();
+                  if (per != null && !per) {
+                    return null;
+                  }
+                  String dir = await _apkLocalPath();
+                  String uri = upgradeInfo.downloaduri;
+                  String apkname = upgradeInfo.apkname;
+                  final filePath = await downloadFile(uri, apkname, dir);
 
-          // if (upgradeInfo.version != _packageInfo.version) {
-          //   final confirm = await updateDialog(upgradeInfo.information, upgradeInfo.version);
-          //   if ((confirm ?? true)) {
-          //     if (Platform.isIOS) {
-          //     } else if (Platform.isAndroid) {
-          //       if (upgradeInfo.downloaduri.isNotEmpty) {
-          //         var per = await _checkPermission();
-          //         if (per != null && !per) {
-          //           return null;
-          //         }
-          //         String dir = await _apkLocalPath();
-          //         String uri = upgradeInfo.downloaduri;
-          //         String apkname = upgradeInfo.apkname;
-          //         final filePath = await downloadFile(uri, apkname, dir);
-
-          //         print(filePath);
-          //         _installApk(filePath);
-          //       }
-          //     }
-          //   } else {
-          //     Navigator.of(context).pushReplacement(
-          //       MaterialPageRoute(builder: (context) => HomeScreen()),
-          //     );
-          //   }
-          // } else {
-          //   Navigator.of(context).pushReplacement(
-          //     MaterialPageRoute(builder: (context) => HomeScreen()),
-          //   );
-          // }
-
+                  print(filePath);
+                  _installApk(filePath);
+                }
+              }
+            } else {
+              Navigator.of(context).pushReplacement(
+                MaterialPageRoute(builder: (context) => HomeScreen()),
+              );
+            }
+          } else {
+            Navigator.of(context).pushReplacement(
+              MaterialPageRoute(builder: (context) => HomeScreen()),
+            );
+          }
         } //check login
       } // end validate
     } catch (e) {

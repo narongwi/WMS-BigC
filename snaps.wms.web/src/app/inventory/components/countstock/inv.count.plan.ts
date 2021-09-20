@@ -59,6 +59,7 @@ declare var $: any;
     '.px-130{width:130px;margin-left:5px;margin-right:5px;}',
     '.row-p-0{display:flex;flex-wrap: wrap;padding-right:10px;padding-left:2px;margin:0;line-height: 2.2}',
     '.btn-xs.active{background-color: #a7c95758;font-weight: bold;color: #386641;border: 1px solid #9ab754a1}',
+    '.bgnew{background-color:#a7c95758}',
   ],
   providers: [
     NgbPaginationConfig,

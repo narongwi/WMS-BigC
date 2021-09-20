@@ -14,15 +14,15 @@ import 'package:wms/size_config.dart';
 // const String urlAPI = "http://10.0.3.2:5720";
 
 /* Localhost  Config */
-const String appConfig = "SIM";
-const String authApiUrl = "http://192.168.1.13:5001";
-const String adminApiUrl = "http://192.168.1.13:4220";
-const String pdaApiUrl = "http://192.168.1.13:5002";
-const String accnApiUrl = "http://192.168.1.13:4220";
-const String recvApiUrl = "http://192.168.1.13:4320";
-const String taskApiUrl = "http://192.168.1.13:4420";
-const String prepApiUrl = "http://192.168.1.13:4620";
-const String countApiUrl = "http://192.168.1.13:4520";
+// const String appConfig = "SIM";
+// const String authApiUrl = "http://192.168.1.13:5001";
+// const String adminApiUrl = "http://192.168.1.13:4220";
+// const String pdaApiUrl = "http://192.168.1.13:5002";
+// const String accnApiUrl = "http://192.168.1.13:4220";
+// const String recvApiUrl = "http://192.168.1.13:4320";
+// const String taskApiUrl = "http://192.168.1.13:4420";
+// const String prepApiUrl = "http://192.168.1.13:4620";
+// const String countApiUrl = "http://192.168.1.13:4520";
 
 /* Development Config*/
 // const String appConfig = "SIM";
@@ -36,15 +36,15 @@ const String countApiUrl = "http://192.168.1.13:4520";
 // const String countApiUrl = "http://10.4.5.194:4520";
 
 /* Production Config*/
-// const String appConfig = "PROD";
-// const String authApiUrl = "http://172.28.8.48:5101";
-// const String adminApiUrl = "http://172.28.8.48:5102";
-// const String accnApiUrl = "http://172.28.8.48:5102";
-// const String countApiUrl = "http://172.28.8.48:5103";
-// const String recvApiUrl = "http://172.28.8.48:5107";
-// const String taskApiUrl = "http://172.28.8.48:5109";
-// const String prepApiUrl = "http://172.28.8.48:5108";
-// const String pdaApiUrl = "http://172.28.8.48:5110";
+const String appConfig = "PROD";
+const String authApiUrl = "http://172.28.8.48:5101";
+const String adminApiUrl = "http://172.28.8.48:5102";
+const String accnApiUrl = "http://172.28.8.48:5102";
+const String countApiUrl = "http://172.28.8.48:5103";
+const String recvApiUrl = "http://172.28.8.48:5107";
+const String taskApiUrl = "http://172.28.8.48:5109";
+const String prepApiUrl = "http://172.28.8.48:5108";
+const String pdaApiUrl = "http://172.28.8.48:5110";
 
 // Colors
 const primaryColor = Color(0xff153C6A);

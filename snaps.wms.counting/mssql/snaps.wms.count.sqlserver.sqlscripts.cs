@@ -133,8 +133,8 @@ namespace Snaps.WMS {
             order BY ( case WHEN isnull(p.isdlc,0) = 1 THEN s.dateexp ELSE s.daterec end) ASC,s.huno asc";
 
         private string sqlplan_insert_step2_1 = @"insert into wm_couln (orgcode,site,depot,spcarea,countcode,plancode,loccode,unitcount,tflow,datecreate,accncreate,datemodify,accnmodify,procmodify, 
-        stbarcode, starticle, stpv, stlv, stqtysku, stqtypu,stlotmfg, stdatemfg, stdateexp, stserialno,sthuno ,locseq,locctype) values(@orgcode,@site,@depot,@spcarea,@countcode,@plancode,@loccode,@unitcount,@tflow,
-        getdate(),@accncreate,getdate(),@accnmodify,@procmodify,@stbarcode, @starticle,@stpv,@stlv,@stqtysku,@stqtypu,@stlotmfg,@stdatemfg,@stdateexp,@stserialno,@sthuno,@locseq,@locctype)";
+        stbarcode, starticle, stpv, stlv, stqtysku, stqtypu,stlotmfg, stdatemfg, stdateexp, stserialno,sthuno ,locseq,locctype,seqno) values(@orgcode,@site,@depot,@spcarea,@countcode,@plancode,@loccode,@unitcount,@tflow,
+        getdate(),@accncreate,getdate(),@accnmodify,@procmodify,@stbarcode, @starticle,@stpv,@stlv,@stqtysku,@stqtypu,@stlotmfg,@stdatemfg,@stdateexp,@stserialno,@sthuno,@locseq,@locctype,cast(@locseq as numeric(8,2)) + 0.01)";
 
         //private string sqlplan_validate_step1 = ""+ 
         //@"update t set tflow = case when isnull(isskip,0) = 1 and stbarcode is null then 'ED'              
@@ -232,10 +232,10 @@ namespace Snaps.WMS {
      
         private string sqlplan_recount_line =
         @"insert into wm_couln(orgcode, site, depot, spcarea, countcode, plancode, loccode, locseq, unitcount, stbarcode, starticle, stpv, stlv, stqtysku, 
-        stqtypu, stlotmfg, stdatemfg, stdateexp, stserialno, sthuno,tflow, datecreate, accncreate, datemodify, accnmodify, procmodify,locctype)
+        stqtypu, stlotmfg, stdatemfg, stdateexp, stserialno, sthuno,tflow, datecreate, accncreate, datemodify, accnmodify, procmodify,locctype, seqno ,addnew)
         select orgcode, site, depot, spcarea, countcode, @newplan plancode, loccode, locseq, unitcount, cnbarcode stbarcode, cnarticle as starticle,cnpv as stpv,cnlv as stlv,cnqtysku as stqtysku, 
 	    cnqtypu as stqtypu, cnlotmfg as stlotmfg, cndatemfg as stdatemfg, cndateexp as stdateexp,cnserialno as stserialno,cnhuno as sthuno,'IO' tflow, sysdatetimeoffset() datecreate,
-	    @accnmodify accncreate,sysdatetimeoffset() datemodify, @accnmodify accnmodify,'' procmodify, locctype  
+	    @accnmodify accncreate,sysdatetimeoffset() datemodify, @accnmodify accnmodify,'' procmodify, locctype,locseq + 0.01 as seqno , 0 as addnew
         from wm_couln where orgcode = @orgcode and site = @site and depot = @depot and countcode = @countcode and plancode = @plancode and tflow in('OL','OH','WQ')";
 
 
@@ -265,7 +265,7 @@ namespace Snaps.WMS {
             l.cnflow,l.cnmsg,l.isskip,l.isrgen,l.iswrgln,l.countdevice,
             l.countdate,l.corcode,l.corqty,l.coraccn,l.cordevice,l.cordate,
             l.tflow,l.datecreate,l.accncreate,l.datemodify,l.accnmodify,l.procmodify,
-            l.locctype from wm_coupn h 
+            l.locctype,l.seqno,l.addnew from wm_coupn h 
               join wm_couln l on h.orgcode = l.orgcode and h.site = l.site 
               and h.depot = l.depot and h.countcode = l.countcode and h.plancode = l.plancode 
             where l.orgcode = @orgcode
@@ -291,7 +291,7 @@ namespace Snaps.WMS {
             l.cnflow,l.cnmsg,l.isskip,l.isrgen,l.iswrgln,l.countdevice,
             l.countdate,l.corcode,l.corqty,l.coraccn,l.cordevice,l.cordate,
             l.tflow,l.datecreate,l.accncreate,l.datemodify,l.accnmodify,l.procmodify,
-            l.locctype from wm_coupn h 
+            l.locctype,l.seqno,l.addnew from wm_coupn h 
               join wm_couln l on h.orgcode = l.orgcode and h.site = l.site 
               and h.depot = l.depot and h.countcode = l.countcode and h.plancode = l.plancode 
             where l.orgcode = @orgcode
@@ -300,8 +300,7 @@ namespace Snaps.WMS {
              and l.countcode = @countcode
              and l.plancode = @plancode
             ) l left join wm_product p on l.orgcode = p.orgcode and l.site = p.site and l.depot = p.depot 
-              and l.cnarticle = p.article  and l.cnpv= p.pv and l.cnlv = p.lv
-            order BY  l.locseq asc";
+              and l.cnarticle = p.article  and l.cnpv= p.pv and l.cnlv = p.lv ";
 
         private string sqlline_vald = "select count(1) rsl from wm_couln where orgcode = @orgcode and site = @site and depot = @depot and countcode = @countcode and plancode = @plancode and loccode = @loccode";
         private string sqlline_insert = "" + 
@@ -388,14 +387,14 @@ namespace Snaps.WMS {
         private string sqlcount_newline = @"insert into wm_couln (orgcode, site, depot, spcarea, countcode, plancode, loccode, locseq, unitcount, stbarcode, starticle, stpv, stlv, 
             stqtysku, stqtypu, stlotmfg, stdatemfg, stdateexp, stserialno, sthuno, cnbarcode, cnarticle, cnpv, cnlv, cnqtysku, cnqtypu, cnlotmfg, 
             cndatemfg, cndateexp, cnserialno, cnhuno, cnflow, cnmsg, isskip, isrgen, iswrgln, countdevice, countdate, corcode, corqty, coraccn, 
-            cordevice, cordate, tflow, datecreate, accncreate, datemodify, accnmodify, procmodify, locctype)
-            select top 1 orgcode, site, depot, spcarea, countcode, plancode, loccode,(select max(locseq) + 1 from wm_couln s where s.orgcode = @orgcode 
-            and s.site = @site and s.depot = @depot and s.countcode =  @countcode and s.plancode = @plancode ) locseq,@unitcount unitcount, stbarcode, 
-            starticle, stpv, stlv, stqtysku, stqtypu, stlotmfg, stdatemfg, stdateexp, stserialno, sthuno, @cnbarcode cnbarcode,@cnarticle cnarticle,@cnpv cnpv,
+            cordevice, cordate, tflow, datecreate, accncreate, datemodify, accnmodify, procmodify, locctype, seqno, addnew)
+            select top 1 orgcode, site, depot, spcarea, countcode, plancode, loccode,
+            (select max(locseq) + 1 from wm_couln s where s.orgcode = @orgcode and s.site = @site and s.depot = @depot and s.countcode =  @countcode and s.plancode = @plancode ) locseq,
+            @unitcount unitcount, stbarcode, starticle, stpv, stlv, stqtysku, stqtypu, stlotmfg, stdatemfg, stdateexp, stserialno, sthuno, @cnbarcode cnbarcode,@cnarticle cnarticle,@cnpv cnpv,
             @cnlv cnlv,@cnqtysku cnqtysku,@cnqtypu cnqtypu,@cnlotmfg cnlotmfg, @cndatemfg cndatemfg,@cndateexp cndateexp,@cnserialno,@cnhuno cnhuno,@cnflow cnflow,
             @cnmsg cnmsg , isskip, isrgen, iswrgln, countdevice,SYSDATETIMEOFFSET() countdate, corcode, corqty, coraccn, cordevice, cordate,tflow,SYSDATETIMEOFFSET() datecreate,
-            @accncreate accncreate, SYSDATETIMEOFFSET() datemodify, @accnmodify accnmodify, procmodify, locctype  from wm_couln wc where wc.orgcode=@orgcode 
-            and wc.site = @site and wc.depot = @depot and wc.countcode = @countcode and wc.plancode = @plancode and wc.locseq = @locseq and wc.tflow='IO';
+            @accncreate accncreate, SYSDATETIMEOFFSET() datemodify, @accnmodify accnmodify, procmodify, locctype,@seqno + 0.01 as seqno, @addnew as addnew  
+            from wm_couln wc where wc.orgcode=@orgcode  and wc.site = @site and wc.depot = @depot and wc.countcode = @countcode and wc.plancode = @plancode and wc.locseq = @locseq and wc.tflow='IO';
             select max(locseq) locseq from wm_couln s where s.orgcode = @orgcode and s.site = @site and s.depot = @depot and s.countcode =  @countcode and s.plancode = @plancode and s.loccode = @loccode and s.cnhuno = @cnhuno";
 
         private string sqlcount_findproduct =
