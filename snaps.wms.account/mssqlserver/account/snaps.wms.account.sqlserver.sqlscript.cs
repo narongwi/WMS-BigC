@@ -68,9 +68,11 @@ namespace Snaps.WMS {
         //                cmc.snapsPar(o.accncode, "accncode");
         //                cmc.snapsPar("role", "cfgtype");
 
-        string sqlacconfig_remove = "update wm_acfg set cfgcode=@cfgcode,cfgvalue=@cfgvalue,formatdate=@formatdate,formatdatelong=@formatdatelong," +
-            " formatdateshort=@formatdateshort,accnmodify=@accnmodify,procmodify=@procmodify,datemodify=getdate()" +
-            " where orgcode = @orgcode and site = @site and depot = @depot and accncode = @accncode and cfgtype = @cfgtype ";
+        //string sqlacconfig_remove = "update wm_acfg set cfgcode=@cfgcode,cfgvalue=@cfgvalue,formatdate=@formatdate,formatdatelong=@formatdatelong," +
+        //    " formatdateshort=@formatdateshort,accnmodify=@accnmodify,procmodify=@procmodify,datemodify=getdate()" +
+        //    " where orgcode = @orgcode and site = @site and depot = @depot and accncode = @accncode and cfgtype = @cfgtype ";
+
+        string sqlacconfig_update = "update wm_acfg set formatdate=@formatdate,formatdatelong=@formatdatelong,formatdateshort=@formatdateshort,accnmodify=@accnmodify,procmodify=@procmodify,datemodify=getdate() where accncode = @accncode and cfgtype = @cfgtype";
 
         private string sqlaccount_getdefpriv = "select suffixpriv from wm_policy where orgcode = @orgcode and site =  @site and depot = @depot and tflow = 'IO'";
         private string sqlaccount_getlifetime = "select dayexpire from wm_policy where orgcode = @orgcode and site =  @site and depot = @depot and tflow = 'IO'";

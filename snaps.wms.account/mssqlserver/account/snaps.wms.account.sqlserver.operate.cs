@@ -212,9 +212,11 @@ namespace Snaps.WMS {
                             // insert account
                             cm.CommandText = sqlaccount_insert_step1;
                             lm.Add(cm);
+
                             // insert config
-                            cmg = co.getCommand(cg);
-                            lm.Add(cmg);
+                            // cmg = co.getCommand(cg);
+                            // lm.Add(cmg);
+
                             // insert password 
                             cmp =  setPriv(ap,o.accnmodify);
                             lm.Add(cmp);
@@ -240,13 +242,13 @@ namespace Snaps.WMS {
 
                         // update config
                         SqlCommand cmc = new SqlCommand("", cn);
-                        cmc.CommandText = sqlacconfig_remove;
-                        cmc.snapsPar(o.orgcode, "orgcode");
-                        cmc.snapsPar(o.site, "site");
-                        cmc.snapsPar(o.depot, "depot");
+                        cmc.CommandText = sqlacconfig_update;
+                        //cmc.snapsPar(o.orgcode, "orgcode");
+                        //cmc.snapsPar(o.site, "site");
+                        //cmc.snapsPar(o.depot, "depot");
                         cmc.snapsPar(o.accnmodify, "accnmodify");
-                        cmc.snapsPar(o.accsrole, "cfgcode");
-                        cmc.snapsPar(o.accsrole, "cfgvalue");
+                        //cmc.snapsPar(o.accsrole, "cfgcode");
+                        //cmc.snapsPar(o.accsrole, "cfgvalue");
                         cmc.snapsPar(o.formatdate, "formatdate");
                         cmc.snapsPar(o.formatdatelong, "formatdatelong");
                         cmc.snapsPar(o.formatdateshort, "formatdateshort");
@@ -275,7 +277,7 @@ namespace Snaps.WMS {
 
                 cm.CommandText = @"select c.orgcode,c.site,c.depot,r.rolecode ,r.rolename ,c.accncode,c.accncreate,c.datecreate
                  from wm_acfg c join wm_role r on c.orgcode = r.orgcode  and c.cfgcode = r.rolecode
-                 where c.orgcode = @orgcode and c.accncode = @accncode";
+                 where c.orgcode=@orgcode and c.accncode = @accncode";
 
                 var cfgdt = cm.snapsTableAsync().Result;
                 rn.accncfg  = new List<accn_cfg>();
@@ -283,8 +285,8 @@ namespace Snaps.WMS {
                     rn.accncfg.Add(new accn_cfg(rw["orgcode"],rw["site"],rw["depot"],rw["accncode"],rw["rolecode"],rw["rolename"],rw["accncreate"],rw["datecreate"]));
                 }
 
-                if(rn.accncfg.Count > 0)
-                    rn.accsrole = rn.accncfg.First().rolecode;
+                //if(rn.accncfg.Count > 0)
+                //    rn.accsrole = rn.accncfg.First().rolecode;
 
                 return rn;
             } catch(Exception ex) {
