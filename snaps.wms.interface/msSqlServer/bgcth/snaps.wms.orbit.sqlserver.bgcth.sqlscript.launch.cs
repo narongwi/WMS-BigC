@@ -139,8 +139,35 @@ namespace Snaps.WMS {
         // and ox.orgcode = ob.orgcode and ox.site = ob.site and ox.depot = ob.depot and ox.ouorder = ob.ouorder";
 
         //isnull(ob.ourefno,'0') ME3NUMCTL
+        //string sqlInterface_launch_delivery =
+        //   @"select ox.orbitsite ME3CODSIT, ox.ouorder ME3NUMCDE,(case when isnull(ob.ourefno,'')='' then '0' else ob.ourefno end) ME3NUMCTL, 
+        //         CAST(ox.dateops AS datetime) ME3DATLIV,ox.article ME3CPROIN, ox.qtysku ME3QTEEXP, ob.qtysku ME3QTEALIV,ob.qtysku ME3QTECDE,
+        //         (case when oh.outype = 'DL' and oh.ousubtype ='DV' then '1' when oh.outype = 'DL' and oh.ousubtype ='DC' then '2' else null end) ME3TYPOL,
+        //         ox.thcode ME3CODCLI, ob.oudono ME3NUMORL, null ME3CPROCD,ox.accnops ME3CODEXP, max(ox.oudnno) over (partition by ox.ouorder order by ox.ouorder) ME3NSEQBL,
+        //         CAST(ox.qtyweight as decimal(9,3)) ME3PDSEXP, null ME3STASTK, 0 ME3NDOS, ox.site ME3DONORD, '1' ME3TYPMVT, 
+        //         CASE WHEN ob.qtysku = ob.qtyskudel THEN '1' ELSE '0' END AS ME3FINCDE,
+        //         isnull(ox.transportno,0) ME3NSETRA, ox.orbitdepot ME3DEPOT, dbo.lpad(ox.lv,3,'0') ME3ILOGIS,
+        //         CASE WHEN oh.outype = 'DL' and oh.ousubtype ='DV' THEN '-1' ELSE ox.routeops END AS ME3CTOURN, ob.ouseq ME3NLIGOL, ox.qtysku ME3NCOLIS,ob.ouln ME3CINCDE,ob.ourefln ME3NOLIGN,
+        //         ox.huno ME3SSCC, null ME3ILOGCD, '0' ME3NLIGP,CAST(ox.dateops AS datetime) ME3DATEXP,
+        //         CAST(ox.dateops AS datetime) ME3DATACT,'4001' ME3CODTRA, null ME3TIEEMB, ox.qtysku ME3UMCEXP, '1' ME3NLIGMAG,ROWID
+        //     from xm_xodelivery ox ,wm_outbound oh, wm_outbouln ob  where ox.xaction = 'WC'
+        //     and ox.orgcode = oh.orgcode and ox.site = oh.site and ox.depot = oh.depot and ox.ouorder = oh.ouorder
+        //     and ox.orgcode = ob.orgcode and ox.site = ob.site and ox.depot = ob.depot and ox.ouorder = ob.ouorder and ox.article = ob.article and ox.pv = ob.pv and ox.lv = ob.lv";
+
+        // summary interface 
         string sqlInterface_launch_delivery =
-           @"select ox.orbitsite ME3CODSIT, ox.ouorder ME3NUMCDE,(case when isnull(ob.ourefno,'')='' then '0' else ob.ourefno end) ME3NUMCTL, 
+          @"SELECT ME3CODSIT,ME3NUMCDE,ME3NUMCTL,
+	        MAX(ME3DATLIV) as ME3DATLIV,ME3CPROIN,
+	        SUM(ME3QTEEXP) as ME3QTEEXP,
+	        SUM(ME3QTEALIV)as ME3QTEALIV,
+	        SUM(ME3QTECDE) as ME3QTECDE,ME3TYPOL,ME3CODCLI,ME3NUMORL,ME3CPROCD,ME3CODEXP,ME3NSEQBL,
+	        SUM(ME3PDSEXP) as ME3PDSEXP,ME3STASTK,ME3NDOS,ME3DONORD,ME3TYPMVT,ME3FINCDE,ME3NSETRA,ME3DEPOT,ME3ILOGIS,ME3CTOURN,ME3NLIGOL,
+	        SUM(ME3NCOLIS) AS ME3NCOLIS,ME3CINCDE,ME3NOLIGN,ME3SSCC,ME3ILOGCD,ME3NLIGP,
+	        MAX(ME3DATEXP) AS ME3DATEXP,
+	        MAX(ME3DATACT) AS ME3DATACT,ME3CODTRA,ME3TIEEMB,
+	        SUM(ME3UMCEXP) AS ME3UMCEXP,ME3NLIGMAG,	0 ROWID
+            FROM (
+            select ox.orbitsite ME3CODSIT, ox.ouorder ME3NUMCDE,(case when isnull(ob.ourefno,'')='' then '0' else ob.ourefno end) ME3NUMCTL, 
                  CAST(ox.dateops AS datetime) ME3DATLIV,ox.article ME3CPROIN, ox.qtysku ME3QTEEXP, ob.qtysku ME3QTEALIV,ob.qtysku ME3QTECDE,
                  (case when oh.outype = 'DL' and oh.ousubtype ='DV' then '1' when oh.outype = 'DL' and oh.ousubtype ='DC' then '2' else null end) ME3TYPOL,
                  ox.thcode ME3CODCLI, ob.oudono ME3NUMORL, null ME3CPROCD,ox.accnops ME3CODEXP, max(ox.oudnno) over (partition by ox.ouorder order by ox.ouorder) ME3NSEQBL,
@@ -152,7 +179,9 @@ namespace Snaps.WMS {
                  CAST(ox.dateops AS datetime) ME3DATACT,'4001' ME3CODTRA, null ME3TIEEMB, ox.qtysku ME3UMCEXP, '1' ME3NLIGMAG,ROWID
              from xm_xodelivery ox ,wm_outbound oh, wm_outbouln ob  where ox.xaction = 'WC'
              and ox.orgcode = oh.orgcode and ox.site = oh.site and ox.depot = oh.depot and ox.ouorder = oh.ouorder
-             and ox.orgcode = ob.orgcode and ox.site = ob.site and ox.depot = ob.depot and ox.ouorder = ob.ouorder and ox.article = ob.article and ox.pv = ob.pv and ox.lv = ob.lv";
+             and ox.orgcode = ob.orgcode and ox.site = ob.site and ox.depot = ob.depot and ox.ouorder = ob.ouorder and ox.article = ob.article and ox.pv = ob.pv and ox.lv = ob.lv
+            ) s GROUP BY ME3CODSIT,ME3NUMCDE,ME3NUMCTL,ME3CPROIN,ME3TYPOL,ME3CODCLI,ME3NUMORL,ME3CPROCD,ME3CODEXP,ME3NSEQBL,ME3STASTK,ME3NDOS,ME3DONORD,ME3TYPMVT,ME3FINCDE,ME3NSETRA,
+	            ME3DEPOT,ME3ILOGIS,ME3CTOURN,ME3NLIGOL,ME3CINCDE,ME3NOLIGN,ME3SSCC,ME3ILOGCD,ME3NLIGP,ME3CODTRA,ME3TIEEMB,ME3NLIGMAG";
 
         string sqlInterface_launch_delivery_insert = "" + 
         " INSERT INTO N3_MVTEX ( ME3CODSIT,ME3NUMCDE,ME3NUMCTL,ME3DATLIV,ME3CPROIN,ME3QTEEXP,ME3QTEALIV,ME3QTECDE	        " +
@@ -161,13 +190,15 @@ namespace Snaps.WMS {
         " ,ME3NLIGP,ME3DATEXP,ME3DATACT,ME3CODTRA,ME3NLIGMAG,ME3UMCEXP ) VALUES ( :ME3CODSIT,:ME3NUMCDE,:ME3NUMCTL,:ME3DATLIV,:ME3CPROIN,:ME3QTEEXP, " + 
         "  :ME3QTEALIV,:ME3QTECDE,:ME3TYPOL,:ME3CODCLI,:ME3NUMORL,:ME3CPROCD,:ME3CODEXP,:ME3NSEQBL,:ME3PDSEXP,:ME3STASTK	" +
         " ,:ME3NDOS,:ME3DONORD,:ME3TYPMVT,:ME3FINCDE,:ME3NSETRA,:ME3DEPOT,:ME3ILOGIS,:ME3CTOURN,:ME3NLIGOL,:ME3NCOLIS		" +
-        " ,:ME3CINCDE,:ME3NOLIGN,:ME3SSCC,:ME3ILOGCD,:ME3NLIGP,:ME3DATEXP,:ME3DATACT,:ME3CODTRA,:ME3NLIGMAG,:ME3UMCEXP )      ";
-        string sqlInterface_launch_delivery_clear = "" + 
-        " update xm_xodelivery set xaction = 1, xmodify = sysdatetimeoffset() where rowid = @rowid ";
-        string sqlInterface_launch_delivery_error = "" +
-        " update xm_xodelivery set xaction = 2, xmodify = sysdatetimeoffset(), xmsg = @xmsg where rowid = @rowid ";
+        " ,:ME3CINCDE,:ME3NOLIGN,:ME3SSCC,:ME3ILOGCD,:ME3NLIGP,:ME3DATEXP,:ME3DATACT,:ME3CODTRA,:ME3NLIGMAG,:ME3UMCEXP )    ";
 
+        //string sqlInterface_launch_delivery_clear = "" + 
+        //" update xm_xodelivery set xaction = 1, xmodify = sysdatetimeoffset() where rowid = @rowid ";
+        //string sqlInterface_launch_delivery_error = "" +
+        //" update xm_xodelivery set xaction = 2, xmodify = sysdatetimeoffset(), xmsg = @xmsg where rowid = @rowid ";
 
+        string sqlInterface_launch_delivery_clear = @"update xm_xodelivery set xaction = 1, xmodify = sysdatetimeoffset()  where site = @site and oudnno = @oudnno and ouorder =@ouorder and ouln =@ouln and huno = @huno and article = @article and lv = cast(@lv as int) and xaction = 'WC'";
+        string sqlInterface_launch_delivery_error = @"update xm_xodelivery set xaction = 2, xmodify = sysdatetimeoffset(), xmsg = @xmsg  where site = @site and oudnno = @oudnno and ouorder =@ouorder and ouln =@ouln and huno = @huno and article = @article and lv = cast(@lv as int) and xaction = 'WC'";
 
         string sqlinterface_launch_block = @" select orbitsite MI3CODSIT,cast(x.xcreate as datetime) MI3DATMVT,article MI3CPROIN,
                 '00' MI3CECART,qtysku MI3QTEUVC,x.accnmodify MI3CODINV, 

@@ -216,7 +216,7 @@ namespace Snaps.WMS {
                 OracleConnection.ClearPool(oc);
             }
         }
-        public void retrive_outbound(string notifyToken = "",string notifyProxy = "",bool errorOnly = true) {
+        public void retrive_outbound() {
 
             SqlConnection on = new SqlConnection(cnx_snapswms);
             OracleConnection oc = new OracleConnection();
@@ -369,33 +369,33 @@ namespace Snaps.WMS {
             }
 
             // WMS line Notify
-            if(goldisready > 0 && !string.IsNullOrEmpty(notifyToken)) {
-                try {
-                    if(errorOnly) {
-                        // check is error
-                        if(wmsfailure > 0) {
-                            Console.WriteLine("Outbound Line Notify Sending");
-                            var notify = new snaps.wms.notify.LineNotify(notifyToken,notifyProxy);
-                            string message = "\nWMS Outbound Interface\nGOLD is ready " + goldisready 
-                                + " row\nWMS Imported " + wmsImported + " row\nWMS Failure " + wmsfailure + " row";
-                            notify.Send(message,true,wmsfailure == 0 ? true : false).Wait();
-                            Console.WriteLine("Outbound Line Notify Successfully!");
-                        }
-                    }else{
-                        // All Notify
-                        Console.WriteLine("Outbound Line Notify Sending");
-                        var notify = new snaps.wms.notify.LineNotify(notifyToken,notifyProxy);
-                        string message = "\nWMS Outbound Interface\nGOLD is ready " + goldisready+ " row\nWMS Imported " + wmsImported + " row\nWMS Failure " + wmsfailure + " row";
-                        notify.Send(message,true,wmsfailure == 0 ? true : false).Wait();
-                        Console.WriteLine("Outbound Line Notify Successfully!");
-                    }
-                } catch(Exception lx) {
-                    logger.Error("91917","01","nWMS Outbound Line Notify",lx,lx.Message);
-                }
+            //if(goldisready > 0 && !string.IsNullOrEmpty(notifyToken)) {
+            //    try {
+            //        if(errorOnly) {
+            //            // check is error
+            //            if(wmsfailure > 0) {
+            //                Console.WriteLine("Outbound Line Notify Sending");
+            //                var notify = new snaps.wms.notify.LineNotify(notifyToken,notifyProxy);
+            //                string message = "\nWMS Outbound Interface\nGOLD is ready " + goldisready 
+            //                    + " row\nWMS Imported " + wmsImported + " row\nWMS Failure " + wmsfailure + " row";
+            //                notify.Send(message,true,wmsfailure == 0 ? true : false).Wait();
+            //                Console.WriteLine("Outbound Line Notify Successfully!");
+            //            }
+            //        }else{
+            //            // All Notify
+            //            Console.WriteLine("Outbound Line Notify Sending");
+            //            var notify = new snaps.wms.notify.LineNotify(notifyToken,notifyProxy);
+            //            string message = "\nWMS Outbound Interface\nGOLD is ready " + goldisready+ " row\nWMS Imported " + wmsImported + " row\nWMS Failure " + wmsfailure + " row";
+            //            notify.Send(message,true,wmsfailure == 0 ? true : false).Wait();
+            //            Console.WriteLine("Outbound Line Notify Successfully!");
+            //        }
+            //    } catch(Exception lx) {
+            //        logger.Error("91917","01","nWMS Outbound Line Notify",lx,lx.Message);
+            //    }
 
-            } else {
-                Console.WriteLine("Outbound Line Notify Successfully!");
-            }
+            //} else {
+            //    Console.WriteLine("Outbound Line Notify Successfully!");
+            //}
 
         }
         public void retrive_product() {

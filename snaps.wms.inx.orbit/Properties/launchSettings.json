@@ -2,7 +2,7 @@
   "profiles": {
     "snaps.wms.inx.orbit": {
       "commandName": "Project",
-      "commandLineArgs": "launching_imstock"
+      "commandLineArgs": "launching_delivery"
     }
   }
 }
