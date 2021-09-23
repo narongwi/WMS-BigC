@@ -287,13 +287,14 @@
                         <div class="col-md-3">
                           <input class="form-control form-control-sm text-danger fnb" name="editBarcode" type="text"
                             placeholder="Barcode" [(ngModel)]="editorLinemd.cnbarcode" [disabled]="radioGenhuno"
-                            (ngModelChange)="productChanged('barcode')" />
+                            (change)="productChanged('barcode')" />
+                          <!-- (ngModelChange)="productChanged('barcode')" -->
                           <!-- (change)="checkNewLine()" -->
                         </div>
                         <div class="col-md-3">
                           <input class="form-control form-control-sm text-danger fnb" name="editArticle" type="text"
                             placeholder="Article" [(ngModel)]="editorLinemd.cnarticle" [disabled]="radioGenhuno"
-                            (ngModelChange)="productChanged('article')" />
+                            (change)="productChanged('article')" />
                         </div>
                         <div class="col-md-2">
                           <input class="form-control form-control-sm text-danger fnb" name="editPV" type="number"
@@ -303,7 +304,7 @@
                         <div class="col-md-2">
                           <input class="form-control form-control-sm text-danger fnb" name="editLV" type="number"
                             min="0" placeholder="LV" [(ngModel)]="editorLinemd.cnlv" [disabled]="radioGenhuno"
-                            (ngModelChange)="productChanged('lv')" />
+                            (change)="productChanged('lv')" />
                         </div>
                       </div>
                       <div class="row mg-0 ln">
