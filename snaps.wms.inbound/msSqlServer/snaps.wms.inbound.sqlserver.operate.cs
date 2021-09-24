@@ -473,7 +473,12 @@ namespace Snaps.WMS {
                 ln.qtyhurec = (ln.qtyhurec == 0) ? 1 : ln.qtyhurec; // Auto assign atlease 1 HU
                 cm = lxcomamnd(ln);
                 cm.CommandText = sqlinbounlx_valmea;
-                if(cm.snapsScalarStrAsync().Result == "1") {
+                var product = await cm.snapsTableAsync();
+
+
+                if(product.Rows.Count == 0) {
+                    throw new Exception("The product status is not active");
+                } else if(product.Rows[0]["ismeasurement"].ToString() == "1") {
                     throw new Exception("Product still require to measurement");
                 } else {
                     cm.CommandText = sqlinboulx_val;
