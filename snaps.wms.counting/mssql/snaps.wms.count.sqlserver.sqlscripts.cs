@@ -319,6 +319,8 @@ namespace Snaps.WMS {
         private string sqlline_update = @" update wm_couln set cnhuno=@cnhuno, cnbarcode = @cnbarcode,cnarticle=@cnarticle,cnpv=@cnpv,cnlv=@cnlv,cnqtypu = @cnqtypu, cnlotmfg = @cnlotmfg, cndatemfg = @cndatemfg, cndateexp = @cndateexp, cnserialno = @cnserialno,countdate = sysdatetimeoffset(),datemodify = sysdatetimeoffset(), accnmodify = @accnmodify,cnflow=@cnflow,cnmsg=@cnmsg from wm_couln where orgcode = @orgcode and site = @site and depot = @depot and loccode = @loccode 
            and locseq = @locseq and countcode = @countcode and plancode = @plancode and tflow in ('IO')";
 
+        private string sqlline_delete = @"delete from wm_couln where orgcode =@orgcode and site = @site and depot = @depot and countcode = @countcode and plancode  = @plancode and locseq = @locseq";
+
         //private string sqlline_update2 = @" update t set stqtysku = isnull(s.qtysku,0), stqtypu = isnull(s.qtypu,0), starticle = s.article , stpv = s.pv , stlv = s.lv, 
         //            cnbarcode = @cnbarcode, cnqtypu = @cnqtypu, cnlotmfg = @cnlotmfg, cndatemfg = @cndatemfg, cndateexp = @cndateexp, cnserialno = @cnserialno, 
         //            countdate = sysdatetimeoffset(),datemodify = sysdatetimeoffset(), accnmodify = @accnmodify, stbarcode = s.barcode,

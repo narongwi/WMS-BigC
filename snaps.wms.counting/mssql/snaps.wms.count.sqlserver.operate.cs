@@ -581,7 +581,22 @@ namespace Snaps.WMS {
                 throw ex;
             } finally { cm.ForEach(e => e.Dispose()); }
         }
-
+        public async Task deleteLineAsync(countline_md o) {
+            SqlCommand cm = new SqlCommand(sqlline_delete,cn);
+            try {
+                cm.snapsPar(o.orgcode,"orgcode");
+                cm.snapsPar(o.site,"site");
+                cm.snapsPar(o.depot,"depot");
+                cm.snapsPar(o.countcode,"countcode");
+                cm.snapsPar(o.plancode,"plancode");
+                cm.snapsPar(o.locseq,"locseq");
+                await cm.snapsExecuteAsync();
+                logger.Info(o.orgcode,o.site,o.accnmodify,"delete count task ",o.countcode," plan ",o.plancode,"locseq ", o.locseq.ToString(),"completed");
+            } catch(Exception ex) {
+                logger.Error(o.orgcode,o.site,o.accnmodify,ex,ex.Message);
+                throw ex;
+            } finally { cm.Dispose(); }
+        }
         public async Task upsertLineAsync(countline_md o) {
             SqlCommand cm = new SqlCommand(sqlline_vald,cn);
             try {

@@ -257,18 +257,14 @@
                           <span class="text-dark fnb tx-overflow">Plan code
                           </span>
                         </div>
-                        <div class="col-md-7">
+                        <div class="col-md-8">
                           <span class="text-danger fnb">{{editorLinemd.plancode}} :
                             {{crplan.planname}}</span>
                         </div>
-                        <div class="col-md-3 text-info" style="text-align: right; font-size: 13px">
-                          <!-- <button
-														type="button"
-														class="btn snaps-default btn-xs"
-														(click)="ngResetEdit()"
-													>
-														<i class="fas fa-redo mr-1"></i> reset
-													</button> -->
+                        <div class="col-md-2 text-info" style="text-align: right; font-size: 13px">
+                          <button class="btn snaps-danger btn-xs btn-block" [disabled]="radioGenhuno|| disabledDelete" (click)="deleteLine()">
+                            Delete
+                          </button>
                         </div>
                       </div>
 
@@ -280,6 +276,8 @@
                         <div class="col-md-10">
                           <span class="text-danger fnb">{{editorLinemd.loccode}}</span>
                         </div>
+                       
+                       
                       </div>
 
                       <div class="row mg-0 ln">
@@ -375,12 +373,12 @@
                       </div>
 
                       <div class="row mg-0 ln">
-                        <div class="col-md-2"></div>
-                        <div class="col-md-2" style="text-align: right" *ngIf="editorLinemd.cnflow=='NW'">
-                          <button class="btn snaps-danger btn-xs" [disabled]="radioGenhuno" (click)="ngRemvoeEdit()">
+                        <div class="col-md-4"></div>
+                        <!-- <div class="col-md-2" style="text-align: right">
+                          <button class="btn snaps-danger btn-xs" [disabled]="radioGenhuno" (click)="deleteLine()">
                             Delete
                           </button>
-                        </div>
+                        </div> -->
                         <div class="col-md-2">
                           <button class="btn snaps-default btn-xs btn-block" [disabled]="radioGenhuno"
                             style="margin-right: 20px" (click)="ngCancleEdit()">
@@ -394,14 +392,14 @@
                           </button>
                         </div>
                       </div>
-                      <div class="row mg-0">
+                      <!-- <div class="row mg-0">
                         <div class="col-md-3">&nbsp;</div>
                         <div class="col-md-2" style="text-align: right" *ngIf="editorLinemd.cnflow=='NW'">
                           <button class="btn snaps-danger btn-xs" [disabled]="radioGenhuno" (click)="ngRemvoeEdit()">
                             Delete
                           </button>
                         </div>
-                      </div>
+                      </div> -->
                       <div class="row mg-0 ln">
                         <div class="col-md-12 text-danger text-center fnb">
                           {{editLineMessage}}

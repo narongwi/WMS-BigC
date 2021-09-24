@@ -23,7 +23,8 @@ namespace Snaps.WMS.Interfaces
         Task<List<countline_md>> countLineAsync(countplan_md o);
         Task<List<countline_md>> getLineAsync(findcountline_md o);
         Task upsertLineAsync(List<countline_md> o);
-        
+        Task deleteLineAsync(countline_md o);
+
         // confirm stock take
         Task<List<countcorrection_md>> getConfrimLineAsync(counttask_md o);
         Task countConfirmAsync(counttask_md o);

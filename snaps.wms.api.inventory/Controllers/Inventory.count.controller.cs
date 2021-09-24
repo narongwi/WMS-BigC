@@ -420,6 +420,31 @@ namespace Snaps.WMS.Controllers
                 if (_log.IsEnabled(LogLevel.Debug)) { p.snap(); _log.LogDebug(p.toJson()); p.Dispose(); }
             }
         }
+
+        [Authorize]
+        [HttpPost("deleteLine/{id}")]
+        public async Task<IActionResult> deleteLineAysnc(String id,[FromBody] countline_md o,
+                   [FromHeader(Name = "site")] String osite,
+                   [FromHeader(Name = "depot")] String odepot,
+                   [FromHeader(Name = "accncode")] String oaccn,
+                   [FromHeader(Name = "orgcode")] String oorg,
+                   [FromHeader(Name = "lang")] String lng
+                   ) {
+            Process ps; SnapsLogDbg p = null;
+            try {
+                if(_log.IsEnabled(LogLevel.Debug)) { ps = Process.GetCurrentProcess(); p = new SnapsLogDbg(ps,"upsertLine",id,Request.getIP(),app,oaccn); }
+                o.accnmodify = oaccn; 
+                o.accncreate = oaccn;
+                await _sv.deleteLineAsync(o);
+                return Ok();
+            } catch(Exception exr) {
+                _log.LogError(exr.SnapsLogExc(Request.getIP(),oaccn,app,"upsertLine",rqid: id,ob: o));
+                return BadRequest(exr.SnapsBadRequest());
+            } finally {
+                if(_log.IsEnabled(LogLevel.Debug)) { p.snap(); _log.LogDebug(p.toJson()); p.Dispose(); }
+            }
+        }
+
         [Authorize]
         [HttpPost("getConfirmLine/{id}")]
         public async Task<IActionResult> getConfirmLineAsnc(String id, [FromBody] counttask_md o,
