@@ -123,6 +123,43 @@ namespace Snaps.WMS {
         //" null spcprepzone,null spcdistzone,null spcdistshare,null spczonedelv,'BGCTH.GC' orbitsource,     " +
         //" 'WC' tflow,null fileid,iaracti rowops,null datecreate,null dateops,null ermsg                    " +
         //" from ICSARTICLE where iarsite = :site and  iardepo = :depot                                      " ;
+
+        /* Comment 25 Sep 2021 */
+        //string sqlInterface_retrive_product =
+        // @"select distinct 'bgc' orgcode,iarsite site,lpad(iardepo,2,'0') depot,null spcarea,iarcexr article,null articletype,   
+        //    null pv,iarcexvl lv,iarliba description,iarliba descalt,iarcnuf thcode,iardlc dlcall,            
+        //    iarpof dlcfactory,iarpoe dlcwarehouse,iarpov dlcshop,iarpoc dlconsumer,iarniv1 hdivison,         
+        //    iarniv2 hdepartment,iarniv3 hsubdepart,iarniv4 hclass,iarniv5 hsubclass,iartcon typemanage,      
+        //    iarupre unitmanage,
+        //    (case when iarupre = '1' then '01' when iarupre = '2' then '11' when iarupre = '3' then '21' when iarupre = '4' then '32' when iarupre = '5' then '41'  else null end) unitdesc,
+        //    iarupre unitreceipt,iarupre unitprep,iarupre unitsale,          
+        //    null unitstock,iarupds unitweight,iarulon unitdimension,iaruvol unitvolume,null hucode,             
+        //    iarspcb rtoskuofpu,iarspcb rtoskuofipck,(iarspcb*iarpcb) rtoskuofpck,(iarspcb*iarpcb*iarcarc) rtoskuoflayer,(iarspcb*iarpcb*iarcarc*iarcpal) rtoskuofhu,           
+        //    iarcarc rtopckoflayer,iarcpal rtolayerofhu,null innaturalloss,null ounaturalloss,                
+        //    null costinbound,null costoutbound,iarpttc costavg,iaruvlo skulength,iaruvla skuwidth,              
+        //    iaruvha skuheight,iarpbru skugrossweight,iarpbru skuweight,trunc((iaruvlo*iaruvla*iaruvha)/1000,5) skuvolume,
+        //    (case when iarupre = '1' then iaruvlo when iarupre = '2' then iarsplo when iarupre = '3' then iarlong when iarupre = '4' then iarcolo when iarupre = '5' then iarlonpl  else 1 end) pulength,         
+        //    (case when iarupre = '1' then iaruvla when iarupre = '2' then iarspla when iarupre = '3' then iarlarg when iarupre = '4' then iarcola when iarupre = '5' then iarlarpl  else 1 end) puwidth,
+        //    (case when iarupre = '1' then iaruvha when iarupre = '2' then iarspha when iarupre = '3' then iarhaut when iarupre = '4' then iarcoha when iarupre = '5' then iarhaupl  else 1 end) puheight,
+        //    (case when iarupre = '1' then iarpbru when iarupre = '2' then iarpbspc when iarupre = '3' then iarpbpcb when iarupre = '4' then iarpbco when iarupre = '5' then iarpbpl  else 1 end) pugrossweight,
+        //    (case when iarupre = '1' then iarpbru when iarupre = '2' then iarpbspc when iarupre = '3' then iarpbpcb when iarupre = '4' then iarpbco when iarupre = '5' then iarpbpl  else 1 end) puweight,
+        //    (case when iarupre = '1' then  (iaruvlo*iaruvla*iaruvha) when iarupre = '2' then iarsplo when iarupre = '3' then iarlong when iarupre = '4' then iarcolo when iarupre = '5' then iarlonpl  else 1 end) puvolume,
+        //    iarsplo ipcklength,iarspla ipckwidth,iarspha ipckheight,iarpbspc ipckgrossweight,iarpbspc ipckweight,               
+        //    trunc((iarsplo*iarspla*iarspha)/1000,5) ipckvolume,iarlong pcklength,iarlarg pckwidth,iarhaut pckheight,iarpbpcb pckgrossweight,    
+        //    iarpbpcb pckweight,trunc((iarlong*iarlarg*iarhaut)/1000,5) pckvolume,iarcolo layerlength,iarcola layerwidth,iarcoha layerheight,    
+        //    iarpbco layergrossweight,iarpbco layerweight, trunc((iarcolo*iarcola*iarcoha)/1000,5) layervolume,iarlonpl hulength,                
+        //    iarlarpl huwidth,iarhaupl huheight,iarpbpl hugrossweight,iarpbpl huweight,trunc((iarlonpl*iarlarpl*iarhaupl)/1000,5) huvolume,        
+        //    null isdangerous,null ishighvalue,null isfastmove,null isslowmove,null isprescription,           
+        //    null isdlc,null ismaterial,null isunique,null isalcohol,null istemperature,null isdynamicpick,   
+        //    null ismixingprep,null isfinishgoods,null isnaturalloss,null isbatchno,1 ismeasurement,          
+        //    null roomtype,iartmax tempmin,iartmin tempmax,null alcmanage,null alccategory,null alccontent,   
+        //    null alccolor,null dangercategory,null dangerlevel,null stockthresholdmin,null stockthresholdmax,
+        //    null spcrecvzone,null spcrecvaisle,null spcrecvbay,null spcrecvlevel,null spcrecvlocation,	   
+        //    null spcprepzone,null spcdistzone,null spcdistshare,null spczonedelv,'BGCTH.GC' orbitsource,     
+        //    'WC' tflow,null fileid,iaracti rowops,null datecreate,null dateops,null ermsg,iarpcb as rtoipckofpck 
+        //    from ICSARTICLE where iarsite = :site and  iardepo = :depot";
+
+        /* Modify 25 Sep 2021 */
         string sqlInterface_retrive_product =
          @"select distinct 'bgc' orgcode,iarsite site,lpad(iardepo,2,'0') depot,null spcarea,iarcexr article,null articletype,   
             null pv,iarcexvl lv,iarliba description,iarliba descalt,iarcnuf thcode,iardlc dlcall,            
@@ -130,10 +167,18 @@ namespace Snaps.WMS {
             iarniv2 hdepartment,iarniv3 hsubdepart,iarniv4 hclass,iarniv5 hsubclass,iartcon typemanage,      
             iarupre unitmanage,
             (case when iarupre = '1' then '01' when iarupre = '2' then '11' when iarupre = '3' then '21' when iarupre = '4' then '32' when iarupre = '5' then '41'  else null end) unitdesc,
-            iarupre unitreceipt,iarupre unitprep,iarupre unitsale,          
+            iarupre unitreceipt,
+            iarupre unitprep,
+            iaruven unitsale,          
             null unitstock,iarupds unitweight,iarulon unitdimension,iaruvol unitvolume,null hucode,             
-            iarspcb rtoskuofpu,iarspcb rtoskuofipck,(iarspcb*iarpcb) rtoskuofpck,(iarspcb*iarpcb*iarcarc) rtoskuoflayer,(iarspcb*iarpcb*iarcarc*iarcpal) rtoskuofhu,           
-            iarcarc rtopckoflayer,iarcpal rtolayerofhu,null innaturalloss,null ounaturalloss,                
+            (case when iarupre = '1' then 1 when iarupre = '2' then iarspcb when iarupre = '3' then (iarspcb*iarpcb) when iarupre = '4' then (iarspcb*iarpcb*iarcarc) when iarupre = '5' then (iarspcb*iarpcb*iarcarc*iarcpal)  else null end) rtoskuofpu,
+            iarspcb rtoskuofipck,
+            (iarspcb*iarpcb) rtoskuofpck,
+            (iarspcb*iarpcb*iarcarc) rtoskuoflayer,
+            (iarspcb*iarpcb*iarcarc*iarcpal) rtoskuofhu,           
+            iarcarc rtopckoflayer,
+            iarcpal rtolayerofhu,
+            null innaturalloss,null ounaturalloss,                
             null costinbound,null costoutbound,iarpttc costavg,iaruvlo skulength,iaruvla skuwidth,              
             iaruvha skuheight,iarpbru skugrossweight,iarpbru skuweight,trunc((iaruvlo*iaruvla*iaruvha)/1000,5) skuvolume,
             (case when iarupre = '1' then iaruvlo when iarupre = '2' then iarsplo when iarupre = '3' then iarlong when iarupre = '4' then iarcolo when iarupre = '5' then iarlonpl  else 1 end) pulength,         
@@ -152,10 +197,11 @@ namespace Snaps.WMS {
             null ismixingprep,null isfinishgoods,null isnaturalloss,null isbatchno,1 ismeasurement,          
             null roomtype,iartmax tempmin,iartmin tempmax,null alcmanage,null alccategory,null alccontent,   
             null alccolor,null dangercategory,null dangerlevel,null stockthresholdmin,null stockthresholdmax,
-            null spcrecvzone,null spcrecvaisle,null spcrecvbay,null spcrecvlevel,null spcrecvlocation,	   
+            null spcrecvzone,null spcrecvaisle,null spcrecvbay,null spcrecvlevel,null spcrecvlocation,       
             null spcprepzone,null spcdistzone,null spcdistshare,null spczonedelv,'BGCTH.GC' orbitsource,     
             'WC' tflow,null fileid,iaracti rowops,null datecreate,null dateops,null ermsg,iarpcb as rtoipckofpck 
             from ICSARTICLE where iarsite = :site and  iardepo = :depot";
+
         //Retrive Barcode to orbit 
         //string sqlInterface_retrive_barcode = ""+ 
         //" select  distinct 'bgc' orgcode, iarsite site, iardepo depot,'' spcarea, iarcexr article,0 pv, iarcexvl lv,  " +
