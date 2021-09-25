@@ -32,7 +32,7 @@ namespace snaps.wms.inx.orbit
         static void retrive_outbound(string notifyToken = "",string notifyProxy = "",bool errorOnly = true) {
             orbit_ops oo = new orbit_ops(cnx_snapswms, cnx_legacysource);
             try { 
-                oo.retrive_outbound(notifyToken,notifyProxy,errorOnly);
+                oo.retrive_outbound();
             }catch (Exception ex) { 
                 throw ex;
             }finally { oo.Dispose(); }

@@ -70,7 +70,6 @@ class _DistributeScreen extends State<DistributeScreen> {
   void resetScreen() {
     setState(() {
       isLoading = false;
-      //prepdtr = Distribution();
       distline = DistrbLine();
       lines = <DistrbLine>[];
       emptyInfo = Empty();
@@ -82,7 +81,6 @@ class _DistributeScreen extends State<DistributeScreen> {
       qtyPuController.text = "";
       qtySkuController.text = "";
       if (distinfo.tflow == 'PA') {
-        //distinfo = DistrbInfo();
         enableFinish = true;
       } else {
         distinfo = DistrbInfo();
@@ -125,14 +123,15 @@ class _DistributeScreen extends State<DistributeScreen> {
 
         final _lines = _distinfo.lines.where((x) => x.qtypuops < x.qtypuorder || x.preplineops == 0).toList();
         if (_lines.length == 0) {
-          final message = _distinfo.lines.length > 0 ? "This HU has already completed" : "No data found!";
+          final message = _distinfo.lines.length > 0 ? "This HU has already putline completed" : "No data found!";
           alert(context, "info", "Information", message);
-          resetScreen();
           setState(() {
             isLoading = false;
             distinfo = _distinfo;
             prepdtr = _prepdtrs.single;
           });
+
+          resetScreen();
         } else {
           setState(() {
             isLoading = false;
@@ -172,16 +171,18 @@ class _DistributeScreen extends State<DistributeScreen> {
       final _lines = _distinfo.lines.where((x) => x.qtypuops < x.qtypuorder || x.preplineops == 0).toList();
       if (_lines.length == 0) {
         // alert(context, "info", "Information", "This HU has already completed or No data found!");
-        resetScreen();
         setState(() {
           isLoading = false;
           distinfo = _distinfo;
         });
+
+        resetScreen();
       } else {
         // update screen data
         setState(() {
           isLoading = false;
           distinfo = _distinfo;
+          lines = _lines;
           enableFinish = distinfo.tflow == 'PA' ? true : false;
           enablePutline = false;
           emptyHuController.text = "";
@@ -331,8 +332,9 @@ class _DistributeScreen extends State<DistributeScreen> {
         setState(() {
           isLoading = false;
           distinfo.tflow = "ED";
-          resetScreen();
         });
+
+        resetScreen();
       }
     } catch (e) {
       alert(context, "error", "Error", e.toString());
@@ -880,7 +882,15 @@ class _DistributeScreen extends State<DistributeScreen> {
           ),
           IconButton(
             icon: const Icon(CupertinoIcons.plus_circle),
-            onPressed: () => resetScreen(),
+            onPressed: () {
+              resetScreen();
+              setState(() {
+                distinfo = DistrbInfo();
+                prepdtr = Distribution();
+                hunoController.text = "";
+                enableFinish = false;
+              });
+            },
           ),
         ],
       ),

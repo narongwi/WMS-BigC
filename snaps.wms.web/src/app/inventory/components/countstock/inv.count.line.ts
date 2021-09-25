@@ -98,6 +98,7 @@ export class invcountlineComponent implements OnInit, OnDestroy, AfterViewInit {
   @Input() dateformatlong: string;
   public toastRef: any;
   public disabledSave: boolean;
+  public disabledDelete: boolean;
   public rowselected: number;
   public newline: boolean;
   public lineprogress: number;
@@ -348,6 +349,8 @@ export class invcountlineComponent implements OnInit, OnDestroy, AfterViewInit {
   ngEditLine(ln: countline_md, ix: number) {
     this.newline = false;
     this.editLineIndex = -1;
+    this.editLineMessage = '';
+    this.radioGenhuno = false;
     this.editorLinemd = new countline_md();
     this.editorLinemd = Object.assign({}, ln);
     this.editLineIndex = ix;
@@ -355,6 +358,7 @@ export class invcountlineComponent implements OnInit, OnDestroy, AfterViewInit {
     this.editorWidth = (this.planLine.nativeElement as HTMLElement).offsetWidth;
     this.editDateexpMd = this.ngDformat(ln.cndateexp);
     this.editorIsOpen = true;
+    this.disabledDelete = false;
   }
 
   productChanged(inputtype) {
@@ -371,21 +375,38 @@ export class invcountlineComponent implements OnInit, OnDestroy, AfterViewInit {
       if (inputtype == 'barcode') {
         productval.barcode = this.editorLinemd.cnbarcode;
         productval.article = '';
+        productval.pv = null;
+        productval.lv = null;
       } else if (inputtype == 'article') {
         productval.barcode = '';
         productval.article = this.editorLinemd.cnarticle;
+        productval.pv = null;
+        productval.lv = null;
       } else {
         productval.barcode = this.editorLinemd.cnbarcode;
         productval.article = this.editorLinemd.cnarticle;
+        productval.pv = this.editorLinemd.cnpv;
+        productval.lv = this.editorLinemd.cnlv;
       }
-      productval.pv = this.editorLinemd.cnpv;
-      productval.lv = this.editorLinemd.cnlv;
+
       productval.loccode = this.editorLinemd.loccode;
       productval.huno = this.editorLinemd.cnhuno;
       productval.unitcount = this.editorLinemd.unitcount;
       productval.countcode = this.editorLinemd.countcode;
       productval.plancode = this.editorLinemd.plancode;
       productval.linecode = this.editorLinemd.locseq;
+
+      if (
+        this.editorLinemd.cnhuno == this.lsline[this.editLineIndex].cnhuno &&
+        this.editorLinemd.cnarticle ==
+          this.lsline[this.editLineIndex].cnarticle &&
+        this.editorLinemd.cnlv == this.lsline[this.editLineIndex].cnlv
+      ) {
+        this.disabledDelete = false;
+      } else {
+        this.disabledDelete = true;
+      }
+
       // productval.qtycount = this.editorLinemd.cnqtypu;
       // productval.isnewhu = this.radioGenhuno;
       this.sv.findProduct(productval).subscribe(
@@ -397,6 +418,7 @@ export class invcountlineComponent implements OnInit, OnDestroy, AfterViewInit {
           this.editorLinemd.unitcount = res.unitcount;
           this.editorLinemd.productdesc = res.descalt;
           this.editpuqty.nativeElement.focus();
+          this.editLineMessage = '';
         },
         (err: any) => {
           this.editLineMessage = err.message;
@@ -417,56 +439,64 @@ export class invcountlineComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
   public generate() {
-    this.ngPopups.confirm('Do you Generate New HU ?').subscribe((res) => {
-      if (res) {
-        let generateval: product_vld = {};
-        generateval.orgcode = this.editorLinemd.orgcode;
-        generateval.site = this.editorLinemd.site;
-        generateval.depot = this.editorLinemd.depot;
-        generateval.barcode = this.editorLinemd.cnbarcode;
-        generateval.article = this.editorLinemd.cnarticle;
-        generateval.pv = this.editorLinemd.cnpv;
-        generateval.lv = this.editorLinemd.cnlv;
-        generateval.lotmfg = this.editorLinemd.cnlotmfg;
-        generateval.dateexp = this.editorLinemd.cndateexp;
-        generateval.datemfg = this.editorLinemd.cndatemfg;
-        generateval.serialno = this.editorLinemd.cnserialno;
-        generateval.loccode = this.editorLinemd.loccode;
-        generateval.huno = this.editorLinemd.cnhuno;
-        generateval.unitcount = this.editorLinemd.unitcount;
-        generateval.countcode = this.editorLinemd.countcode;
-        generateval.plancode = this.editorLinemd.plancode;
-        generateval.linecode = this.editorLinemd.locseq;
-        generateval.qtycount = !this.valid(this.editorLinemd.cnqtypu)
-          ? 0
-          : this.editorLinemd.cnqtypu;
+    if (Number(this.editorLinemd.cnqtypu) > 0) {
+      this.ngPopups.confirm('Do you Generate New HU ?').subscribe((res) => {
+        if (res) {
+          let generateval: product_vld = {};
+          generateval.orgcode = this.editorLinemd.orgcode;
+          generateval.site = this.editorLinemd.site;
+          generateval.depot = this.editorLinemd.depot;
+          generateval.barcode = this.editorLinemd.cnbarcode;
+          generateval.article = this.editorLinemd.cnarticle;
+          generateval.pv = this.editorLinemd.cnpv;
+          generateval.lv = this.editorLinemd.cnlv;
+          generateval.lotmfg = this.editorLinemd.cnlotmfg;
+          generateval.dateexp = this.editorLinemd.cndateexp;
+          generateval.datemfg = this.editorLinemd.cndatemfg;
+          generateval.serialno = this.editorLinemd.cnserialno;
+          generateval.loccode = this.editorLinemd.loccode;
+          generateval.huno = this.editorLinemd.cnhuno;
+          generateval.unitcount = this.editorLinemd.unitcount;
+          generateval.countcode = this.editorLinemd.countcode;
+          generateval.plancode = this.editorLinemd.plancode;
+          generateval.linecode = this.editorLinemd.locseq;
+          generateval.qtycount = !this.valid(this.editorLinemd.cnqtypu)
+            ? 0
+            : this.editorLinemd.cnqtypu;
 
-        this.sv.generatehu(generateval).subscribe(
-          (res: countline_md) => {
-            this.lsline[this.editLineIndex].cnqtypu = 0;
-            this.editorLinemd = res;
-            // this.lsline.push(this.editorLinemd);
-            this.editLineIndex = this.editLineIndex + 1;
-            this.lsline.splice(this.editLineIndex, 0, this.editorLinemd);
-            this.radioGenhuno = false;
-            // reset current count = 0
-            this.toastr.success(
-              "<span class='fn-07e'>Generated Successful</span>",
-              null,
-              { enableHtml: true }
-            );
-          },
-          (err: any) => {
-            this.editLineMessage = err.message;
-            this.toastr.error(
-              "<span class='fn-07e'>" + this.editLineMessage + '</span>',
-              null,
-              { enableHtml: true }
-            );
-          }
-        );
-      }
-    });
+          this.sv.generatehu(generateval).subscribe(
+            (res: countline_md) => {
+              this.lsline[this.editLineIndex].cnqtypu = 0;
+              this.editorLinemd = res;
+              // this.lsline.push(this.editorLinemd);
+              this.editLineIndex = this.editLineIndex + 1;
+              this.lsline.splice(this.editLineIndex, 0, this.editorLinemd);
+              this.radioGenhuno = false;
+              // reset current count = 0
+              this.toastr.success(
+                "<span class='fn-07e'>Generated Successful</span>",
+                null,
+                { enableHtml: true }
+              );
+            },
+            (err: any) => {
+              this.editLineMessage = err.message;
+              this.toastr.error(
+                "<span class='fn-07e'>" + this.editLineMessage + '</span>',
+                null,
+                { enableHtml: true }
+              );
+            }
+          );
+        }
+      });
+    } else {
+      this.toastr.error(
+        "<span class='fn-07e'>please enter a count qty greater than 0</span>",
+        null,
+        { enableHtml: true }
+      );
+    }
   }
   public label() {
     if (!this.valid(this.editorLinemd.cnhuno)) {
@@ -593,73 +623,85 @@ export class invcountlineComponent implements OnInit, OnDestroy, AfterViewInit {
           { enableHtml: true }
         );
       } else {
-        this.ngPopups.confirm('Do you Save Change ?').subscribe((res) => {
-          if (res) {
-            let hunoval: product_vld = {};
-            hunoval.orgcode = this.editorLinemd.orgcode;
-            hunoval.site = this.editorLinemd.site;
-            hunoval.depot = this.editorLinemd.depot;
-            hunoval.barcode = this.editorLinemd.cnbarcode;
-            hunoval.article = this.editorLinemd.cnarticle;
-            hunoval.pv = this.editorLinemd.cnpv;
-            hunoval.lv = this.editorLinemd.cnlv;
-            hunoval.lotmfg = this.editorLinemd.cnlotmfg;
-            hunoval.dateexp = this.editorLinemd.cndateexp;
-            hunoval.datemfg = this.editorLinemd.cndatemfg;
-            hunoval.serialno = this.editorLinemd.cnserialno;
-            hunoval.loccode = this.editorLinemd.loccode;
-            hunoval.huno = this.editorLinemd.cnhuno;
-            hunoval.unitcount = this.editorLinemd.unitcount;
-            hunoval.countcode = this.editorLinemd.countcode;
-            hunoval.plancode = this.editorLinemd.plancode;
-            hunoval.linecode = this.editorLinemd.locseq;
-            hunoval.qtycount = !this.valid(this.editorLinemd.cnqtypu)
-              ? 0
-              : this.editorLinemd.cnqtypu;
-            if (
-              this.editorLinemd.cnhuno ==
-                this.lsline[this.editLineIndex].cnhuno &&
-              this.editorLinemd.cnarticle ==
-                this.lsline[this.editLineIndex].cnarticle &&
-              this.editorLinemd.cnlv == this.lsline[this.editLineIndex].cnlv
-            ) {
-              hunoval.isnewhu = false;
-            } else {
-              hunoval.isnewhu = true;
-            }
+        let _isnewhu: boolean = false;
+        let _countpu: number = Number(this.editorLinemd.cnqtypu);
+        if (
+          this.editorLinemd.cnhuno == this.lsline[this.editLineIndex].cnhuno &&
+          this.editorLinemd.cnarticle ==
+            this.lsline[this.editLineIndex].cnarticle &&
+          this.editorLinemd.cnlv == this.lsline[this.editLineIndex].cnlv
+        ) {
+          _isnewhu = false;
+        } else {
+          _isnewhu = true;
+        }
 
-            this.sv.validatehu(hunoval).subscribe(
-              (res: countline_md) => {
-                // add line ifany
-                if (hunoval.isnewhu) {
-                  console.log('new hu operation');
-                  this.lsline[this.editLineIndex].cnqtypu = 0;
-                  this.editorLinemd = res;
-                  // this.lsline.push(this.editorLinemd);
-                  this.lsline.splice(
-                    this.editLineIndex + 1,
-                    0,
-                    this.editorLinemd
+        if (_isnewhu && _countpu <= 0) {
+          this.toastr.error(
+            "<span class='fn-07e'>please enter a count qty greater than 0</span>",
+            null,
+            { enableHtml: true }
+          );
+        } else {
+          this.editLineMessage = '';
+          this.ngPopups.confirm('Do you Save Change ?').subscribe((res) => {
+            if (res) {
+              let hunoval: product_vld = {};
+              hunoval.orgcode = this.editorLinemd.orgcode;
+              hunoval.site = this.editorLinemd.site;
+              hunoval.depot = this.editorLinemd.depot;
+              hunoval.barcode = this.editorLinemd.cnbarcode;
+              hunoval.article = this.editorLinemd.cnarticle;
+              hunoval.pv = this.editorLinemd.cnpv;
+              hunoval.lv = this.editorLinemd.cnlv;
+              hunoval.lotmfg = this.editorLinemd.cnlotmfg;
+              hunoval.dateexp = this.editorLinemd.cndateexp;
+              hunoval.datemfg = this.editorLinemd.cndatemfg;
+              hunoval.serialno = this.editorLinemd.cnserialno;
+              hunoval.loccode = this.editorLinemd.loccode;
+              hunoval.huno = this.editorLinemd.cnhuno;
+              hunoval.unitcount = this.editorLinemd.unitcount;
+              hunoval.countcode = this.editorLinemd.countcode;
+              hunoval.plancode = this.editorLinemd.plancode;
+              hunoval.linecode = this.editorLinemd.locseq;
+              hunoval.qtycount = !this.valid(this.editorLinemd.cnqtypu)
+                ? 0
+                : this.editorLinemd.cnqtypu;
+              hunoval.isnewhu = _isnewhu;
+
+              this.sv.validatehu(hunoval).subscribe(
+                (res: countline_md) => {
+                  // add line ifany
+                  if (hunoval.isnewhu) {
+                    console.log('new hu operation');
+                    this.lsline[this.editLineIndex].cnqtypu = 0;
+                    this.editorLinemd = res;
+                    // this.lsline.push(this.editorLinemd);
+                    this.lsline.splice(
+                      this.editLineIndex + 1,
+                      0,
+                      this.editorLinemd
+                    );
+
+                    this.ngCancleEdit();
+                  } else {
+                    console.log('Edit hu operation');
+                    this.lsline[this.editLineIndex] = this.editorLinemd;
+                    this.ngCancleEdit();
+                  }
+                },
+                (err) => {
+                  this.editLineMessage = err.message;
+                  this.toastr.error(
+                    "<span class='fn-07e'>" + this.editLineMessage + '</span>',
+                    null,
+                    { enableHtml: true }
                   );
-
-                  this.ngCancleEdit();
-                } else {
-                  console.log('Edit hu operation');
-                  this.lsline[this.editLineIndex] = this.editorLinemd;
-                  this.ngCancleEdit();
                 }
-              },
-              (err) => {
-                this.editLineMessage = err.message;
-                this.toastr.error(
-                  "<span class='fn-07e'>" + this.editLineMessage + '</span>',
-                  null,
-                  { enableHtml: true }
-                );
-              }
-            );
-          }
-        });
+              );
+            }
+          });
+        }
       }
     }
   }
@@ -684,14 +726,39 @@ export class invcountlineComponent implements OnInit, OnDestroy, AfterViewInit {
   ngCancleEdit() {
     this.radioGenhuno = false;
     this.editorIsOpen = false;
+    this.disabledDelete = true;
+    this.disabledSave = true;
     this.editLineIndex = -1;
     this.editorLinemd = new countline_md();
   }
-  ngRemvoeEdit() {
-    if (this.editLineIndex != -1 && this.editorLinemd.cnflow == 'NW') {
-      this.lsline.splice(this.editLineIndex, 1);
-      // close form
-      this.ngCancleEdit();
+  deleteLine() {
+    if (this.editorLinemd && this.editLineIndex > -1) {
+      this.ngPopups
+        .confirm('Do you Delete this count line ?')
+        .subscribe((res) => {
+          if (res) {
+            this.sv.deleteLineAsync(this.editorLinemd).subscribe(
+              (res: countline_md) => {
+                console.log('delete hu operation');
+                this.lsline.splice(this.editLineIndex, 1);
+                this.ngCancleEdit();
+                this.toastr.success(
+                  "<span class='fn-07e'>Deleted Successfully!</span>",
+                  null,
+                  { enableHtml: true }
+                );
+              },
+              (err) => {
+                this.editLineMessage = err.message;
+                this.toastr.error(
+                  "<span class='fn-07e'>" + this.editLineMessage + '</span>',
+                  null,
+                  { enableHtml: true }
+                );
+              }
+            );
+          }
+        });
     }
   }
   getdocstatement() {

@@ -204,7 +204,7 @@ namespace Snaps.WMS {
         " and article = @article and pv = @pv and lv = @lv and tflow = 'IO' ";
         private string sqlinboulc_valserail = @"select isnull( ( select count(1) from wm_inboulx where serialno = @serialno and orgcode = @orgcode and site = @site and depot = @depot ), 0 ) rsl";
 
-        private string sqlinbounlx_valmea = "select ismeasurement from wm_product where orgcode = @orgcode and site = @site and depot = @depot and article = @article and pv = @pv and lv = @lv";
+        private string sqlinbounlx_valmea = "select ismeasurement from wm_product where orgcode = @orgcode and site = @site and depot = @depot and article = @article and pv = @pv and lv = @lv and tflow = 'IO'";
 
 
 

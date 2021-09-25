@@ -240,12 +240,33 @@ namespace Snaps.WMS {
                 cm.CommandText = sqlInterface_launch_delivery;
                 dt = cm.snapsTableAsync().Result;
                 om.BindByName = true; //Fix for error ORA-01008: not all variables bound
-                om.CommandText = sqlInterface_launch_delivery_insert;
-                cm.CommandText = sqlInterface_launch_delivery_clear;
-                em.CommandText = sqlInterface_launch_delivery_error;
+                om.CommandText = sqlInterface_launch_delivery_insert;// n3mvtex
+                cm.CommandText = sqlInterface_launch_delivery_clear;//flag status
+                em.CommandText = sqlInterface_launch_delivery_error;//flag status
 
-                cm.snapsPar(0,"rowid");
-                em.snapsPar("","xmsg"); em.snapsPar(0,"rowid");
+                // for complete parameter
+                cm.snapsPar("","site");
+                cm.snapsPar("","oudnno");
+                cm.snapsPar("","ouorder");
+                cm.snapsPar("","ouln");
+                cm.snapsPar("","huno");
+                cm.snapsPar("","article");
+                cm.snapsPar(0,"lv");
+
+                // for error parameter
+                em.snapsPar("","site");
+                em.snapsPar("","oudnno");
+                em.snapsPar("","ouorder");
+                em.snapsPar("","ouln");
+                em.snapsPar("","huno");
+                em.snapsPar("","article");
+                em.snapsPar(0,"lv");
+                em.snapsPar("","xmsg"); 
+
+                //cm.snapsPar(0,"rowid");
+                //em.snapsPar("","xmsg"); 
+                //em.snapsPar(0,"rowid");
+
                 om.Parameters.Add("ME3CODSIT","");
                 om.Parameters.Add("ME3NUMCDE","");
                 om.Parameters.Add("ME3NUMCTL","");
@@ -324,14 +345,31 @@ namespace Snaps.WMS {
                     // om.Parameters["ME3TIEEMB"].Value = rw["ME3TIEEMB"].ToString();
 
                     try {
-                        cm.Parameters["rowid"].Value = rw["rowid"].ToString().CInt32();
+                        // insert mvtex
                         oc.Open();
                         om.ExecuteNonQuery();
                         oc.Close();
+
+                        // update completed status 
+                        cm.Parameters["site"].Value = rw["ME3CODSIT"].ToString();
+                        cm.Parameters["oudnno"].Value = rw["ME3NSEQBL"].ToString();
+                        cm.Parameters["ouorder"].Value = rw["ME3NUMCDE"].ToString();
+                        cm.Parameters["ouln"].Value = rw["ME3CINCDE"].ToString();
+                        cm.Parameters["huno"].Value = rw["ME3SSCC"].ToString();
+                        cm.Parameters["article"].Value = rw["ME3CPROIN"].ToString();
+                        cm.Parameters["lv"].Value = rw["ME3ILOGIS"].ToString().CInt32();
                         cm.snapsExecute();
                     } catch(Exception exl) {
-                        oc.Close();
-                        em.Parameters["rowid"].Value = rw["rowid"].ToString().CInt32();
+                        oc.Close();// close oracle
+                        // update error status 
+                        em.Parameters["site"].Value = rw["ME3CODSIT"].ToString();
+                        em.Parameters["oudnno"].Value = rw["ME3NSEQBL"].ToString();
+                        em.Parameters["ouorder"].Value = rw["ME3NUMCDE"].ToString();
+                        em.Parameters["ouln"].Value = rw["ME3CINCDE"].ToString();
+                        em.Parameters["huno"].Value = rw["ME3SSCC"].ToString();
+                        em.Parameters["article"].Value = rw["ME3CPROIN"].ToString();
+                        em.Parameters["lv"].Value = rw["ME3ILOGIS"].ToString().CInt32();
+                        //em.Parameters["rowid"].Value = rw["rowid"].ToString().CInt32();
                         em.Parameters["xmsg"].Value = (exl.Message.Length > 100) ? exl.Message.ToString().Substring(0,100) : exl.Message.ToString();
                         em.snapsExecute();
                     }
@@ -346,6 +384,7 @@ namespace Snaps.WMS {
                 OracleConnection.ClearPool(oc);
                 oc.Dispose();
                 om.Dispose();
+                em.Dispose();
             }
         }
 

@@ -25,35 +25,31 @@ import 'package:wms/size_config.dart';
 // const String countApiUrl = "http://192.168.1.13:4520";
 
 /* Development Config*/
-// const String appConfig = "SIM";
-// const String authApiUrl = "http://10.4.5.194:5001";
-// const String adminApiUrl = "http://10.4.5.194:4220";
-// const String pdaApiUrl = "http://10.4.5.194:5002";
-// const String accnApiUrl = "http://10.4.5.194:4220";
-// const String recvApiUrl = "http://10.4.5.194:4320";
-// const String taskApiUrl = "http://10.4.5.194:4420";
-// const String prepApiUrl = "http://10.4.5.194:4620";
-// const String countApiUrl = "http://10.4.5.194:4520";
+const String appConfig = "SIM";
+const String authApiUrl = "http://10.4.5.194:5001";
+const String adminApiUrl = "http://10.4.5.194:4220";
+const String pdaApiUrl = "http://10.4.5.194:5002";
+const String accnApiUrl = "http://10.4.5.194:4220";
+const String recvApiUrl = "http://10.4.5.194:4320";
+const String taskApiUrl = "http://10.4.5.194:4420";
+const String prepApiUrl = "http://10.4.5.194:4620";
+const String countApiUrl = "http://10.4.5.194:4520";
 
 /* Production Config*/
-const String appConfig = "PROD";
-const String authApiUrl = "http://172.28.8.48:5101";
-const String adminApiUrl = "http://172.28.8.48:5102";
-const String accnApiUrl = "http://172.28.8.48:5102";
-const String countApiUrl = "http://172.28.8.48:5103";
-const String recvApiUrl = "http://172.28.8.48:5107";
-const String taskApiUrl = "http://172.28.8.48:5109";
-const String prepApiUrl = "http://172.28.8.48:5108";
-const String pdaApiUrl = "http://172.28.8.48:5110";
+// const String appConfig = "PROD";
+// const String authApiUrl = "http://172.28.8.48:5101";
+// const String adminApiUrl = "http://172.28.8.48:5102";
+// const String accnApiUrl = "http://172.28.8.48:5102";
+// const String countApiUrl = "http://172.28.8.48:5103";
+// const String recvApiUrl = "http://172.28.8.48:5107";
+// const String taskApiUrl = "http://172.28.8.48:5109";
+// const String prepApiUrl = "http://172.28.8.48:5108";
+// const String pdaApiUrl = "http://172.28.8.48:5110";
 
 // Colors
 const primaryColor = Color(0xff153C6A);
 const primaryLightColor = Color(0xff5B6672);
-const primaryGradientColor = LinearGradient(
-  begin: Alignment.topLeft,
-  end: Alignment.bottomRight,
-  colors: [Color(0xff5B6672), Color(0xff153C6A)],
-);
+const primaryGradientColor = LinearGradient(begin: Alignment.topLeft, end: Alignment.bottomRight, colors: [Color(0xff5B6672), Color(0xff153C6A)]);
 const secondaryColor = Color(0xFF979797);
 const successColor = Color(0xFF89DA59);
 const warningColor = Color(0xFFEE8F22);

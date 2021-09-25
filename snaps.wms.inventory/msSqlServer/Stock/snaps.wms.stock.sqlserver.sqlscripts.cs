@@ -220,7 +220,7 @@ namespace Snaps.WMS {
                 from wm_stock s left join  wm_locdw l on s.orgcode = l.orgcode and s.site = l.site and s.depot = l.depot and s.loccode = l.lscode 
                 where s.qtysku > 0 
                 and s.orgcode = @orgcode and s.site = @site and s.depot = @depot and s.article = @article and s.pv = @pv and s.lv = @lv 
-                and not exists (select 1 from wm_stobc b where s.orgcode = b.orgcode and s.site = b.site and s.depot = b.depot and s.stockid = b.stockid and tflow not in ('CL','ED')) 
+                and not exists (select 1 from wm_stobc b where s.orgcode = b.orgcode and s.site = b.site and s.depot = b.depot and s.stockid = b.stockid and tflow not in ('PE','CL','ED')) 
                 and not exists (select 1 from wm_taln  t where t.orgcode = s.orgcode and t.site = s.site and t.depot = s.depot and t.sourcehuno = s.huno and t.tflow in ('IO','SS','PT') )";
 
         //Stock available
