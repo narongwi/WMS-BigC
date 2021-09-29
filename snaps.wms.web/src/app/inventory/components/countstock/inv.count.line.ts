@@ -612,7 +612,8 @@ export class invcountlineComponent implements OnInit, OnDestroy, AfterViewInit {
         this.lsline.filter(
           (x) =>
             x.cnhuno == this.editorLinemd.cnhuno &&
-            x.loccode != this.editorLinemd.loccode
+            x.loccode != this.editorLinemd.loccode &&
+            x.cnqtypu > 0
         ).length > 0
       ) {
         this.editLineMessage =
