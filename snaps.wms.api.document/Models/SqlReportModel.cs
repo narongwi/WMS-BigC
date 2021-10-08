@@ -349,7 +349,7 @@ namespace snaps.wms.api.document.Models
                 SELECT x.orgcode,x.site,x.depot, r.thcode, (case when r.thcode = 'CMB' then 'Combine Route for multi store' else r.thcode + ' : ' + s.thnamealt end) thname, 
                 	(case when r.thcode = 'CMB' then 'Combine Route for multi store' else s.thnamealt end) thnamealt,
 	                r.loadtype, b.bndesc loadtypename,x.routenodel as routeno,FORMAT(r.plandate, 'dd/MM/yyyy HH:mm:ss') plandate,r.loccode,r.outrno docno,'' ordertype, 
-	                sum(x.opspu) puqty, count(distinct x.opshuno) huqty,( sum(x.opspu * p.skuvolume)/1000) volume, sum(x.opspu * p.skugrossweight) weight,0 cubic, r.plateNo, r.driver,
+	                sum(x.opspu) puqty, count(distinct x.opshuno) huqty,( sum(x.opspu * p.skuvolume)/1000) volume, sum((x.opspu * p.rtoskuofpu) * p.skugrossweight) weight,0 cubic, r.plateNo, r.driver,
 	                format(r.dateshipment, 'dd/MM/yyyy HH:mm:ss' ) as datedelivery,r.transportor, t.thname transportername,r.outrno 
                 FROM wm_outboulx x
 	                JOIN wm_outbound o ON  x.orgcode = o.orgcode and x.site = o.site and x.depot = o.depot and x.ouorder = o.ouorder

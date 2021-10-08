@@ -7,7 +7,7 @@ class WMSBanner extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text("SNAPS WMS", style: TextStyle(fontSize: 32, color: primaryColor)),
+        Text("BGC WMS", style: TextStyle(fontSize: 32, color: primaryColor)),
         Text("Warehouse Management System",
             style: TextStyle(fontSize: 12, color: secondaryColor)),
         SizedBox(height: 10.0),
