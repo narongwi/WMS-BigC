@@ -115,9 +115,9 @@ export class inborderreceiptComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void { }
-  ngOnDestroy(): void { }
-  ngAfterViewInit() { }
+  ngOnInit(): void {}
+  ngOnDestroy(): void {}
+  ngAfterViewInit() {}
   ngRefresh() {
     // get order
     this.crline = new inbouln_md();
@@ -195,13 +195,10 @@ export class inborderreceiptComponent implements OnInit {
     // this.selline(this.opsorder.lines[0], 0);
   }
   selline(o: inbouln_md, ix: number) {
-
-
-    console.log(this.opsorder.tflow);
     if (this.opsorder.tflow == 'IO' || this.opsorder.tflow == 'SA') {
-      console.log("Click Start botton for receipt");
+      console.log('Click Start botton for receipt');
     } else if (this.opsorder.tflow == 'ED') {
-      console.log("Order is already complted");
+      console.log('Order is already complted');
     } else {
       this.itmrowselect = ix;
 
@@ -229,7 +226,6 @@ export class inborderreceiptComponent implements OnInit {
       );
       this.slratio = this.lsratio.find((x) => x.valopnfirst == o.unitreceipt);
     }
-
   }
 
   cvSKU() {
@@ -237,7 +233,7 @@ export class inborderreceiptComponent implements OnInit {
       Number(this.opsline.qtypurec) * Number(this.slratio.value);
     this.opsline.qtyhurec = Math.trunc(
       Number(this.opsline.qtyskurec) /
-      Number(this.lsratio.find((e) => e.valopnfirst == '5').value)
+        Number(this.lsratio.find((e) => e.valopnfirst == '5').value)
     );
     this.opsline.qtyhurec =
       this.opsline.qtyhurec == 0 ? 1 : this.opsline.qtyhurec;
@@ -285,13 +281,13 @@ export class inborderreceiptComponent implements OnInit {
       (err) => {
         this.toastr.error(
           "<span class='fn-08e'>" +
-          (err.error == undefined ? err.message : err.error.message) +
-          '</span>',
+            (err.error == undefined ? err.message : err.error.message) +
+            '</span>',
           null,
           { enableHtml: true }
         );
       },
-      () => { }
+      () => {}
     );
     this.sv.getParameter().subscribe(
       (res) => {
@@ -300,13 +296,13 @@ export class inborderreceiptComponent implements OnInit {
       (err) => {
         this.toastr.error(
           "<span class='fn-08e'>" +
-          (err.error == undefined ? err.message : err.error.message) +
-          '</span>',
+            (err.error == undefined ? err.message : err.error.message) +
+            '</span>',
           null,
           { enableHtml: true }
         );
       },
-      () => { }
+      () => {}
     );
   }
   getratio() {
@@ -326,13 +322,13 @@ export class inborderreceiptComponent implements OnInit {
         (err) => {
           this.toastr.error(
             "<span class='fn-08e'>" +
-            (err.error == undefined ? err.message : err.error.message) +
-            '</span>',
+              (err.error == undefined ? err.message : err.error.message) +
+              '</span>',
             null,
             { enableHtml: true }
           );
         },
-        () => { }
+        () => {}
       );
   }
   getline() {
@@ -368,7 +364,6 @@ export class inborderreceiptComponent implements OnInit {
 
           this.crline.details.filter((m) => m.tflow == 'SV');
 
-
           this.isbtnfinish =
             Number(this.opsorder.pendinginf) > 0 ? true : false;
           this.isbtnconf =
@@ -377,7 +372,8 @@ export class inborderreceiptComponent implements OnInit {
               : false;
 
           // check enable finishd button
-          this.isbtnfinish = Number(this.opsorder.pendinginf) > 0 ? true : false;
+          this.isbtnfinish =
+            Number(this.opsorder.pendinginf) > 0 ? true : false;
           //this.isbtnsave = this.crline.details.length == 0 || pndrec > 0 ?true:(_qtypnd > 0 ?true:false);
 
           // this.isbtnconf = this.crline.details.filter(m=>m.tflow!="ED").length == 0 ?false:true;
@@ -386,23 +382,25 @@ export class inborderreceiptComponent implements OnInit {
       (err) => {
         this.toastr.error(
           "<span class='fn-08e'>" +
-          (err.error == undefined ? err.message : err.error.message) +
-          '</span>',
+            (err.error == undefined ? err.message : err.error.message) +
+            '</span>',
           null,
           { enableHtml: true }
         );
       },
-      () => { }
+      () => {}
     );
-
   }
   saveline() {
     var now = new Date();
+    console.log(this.crline);
+    console.log('order qty =>' + this.crline.qtysku);
+    console.log('receve qty =>' + this.opsline.qtyskurec);
 
     if (
       this.crline.qtysku <
       this.crline.details.reduce((obl, val) => (obl += val.qtyskurec), 0) +
-      this.opsline.qtyskurec
+        this.opsline.qtyskurec
     ) {
       this.toastr.warning(
         "<span class='fn-08e'> Quantity more than order  </span>",
@@ -492,13 +490,13 @@ export class inborderreceiptComponent implements OnInit {
           (err) => {
             this.toastr.error(
               "<span class='fn-08e'>" +
-              (err.error == undefined ? err.message : err.error.message) +
-              '</span>',
+                (err.error == undefined ? err.message : err.error.message) +
+                '</span>',
               null,
               { enableHtml: true }
             );
           },
-          () => { }
+          () => {}
         );
       }
     }
@@ -507,16 +505,16 @@ export class inborderreceiptComponent implements OnInit {
   enableSaveCheck() {
     // pending + received
     let saveqty = 0;
-    this.crline.details.forEach(e => { 
+    this.crline.details.forEach((e) => {
       saveqty = saveqty + e.qtypurec;
     });
 
     let orderqty = 0;
-    this.opsorder?.lines.filter(x => x.article == this.crline.article)
-      .forEach(e =>{ 
-        orderqty = orderqty + e.qtypu
+    this.opsorder?.lines
+      .filter((x) => x.article == this.crline.article)
+      .forEach((e) => {
+        orderqty = orderqty + e.qtypu;
       });
-
 
     this.isbtnsave = saveqty < orderqty ? true : false;
   }
@@ -551,13 +549,13 @@ export class inborderreceiptComponent implements OnInit {
             (err) => {
               this.toastr.error(
                 "<span class='fn-08e'>" +
-                (err.error == undefined ? err.message : err.error.message) +
-                '</span>',
+                  (err.error == undefined ? err.message : err.error.message) +
+                  '</span>',
                 null,
                 { enableHtml: true }
               );
             },
-            () => { }
+            () => {}
           );
         }
       });
@@ -593,7 +591,6 @@ export class inborderreceiptComponent implements OnInit {
                     : false;
 
                 this.ngRefresh();
-
               });
           }
         });
@@ -662,13 +659,13 @@ export class inborderreceiptComponent implements OnInit {
               (err) => {
                 this.toastr.error(
                   "<span class='fn-08e'>" +
-                  (err.error == undefined ? err.message : err.error.message) +
-                  '</span>',
+                    (err.error == undefined ? err.message : err.error.message) +
+                    '</span>',
                   null,
                   { enableHtml: true }
                 );
               },
-              () => { }
+              () => {}
             );
         }
       });
@@ -695,17 +692,18 @@ export class inborderreceiptComponent implements OnInit {
                 (err) => {
                   this.toastr.error(
                     "<span class='fn-08e'>" +
-                    (err.error == undefined ? err.message : err.error.message) +
-                    '</span>',
+                      (err.error == undefined
+                        ? err.message
+                        : err.error.message) +
+                      '</span>',
                     null,
                     { enableHtml: true }
                   );
                 },
-                () => { }
+                () => {}
               );
           }
         });
-
     }
   }
 
@@ -728,13 +726,13 @@ export class inborderreceiptComponent implements OnInit {
               (err) => {
                 this.toastr.error(
                   "<span class='fn-08e'>" +
-                  (err.error == undefined ? err.message : err.error.message) +
-                  '</span>',
+                    (err.error == undefined ? err.message : err.error.message) +
+                    '</span>',
                   null,
                   { enableHtml: true }
                 );
               },
-              () => { }
+              () => {}
             );
         }
       });
@@ -761,13 +759,13 @@ export class inborderreceiptComponent implements OnInit {
               (err) => {
                 this.toastr.error(
                   "<span class='fn-08e'>" +
-                  (err.error == undefined ? err.message : err.error.message) +
-                  '</span>',
+                    (err.error == undefined ? err.message : err.error.message) +
+                    '</span>',
                   null,
                   { enableHtml: true }
                 );
               },
-              () => { }
+              () => {}
             );
         }
       });
@@ -799,13 +797,13 @@ export class inborderreceiptComponent implements OnInit {
               (err) => {
                 this.toastr.error(
                   "<span class='fn-08e'>" +
-                  (err.error == undefined ? err.message : err.error.message) +
-                  '</span>',
+                    (err.error == undefined ? err.message : err.error.message) +
+                    '</span>',
                   null,
                   { enableHtml: true }
                 );
               },
-              () => { }
+              () => {}
             );
           }
         });
@@ -838,13 +836,13 @@ export class inborderreceiptComponent implements OnInit {
               (err) => {
                 this.toastr.error(
                   "<span class='fn-08e'>" +
-                  (err.error == undefined ? err.message : err.error.message) +
-                  '</span>',
+                    (err.error == undefined ? err.message : err.error.message) +
+                    '</span>',
                   null,
                   { enableHtml: true }
                 );
               },
-              () => { }
+              () => {}
             );
           }
         });
@@ -892,15 +890,15 @@ export class inborderreceiptComponent implements OnInit {
                 (err) => {
                   this.toastr.error(
                     "<span class='fn-08e'>" +
-                    (err.error == undefined
-                      ? err.message
-                      : err.error.message) +
-                    '</span>',
+                      (err.error == undefined
+                        ? err.message
+                        : err.error.message) +
+                      '</span>',
                     null,
                     { enableHtml: true }
                   );
                 },
-                () => { }
+                () => {}
               );
           }
         });
@@ -932,13 +930,13 @@ export class inborderreceiptComponent implements OnInit {
               (err) => {
                 this.toastr.error(
                   "<span class='fn-08e'>" +
-                  (err.error == undefined ? err.message : err.error.message) +
-                  '</span>',
+                    (err.error == undefined ? err.message : err.error.message) +
+                    '</span>',
                   null,
                   { enableHtml: true }
                 );
               },
-              () => { }
+              () => {}
             );
           }
         });
@@ -950,8 +948,8 @@ export class inborderreceiptComponent implements OnInit {
       this.ngPopups
         .confirm(
           'Do you confirm setup priority of order ' +
-          this.opsorder.inorder +
-          ' ?'
+            this.opsorder.inorder +
+            ' ?'
         )
         .subscribe((res) => {
           if (res) {
@@ -973,15 +971,15 @@ export class inborderreceiptComponent implements OnInit {
                     this.opsorder.inpriority == 0 ? 30 : 0;
                   this.toastr.error(
                     "<span class='fn-08e'>" +
-                    (err.error == undefined
-                      ? err.message
-                      : err.error.message) +
-                    '</span>',
+                      (err.error == undefined
+                        ? err.message
+                        : err.error.message) +
+                      '</span>',
                     null,
                     { enableHtml: true }
                   );
                 },
-                () => { }
+                () => {}
               );
           }
         });
@@ -1042,9 +1040,9 @@ export class inborderreceiptComponent implements OnInit {
       isvalid = false;
     } else if (model === null) {
       isvalid = false;
-    } else if (model === "") {
+    } else if (model === '') {
       isvalid = false;
-    } else if (this.Trim(model) === "") {
+    } else if (this.Trim(model) === '') {
       isvalid = false;
     } else {
       isvalid = true;
@@ -1052,6 +1050,6 @@ export class inborderreceiptComponent implements OnInit {
     return isvalid;
   }
   public Trim(str) {
-    return str.toString().replace(/^\s+|\s+$/gm, "");
+    return str.toString().replace(/^\s+|\s+$/gm, '');
   }
 }
