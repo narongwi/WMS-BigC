@@ -74,8 +74,7 @@ namespace Snaps.WMS {
         " (select orgcode,site,depot,bndesc, bndescalt,bnvalue from wm_binary                       " + 
         "   where bntype = 'UNIT' and bncode = 'KEEP' and bnstate = 'IO' ) b,                       " +
         " (select orgcode,site,depot,rtoskuofpu, rtoskuofipck, rtoskuofpck, rtoskuoflayer, rtoskuofhu " + 
-        " from wm_product where site = @site and depot = @depot and pv = @pv and lv = @lv           " + 
-        " and article = @article and pv = @pv and lv = @lv ) p where b.orgcode = p.orgcode          " + 
+        " from wm_product where site = @site and depot = @depot and article = @article and pv = @pv and lv = @lv ) p where b.orgcode = p.orgcode          " + 
         " and b.site = p.site and b.depot = p.depot ";
 
         //get Inbound order header 
