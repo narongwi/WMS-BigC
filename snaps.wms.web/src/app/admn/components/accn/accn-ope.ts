@@ -119,7 +119,6 @@ export class opraccount implements OnInit, OnDestroy {
   }
 
   ngOnChanges() {
-    console.log(this.mdaccn);
     this.slctype = this.lstype.find((e) => e.value == this.mdaccn.accntype);
     this.slcrole = this.lsrole.find((e) => e.value == this.mdaccn.accsrole);
     this.slcstate = this.lsacnstate.find((e) => e.value == this.mdaccn.tflow);
