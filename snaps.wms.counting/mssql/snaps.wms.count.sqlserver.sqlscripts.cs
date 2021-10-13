@@ -428,26 +428,26 @@ namespace Snaps.WMS {
                     and (b.barcode = @product or b.article = @product)
                 ) ";
 
-        //private string sqlcount_huactive =
-        //  @"select count(1) ishuno
-        //        from wm_handerlingunit s 
-        //        where s.orgcode = @orgcode
-        //            and s.site = @site
-        //            and s.depot = @depot
-        //            and s.huno = @huno
-        //            and s.tflow = 'IO'";
-
         private string sqlcount_huactive =
           @"select count(1) ishuno
-            from wm_handerlingunit s 
-            where s.orgcode = @orgcode
-                and s.site = @site
-                and s.depot = @depot
-                and s.huno = @huno
-                and s.tflow = 'IO'
-	            and not exists (select 1 from wm_couln l where l.orgcode = s.orgcode 
-					            and l.site = s.site and l.depot = s.depot
-					            and l.cnhuno = s.huno and l.cnqtypu > 0)";
+                from wm_handerlingunit s 
+                where s.orgcode = @orgcode
+                    and s.site = @site
+                    and s.depot = @depot
+                    and s.huno = @huno
+                    and s.tflow = 'IO'";
+
+        //private string sqlcount_huactive =
+        //  @"select count(1) ishuno
+        //    from wm_handerlingunit s 
+        //    where s.orgcode = @orgcode
+        //        and s.site = @site
+        //        and s.depot = @depot
+        //        and s.huno = @huno
+        //        and s.tflow = 'IO'
+        //     and not exists (select 1 from wm_couln l where l.orgcode = s.orgcode 
+        //         and l.site = s.site and l.depot = s.depot
+        //         and l.cnhuno = s.huno and l.cnqtypu > 0)";
 
         //private string sqlcount_huother_product =
         //    @"select count(1) ishuno
