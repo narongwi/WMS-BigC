@@ -1340,7 +1340,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!rtoipck.Value</Value>
+                              <Value>=Fields!rtopck.Value</Value>
                               <Style>
                                 <FontFamily>Arial Unicode MS</FontFamily>
                                 <FontSize>7pt</FontSize>
