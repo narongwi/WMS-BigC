@@ -466,6 +466,7 @@ namespace Snaps.WMS {
                     and s.depot = @depot
                     and s.cnhuno = @huno
                     and s.loccode <> @loccode
-                    and s.cnqtypu > 0";
+                    and s.cnqtypu > 0 
+                    and s.tflow not in ('CL','WQ','ED') ";
     }
 }
