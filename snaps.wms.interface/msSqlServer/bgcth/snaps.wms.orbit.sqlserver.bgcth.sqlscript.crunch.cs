@@ -430,7 +430,7 @@ namespace Snaps.WMS {
         " t.alcmanage = s.alcmanage,t.alccategory = s.alccategory,t.alccontent = s.alccontent,t.alccolor = s.alccolor,             " +
         " t.dangercategory = s.dangercategory,t.dangerlevel = s.dangerlevel,t.stockthresholdmin = s.stockthresholdmin,             " +
         " t.stockthresholdmax = s.stockthresholdmax,t.datemodify = SYSDATETIMEOFFSET(),t.orbitsource = s.orbitsource,              " +
-        " t.procmodify = s.orbitsource, t.accnmodify = s.orbitsource                                                               " +
+        " t.procmodify = s.orbitsource, t.accnmodify = s.orbitsource, t.tflow = 'IO'                                               " +
         "  from wm_product t                                                                                                       " +
         "  left join xm_xiproduct s                                                                                                " +
         "    on t.orgcode = s.orgcode and t.site = s.site and t.depot = s.depot and t.thcode = s.thcode                            " +
