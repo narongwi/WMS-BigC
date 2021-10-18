@@ -106,14 +106,41 @@ namespace snaps.wms.api.document.Models
              and 1 < (select count(distinct x.article) from wm_stock x where x.orgcode = s.orgcode and x.site = s.site and x.depot = s.depot and x.huno = s.huno)
              group by s.loccode,s.huno ";
 
+        //public static string HUSql =
+        //    @"select s.article, s.lv, s.pv, s.loccode location, p.description, convert(varchar, s.datecreate, 103)  daterecipt, 
+        //      inrefno inorder, qtysku quantitysku, qtypu as quantitypu, s.qtyweight weight, 
+        //      convert(varchar, s.dateexp, 103) dateexp, convert(varchar, s.datemfg, 103)  datemfg, 
+        //      cast(rtopckoflayer as varchar(10)) + ' x ' + cast(rtolayerofhu as varchar(20)) tihi,
+        //       rtoskuofhu skuofpallet, rtoskuofipck skuofipck, rtoskuofpck skuofpck, rtoipckofpck ipckofpck, 
+        //      rtopckoflayer*rtolayerofhu pckofpallet, s.huno, b.barcode
+        //    from wm_product p, wm_stock s, wm_barcode b
+        //    where s.orgcode = p.orgcode and s.site = p.site and s.depot = p.depot and s.article = p.article and s.pv = p.pv and s.lv = p.lv
+        //    and s.orgcode = b.orgcode and s.site = b.site and s.depot = b.depot and s.article = b.article and s.pv = b.pv and s.lv = b.lv
+        //    and s.orgcode = '{0}' and s.site = '{1}' and s.depot = '{2}' and s.huno = '{3}'  and b.isprimary = '1' and b.tflow = 'IO' ";
+
         public static string HUSql =
-            @"select s.article, s.lv, s.pv, s.loccode location, p.description,convert(varchar, s.datecreate, 103)  daterecipt, inrefno inorder, qtysku quantitysku, 
-             s.qtyweight weight, convert(varchar, s.dateexp, 103) dateexp,convert(varchar, s.datemfg, 103)  datemfg, cast(rtopckoflayer as varchar(10)) + ' x ' + cast(rtolayerofhu as varchar(20)) tihi,
- 	         rtoskuofhu skuofpallet, rtoskuofipck skuofipck, rtoskuofpck skuofpck,0 ipckofpck, 0 pckofpallet, s.huno, b.barcode
-             from wm_product p, wm_stock s, wm_barcode b
-             where s.orgcode = p.orgcode and s.site = p.site and s.depot = p.depot and s.article = p.article and s.pv = p.pv and s.lv = p.lv
-             and s.orgcode = b.orgcode and s.site = b.site and s.depot = b.depot and s.article = b.article and s.pv = b.pv and s.lv = b.lv
-             and s.orgcode = '{0}' and s.site = '{1}' and s.depot = '{2}' and s.huno = '{3}'  and b.isprimary = '1' and b.tflow = 'IO' ";
+            @"select s.article, s.lv, s.pv, s.loccode location, p.description, convert(varchar, s.datecreate, 103)  daterecipt, 
+		            inrefno inorder, qtysku quantitysku, qtypu as quantitypu, s.qtyweight weight, 
+		            convert(varchar, s.dateexp, 103) dateexp, convert(varchar, s.datemfg, 103)  datemfg, 
+		            cast(rtopckoflayer as varchar(10)) + ' x ' + cast(rtolayerofhu as varchar(20)) tihi,
+ 		            rtoskuofhu skuofpallet, rtoskuofipck skuofipck, rtoskuofpck skuofpck, rtoipckofpck ipckofpck, 
+		            rtopckoflayer*rtolayerofhu pckofpallet, s.huno, b.barcode
+            from wm_product p, wm_stock s, wm_barcode b
+            where s.orgcode = p.orgcode and s.site = p.site and s.depot = p.depot and s.article = p.article and s.pv = p.pv and s.lv = p.lv
+            and s.orgcode = b.orgcode and s.site = b.site and s.depot = b.depot and s.article = b.article and s.pv = b.pv and s.lv = b.lv
+            and s.orgcode = '{0}' and s.site = '{1}' and s.depot = '{2}' and s.huno = '{3}' and b.isprimary = '1' and b.tflow = 'IO'
+            and 1 = (select count(distinct x.article) from wm_stock x where x.orgcode = s.orgcode and x.site = s.site and x.depot = s.depot and x.huno = s.huno)
+            UNION ALL 
+            select  null article, null lv, null pv, s.loccode location, null description, null daterecipt, 
+		            null inorder, sum(qtysku) quantitysku, sum(qtypu) as quantitypu, sum(s.qtyweight) weight, 
+		            null dateexp, null datemfg, 
+		            null tihi,
+ 		            null skuofpallet, null skuofipck, null skuofpck, null ipckofpck, 
+		            null pckofpallet, s.huno, 'Multi Product' barcode
+            from wm_stock s where s.orgcode = '{0}' and s.site = '{1}' and s.depot = '{2}' and s.huno = '{3}'
+            and 1 < (select count(distinct x.article) from wm_stock x where x.orgcode = s.orgcode and x.site = s.site and x.depot = s.depot and x.huno = s.huno)
+            group by s.loccode,s.huno ";
+
         public static string HUEmptySql =
           @"select (select top 1 zp.przone from wm_loczp zp where zp.orgcode = '{0}' and zp.site = '{1}' and zp.depot = '{2}' and zp.lscode = loccode) worksite,
                 loccode, h.thcode, huno, SUBSTRING(huno,len(huno)-3,4) hunolast, SUBSTRING(huno,0,len(huno)-3) hunowolast,t.thnameint thname,
