@@ -46,8 +46,9 @@ namespace snaps.wms.api.document.Models
             "    and t.orgcode = s.orgcode and t.site = s.site and t.depot = s.depot and t.stockid = s.stockid " +
             "    and t.orgcode = b.orgcode and t.site = b.site and t.depot = b.depot and t.article = b.article and t.pv = b.pv and t.lv = b.lv " +
             "    and t.orgcode = '{0}' and t.site = '{1}' and t.depot = '{2}' and t.taskno = '{3}'  and b.isprimary = '1' ";
+
         public static string InboundSql =
-            @"select s.article, s.lv, s.pv, s.loccode location, p.description,convert(varchar, s.datecreate, 103)  daterecipt, inrefno inorder, qtysku quantitysku, 
+            @"select s.article, s.lv, s.pv, s.loccode location, p.description,convert(varchar, s.datecreate, 103)  daterecipt, inrefno inorder, qtysku quantitysku, qtypu quantitypu,
              s.qtyweight weight, convert(varchar, s.dateexp, 103) dateexp,convert(varchar, s.datemfg, 103)  datemfg, cast(rtopckoflayer as varchar(10)) + ' x ' + cast(rtolayerofhu as varchar(20)) tihi,
  	         rtoskuofhu skuofpallet, rtoskuofipck skuofipck, rtoskuofpck skuofpck,0 ipckofpck, 0 pckofpallet, s.huno, b.barcode
              from wm_product p, wm_stock s, wm_barcode b
